@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/_main_activity__route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tt_downloader"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:scrollbars="vertical" >
+
+        <Button
+            android:id="@+id/buttonSearchRoute"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/strSearchRoute" />
+        
+        <TextView
+            android:id="@+id/textViewSearchTextRoutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/searchTextRoute"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" 
+            android:layout_below="@+id/buttonSearchRoute" />
+
+        <AutoCompleteTextView
+            android:id="@+id/editTextSuchtextWege"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewSearchTextRoutes"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="text"
+            android:selectAllOnFocus="false" 
+            android:layout_below="@+id/textViewSearchTextRoutes" >
+        </AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/textViewGebiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextSuchtextWege"
+            android:text="@string/lblGebiet"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" 
+            android:layout_below="@+id/editTextSuchtextWege"/>
+
+        <Spinner
+            android:id="@+id/spinnerAreaRoute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewGebiet"
+            android:layout_below="@+id/textViewGebiet" />
+
+        <include
+            android:id="@+id/includeLimitsForScale4RouteSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/spinnerAreaRoute"
+            layout="@layout/main_activity_seekbar_limits_of_scale" />
+
+        <TextView
+            android:id="@+id/TextViewNumberOfComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/includeLimitsForScale4RouteSearch"
+            android:text="@string/strNumberOfComments"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" />
+
+        <SeekBar
+            android:id="@+id/seekBarNumberOfComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/TextViewNumberOfComments"
+            android:layout_below="@+id/TextViewNumberOfComments"
+            android:max="@integer/Twenty"
+            android:progress="@integer/Zero" />
+
+        <TextView
+            android:id="@+id/TextViewMinOfMeanRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/seekBarNumberOfComments"
+            android:layout_below="@+id/seekBarNumberOfComments"
+            android:layout_marginTop="16dp"
+            android:text="@string/strMinOfMeanRating"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" />
+
+        <SeekBar
+            android:id="@+id/seekBarMinOfMeanRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/TextViewMinOfMeanRating"
+            android:layout_below="@+id/TextViewMinOfMeanRating"
+            android:max="@integer/Six"
+            android:progress="@integer/Zero" />
+
+    </RelativeLayout>
+
+</ScrollView>
