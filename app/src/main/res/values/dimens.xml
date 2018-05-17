@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="smallGap">10sp</dimen>
+    <dimen name="NoGap">0dp</dimen>
+    <dimen name="lv_item">14sp</dimen>
+    <dimen name="lv_header">28sp</dimen>
+    <dimen name="header_small">19sp</dimen>
+    <dimen name="TinyGap">3sp</dimen>
+
+    <!-- MAPSFORGE Resources -->
+
+    <dimen name="attribution_margin">1dp</dimen>
+    <dimen name="attribution_size">4pt</dimen>
+    <dimen name="controls_margin">8dp</dimen>
+
+</resources>

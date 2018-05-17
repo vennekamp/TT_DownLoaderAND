@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:gravity="center_horizontal"
+    android:paddingBottom="5dp"
+    android:weightSum="1.0" >
+
+    <RelativeLayout
+        android:id="@+id/summit_lv_item_found"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight=".97"
+        android:background="@color/Black"
+        android:gravity="left|right"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView_tableCol_SummitName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignTop="@id/textView_tableCol_SummitName"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableCol_SummitName"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_header" />
+
+        <TextView
+            android:id="@+id/textView_tableCol_Area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView_tableCol_SummitName"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableCol_Area"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+
+        <TextView
+            android:id="@+id/textView_tableColStrUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView_tableCol_Area"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableColSummitNumberOfficial"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+
+        <TextView
+            android:id="@+id/textView_tableCol_DateOfComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView_tableColStrUser"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableCol_NumberOfRoutes"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+
+        <TextView
+            android:id="@+id/textView_tableCol_NumberofStarRoutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView_tableCol_DateOfComment"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableCol_NumberofStarRoutes"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+
+        <TextView
+            android:id="@+id/textView_tableCol_NumberOfComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView_tableCol_NumberofStarRoutes"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableCol_EasiestGrade"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+        <!--
+	<TextView
+        android:id="@+id/textView_tableCol_GPSCoord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_tableCol_NumberOfComments"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:text="@string/tableCol_Gps"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" 
+        android:focusable="false" />
+        -->
+
+        <CheckBox
+            android:id="@+id/CheckBoxAsscended_in_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView_tableCol_NumberOfComments"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:button="@drawable/checkbox_selector"
+            android:enabled="false"
+            android:focusable="false"
+            android:text="@string/tableCol_IsAscended"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+
+        <TextView
+            android:id="@+id/textView_tableCol_MyComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/CheckBoxAsscended_in_lv"
+            android:layout_margin="1dp"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:text="@string/tableCol_MyComment"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+
+        <TextView
+            android:id="@+id/textView_tableCol_DateAsscended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView_tableCol_MyComment"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView_tableCol_NumberOfComments"
+            android:layout_margin="1dp"
+            android:layout_toRightOf="@+id/CheckBoxAsscended_in_lv"
+            android:background="@color/Blue"
+            android:focusable="false"
+            android:textColor="@color/White"
+            android:textSize="@dimen/lv_item" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageViewArrow"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight=".03"
+        android:contentDescription="@string/arrow"
+        android:maxWidth="@dimen/activity_vertical_margin"
+        android:scaleType="fitXY"
+        android:src="@drawable/grey_arrow_large" />
+
+</LinearLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/_main_activity__summit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tt_downloader"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:scrollbars="vertical" >
+
+        <LinearLayout
+            android:id="@+id/linearlayout_summitbuttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_horizontal"
+            android:weightSum="1.0" >
+
+	        <Button
+	            android:id="@+id/button_INFO"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+            	android:layout_weight=".35" 
+	            android:text="@string/INFO" />
+
+            <Button
+                android:id="@+id/buttonSearchSummit"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+            	android:layout_weight=".65" 
+                android:text="@string/strSearchSummit" />
+		</LinearLayout>
+        
+        <TextView
+            android:id="@+id/textViewSuchTextGipfel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/searchTextSummit"
+            android:layout_below="@+id/linearlayout_summitbuttons"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" />
+
+        <AutoCompleteTextView
+            android:id="@+id/editTextSuchtextGipfel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewSuchTextGipfel"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textViewSuchTextGipfel"
+            android:ems="10"
+            android:inputType="text"
+            android:selectAllOnFocus="false" >
+        </AutoCompleteTextView>
+
+        <TextView
+            android:id="@+id/textViewGebiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/editTextSuchtextGipfel"
+            android:layout_below="@+id/editTextSuchtextGipfel"
+            android:text="@string/lblGebiet"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" />
+
+        <Spinner
+            android:id="@+id/spinnerAreaSummit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewGebiet"
+            android:layout_below="@+id/textViewGebiet" />
+
+        <include
+            android:id="@+id/includeAnzahlDerWege"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="false"
+            android:layout_below="@+id/spinnerAreaSummit"
+            layout="@layout/main_activity_seekbar_number_of_routes" />
+
+        <include
+            android:id="@+id/includeAnzahlDerSternchenWege"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/includeAnzahlDerWege"
+            android:layout_below="@+id/includeAnzahlDerWege"
+            layout="@layout/main_activity_seekbar_number_of_stared_routes" />
+
+    </RelativeLayout>
+
+</ScrollView>

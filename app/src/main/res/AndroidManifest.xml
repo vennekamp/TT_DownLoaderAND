@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.teufelsturm"
+    android:versionCode="1"
+    android:versionName="1.02"
+    android:installLocation="auto">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.location.network" />
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature android:name="android.hardware.wifi" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".tt_downloader.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name=".tt_downloader.MainPagerWidget"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".gpslocation.ActivityGPSCompass" >
+        </activity>
+        <activity android:name=".gpslocation.MapsForgeActivity" >
+        </activity>
+        <activity android:name=".tt_downloader.comments.TT_CommentsFoundActivity" >
+        </activity>
+        <activity android:name=".tt_downloader.routes.TT_RouteFoundActivity" >
+        </activity>
+        <activity android:name=".tt_downloader.routes.TT_RoutesFoundActivity" >
+        </activity>
+        <activity android:name=".gpslocation.TT_SummitCoord_TabWidget" >
+        </activity>
+        <activity android:name=".tt_downloader.summit.TT_SummitFoundActivity" >
+        </activity>
+        <activity android:name=".tt_downloader.summit.TT_SummitsFoundActivity" >
+        </activity>
+    </application>
+
+</manifest>

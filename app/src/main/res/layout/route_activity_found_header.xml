@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/route_activity_found_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="fill"
+    android:background="@color/Green"
+    android:clipToPadding="true"
+    android:gravity="fill"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:scrollbars="none" >
+
+    <TextView
+        android:id="@+id/textView_tableCol_RouteName_inComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="@string/tableCol_RouteName"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/lv_header" />
+
+    <TextView
+        android:id="@+id/textView_tableCol_SummitName_inComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_tableCol_RouteName_inComment"
+        android:layout_margin="1dp"
+        android:focusable="false"
+        android:text="@string/tableCol_SummitName"
+        android:textColor="@color/Black"
+        android:textSize="@dimen/header_small" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_SpinnerRouteAsscended_RouteAscendDay_inComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_tableCol_SummitName_inComment"
+        android:gravity="center_horizontal"
+        android:weightSum="1.0" >
+
+        <Spinner
+            android:id="@+id/spinnerRouteAsscended_inComment"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight=".5"
+            android:focusable="false"
+            android:text="@string/tableCol_RouteIsAscended"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small" />
+
+		<Button
+            android:id="@+id/buttonRouteAscendDay"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:layout_weight=".5"
+            android:text="@string/strNoDay"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small" /> 
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextMyRouteComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearlayout_SpinnerRouteAsscended_RouteAscendDay_inComment"
+        android:configChanges="orientation|keyboardHidden"
+        android:gravity="top|left"
+        android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"
+        android:lines="4"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="vertical"
+        android:selectAllOnFocus="false" />
+
+</RelativeLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_lv_item_found"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@color/Black"
+    android:gravity="left|right"
+    android:orientation="vertical"
+    android:paddingBottom="5dp" >
+
+    <TextView
+        android:id="@+id/textView_Comment_in_Comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:focusable="false"
+        android:text="@string/tableCol_Comment"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" />
+
+    <TextView
+        android:id="@+id/textView_tableCol_RouteName2Comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_Comment_in_Comment"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:drawableRight="@drawable/grey_arrow"
+        android:focusable="false"
+        android:text="@string/tableCol_RouteName"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" />
+
+    <TextView
+        android:id="@+id/textView_tableCol_SummitName2Comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_tableCol_RouteName2Comment"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:drawableRight="@drawable/grey_arrow"
+        android:focusable="false"
+        android:text="@string/tableCol_SummitName"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" />
+
+    <TextView
+        android:id="@+id/textView_Comment_UserGrading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView_tableCol_SummitName2Comment"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:focusable="false"
+        android:text="@string/tableCol_UserGrade"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" />
+
+    <TextView
+        android:id="@+id/textView_Comment_tableColStrUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_Comment_UserGrading"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:focusable="false"
+        android:text="@string/tableColStrUser"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" />
+
+    <TextView
+        android:id="@+id/textView_Comment_tableCol_DateOfComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_Comment_tableColStrUser"
+        android:layout_margin="1dp"
+        android:background="@color/Blue"
+        android:focusable="false"
+        android:text="@string/tableCol_DateOfComment"
+        android:textColor="@color/White"
+        android:textSize="@dimen/lv_item" />
+
+</RelativeLayout>
