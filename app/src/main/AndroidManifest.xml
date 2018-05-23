@@ -46,5 +46,6 @@
         </activity>
         <activity android:name=".summit.TT_SummitsFoundActivity" >
         </activity>
-        </application>
+        <activity android:name=".MainActivity" />
+    </application>
 </manifest>
