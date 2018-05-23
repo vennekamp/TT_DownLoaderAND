@@ -22,10 +22,9 @@ public class CheckGPSLocation {
 	 * @return true, if the Latitude and longitude of the Locations are identical.
 	 */
 	protected static boolean equalsLocation(Location location, Location currentBestLocation) {
-		if ( location.getLatitude() == currentBestLocation.getLatitude()
-				&& location.getLongitude() == currentBestLocation.getLongitude() )
-			return true;
-		return false;
+		if (location.getLatitude() == currentBestLocation.getLatitude()
+				&& location.getLongitude() == currentBestLocation.getLongitude()) return true;
+		else return false;
 	}
 	/** Determines whether one Location reading is better than the current Location fix
 	  * @param location  The new Location that you want to evaluate

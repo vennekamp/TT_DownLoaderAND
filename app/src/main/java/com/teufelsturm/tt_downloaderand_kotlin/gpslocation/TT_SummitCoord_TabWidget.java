@@ -36,7 +36,7 @@ public class TT_SummitCoord_TabWidget extends TabActivity {
 		tabHost.addTab(spec);
 
 		// Do the same for the other tabs
-		intent = new Intent().setClass(this, SimplestMapViewer.class);
+		intent = new Intent().setClass(this, GettingStarted.class);
 		intent.putExtra("TT_Gipfel_AND", aTT_Summit_AND);
 		spec = tabHost
 				.newTabSpec("map")

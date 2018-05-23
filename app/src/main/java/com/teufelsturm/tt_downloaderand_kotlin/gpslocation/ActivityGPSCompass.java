@@ -31,7 +31,6 @@ public class ActivityGPSCompass extends Activity implements LocationListener {
 
 	private static SensorManager sensorService;
 	private static MyCompassView compassView;
-	private static TT_Summit_AND aTT_Summit_AND;
 	private static Sensor sensor;
 	private static LocationManager locationManager;
 	private static String provider;
@@ -56,7 +55,7 @@ public class ActivityGPSCompass extends Activity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		Log.v(getClass().getSimpleName(), "onCreate erreicht...");
 		Intent intent = getIntent();
-		aTT_Summit_AND = intent.getParcelableExtra("TT_Gipfel_AND");
+		TT_Summit_AND aTT_Summit_AND = intent.getParcelableExtra("TT_Gipfel_AND");
 		targetLocation = new Location("reverseGeocoded");
 		targetLocation.setLatitude(aTT_Summit_AND.getDbl_GpsLat());
 		targetLocation.setLongitude(aTT_Summit_AND.getDbl_GpsLong());
@@ -70,6 +69,7 @@ public class ActivityGPSCompass extends Activity implements LocationListener {
 		// *********************************************************************
 		// ********** COMPASS **************************************************
 		sensorService = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		assert sensorService != null;
 		sensor = sensorService.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		if (sensor != null) {
 			sensorService.registerListener(mySensorEventListener, sensor,
@@ -95,7 +95,7 @@ public class ActivityGPSCompass extends Activity implements LocationListener {
 		criteria.setCostAllowed(false);
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		provider = locationManager.getBestProvider(criteria, false);
-		Log.v(getClass().getSimpleName(), provider.toString());
+		Log.v(getClass().getSimpleName(), provider);
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			// TODO: Consider calling
 			//    ActivityCompat#requestPermissions
