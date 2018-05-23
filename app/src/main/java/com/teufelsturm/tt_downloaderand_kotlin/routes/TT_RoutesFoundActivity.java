@@ -29,7 +29,8 @@ public class TT_RoutesFoundActivity extends Activity {
 
 	private List<TT_Route_AND> lstTT_Routes_AND;
 	private SQLiteDatabase newDB;
-    private TT_Route_ANDAdapter listenAdapter;
+	private ListView meinListView;
+	private TT_Route_ANDAdapter listenAdapter;
 	private static TT_RoutesFoundActivity thisTT_RoutesFoundActivity;
 	private static Boolean dataHasChanged = Boolean.FALSE;
 
@@ -65,14 +66,14 @@ public class TT_RoutesFoundActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "Neuer onCreate... ");
 		setContentView(R.layout.routes_activity_found_lv_list);
-		lstTT_Routes_AND = new ArrayList<>();
+		lstTT_Routes_AND = new ArrayList<TT_Route_AND>();
 		openAndQueryDatabase();
 		Log.i(TAG,
 				"Neuer openAndQueryDatabase... BEENDET!");
 
 		listenAdapter = new TT_Route_ANDAdapter(this, lstTT_Routes_AND, true);
 		Log.i(TAG, "Suche meinListView... ");
-        ListView meinListView = findViewById(R.id.list_summits);
+		meinListView = (ListView) findViewById(R.id.list_summits);
 		Log.i(TAG, "meinListView.setAdapter...");
 		// http://www.androiddesignpatterns.com/2012/07/understanding-loadermanager.html
 		meinListView.setAdapter(listenAdapter);
@@ -196,7 +197,8 @@ public class TT_RoutesFoundActivity extends Activity {
 			Log.i(TAG, "Neue Query erzeugt..."
 					+ queryString);
 
-			Cursor cursor = newDB.rawQuery(queryString, null);
+			Cursor cursor = null;
+			cursor = newDB.rawQuery(queryString, null);
 			Log.i(TAG,
 					"Neue Routen gesucht... 'c != null'" + (cursor != null));
 
@@ -223,9 +225,9 @@ public class TT_RoutesFoundActivity extends Activity {
 						Integer sachsenSchwierigkeitsGrad = cursor
 								.getInt(cursor
 										.getColumnIndex("sachsenSchwierigkeitsGrad"));
-						Integer ohneUnterstuetzungSchwierigkeitsGrad = cursor
+						Integer ohneUnterstützungSchwierigkeitsGrad = cursor
 								.getInt(cursor
-										.getColumnIndex("ohneUnterstuetzungSchwierigkeitsGrad"));
+										.getColumnIndex("ohneUnterstützungSchwierigkeitsGrad"));
 						Integer rotPunktSchwierigkeitsGrad = cursor
 								.getInt(cursor
 										.getColumnIndex("rotPunktSchwierigkeitsGrad"));
@@ -246,7 +248,7 @@ public class TT_RoutesFoundActivity extends Activity {
 								blnAusrufeZeichen, intSterne,
 								strSchwierigkeitsGrad,
 								sachsenSchwierigkeitsGrad,
-								ohneUnterstuetzungSchwierigkeitsGrad,
+								ohneUnterstützungSchwierigkeitsGrad,
 								rotPunktSchwierigkeitsGrad,
 								intSprungSchwierigkeitsGrad,
 								intAnzahlDerKommentare,
@@ -260,13 +262,11 @@ public class TT_RoutesFoundActivity extends Activity {
 								+ intTTWegNr + "\t" + WegName);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (SQLiteException se) {
 			Log.e(TAG,
 					"Could not create or Open the database");
 		} finally {
-
 			newDB.close();
 			Toast.makeText(this, lstTT_Routes_AND.size() + " Wege gefunden"
 					+ ( lstTT_Routes_AND.size()  ==  getResources().getInteger(R.integer.MaxNoItemQuerxy) 

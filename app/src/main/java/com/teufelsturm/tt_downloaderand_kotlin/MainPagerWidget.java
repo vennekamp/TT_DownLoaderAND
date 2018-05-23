@@ -23,7 +23,7 @@ public class MainPagerWidget extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout._main_activity_pager);
 
-        mViewPager = findViewById(R.id.viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
         // Tab Initialization
         initialiseTabHost();
@@ -32,7 +32,7 @@ public class MainPagerWidget extends FragmentActivity
         List<Fragment> fragments = getFragments();
         pageAdapter = new MyPageAdapter(getSupportFragmentManager(), fragments);
         mViewPager.setAdapter(pageAdapter);
-        mViewPager.addOnPageChangeListener(MainPagerWidget.this);
+        mViewPager.setOnPageChangeListener(MainPagerWidget.this);
 	}
 
     // Method to add a TabHost
@@ -68,7 +68,7 @@ public class MainPagerWidget extends FragmentActivity
 	
 
     private List<Fragment> getFragments(){
-        List<Fragment> fList = new ArrayList<>();
+        List<Fragment> fList = new ArrayList<Fragment>();
         MainActivitySearchAbstract fragSummit 
         	= MainActivitySearchAbstract.newInstance(MainActivitySearchAbstract.SearchType.SUMMIT );
         MainActivitySearchAbstract fragRoute 
@@ -84,7 +84,7 @@ public class MainPagerWidget extends FragmentActivity
 
     // Tabs Creation
     private void initialiseTabHost() {
-        mTabHost = findViewById(android.R.id.tabhost);
+        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup();
 
 		Resources res = getResources(); // Resource object to get Drawables
