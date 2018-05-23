@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/route_activity_found_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:text="@string/tableCol_SummitName"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/Black"
@@ -29,34 +29,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_SummitName"
         android:text="@string/tableCol_Area"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/Black"
         android:textSize="@dimen/header_small" />
 
-
-    <Button
-        android:id="@+id/textView_GpsCoords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_Area"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/strGpcCoords"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/Black"
-        android:textSize="@dimen/header_small"
-        android:visibility="gone" />
-
     <TextView
         android:id="@+id/textView_NeighbourSummit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_GpsCoords"
         android:text="@string/strNeighbourSummit"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -68,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_NeighbourSummit"
         android:orientation="horizontal"
         android:padding="@dimen/NoGap" >
@@ -78,7 +60,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="left"
             android:layout_margin="@dimen/NoGap"
             android:layout_weight="1"
             android:lines="@integer/Two"
@@ -91,7 +73,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="right"
             android:layout_margin="@dimen/NoGap"
             android:layout_weight="1"
             android:lines="@integer/Two"
@@ -105,7 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/NeighbourSummitsKnobs01"
         android:orientation="horizontal"
         android:padding="@dimen/NoGap" >
@@ -139,7 +120,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/NeighbourSummitsKnobs02"
         android:gravity="center_horizontal"
         android:weightSum="1.0" >
@@ -172,16 +152,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="4"
-            android:hint="@string/tableCol_Comment"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/linearlayout_CheckBoxSummitAsscended_SummitAscendDay_inComment"
-            android:gravity="top|start"
+            android:gravity="top|left"
             android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
             android:configChanges="orientation|keyboardHidden"
             android:selectAllOnFocus="false"
             android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"  />
 
+        <Button
+            android:id="@+id/textView_GpsCoords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_Area"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:text="@string/strGpcCoords"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small" />
 
 </RelativeLayout>

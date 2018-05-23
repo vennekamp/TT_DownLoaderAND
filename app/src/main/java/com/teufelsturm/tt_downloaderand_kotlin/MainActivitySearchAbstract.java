@@ -176,6 +176,7 @@ public abstract class MainActivitySearchAbstract extends Fragment implements
 		try {
 			myDbHelper.openDataBase();
 		} catch (SQLException sqle) {
+
 			throw sqle;
 		}
 		List<String> getAllLabels = myDbHelper.getAllAreas();

@@ -29,26 +29,26 @@ import java.util.Locale;
 public class TT_CommentsFoundActivity extends Activity 
 	implements OnInitListener {
 
-    private final static String TAG = TT_CommentsFoundActivity.class.getSimpleName();
-
 	private static List<TT_Comment_AND> lstTT_Comment_AND;
 	private SQLiteDatabase newDB;
+	private ListView meinListView;
+	private TT_Comment_ANDAdapter listenAdapter; 
 	private TextToSpeech tts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i(TAG, "Neuer onCreate... ");
+		Log.i(getClass().getSimpleName(), "Neuer onCreate... ");
 		setContentView(R.layout.comments_activity_found_lv_list);
 
-		lstTT_Comment_AND = new ArrayList<>();
+		lstTT_Comment_AND = new ArrayList<TT_Comment_AND>();
 		// query all routes to this summit
 		openAndQueryDatabase();
-		TT_Comment_ANDAdapter listenAdapter = new TT_Comment_ANDAdapter(this,
+		listenAdapter = new TT_Comment_ANDAdapter(this,
 				lstTT_Comment_AND, true);
-		Log.i(TAG,
+		Log.i(getClass().getSimpleName(),
 				"(ListView) findViewById(R.id.list_routes);");
-		ListView meinListView = findViewById(R.id.list_comments);
+		meinListView = (ListView) findViewById(R.id.list_comments);
 		meinListView.setAdapter(listenAdapter);
 		// Event Listener
 		tts = new TextToSpeech(this, this);
@@ -71,10 +71,10 @@ public class TT_CommentsFoundActivity extends Activity
 		});
 		
 
-		Log.i(TAG,
+		Log.i(getClass().getSimpleName(),
 				"Neuer onCreate komplett abgearbeitet... ");
 	
-		Log.i(TAG,"Neuer onCreate... BEENDET");
+		Log.i(getClass().getSimpleName(),"Neuer onCreate... BEENDET");
 
 	}
 
@@ -87,14 +87,14 @@ public class TT_CommentsFoundActivity extends Activity
 
 	//**************************
 	private void openAndQueryDatabase() {
-		Log.i(TAG, "Neuer openAndQueryDatabase... ");
+		Log.i(getClass().getSimpleName(), "Neuer openAndQueryDatabase... ");
 
 		try {
 			DataBaseHelper dbHelper = new DataBaseHelper(
 					this.getApplicationContext());
 			newDB = dbHelper.getWritableDatabase();
-			Cursor cursor;
-			String QueryString1;
+			Cursor cursor = null;
+			String QueryString1 = null;
 			String strTextSuchtext = MainActivitySearchComment
 					.getStrTextSuchtext();
 			String strGebiet = MainActivitySearchComment.getStrtextViewGebiet();
@@ -116,31 +116,28 @@ public class TT_CommentsFoundActivity extends Activity
 //							b.[rotPunktSchwierigkeitsGrad]
 //							, b.[intSprungSchwierigkeitsGrad] ) BETWEEN 1 AND 15
 //				     ORDER BY b.[intTTGipfelNr] LIMIT 250
-			QueryString1 = new StringBuilder().append("SELECT a.[intTTWegNr], a.[strEntryKommentar], ")
-					.append("b.[WegName], b.[strSchwierigkeitsGrad]")
-                    .append(" , c.[strName], ")
-                    .append("b.[intTTGipfelNr], a.[entryBewertung], a.[strEntryUser], a.[entryDatum]")
-                    .append("      FROM  [TT_Summit_AND] c, [TT_Route_AND] b, [TT_RouteComment_AND] a")
-                    .append("      WHERE a.[entryBewertung] >= ")
-                    .append(intMinMinCommentInComment).append("      AND a.[strEntryKommentar] like ")
-                    .append(DatabaseUtils.sqlEscapeString("%" + strTextSuchtext + "%"))
-                    .append("     AND a.[intTTWegNr] = b.[intTTWegNr]")
-                    .append(strGebiet.equals(this.getString(R.string.strAll))
-                            ? "       AND c.[strGebiet] != \"\" "
-                            : "       AND c.[strGebiet] = '" + strGebiet + "'")
-                    .append("      AND c.[intTTGipfelNr] = b.[intTTGipfelNr]")
-                    .append("      AND coalesce(b.[sachsenSchwierigkeitsGrad],")
-                    .append("			b.[ohneUnterstützungSchwierigkeitsGrad],")
-                    .append("			b.[rotPunktSchwierigkeitsGrad]")
-                    .append("			, b.[intSprungSchwierigkeitsGrad] ) ")
-                    .append(" BETWEEN ").append(intMinSchwierigkeit).append(" AND ")
-                    .append(intMaxSchwierigkeit).append("     ORDER BY c.[strName] LIMIT ")
-                    .append(getResources().getInteger(R.integer.MaxNoItemQuerxy)).toString();
-					Log.i(TAG,
+			QueryString1 = "SELECT a.[intTTWegNr], a.[strEntryKommentar], b.[WegName], b.[strSchwierigkeitsGrad]" +
+					" , c.[strName], " +
+					"b.[intTTGipfelNr], a.[entryBewertung], a.[strEntryUser], a.[entryDatum]" +
+					"      FROM  [TT_Summit_AND] c, [TT_Route_AND] b, [TT_RouteComment_AND] a" +
+					"      WHERE a.[entryBewertung] >= " + intMinMinCommentInComment +  
+					"      AND a.[strEntryKommentar] like " + DatabaseUtils.sqlEscapeString("%" + strTextSuchtext + "%") +
+					"     AND a.[intTTWegNr] = b.[intTTWegNr]" +
+					(strGebiet.equals(this.getString(R.string.strAll)) 
+							? "       AND c.[strGebiet] != \"\" "
+							: "       AND c.[strGebiet] = '" + strGebiet + "'") +
+					"      AND c.[intTTGipfelNr] = b.[intTTGipfelNr]" +
+					"      AND coalesce(b.[sachsenSchwierigkeitsGrad]," +
+					"			b.[ohneUnterstützungSchwierigkeitsGrad]," +
+					"			b.[rotPunktSchwierigkeitsGrad]" +
+					"			, b.[intSprungSchwierigkeitsGrad] ) " +
+					" BETWEEN " + intMinSchwierigkeit + " AND " + intMaxSchwierigkeit +
+					"     ORDER BY c.[strName] LIMIT " + getResources().getInteger(R.integer.MaxNoItemQuerxy);  
+					Log.i(getClass().getSimpleName(),
 							"Neue Kommentarr zum Suche finden:\r\n" + QueryString1);
 
 			cursor = newDB.rawQuery(QueryString1, null);
-			Log.i(TAG,
+			Log.i(getClass().getSimpleName(),
 					"Neuen Kommentar zum Weg suchen:\t c != null'"
 							+ (cursor != null));
 
@@ -150,11 +147,11 @@ public class TT_CommentsFoundActivity extends Activity
 					do {
 						int intTTWegNr = cursor.getInt(cursor
 								.getColumnIndex("intTTWegNr"));
-						Log.i(TAG, 
+						Log.i(getClass().getSimpleName(), 
 								" -> intTTWegNr..... " + intTTWegNr);
 						String strEntryKommentar = cursor.getString(cursor
 								.getColumnIndex("strEntryKommentar"));
-						Log.i(TAG, 
+						Log.i(getClass().getSimpleName(), 
 								" -> strEntryKommentar..... " + strEntryKommentar);
 						String strWegName = cursor.getString(cursor
 								.getColumnIndex("WegName")) + " ("
@@ -164,35 +161,33 @@ public class TT_CommentsFoundActivity extends Activity
 										 .getColumnIndex("strName"));
 						int intTTGipfelNr = cursor.getInt(cursor
 								 .getColumnIndex("intTTGipfelNr"));
-						Log.i(TAG, 
+						Log.i(getClass().getSimpleName(), 
 								" -> strWegName..... " + strWegName);
 						Integer intEntryBewertung = cursor.getInt(cursor
 								.getColumnIndex("entryBewertung"));
-						Log.i(TAG, 
+						Log.i(getClass().getSimpleName(), 
 								" -> intEntryBewertung..... " + intEntryBewertung);
 						String strEntryUser = cursor.getString(cursor
 								.getColumnIndex("strEntryUser"));
-						Log.i(TAG, 
+						Log.i(getClass().getSimpleName(), 
 								" -> strEntryUser..... " + strEntryUser);
 						Long longEntryDatum = cursor.getLong(cursor
 								.getColumnIndex("entryDatum"));
-						Log.i(TAG, 
+						Log.i(getClass().getSimpleName(), 
 								" -> longEntryDatum..... " + longEntryDatum);
 
 						lstTT_Comment_AND.add(new TT_Comment_AND(intTTWegNr,
 								strEntryKommentar, strWegName, strName, intTTGipfelNr, intEntryBewertung,
 								strEntryUser, longEntryDatum));
-						Log.i(TAG, ++iCounter
+						Log.i(getClass().getSimpleName(), ++iCounter
 								+ " -> Neuer Kommentar... " + strEntryUser);
 					} while (cursor.moveToNext());
-                    cursor.close();
 				}
 			}
 		} catch (SQLiteException se) {
-			Log.e(TAG,
+			Log.e(getClass().getSimpleName(),
 					"Could not create or Open the database");
 		} finally {
-
 			newDB.close();
 			Toast.makeText(this, lstTT_Comment_AND.size() + " Kommentare gefunden"
 					+ ( lstTT_Comment_AND.size()  ==  getResources().getInteger(R.integer.MaxNoItemQuerxy) 
@@ -211,7 +206,7 @@ public class TT_CommentsFoundActivity extends Activity
 	    if(tts != null) {
 	    	tts.stop();
 	        tts.shutdown();
-	        Log.d(TAG, "TTS Destroyed");
+	        Log.d(getClass().getSimpleName(), "TTS Destroyed");
 	    }
 	    super.onDestroy();
 	}
