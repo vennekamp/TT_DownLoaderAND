@@ -1,9 +1,10 @@
 package com.teufelsturm.tt_downloaderand_kotlin.comments;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RouteFoundActivity;
+import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RouteFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.summit.TT_SummitFoundActivity;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.TT_Comment_AND;
@@ -27,11 +28,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
-	private final Activity activity;
+	private final FragmentActivity activity;
 	private final Boolean showRoute;
 	private final List<TT_Comment_AND> lstTT_Comment_AND;
+	private TT_Comment_ANDView aTT_Comment_ANDView;
 
-	public TT_Comment_ANDAdapter(Activity activity,
+	public TT_Comment_ANDAdapter(FragmentActivity activity,
 			List<TT_Comment_AND> objects, Boolean showRoute) {
 		super(activity, R.layout.comment_lv_item_found, objects);
 		Log.i(this.getClass().getSimpleName(),
@@ -42,12 +44,10 @@ public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
 	}
 
 	@Override
-	@NonNull
-	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View rowView = convertView;
 		Log.i(this.getClass().getSimpleName(), "Suche view...: " + position);
 
-		TT_Comment_ANDView aTT_Comment_ANDView;
 		if (rowView == null) {
 			aTT_Comment_ANDView = new TT_Comment_ANDView();
 			// Get a new instance of the row layout view
@@ -58,24 +58,24 @@ public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
 			// so they don't need to be re-fetched
 			Log.i(this.getClass().getSimpleName(),
 					"textView_Comment_in_Comment suchen...  ");
-			aTT_Comment_ANDView.textView_Comment_in_Comment = rowView
+			aTT_Comment_ANDView.textView_Comment_in_Comment = (TextView) rowView
 					.findViewById(R.id.textView_Comment_in_Comment);
 			Log.i(this.getClass().getSimpleName(),
 					"textView_Comment_in_Comment...: "
-							+ (aTT_Comment_ANDView.textView_Comment_in_Comment)
+							+ ((TextView) aTT_Comment_ANDView.textView_Comment_in_Comment)
 									.getText());
 			// the TextView with the Route Name (for this Comment View)
 			// Handle it's visibility and Click Listener
-			aTT_Comment_ANDView.textView_tableCol_RouteName2Comment = rowView
+			aTT_Comment_ANDView.textView_tableCol_RouteName2Comment = (TextView) rowView
 					.findViewById(R.id.textView_tableCol_RouteName2Comment);
-			aTT_Comment_ANDView.textView_tableCol_SummitName2Comment = rowView
+			aTT_Comment_ANDView.textView_tableCol_SummitName2Comment = (TextView) rowView
 					.findViewById(R.id.textView_tableCol_SummitName2Comment);
 
-			aTT_Comment_ANDView.textView_Comment_UserGrading = rowView
+			aTT_Comment_ANDView.textView_Comment_UserGrading = (TextView) rowView
 					.findViewById(R.id.textView_Comment_UserGrading);
-			aTT_Comment_ANDView.textView_Comment_tableColStrUser = rowView
+			aTT_Comment_ANDView.textView_Comment_tableColStrUser = (TextView) rowView
 					.findViewById(R.id.textView_Comment_tableColStrUser);
-			aTT_Comment_ANDView.textView_Comment_tableCol_DateOfComment = rowView
+			aTT_Comment_ANDView.textView_Comment_tableCol_DateOfComment = (TextView) rowView
 					.findViewById(R.id.textView_Comment_tableCol_DateOfComment);
 			// Cache the view objects in the tag,
 			// so they can be re-accessed later
@@ -95,26 +95,30 @@ public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
 				.setText(currentTT_Comment_AND.getStrEntryKommentar());
 		Log.i(this.getClass().getSimpleName(), "Suche WegName...: ");
 		aTT_Comment_ANDView.textView_tableCol_RouteName2Comment
-				.setText(String.format("%s  %s", activity.getApplicationContext().getResources()
-                        .getString(R.string.tableCol_RouteName), currentTT_Comment_AND.getStrWegName()));
+				.setText(activity.getApplicationContext().getResources()
+						.getString(R.string.tableCol_RouteName)
+						+ "  " + currentTT_Comment_AND.getStrWegName());
 		aTT_Comment_ANDView.textView_tableCol_SummitName2Comment
-				.setText(String.format("%s%s", activity.getApplicationContext().getResources()
-                        .getString(R.string.tableCol_SummitName), currentTT_Comment_AND.getStrGipfelName()));
+				.setText(activity.getApplicationContext().getResources()
+						.getString(R.string.tableCol_SummitName)
+						+ currentTT_Comment_AND.getStrGipfelName());
 		Log.i(this.getClass().getSimpleName(), "Suche UserGrading...: "
 				+ currentTT_Comment_AND.getIntEntryBewertung());
 		String strUserGrading = EnumTT_WegBewertung.values()[currentTT_Comment_AND
 				.getIntEntryBewertung() + EnumTT_WegBewertung.getMinInteger()]
 				.toString();
 
-		aTT_Comment_ANDView.textView_Comment_UserGrading.setText(String.format("%s  %s", activity
-                .getApplicationContext().getResources()
-                .getString(R.string.tableCol_UserGrade), strUserGrading));
+		aTT_Comment_ANDView.textView_Comment_UserGrading.setText(activity
+				.getApplicationContext().getResources()
+				.getString(R.string.tableCol_UserGrade)
+				+ "  " + strUserGrading);
 
 		Log.i(this.getClass().getSimpleName(), "Suche StrUser...: "
 				+ currentTT_Comment_AND.getStrEntryUser());
-		aTT_Comment_ANDView.textView_Comment_tableColStrUser.setText(String.format("%s   %s", activity
-                .getApplicationContext().getResources()
-                .getString(R.string.tableColStrUser), currentTT_Comment_AND.getStrEntryUser()));
+		aTT_Comment_ANDView.textView_Comment_tableColStrUser.setText(activity
+				.getApplicationContext().getResources()
+				.getString(R.string.tableColStrUser)
+				+ "   " + currentTT_Comment_AND.getStrEntryUser());
 		Log.i(this.getClass().getSimpleName(), "Suche StrUser...: "
 				+ currentTT_Comment_AND.getLongEntryDatum().toString());
 
@@ -127,8 +131,9 @@ public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
 						+ " currentTt_Comment_AND.getIntEntryDatum(): "
 						+ sdf.format(resultdate));
 		aTT_Comment_ANDView.textView_Comment_tableCol_DateOfComment
-				.setText(String.format("%s   %s", activity.getApplicationContext().getResources()
-                        .getString(R.string.tableCol_DateOfComment), sdf.format(resultdate)));
+				.setText(activity.getApplicationContext().getResources()
+						.getString(R.string.tableCol_DateOfComment)
+						+ "   " + sdf.format(resultdate));
 		if (!this.showRoute) {
 			aTT_Comment_ANDView.textView_tableCol_RouteName2Comment
 					.setVisibility(View.GONE);
@@ -148,18 +153,27 @@ public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
 									Toast.LENGTH_LONG).show();
 							Integer bInt = (Integer)v.getTag();
 							Log.i(getClass().getSimpleName(),
-									"Intent TT_RouteFoundActivity = new Intent(...");
-							Intent addonPageRouteFoundActivity = new Intent(
-									activity, TT_RouteFoundActivity.class);
-							Log.i(getClass().getSimpleName(),
-									"addonPageSummitFoundActivity.putExtra(...");
-							addonPageRouteFoundActivity.putExtra(
-									"TT_Route_AND",
-									new TT_Route_AND(bInt, activity
-											.getApplicationContext()));
-							Log.i(getClass().getSimpleName(),
-									"startActivity... ");
-							activity.startActivity(addonPageRouteFoundActivity); 
+									"Intent TT_RouteFoundFragment = new Intent(...");
+//							Intent addonPageRouteFoundActivity = new Intent(
+//									activity, TT_RouteFoundFragment.class);
+//							Log.i(getClass().getSimpleName(),
+//									"addonPageSummitFoundActivity.putExtra(...");
+//							addonPageRouteFoundActivity.putExtra(
+//									"TT_Route_AND",
+//									new TT_Route_AND(bInt, activity
+//											.getApplicationContext()));
+//							Log.i(getClass().getSimpleName(),
+//									"startActivity... ");
+//							activity.startActivity(addonPageRouteFoundActivity);
+							Fragment fragment
+									= TT_RouteFoundFragment.newInstance(
+											new TT_Route_AND(bInt, activity));
+
+                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_container, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
 						}
 					});
 			aTT_Comment_ANDView.textView_tableCol_SummitName2Comment
@@ -189,11 +203,11 @@ public class TT_Comment_ANDAdapter extends ArrayAdapter<TT_Comment_AND> {
 	}
 
 	protected static class TT_Comment_ANDView {
-		TextView textView_Comment_in_Comment;
-		TextView textView_tableCol_RouteName2Comment;
-		TextView textView_tableCol_SummitName2Comment;
-		TextView textView_Comment_UserGrading;
-		TextView textView_Comment_tableColStrUser;
-		TextView textView_Comment_tableCol_DateOfComment;
+		protected TextView textView_Comment_in_Comment;
+		protected TextView textView_tableCol_RouteName2Comment;
+		protected TextView textView_tableCol_SummitName2Comment;
+		protected TextView textView_Comment_UserGrading;
+		protected TextView textView_Comment_tableColStrUser;
+		protected TextView textView_Comment_tableCol_DateOfComment;
 	}
 }

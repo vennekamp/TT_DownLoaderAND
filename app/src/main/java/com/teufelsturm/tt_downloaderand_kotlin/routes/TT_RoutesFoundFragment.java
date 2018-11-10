@@ -1,15 +1,21 @@
 package com.teufelsturm.tt_downloaderand_kotlin.routes;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -23,18 +29,19 @@ import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.TT_Route_AND;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TT_RoutesFoundActivity extends Activity {
+public class TT_RoutesFoundFragment extends Fragment {
 
-	private final static String TAG = TT_RoutesFoundActivity.class.getSimpleName();
+	private final static String TAG = TT_RoutesFoundFragment.class.getSimpleName();
 
 	private List<TT_Route_AND> lstTT_Routes_AND;
 	private SQLiteDatabase newDB;
-    private TT_Route_ANDAdapter listenAdapter;
-	private static TT_RoutesFoundActivity thisTT_RoutesFoundActivity;
+	private ListView meinListView;
+	private TT_Route_ANDAdapter listenAdapter;
+	private static TT_RoutesFoundFragment thisTT_RoutesFoundActivity;
 	private static Boolean dataHasChanged = Boolean.FALSE;
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		thisTT_RoutesFoundActivity = this;
 		if (dataHasChanged) {
@@ -45,7 +52,7 @@ public class TT_RoutesFoundActivity extends Activity {
 	}
 
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		thisTT_RoutesFoundActivity = null;
 		super.onPause();
 	}
@@ -61,18 +68,26 @@ public class TT_RoutesFoundActivity extends Activity {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.i(TAG, "Neuer onCreate... ");
-		setContentView(R.layout.routes_activity_found_lv_list);
-		lstTT_Routes_AND = new ArrayList<>();
+	public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG, "Neuer onCreate... ");
+    }
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                @Nullable ViewGroup container,
+                @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.routes_activity_found_lv_list,
+                container, false);
+		lstTT_Routes_AND = new ArrayList<TT_Route_AND>();
 		openAndQueryDatabase();
 		Log.i(TAG,
 				"Neuer openAndQueryDatabase... BEENDET!");
 
-		listenAdapter = new TT_Route_ANDAdapter(this, lstTT_Routes_AND, true);
+		listenAdapter = new TT_Route_ANDAdapter(getActivity(),
+                lstTT_Routes_AND, true);
 		Log.i(TAG, "Suche meinListView... ");
-        ListView meinListView = findViewById(R.id.list_summits);
+		meinListView = (ListView) view.findViewById(R.id.list_summits);
 		Log.i(TAG, "meinListView.setAdapter...");
 		// http://www.androiddesignpatterns.com/2012/07/understanding-loadermanager.html
 		meinListView.setAdapter(listenAdapter);
@@ -81,13 +96,23 @@ public class TT_RoutesFoundActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Log.e(TAG, "onItemClick in TT_RoutesFoundActivity"
+				Log.e(TAG, "onItemClick in TT_RoutesFoundFragment"
 							+ view.getTag().toString() );
 				Log.i(TAG,
 						"Intent addonPageSummitFoundActivity = new Intent(...");
-				Intent addonPageRouteFoundActivity = new Intent(
-						TT_RoutesFoundActivity.this,
-						TT_RouteFoundActivity.class);
+//				Intent addonPageRouteFoundActivity = new Intent(
+//						_TT_RoutesFoundActivity.this,
+//						_TT_RouteFoundActivity.class);
+
+
+
+                Fragment fragment = new TT_RouteFoundFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
 				Log.i(TAG,
 						"addonPageSummitFoundActivity.putExtra(...");
 				addonPageRouteFoundActivity.putExtra("TT_Route_AND",
@@ -101,22 +126,21 @@ public class TT_RoutesFoundActivity extends Activity {
 		// http://android-er.blogspot.de/2012/05/simple-example-use-osmdroid-and-slf4j.html
 
 		Log.i(TAG, "Neuer onCreate... BEENDET");
-
+		return view;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.summits_found, menu);
-		return true;
-	}
 
-	private void openAndQueryDatabase() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.summits_found, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    private void openAndQueryDatabase() {
 		Log.i(TAG, "Neuer openAndQueryDatabase... ");
 		lstTT_Routes_AND.clear();
 		try {
-			DataBaseHelper dbHelper = new DataBaseHelper(
-					this.getApplicationContext());
+			DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
 			newDB = dbHelper.getWritableDatabase();
 			Log.i(TAG, "queryString erzeugen... ");
 			String strTextSuchtext = MainActivitySearchRoute
@@ -196,7 +220,8 @@ public class TT_RoutesFoundActivity extends Activity {
 			Log.i(TAG, "Neue Query erzeugt..."
 					+ queryString);
 
-			Cursor cursor = newDB.rawQuery(queryString, null);
+			Cursor cursor = null;
+			cursor = newDB.rawQuery(queryString, null);
 			Log.i(TAG,
 					"Neue Routen gesucht... 'c != null'" + (cursor != null));
 
@@ -223,9 +248,9 @@ public class TT_RoutesFoundActivity extends Activity {
 						Integer sachsenSchwierigkeitsGrad = cursor
 								.getInt(cursor
 										.getColumnIndex("sachsenSchwierigkeitsGrad"));
-						Integer ohneUnterstuetzungSchwierigkeitsGrad = cursor
+						Integer ohneUnterstützungSchwierigkeitsGrad = cursor
 								.getInt(cursor
-										.getColumnIndex("ohneUnterstuetzungSchwierigkeitsGrad"));
+										.getColumnIndex("ohneUnterstützungSchwierigkeitsGrad"));
 						Integer rotPunktSchwierigkeitsGrad = cursor
 								.getInt(cursor
 										.getColumnIndex("rotPunktSchwierigkeitsGrad"));
@@ -246,7 +271,7 @@ public class TT_RoutesFoundActivity extends Activity {
 								blnAusrufeZeichen, intSterne,
 								strSchwierigkeitsGrad,
 								sachsenSchwierigkeitsGrad,
-								ohneUnterstuetzungSchwierigkeitsGrad,
+								ohneUnterstützungSchwierigkeitsGrad,
 								rotPunktSchwierigkeitsGrad,
 								intSprungSchwierigkeitsGrad,
 								intAnzahlDerKommentare,
@@ -260,15 +285,13 @@ public class TT_RoutesFoundActivity extends Activity {
 								+ intTTWegNr + "\t" + WegName);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (SQLiteException se) {
 			Log.e(TAG,
 					"Could not create or Open the database");
 		} finally {
-
 			newDB.close();
-			Toast.makeText(this, lstTT_Routes_AND.size() + " Wege gefunden"
+			Toast.makeText(getActivity(), lstTT_Routes_AND.size() + " Wege gefunden"
 					+ ( lstTT_Routes_AND.size()  ==  getResources().getInteger(R.integer.MaxNoItemQuerxy) 
 					? " (Maximalanzahl an Ergebnissen erreicht)" : ""), Toast.LENGTH_LONG)
 			.show();

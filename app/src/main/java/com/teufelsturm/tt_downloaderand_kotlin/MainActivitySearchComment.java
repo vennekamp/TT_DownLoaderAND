@@ -1,8 +1,10 @@
 package com.teufelsturm.tt_downloaderand_kotlin;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -209,7 +211,14 @@ public class MainActivitySearchComment extends MainActivitySearchAbstract
 		myEditTextSuchtextID = R.id.editTextSuchtextKommentare;
 		myAutoCompleteTextViewText
 			= ((AutoCompleteTextView)view.findViewById(myEditTextSuchtextID)).getText().toString();
-		startActivity(new Intent(getActivity(), TT_CommentsFoundActivity.class));
+
+		Fragment fragment = new TT_CommentsFoundActivity();
+		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.replace(R.id.fragment_container, fragment);
+		fragmentTransaction.addToBackStack(null);
+		fragmentTransaction.commit();
+//		startActivity(new Intent(getActivity(), _TT_CommentsFoundActivity.class));
 	}
 	@Override
 	public void onResume() {

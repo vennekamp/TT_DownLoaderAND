@@ -1,7 +1,6 @@
 package com.teufelsturm.tt_downloaderand_kotlin.routes;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -9,13 +8,14 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class TT_RouteFoundActivity extends FragmentActivity implements OnInitListener {
+public class TT_RouteFoundFragment extends Fragment implements OnInitListener {
 
 	private static List<TT_Comment_AND> lstTT_Comment_AND;
 	private SQLiteDatabase newDB;
@@ -68,26 +68,47 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 	public static final String SAVED_TEXT_KEY = "SavedText";
 	static final int DATE_DIALOG_ID = 0;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.i(getClass().getSimpleName(), "Neuer onCreate... ");
-		setContentView(R.layout.comments_found_lv_w_header);
-		// Find the packet with the 'parent' object
-		Intent intent = getIntent();
-		Log.i(getClass().getSimpleName(), "Neuer intent... ");
-		aTT_Route_AND = intent.getParcelableExtra("TT_Route_AND");
+	public static Fragment newInstance(TT_Route_AND someTT_Route_AND) {
+		TT_RouteFoundFragment myFragment = new TT_RouteFoundFragment();
 
+		Bundle args = new Bundle();
+		args.putParcelable("TT_Route_AND", someTT_Route_AND);
+		myFragment.setArguments(args);
+
+		return myFragment;
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(getClass().getSimpleName(), "Neuer onCreate... ");
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+	    View view = inflater.inflate(R.layout.comments_found_lv_w_header ,container);
+		// Find the packet with the 'parent' object
+//		Intent intent = getIntent();
+//		Log.i(getClass().getSimpleName(), "Neuer intent... ");
+//		aTT_Route_AND = intent.getParcelableExtra("TT_Route_AND");
+        if (  getArguments() == null || !getArguments().containsKey("TT_Route_AND") ) {
+            throw new IllegalArgumentException("getArguments() == null || !getArguments().containsKey(\"TT_Route_AND\")");
+        }
+        else {
+            aTT_Route_AND = getArguments().getParcelable("TT_Route_AND");
+        }
 		lstTT_Comment_AND = new ArrayList<TT_Comment_AND>();
 		// query all routes to this summit
 		openAndQueryDatabase(aTT_Route_AND);
-		listenAdapter = new TT_Comment_ANDAdapter(this, lstTT_Comment_AND,
+		listenAdapter = new TT_Comment_ANDAdapter(getActivity(), lstTT_Comment_AND,
 				false);
 		Log.i(getClass().getSimpleName(),
 				"(ListView) findViewById(R.id.list_routes);");
-		meinListView = (ListView) findViewById(R.id.list_comment);
+		meinListView = (ListView) view.findViewById(R.id.list_comment);
 		// working Code for the Header Creation:
-		LayoutInflater layoutInflater = (LayoutInflater) this
+		LayoutInflater layoutInflater = (LayoutInflater) getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		Log.i(getClass().getSimpleName(), "RelativeLayout myHeaderView  ... ");
 		RelativeLayout myHeaderView = (RelativeLayout) layoutInflater.inflate(
@@ -98,9 +119,9 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 		meinListView.addHeaderView(myHeaderView, null, false);
 		// The e. is part of the header, will not be found before header is
 		// added!
-		spinnerRouteAsscended_inComment = (Spinner) findViewById(R.id.spinnerRouteAsscended_inComment);
-		editTextMyRouteComment = (EditText) findViewById(R.id.editTextMyRouteComment);
-		buttonRouteAscendDay = (Button) findViewById(R.id.buttonRouteAscendDay);
+		spinnerRouteAsscended_inComment = (Spinner) view.findViewById(R.id.spinnerRouteAsscended_inComment);
+		editTextMyRouteComment = (EditText) view.findViewById(R.id.editTextMyRouteComment);
+		buttonRouteAscendDay = (Button) view.findViewById(R.id.buttonRouteAscendDay);
 		// see
 		// http://stackoverflow.com/questions/9770252/scrolling-editbox-inside-scrollview
 		editTextMyRouteComment.setOnTouchListener(new View.OnTouchListener() {
@@ -118,7 +139,7 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 			}
 		});
 		// fill the Data in the Header
-		fillRouteDetails();
+		fillRouteDetails(view);
 		// set Date of Ascend in the linked button.
 		updateDateAscended();
 
@@ -179,13 +200,12 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 						// TODO Auto-generated method stub
 					}
 				});
-		tts = new TextToSpeech(this, this);
+		tts = new TextToSpeech(getActivity(), this);
 		meinListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Toast.makeText(
-						getApplicationContext(),
+				Toast.makeText(getActivity(),
 						lstTT_Comment_AND.get(position - 1)
 								.getStrEntryKommentar(), Toast.LENGTH_LONG)
 						.show();
@@ -208,7 +228,7 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 				if (aTT_Route_AND.getLong_DateAsscended() != 0)
 					calendar.setTimeInMillis(aTT_Route_AND.getLong_DateAsscended());
 			    dateFragment = new DatePickerFragment();
-			    dateFragment.show(getSupportFragmentManager(), "datePicker");
+			    dateFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 			   
 				// ********************************************************
 				Log.i(getClass().getSimpleName(),
@@ -225,43 +245,44 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 		}
 		Log.i(getClass().getSimpleName(),
 				"Neuer onCreate komplett abgearbeitet... ");
+		return view;
 	}
 
 	// ***************************
 	private void updateDateAscended() {
 		String strDatumBestiegenString = aTT_Route_AND.getDatumBestiegen();
 		if (strDatumBestiegenString.equals("")) {
-			strDatumBestiegenString = getApplicationContext().getResources()
+			strDatumBestiegenString = getActivity().getApplicationContext().getResources()
 					.getString(R.string.strChooseDate);
 		}
 		buttonRouteAscendDay.setText(strDatumBestiegenString);
 	}
 
 	// **************************
-	private void fillRouteDetails() {
+	private void fillRouteDetails(View v) {
 		Log.i(getClass().getSimpleName(), "aTT_Route_AND - fillRouteDetails: "
 				+ aTT_Route_AND.getStrWegName());
 		// Route Name
-		((TextView) findViewById(R.id.textView_tableCol_RouteName_inComment))
+		((TextView) v.findViewById(R.id.textView_tableCol_RouteName_inComment))
 				.setText(aTT_Route_AND.getStrWegName() + "  ("
 						+ aTT_Route_AND.getStrSchwierigkeitsGrad() + ")");
 		// Summit Name
-		((TextView) findViewById(R.id.textView_tableCol_SummitName_inComment))
+		((TextView) v.findViewById(R.id.textView_tableCol_SummitName_inComment))
 				.setText(strSummitName_inComment + ", " + strAreaName_inComment);
 		// style of Ascended?
 		// Creating adapter for spinner
 		ArrayAdapter<EnumBegehungsStil> dataAdapter = new ArrayAdapter<EnumBegehungsStil>(
-				this, android.R.layout.simple_spinner_item,
+				getActivity(), android.R.layout.simple_spinner_item,
 				EnumBegehungsStil.values());
 		dataAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_item); /* simple_spinner_dropdown_item */
 		// attaching data adapter to spinner
-		((Spinner) findViewById(R.id.spinnerRouteAsscended_inComment))
+		((Spinner) v.findViewById(R.id.spinnerRouteAsscended_inComment))
 				.setAdapter(dataAdapter);
-		((Spinner) findViewById(R.id.spinnerRouteAsscended_inComment))
+		((Spinner) v.findViewById(R.id.spinnerRouteAsscended_inComment))
 				.setSelection(aTT_Route_AND.getBegehungsStil());
 		// My Comment
-		((TextView) findViewById(R.id.editTextMyRouteComment))
+		((TextView) v.findViewById(R.id.editTextMyRouteComment))
 				.setText(aTT_Route_AND.getStrKommentar());
 
 	}
@@ -272,8 +293,7 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 				+ aTT_Route_AND.getStrWegName());
 
 		try {
-			DataBaseHelper dbHelper = new DataBaseHelper(
-					this.getApplicationContext());
+			DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
 			newDB = dbHelper.getWritableDatabase();
 			Cursor cursor = null;
 			String QueryString1;
@@ -387,7 +407,7 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 	}
 
 	@Override
-	protected void onStop() {
+	public void onStop() {
 		// Close the Text to Speech Library
 		if (tts != null) {
 			tts.stop();
@@ -411,8 +431,7 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 					+ sdf.format(aTT_Route_AND.getLong_DateAsscended())
 					+ "] ");
 		}
-		Toast.makeText(
-				getApplicationContext(),
+		Toast.makeText(getActivity(),
 				"Saved Comment for this Route...\n"
 						+ aTT_Route_AND.getStrKommentar()
 						+ "\nand Comment for it's Summit...\n"
@@ -421,13 +440,13 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 				.show();
 		try {
 			// RouteComment
-			new StoreMyRouteComment(getApplicationContext(),
+			new StoreMyRouteComment(getActivity(),
 					aTT_Route_AND.getIntWegNr(),
 					aTT_Route_AND.getBegehungsStil(),
 					aTT_Route_AND.getLong_DateAsscended(),
 					aTT_Route_AND.getStrKommentar());
 			// SummitComment
-			new StoreMySummitComment(getApplicationContext(),
+			new StoreMySummitComment(getActivity(),
 			// Integer intTTGipfelNr
 					aTT_Route_AND.getIntGipfelNr(),
 					// Boolean isAscendedSummit
@@ -445,7 +464,7 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 		}
 		TT_SummitFoundActivity.hasChangedData();
 		TT_SummitsFoundActivity.hasChangedData();
-		TT_RoutesFoundActivity.hasChangedData();
+		TT_RoutesFoundFragment.hasChangedData();
 	}
 	
 
@@ -463,6 +482,6 @@ public class TT_RouteFoundActivity extends FragmentActivity implements OnInitLis
 	}
 
 	public void setHasUnSavedData(boolean hasUnSavedData) {
-		TT_RouteFoundActivity.hasUnSavedData = hasUnSavedData;
+		TT_RouteFoundFragment.hasUnSavedData = hasUnSavedData;
 	}
 }

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:background="@color/Black"
-    android:gravity="left|right"
+    android:gravity="start|end"
     android:orientation="vertical"
     android:paddingBottom="5dp" >
 
@@ -20,7 +20,8 @@
         android:focusable="false"
         android:text="@string/tableCol_Comment"
         android:textColor="@color/White"
-        android:textSize="@dimen/lv_item" />
+        android:textSize="@dimen/lv_item"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/textView_tableCol_RouteName2Comment"
@@ -34,7 +35,9 @@
         android:focusable="false"
         android:text="@string/tableCol_RouteName"
         android:textColor="@color/White"
-        android:textSize="@dimen/lv_item" />
+        android:textSize="@dimen/lv_item"
+        android:layout_alignParentStart="true"
+        android:drawableEnd="@drawable/grey_arrow" />
 
     <TextView
         android:id="@+id/textView_tableCol_SummitName2Comment"
@@ -48,7 +51,9 @@
         android:focusable="false"
         android:text="@string/tableCol_SummitName"
         android:textColor="@color/White"
-        android:textSize="@dimen/lv_item" />
+        android:textSize="@dimen/lv_item"
+        android:layout_alignParentStart="true"
+        android:drawableEnd="@drawable/grey_arrow" />
 
     <TextView
         android:id="@+id/textView_Comment_UserGrading"
@@ -61,7 +66,8 @@
         android:focusable="false"
         android:text="@string/tableCol_UserGrade"
         android:textColor="@color/White"
-        android:textSize="@dimen/lv_item" />
+        android:textSize="@dimen/lv_item"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/textView_Comment_tableColStrUser"
@@ -74,7 +80,8 @@
         android:focusable="false"
         android:text="@string/tableColStrUser"
         android:textColor="@color/White"
-        android:textSize="@dimen/lv_item" />
+        android:textSize="@dimen/lv_item"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView_Comment_tableCol_DateOfComment"
@@ -87,6 +94,7 @@
         android:focusable="false"
         android:text="@string/tableCol_DateOfComment"
         android:textColor="@color/White"
-        android:textSize="@dimen/lv_item" />
+        android:textSize="@dimen/lv_item"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

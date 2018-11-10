@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -31,7 +35,7 @@ import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.TT_DB_Helper.DataBaseHelper;
 import com.teufelsturm.tt_downloaderand_kotlin.TT_DB_Helper.StoreMySummitComment;
 import com.teufelsturm.tt_downloaderand_kotlin.gpslocation.TT_SummitCoord_TabWidget;
-import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RouteFoundActivity;
+import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RouteFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_Route_ANDAdapter;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.TT_Route_AND;
@@ -44,7 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TT_SummitFoundActivity extends FragmentActivity{
+public class TT_SummitFoundActivity extends Fragment{
 
     private static String TAG = TT_SummitFoundActivity.class.getSimpleName();
 
@@ -52,8 +56,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 	private SQLiteDatabase newDB;
 	private TT_Summit_AND aTT_Summit_AND;
 	private TT_Route_ANDAdapter listenAdapter;
-	@SuppressLint("UseSparseArrays")
-	private Map<Integer, String> hashmapNeighbourSummit = new HashMap<Integer, String>();
+	private Map<Integer, String> hashmapNeighbourSummit = new HashMap<>();
 	private static Boolean dataHasChanged = Boolean.FALSE;
 	private static TT_SummitFoundActivity thisTT_SummitFoundActivity;
 	private DialogFragment dateFragment; 
@@ -64,8 +67,18 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 	private static CheckBox checkBoxSummitAsscended;
 	public static final String SAVED_TEXT_KEY = "SavedText";
 
+	public static Fragment newInstanec(TT_Summit_AND tt_summit_and) {
+		TT_SummitFoundActivity tt_summitFoundActivity = new TT_SummitFoundActivity();
+
+		Bundle args = new Bundle();
+		args.putParcelable("TT_Gipfel_AND", tt_summit_and);
+		tt_summitFoundActivity.setArguments(args);
+
+		return tt_summitFoundActivity;
+	}
+
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		thisTT_SummitFoundActivity  = this;
 		Log.i(getClass().getSimpleName(), "onResume ");
@@ -74,22 +87,24 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 					+ dataHasChanged);
 			this.openAndQueryDatabase(this.aTT_Summit_AND);
 			listenAdapter.notifyDataSetChanged();
-			fillSummitDetails();
 			dataHasChanged = Boolean.FALSE;
 		}
 	}
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		thisTT_SummitFoundActivity  = null;
 		super.onPause();
 	}
 
-	public static void hasChangedData() {
+	public void hasChangedData() {
 		Log.i(TAG,"thisTT_SummitFoundActivity != null " + (thisTT_SummitFoundActivity != null));
 		if (thisTT_SummitFoundActivity != null){
 			thisTT_SummitFoundActivity.openAndQueryDatabase(thisTT_SummitFoundActivity.aTT_Summit_AND);
 			thisTT_SummitFoundActivity.listenAdapter.notifyDataSetChanged();
-			thisTT_SummitFoundActivity.fillSummitDetails();
+			thisTT_SummitFoundActivity.fillSummitDetails(
+                    getActivity().findViewById(R.id.foo);
+
+            );
 			dataHasChanged = Boolean.FALSE;
 		}
 		else{
@@ -105,26 +120,36 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(getClass().getSimpleName(), "Neuer onCreate... ");
-		setContentView(R.layout.summit_found_lv_w_header);
+	}
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.summit_found_lv_w_header,
+                container, false);
+//		setContentView(R.layout.summit_found_lv_w_header);
 		// has to be of type "layout"
 		// Find the packet with the 'parent' object
-		Intent intent = getIntent();
+//		Intent intent = getIntent();
 		Log.i(getClass().getSimpleName(), "Neuer intent...");
-		aTT_Summit_AND = intent.getParcelableExtra("TT_Gipfel_AND");
+		aTT_Summit_AND =   getArguments().getParcelable("TT_Gipfel_AND");
+        getArguments().getInt("someInt", 0);
 		Log.i(getClass().getSimpleName(), "aTT_Gipfel_AND == null...? "
 				+ (aTT_Summit_AND == null));
 		lstTT_Route_AND = new ArrayList<TT_Route_AND>();
 		// query all routes to this summit
 		this.openAndQueryDatabase(aTT_Summit_AND);
-		listenAdapter = new TT_Route_ANDAdapter(this, lstTT_Route_AND, false);
+		listenAdapter = new TT_Route_ANDAdapter(getActivity(), lstTT_Route_AND, false);
 		Log.i(getClass().getSimpleName(),
 				"(ListView) findViewById(R.id.list_routes);");
-		meinListView = (ListView) findViewById(R.id.list_routes);
+		meinListView = (ListView) view.findViewById(R.id.list_routes);
 		// working Code for the Header Creation:
-		LayoutInflater layoutInflater = (LayoutInflater) this
+		LayoutInflater layoutInflater = (LayoutInflater) getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		Log.i(getClass().getSimpleName(), "RelativeLayout myHeaderView  ... ");
 		RelativeLayout myHeaderView = (RelativeLayout) layoutInflater.inflate(
@@ -136,7 +161,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 		meinListView.addHeaderView(myHeaderView, null, false);
 		// the editTextMySummitComment is part of the header - can not be found
 		// before...
-		editTextMySummitComment = (EditText) findViewById(R.id.editTextMySummitComment);
+		editTextMySummitComment = (EditText) view.findViewById(R.id.editTextMySummitComment);
 		editTextMySummitComment.setText(aTT_Summit_AND.getStr_MyComment());
 		// http://stackoverflow.com/questions/9770252/scrolling-editbox-inside-scrollview
 		editTextMySummitComment.setOnTouchListener(new View.OnTouchListener() {
@@ -179,10 +204,10 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 
 			}
 		});
-		checkBoxSummitAsscended = (CheckBox) findViewById(R.id.CheckBoxSummitAsscended);
+		checkBoxSummitAsscended = (CheckBox) view.findViewById(R.id.CheckBoxSummitAsscended);
 		
 		// fill the Data in the Header
-		fillSummitDetails();
+		fillSummitDetails(view);
 		meinListView.setAdapter(listenAdapter);
 		// recreate content in editTextMySummitComment (if saved)
 		// ok we back, load the saved text
@@ -202,7 +227,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 		});
 			
 		
-		buttonSummitAscendDay_inComment = (Button)findViewById(R.id.buttonSummitAscendDay_inComment);
+		buttonSummitAscendDay_inComment = (Button)view.findViewById(R.id.buttonSummitAscendDay_inComment);
 		Log.v(getClass().getSimpleName(), "buttonSummitAscendDay_inComment: " + buttonSummitAscendDay_inComment);
 		updateDateAscended();
 		// Define Action Listener
@@ -210,7 +235,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 			public void onClick(View v) {
 				// ********************************************************
 				dateFragment = new DatePickerFragment();
-			    dateFragment.show(getSupportFragmentManager(), "datePicker");
+			    dateFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
 			   
 				// ********************************************************
 				Log.i(getClass().getSimpleName(),
@@ -234,7 +259,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 						"Neuer addonPageSummitsFoundActivity... ");
 				Intent addonPageCommentsFoundActivity = new Intent(
 						TT_SummitFoundActivity.this,
-						TT_RouteFoundActivity.class);
+						TT_RouteFoundFragment.class);
 
 				Log.i(this.getClass().getSimpleName(),
 						"addonPageCommentsFoundActivity... ");
@@ -259,7 +284,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 	}
 	
 	public void saveMySummitComment() {
-		Toast.makeText(getApplicationContext(),
+		Toast.makeText(getActivity().getApplicationContext(),
 				"Saved Comment for this Summit...\n"
 						+ aTT_Summit_AND.getStr_DateAsscended() + ":\n"
 						+ aTT_Summit_AND.getStr_SummitName(), Toast.LENGTH_SHORT)
@@ -269,7 +294,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 					.setBln_Asscended(checkBoxSummitAsscended.isChecked());
 			aTT_Summit_AND.setStr_MyComment(editTextMySummitComment
 					.getText().toString());
-			new StoreMySummitComment(getApplicationContext(),
+			new StoreMySummitComment(getActivity().getApplicationContext(),
 					aTT_Summit_AND.getInt_TTGipfelNr(), aTT_Summit_AND
 							.getBln_Asscended(), aTT_Summit_AND
 							.getLong_DateAsscended(), aTT_Summit_AND
@@ -280,10 +305,9 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 		}
 	}
 
-	private void actionListenerButton_NeighbourSummit(
+	private void actionListenerButton_NeighbourSummit(Button button_NeighbourSummit,
 			int button_NeighbourSummitId) {
 		// Define Action Listener
-		Button button_NeighbourSummit = (Button) findViewById(button_NeighbourSummitId);
 		Log.i(getClass().getSimpleName(), "buttonSearchSummit ...: "
 				+ button_NeighbourSummit.getText());
 		button_NeighbourSummit.setOnClickListener(new Button.OnClickListener() {
@@ -332,18 +356,18 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 		});
 	}
 
-	private void fillSummitDetails() {
+	private void fillSummitDetails(View view) {
 		Log.i(getClass().getSimpleName(),
 				"aTT_Gipfel_AND - fillSummitDetails: 1"
 						+ aTT_Summit_AND.getInt_TTGipfelNr().toString()
 						+ " --> " + aTT_Summit_AND.getStr_SummitName());
 		// Summit Name
-		((TextView) findViewById(R.id.textView_SummitName))
+		((TextView) view.findViewById(R.id.textView_SummitName))
 				.setText(aTT_Summit_AND.getStr_SummitName() + "   (KleFü #"
 						+ aTT_Summit_AND.getInt_SummitNumberOfficial() + ")");
 
 		// Area Name
-		((TextView) findViewById(R.id.textView_Area)).setText(getResources()
+		((TextView) view.findViewById(R.id.textView_Area)).setText(getResources()
 				.getString(R.string.lblGebiet) + aTT_Summit_AND.getStr_Area());
 		Log.i(getClass().getSimpleName(),
 				"aTT_Gipfel_AND - fillSummitDetails: 2");
@@ -358,14 +382,17 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 		int iCount = 0;
 		for (Map.Entry<Integer, String> strH : hashmapNeighbourSummit
 				.entrySet()) {
-			((Button) findViewById(arrNeighbourSummits[iCount])).setTag(strH
+			((Button) view.findViewById(arrNeighbourSummits[iCount])).setTag(strH
 					.getKey());
-			((Button) findViewById(arrNeighbourSummits[iCount])).setText((strH
+			((Button) view.findViewById(arrNeighbourSummits[iCount])).setText((strH
 					.getValue()).toString());
 			Log.i(getClass().getSimpleName(),
 					"aTT_Gipfel_AND - fillSummitDetails: Neighbor Summit #0"
 							+ (iCount + 1));
-			actionListenerButton_NeighbourSummit(arrNeighbourSummits[iCount]);
+			actionListenerButton_NeighbourSummit(
+
+                    view.findViewById(button_NeighbourSummitId);
+			        arrNeighbourSummits[iCount]);
 			iCount++;
 		}
 		// is Ascended?
@@ -389,7 +416,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 		lstTT_Route_AND.clear();
 		try {
 			DataBaseHelper dbHelper = new DataBaseHelper(
-					this.getApplicationContext());
+					getActivity().getApplicationContext());
 			newDB = dbHelper.getWritableDatabase();
 
 			String QueryString1;
@@ -601,7 +628,7 @@ public class TT_SummitFoundActivity extends FragmentActivity{
 	private void updateDateAscended() {
 		String strDatumBestiegenString = aTT_Summit_AND.getStr_DateAsscended();
 		if (strDatumBestiegenString.equals("")) {
-			strDatumBestiegenString = getApplicationContext().getResources()
+			strDatumBestiegenString = getActivity().getApplicationContext().getResources()
 					.getString(R.string.strChooseDate);
 		}
 		buttonSummitAscendDay_inComment.setText(strDatumBestiegenString);

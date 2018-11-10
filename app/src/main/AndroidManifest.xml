@@ -10,8 +10,8 @@
     <uses-feature android:name="android.hardware.location.network" />
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature android:name="android.hardware.wifi" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -32,19 +32,12 @@
         </activity>
         <activity android:name=".gpslocation.ActivityGPSCompass" >
         </activity>
-        <!--<activity android:name=".gpslocation.SimplestMapViewer" >-->
-        <!--</activity>-->
-        <activity android:name=".comments.TT_CommentsFoundActivity" >
-        </activity>
-        <activity android:name=".routes.TT_RouteFoundActivity" >
-        </activity>
-        <activity android:name=".routes.TT_RoutesFoundActivity" >
+        <activity android:name=".gpslocation.SimplestMapViewer" >
         </activity>
         <activity android:name=".gpslocation.TT_SummitCoord_TabWidget" >
         </activity>
         <activity android:name=".summit.TT_SummitFoundActivity" >
         </activity>
-        <activity android:name=".summit.TT_SummitsFoundActivity" >
-        </activity>
-        </application>
+        <activity android:name=".MainActivity" />
+    </application>
 </manifest>

@@ -1,14 +1,21 @@
 package com.teufelsturm.tt_downloaderand_kotlin.summit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -22,7 +29,7 @@ import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.TT_Summit_AND;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TT_SummitsFoundActivity extends Activity {
+public class TT_SummitsFoundActivity extends Fragment {
 
     private final static String TAG = TT_SummitsFoundActivity.class.getSimpleName();
 
@@ -34,7 +41,7 @@ public class TT_SummitsFoundActivity extends Activity {
 	private static Boolean dataHasChanged = Boolean.FALSE;
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		thisTT_SummitsFoundActivity = this;
 		if (dataHasChanged) {
@@ -45,7 +52,7 @@ public class TT_SummitsFoundActivity extends Activity {
 	}
 
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		thisTT_SummitsFoundActivity = null;
 		super.onPause();
 	}
@@ -62,18 +69,27 @@ public class TT_SummitsFoundActivity extends Activity {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.i(TAG, "Neuer onCreate... ");
-		setContentView(R.layout.summits_activity_found_lv_list);
+	public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG, "Neuer onCreate... ");
+    }
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.summits_activity_found_lv_list,
+                container, false);
 		lstTT_Gipfel_AND = new ArrayList<TT_Summit_AND>();
 		openAndQueryDatabase();
 		Log.i(TAG,
 				"Neuer openAndQueryDatabase... BEENDET!");
 
-		listenAdapter = new TT_Summit_ANDAdapter(this, lstTT_Gipfel_AND);
+		listenAdapter = new TT_Summit_ANDAdapter(getActivity(), lstTT_Gipfel_AND);
 		Log.i(TAG, "Suche meinListView... ");
-		meinListView = (ListView) findViewById(R.id.list_summits);
+		meinListView = (ListView) view.findViewById(R.id.list_summits);
 		Log.i(TAG, "meinListView.setAdapter...");
 		// // working Code for the Header Creation:
 		// LayoutInflater layoutInflater = (LayoutInflater) this
@@ -106,7 +122,7 @@ public class TT_SummitsFoundActivity extends Activity {
 				Intent addonPageSummitsFoundActivity = new Intent(
 						TT_SummitsFoundActivity.this,
 						TT_SummitFoundActivity.class);
-
+				
 				Log.i(TAG,
 						"Click ListItem Number "
 								+ position
@@ -117,6 +133,14 @@ public class TT_SummitsFoundActivity extends Activity {
 						lstTT_Gipfel_AND.get(position));
 				Log.i(TAG, "startActivity... ");
 				startActivity(addonPageSummitsFoundActivity);
+
+
+				Fragment fragment = TT_SummitFoundActivity.newInstanec(lstTT_Gipfel_AND.get(position));
+				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+				fragmentTransaction.replace(R.id.fragment_container, fragment);
+				fragmentTransaction.addToBackStack(null);
+				fragmentTransaction.commit();
 			}
 		});
 		// http://android-er.blogspot.de/2011/11/detect-swipe-using-simpleongestureliste.html
@@ -124,22 +148,21 @@ public class TT_SummitsFoundActivity extends Activity {
 		// http://android-er.blogspot.de/2012/05/simple-example-use-osmdroid-and-slf4j.html
 
 		Log.i(TAG, "Neuer onCreate... BEENDET");
-
+        return view;
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.summits_found, menu);
-		return true;
-	}
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.summits_found, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
-	private void openAndQueryDatabase() {
+
+    private void openAndQueryDatabase() {
 		Log.i(TAG, "Neuer openAndQueryDatabase... ");
 		lstTT_Gipfel_AND.clear();
 		try {
-			DataBaseHelper dbHelper = new DataBaseHelper(
-					this.getApplicationContext());
+			DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
 			newDB = dbHelper.getWritableDatabase();
 			String QueryString1;
 			Log.i(TAG, "QueryString1 erzeugen... ");
@@ -230,7 +253,7 @@ public class TT_SummitsFoundActivity extends Activity {
 					"Could not create or Open the database");
 		} finally {
 			newDB.close();
-			Toast.makeText(this, lstTT_Gipfel_AND.size() + " Gipfel gefunden",
+			Toast.makeText(getActivity(), lstTT_Gipfel_AND.size() + " Gipfel gefunden",
 					Toast.LENGTH_LONG).show();
 		}
 	}

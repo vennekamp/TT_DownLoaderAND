@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 
 import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RouteFoundActivity;
+import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RouteFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.summit.TT_SummitFoundActivity;
 
 import java.text.SimpleDateFormat;
@@ -56,9 +56,9 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
     	calendar = Calendar.getInstance();
-		if (getActivity() instanceof TT_RouteFoundActivity
-				&& ((TT_RouteFoundActivity)getActivity()).getTT_Route_AND().getLong_DateAsscended() != 0) {
-			calendar.setTimeInMillis(((TT_RouteFoundActivity)getActivity()).getTT_Route_AND().getLong_DateAsscended());
+		if (getActivity() instanceof TT_RouteFoundFragment
+				&& ((TT_RouteFoundFragment)getActivity()).getTT_Route_AND().getLong_DateAsscended() != 0) {
+			calendar.setTimeInMillis(((TT_RouteFoundFragment)getActivity()).getTT_Route_AND().getLong_DateAsscended());
 		}
 		else if ( getActivity() instanceof TT_SummitFoundActivity
 				&& ((TT_SummitFoundActivity)getActivity()).getTT_Summit_AND().getLong_DateAsscended() != 0 ){
@@ -91,7 +91,7 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
 	public void onClick(DialogInterface dialog, int which) {
 		// TODO Auto-generated method stub
 		Log.v("DatePickerFragment", "onClick im DatePickerFragment");
-		if (getActivity() instanceof TT_RouteFoundActivity) {
+		if (getActivity() instanceof TT_RouteFoundFragment) {
 			onClick4TT_Route(which);
 		}
 		else if ( getActivity() instanceof TT_SummitFoundActivity){
@@ -100,14 +100,14 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
 		}
 	
 	private void onClick4TT_Route(int which) {
-		TT_Route_AND aTT_Route_AND = ((TT_RouteFoundActivity)getActivity()).getTT_Route_AND();
+		TT_Route_AND aTT_Route_AND = ((TT_RouteFoundFragment)getActivity()).getTT_Route_AND();
 		aTT_Route_AND.setDatumBestiegen(calendar.getTimeInMillis());
-		Button buttonAscendedDay = ((TT_RouteFoundActivity)getActivity()).getButtonMyAscendDate();
+		Button buttonAscendedDay = ((TT_RouteFoundFragment)getActivity()).getButtonMyAscendDate();
 		// When the DatePicker is closed the parent view is re-created,
 		// thus the background data also needs to be changed instead of
 		// the text...
 		if (onClick4TT_XYZ(which, aTT_Route_AND.getLong_DateAsscended(), buttonAscendedDay) ) {
-			((TT_RouteFoundActivity)getActivity()).setHasUnSavedData(true);
+			((TT_RouteFoundFragment)getActivity()).setHasUnSavedData(true);
 			aTT_Route_AND.setDatumBestiegen(calendar.getTimeInMillis());
 		}
 	}

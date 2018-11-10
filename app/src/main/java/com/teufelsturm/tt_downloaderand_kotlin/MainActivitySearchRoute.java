@@ -1,8 +1,10 @@
 package com.teufelsturm.tt_downloaderand_kotlin;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RoutesFoundActivity;
+import com.teufelsturm.tt_downloaderand_kotlin.routes.TT_RoutesFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
@@ -176,7 +178,14 @@ public class MainActivitySearchRoute extends MainActivitySearchAbstract
 		myEditTextSuchtextID = R.id.editTextSuchtextWege;
 		myAutoCompleteTextViewText = ((AutoCompleteTextView) view
 				.findViewById(myEditTextSuchtextID)).getText().toString();
-		startActivity(new Intent(getActivity(), TT_RoutesFoundActivity.class));
+//		startActivity(new Intent(getActivity(), _TT_RoutesFoundActivity.class));
+
+        Fragment fragment = new TT_RoutesFoundFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 	}
 
 	// ***************************************************************************************
