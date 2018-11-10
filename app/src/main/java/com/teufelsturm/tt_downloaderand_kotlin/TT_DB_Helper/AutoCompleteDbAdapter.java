@@ -60,7 +60,7 @@ public class AutoCompleteDbAdapter {
 		int intMaxAnzahlSternchenWege = MainActivitySearchSummit
 				.getIntMaxAnzahlDerSternchenWege();
 		String queryString = "SELECT a.[_id], a.[strName] FROM [TT_Summit_AND] a"
-				+ (strGebiet.equals(mActivity.getString(R.string.strAll)) ? "       WHERE a.[strGebiet] != \"\" "
+				+ (mActivity.getString(R.string.strAll).equals(strGebiet) ? "       WHERE a.[strGebiet] != \"\" "
 						: "       WHERE a.[strGebiet] = '" + strGebiet + "'")
 				+ "\r\n		AND a.[intAnzahlWege] >= "
 				+ intMinAnzahlWege
