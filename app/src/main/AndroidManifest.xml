@@ -18,26 +18,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:installLocation="preferExternal"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".MainPagerWidget"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".gpslocation.ActivityGPSCompass" >
-        </activity>
-        <activity android:name=".gpslocation.SimplestMapViewer" >
-        </activity>
-        <activity android:name=".gpslocation.TT_SummitCoord_TabWidget" >
-        </activity>
-        <activity android:name=".summit.TT_SummitFoundActivity" >
-        </activity>
-        <activity android:name=".MainActivity" />
     </application>
 </manifest>

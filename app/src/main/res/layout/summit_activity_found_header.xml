@@ -11,67 +11,52 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:scrollbars="none" >
+    android:scrollbars="none">
 
     <TextView
         android:id="@+id/textView_SummitName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:text="@string/tableCol_SummitName"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/Black"
-        android:textSize="@dimen/lv_header" />
+        android:textSize="@dimen/lv_header"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView_Area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_SummitName"
         android:text="@string/tableCol_Area"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/Black"
-        android:textSize="@dimen/header_small" />
-
-
-    <Button
-        android:id="@+id/textView_GpsCoords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_Area"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/strGpcCoords"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/Black"
         android:textSize="@dimen/header_small"
-        android:visibility="gone" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView_NeighbourSummit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_GpsCoords"
         android:text="@string/strNeighbourSummit"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/Black"
-        android:textSize="@dimen/header_small" />
+        android:textSize="@dimen/header_small"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:id="@+id/NeighbourSummitsKnobs01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_NeighbourSummit"
         android:orientation="horizontal"
-        android:padding="@dimen/NoGap" >
+        android:padding="@dimen/NoGap"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/button_NeighbourSummit01"
@@ -105,10 +90,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/NeighbourSummitsKnobs01"
         android:orientation="horizontal"
-        android:padding="@dimen/NoGap" >
+        android:padding="@dimen/NoGap"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/button_NeighbourSummit03"
@@ -154,7 +139,7 @@
             android:text="@string/tableCol_RouteIsAscended"
             android:textColor="@color/Black"
             android:textSize="@dimen/header_small" />
-        
+
         <Button
             android:id="@+id/buttonSummitAscendDay_inComment"
             android:layout_width="0dip"
@@ -172,7 +157,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="4"
-            android:hint="@string/tableCol_Comment"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearlayout_CheckBoxSummitAsscended_SummitAscendDay_inComment"
@@ -181,7 +165,19 @@
             android:scrollbars="vertical"
             android:configChanges="orientation|keyboardHidden"
             android:selectAllOnFocus="false"
-            android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"  />
+            android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine" />
 
+        <Button
+            android:id="@+id/textView_GpsCoords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_Area"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:text="@string/strGpcCoords"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small"
+            android:focusable="true" />
 
 </RelativeLayout>

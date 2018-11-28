@@ -17,13 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
-    <ListView
-        android:id="@+id/list_summits"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_summits_activity_found_lv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/Black"
         tools:listitem="@layout/summit_lv_item_found" >
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

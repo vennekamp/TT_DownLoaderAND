@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/routes_lv_item_found"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -9,7 +10,7 @@
     android:weightSum="1.0" >
 
     <RelativeLayout
-        android:id="@+id/routes_lv_item_found"
+        android:id="@+id/routes_lv_item_found_rl"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight=".97"
@@ -84,7 +85,7 @@
             android:layout_alignParentStart="true">
 
             <TextView
-                android:id="@+id/CheckBoxRouteAsscended_in_lv"
+                android:id="@+id/textViewStyleAsscended"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
