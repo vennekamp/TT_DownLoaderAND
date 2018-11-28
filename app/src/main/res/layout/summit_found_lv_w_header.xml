@@ -3,28 +3,189 @@
     android:id="@+id/summit_found_lv_w_header"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:clipToPadding="true"
     android:background="@color/Blue"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:clipToPadding="true"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:scrollbars="none" >
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
-    <View
-        android:id="@+id/space1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
-
-    <ListView
-        android:id="@+id/list_routes"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/Black"
-        tools:listheader="@layout/summit_activity_found_header"
-        tools:listitem="@layout/routes_lv_item_found" >
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" >
 
-    </ListView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/Yellow"
+            android:clipToPadding="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin" >
 
+        <TextView
+            android:id="@+id/textView_SummitName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tableCol_SummitName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/lv_header" />
+
+        <TextView
+            android:id="@+id/textView_Area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tableCol_Area"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small" />
+
+        <Button
+            android:id="@+id/textView_GpsCoords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/strGpcCoords"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small" />
+
+        <TextView
+            android:id="@+id/textView_NeighbourSummit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/strNeighbourSummit"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/header_small" />
+
+        <LinearLayout
+            android:id="@+id/NeighbourSummitsKnobs01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/NoGap">
+
+            <Button
+                android:id="@+id/button_NeighbourSummit01"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_margin="@dimen/NoGap"
+                android:layout_weight="1"
+                android:lines="@integer/Two"
+                android:padding="@dimen/NoGap"
+                android:text="@string/strNeighbourSummit"
+                android:textSize="@dimen/lv_item" />
+
+            <Button
+                android:id="@+id/button_NeighbourSummit02"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/NoGap"
+                android:layout_weight="1"
+                android:lines="@integer/Two"
+                android:padding="@dimen/NoGap"
+                android:text="@string/strNeighbourSummit"
+                android:textSize="@dimen/lv_item" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/NeighbourSummitsKnobs02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/NoGap">
+
+            <Button
+                android:id="@+id/button_NeighbourSummit03"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/NoGap"
+                android:layout_weight="1"
+                android:lines="@integer/Two"
+                android:padding="@dimen/NoGap"
+                android:text="@string/strNeighbourSummit"
+                android:textSize="@dimen/lv_item" />
+
+            <Button
+                android:id="@+id/button_NeighbourSummit04"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/NoGap"
+                android:layout_weight="1"
+                android:lines="@integer/Two"
+                android:padding="@dimen/NoGap"
+                android:text="@string/strNeighbourSummit"
+                android:textSize="@dimen/lv_item" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_CheckBoxSummitAsscended_SummitAscendDay_inComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:weightSum="1.0">
+
+            <CheckBox
+                android:id="@+id/CheckBoxSummitAsscended"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight=".5"
+                android:focusable="false"
+                android:text="@string/tableCol_RouteIsAscended"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/header_small" />
+
+            <Button
+                android:id="@+id/buttonSummitAscendDay_inComment"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight=".5"
+                android:text="@string/strNoDay"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/header_small" />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/editTextMySummitComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:configChanges="orientation|keyboardHidden"
+            android:gravity="top|start"
+            android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"
+            android:lines="4"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="vertical"
+            android:selectAllOnFocus="false"/>
+
+
+        <View
+            android:id="@+id/space1"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_summit_found_lv_w_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/Black"
+            tools:nestedScrollingEnabled="false"
+            tools:listitem="@layout/routes_lv_item_found" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

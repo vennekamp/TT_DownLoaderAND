@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/route_activity_found_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,83 +8,99 @@
     android:clipToPadding="true"
     android:gravity="fill"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:scrollbars="none" >
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/textView_tableCol_RouteName_inComment"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text="@string/tableCol_RouteName"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/Black"
-        android:textSize="@dimen/lv_header"
-        android:layout_alignParentStart="true" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView_tableCol_SummitName_inComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView_tableCol_RouteName_inComment"
-        android:layout_margin="1dp"
-        android:focusable="false"
-        android:text="@string/tableCol_SummitName"
-        android:textColor="@color/Black"
-        android:textSize="@dimen/header_small"
-        android:layout_alignParentStart="true" />
-
-    <LinearLayout
-        android:id="@+id/linearlayout_SpinnerRouteAsscended_RouteAscendDay_inComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView_tableCol_SummitName_inComment"
-        android:gravity="center_horizontal"
-        android:weightSum="1.0"
-        android:layout_alignParentStart="true">
-
-        <Spinner
-            android:id="@+id/spinnerRouteAsscended_inComment"
-            android:layout_width="0dip"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:layout_weight=".5"
-            android:focusable="false"
-            android:text="@string/tableCol_RouteIsAscended"
-            android:textColor="@color/Black"
-            android:textSize="@dimen/header_small" />
+            android:orientation="vertical">
 
-		<Button
-            android:id="@+id/buttonRouteAscendDay"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:layout_weight=".5"
-            android:text="@string/strNoDay"
-            android:textColor="@color/Black"
-            android:textSize="@dimen/header_small" /> 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView_tableCol_RouteName_inComment_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tableCol_RouteName"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/lv_header" />
 
-    <EditText
-        android:id="@+id/editTextMyRouteComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearlayout_SpinnerRouteAsscended_RouteAscendDay_inComment"
-        android:configChanges="orientation|keyboardHidden"
-        android:gravity="start|end"
-        android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"
-        android:lines="4"
-        android:text="@string/tableCol_MyComment"
-        android:hint="@string/tableCol_MyComment"
-        android:scrollbarStyle="outsideInset"
-        android:scrollbars="vertical"
-        android:selectAllOnFocus="false"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/textView_tableCol_SummitName_inComment_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:focusable="false"
+                android:text="@string/tableCol_SummitName"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/header_small" />
+
+            <LinearLayout
+                android:id="@+id/linearlayout_SpinnerRouteAsscended_RouteAscendDay_inComment_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:weightSum="1.0">
+
+                <Spinner
+                    android:id="@+id/spinnerRouteAsscended_inComment_route"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight=".5"
+                    android:focusable="false"
+                    android:text="@string/tableCol_RouteIsAscended"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/header_small" />
+
+                <Button
+                    android:id="@+id/buttonRouteAscendDay_route"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight=".5"
+                    android:text="@string/strNoDay"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/header_small" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editTextMyRouteComment_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:configChanges="orientation|keyboardHidden"
+                android:gravity="start|end"
+                android:hint="@string/tableCol_MyComment"
+                android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"
+                android:lines="4"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="vertical"
+                android:selectAllOnFocus="false"
+                android:text="@string/tableCol_MyComment" />
+
+
+            <View
+                android:id="@+id/space1_route"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_routes_in_routes_found_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/Black"
+                tools:nestedScrollingEnabled="false"
+                tools:listitem="@layout/routes_lv_item_found" />
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

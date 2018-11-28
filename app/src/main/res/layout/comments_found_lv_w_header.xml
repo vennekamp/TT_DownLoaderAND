@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +25,6 @@
         tools:listheader="@layout/route_activity_found_header"
         tools:listitem="@layout/comment_lv_item_found" >
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

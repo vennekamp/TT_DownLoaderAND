@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/summits_activity_found_lv_list"
+    android:id="@+id/comments_activity_found_lv_list"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/Blue"
@@ -12,19 +12,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:scrollbars="none">
 
+
     <View
         android:id="@+id/space1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
-    <ListView
-        android:id="@+id/list_comments"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/Black"
-        tools:listitem="@layout/comment_lv_item_found" >
-
-    </ListView>
+        tools:listheader="@layout/route_activity_found_header"
+        tools:listitem="@layout/comment_lv_item_found" />
 
 </RelativeLayout>
