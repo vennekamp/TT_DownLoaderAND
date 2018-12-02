@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.SQLException;
 
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +26,13 @@ public class SearchManager
     private int intMinAnzahlDerSternchenWege;
     private int intMaxAnzahlDerSternchenWege;
 
+
+
+    private int intMinLimitsForScale;
+    private int intMaxLimitsForScale;
+    private int intMinNumberOfComments = 0;
+    private int intMinOfMeanRating = EnumTT_WegBewertung.getMinInteger();
+
     public static SearchManager getInstance() {
         if (thisInstance == null ) {
             thisInstance = new SearchManager();
@@ -33,6 +42,8 @@ public class SearchManager
             thisInstance.intMinAnzahlDerSternchenWege = 0;
             thisInstance.intMaxAnzahlDerSternchenWege = 50;
 
+            thisInstance.intMinLimitsForScale = EnumSachsenSchwierigkeitsGrad.getMinInteger();
+            thisInstance.intMaxLimitsForScale = EnumSachsenSchwierigkeitsGrad.getMaxInteger();
         }
         return thisInstance;
     }
@@ -58,13 +69,30 @@ public class SearchManager
     public int getIntMaxAnzahlDerSternchenWege() {
         return intMaxAnzahlDerSternchenWege;
     }
-
+    public int getEnumMinLimitsForScale() {
+        return EnumSachsenSchwierigkeitsGrad.values()[intMinLimitsForScale].getValue();
+    }
+    public int getEnumMaxLimitsForScale() {
+        return EnumSachsenSchwierigkeitsGrad.values()[intMaxLimitsForScale].getValue();
+    }
     public void setIntMinAnzahlDerSternchenWege(Integer minValue) {
         intMinAnzahlDerSternchenWege = minValue;
     }
 
     public void setIntMaxAnzahlDerSternchenWege(Integer maxValue) {
         intMaxAnzahlDerSternchenWege = maxValue;
+    }
+    public int getIntMinNumberOfComments() {
+        return intMinNumberOfComments;
+    }
+    public int getIntMinOfMeanRating() {
+        return intMinOfMeanRating;
+    }
+    public void setIntMinNumberOfComments(int minNumberOfComments ) {
+        intMinNumberOfComments = minNumberOfComments;
+    }
+    public void setIntMinOfMeanRating(int minOfMeanRating) {
+        intMinOfMeanRating = minOfMeanRating;
     }
 
     public ArrayList<String> getAllAreaLabels(Context context) {
