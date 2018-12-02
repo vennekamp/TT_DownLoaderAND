@@ -22,7 +22,7 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
-	private static List<String> labels;
+	private static ArrayList<String> labels;
 	// The Android's default system path of your application database.
 	private static String DB_PATH;
 
@@ -201,14 +201,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	/**
 	 * Getting all Areas returns list of Climbing Areas
 	 * */
-	public List<String> getAllAreas() {
+	public ArrayList<String> getAllAreas() {
 		if (labels == null) {
-			labels = new ArrayList<String>();
+			labels = new ArrayList<>();
 			// Select All Query
 			String queryString;
-			queryString = "SELECT DISTINCT a.[strGebiet] from [TT_Summit_AND] a "
-					+ " where a.[strGebiet] != \"\" "
-					+ " ORDER BY a.[strGebiet]";
+			queryString = new StringBuilder()
+					.append("SELECT DISTINCT a.[strGebiet] from [TT_Summit_AND] a ")
+					.append(" where a.[strGebiet] != \"\" ")
+					.append(" ORDER BY a.[strGebiet]").toString();
 
 			SQLiteDatabase myDb = this.getReadableDatabase();
 			Cursor cursor = myDb.rawQuery(queryString, null);
@@ -223,7 +224,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 			// closing connection
 			cursor.close();
-			cursor = null;
 			myDb.close();
 		}
 		// Spinner Drop down elements: labels

@@ -13,10 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TextView;
 
+import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ public class MyPagerFragment extends Fragment
                 container, false);
         mViewPager = view.findViewById(R.id.viewpager);
         // Tab Initialization
-        initialiseTabHost(view);
+        initialiseTabHost(inflater, view);
 
         pageAdapter = new MyPageAdapter( getChildFragmentManager() );
         mViewPager.setAdapter(pageAdapter);
@@ -52,21 +57,30 @@ public class MyPagerFragment extends Fragment
         return view;
 	}
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        if (getView() != null) {
-//            ViewGroup parent = (ViewGroup) getView().getParent();
-//            if (parent != null) {
-//                parent.removeAllViews();
-//            }
-//        }
-//    }
+    @Override
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        ((MainActivity)getActivity()).showFAB(ID);
+    }
+
+	@Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    public View createTabIndicator(LayoutInflater inflater,
+                                   TabHost tabHost, String text, int iconResource) {
+        View tabIndicator = inflater.inflate(R.layout._main_tab_indicator,
+                tabHost.getTabWidget(),false);
+        ((TextView) tabIndicator.findViewById(android.R.id.title)).setText(text);
+        ((ImageView) tabIndicator.findViewById(android.R.id.icon)).setImageResource(iconResource);
+        return tabIndicator;
+    }
 
     // Method to add a TabHost
     private void addTab(Context context,
-                        TabHost tabHost,
-                        TabHost.TabSpec tabSpec) {
+                        @NotNull TabHost tabHost,
+                        @NotNull TabHost.TabSpec tabSpec) {
         tabSpec.setContent(new MyTabFactory(context));
         tabHost.addTab(tabSpec);
     }
@@ -97,17 +111,19 @@ public class MyPagerFragment extends Fragment
 	}
 
     // Tabs Creation
-    private void initialiseTabHost(View v) {
+    private void initialiseTabHost(@NonNull LayoutInflater inflater, @NotNull View v) {
         mTabHost = v.findViewById(android.R.id.tabhost);
         mTabHost.setup();
 
-		Resources res = getResources(); // Resource object to get Drawables
-        addTab(getContext(), this.mTabHost, this.mTabHost.newTabSpec("Gipfel")
-        		.setIndicator("Gipfel", res.getDrawable(R.drawable.ic_summit)));
-        addTab(getContext(), this.mTabHost, this.mTabHost.newTabSpec("Wege")
-        		.setIndicator("Wege",res.getDrawable(R.drawable.ic_route)));
-        addTab(getContext(), this.mTabHost, this.mTabHost.newTabSpec("Kommentare")
-				.setIndicator("Kommentare", res.getDrawable(R.drawable.ic_comments)));
+        addTab(getContext(), mTabHost,mTabHost.newTabSpec("Gipfel")
+        		.setIndicator(createTabIndicator(inflater, mTabHost,
+        		        "Gipfel", R.drawable.ic_summit)));
+        addTab(getContext(), mTabHost, mTabHost.newTabSpec("Wege")
+        		.setIndicator(createTabIndicator(inflater, mTabHost,
+                        "Wege", R.drawable.ic_route)));
+        addTab(getContext(), mTabHost, mTabHost.newTabSpec("Kommentare")
+				.setIndicator(createTabIndicator(inflater, mTabHost,
+                        "Kommentare", R.drawable.ic_comments)));
         mTabHost.setOnTabChangedListener(this);
     }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/_main_activity__route"
@@ -43,6 +44,7 @@
             android:inputType="text"
             android:hint="@string/strSearchRoute"
             android:selectAllOnFocus="false"
+            android:background="@drawable/edittext_background"
             android:layout_below="@+id/textViewSearchTextRoutes"
             android:layout_alignStart="@+id/textViewSearchTextRoutes"
             android:layout_alignParentEnd="true" />
@@ -64,22 +66,43 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textViewGebiet"
             android:layout_below="@+id/textViewGebiet"
+            android:background="@drawable/edittext_background"
             android:layout_alignStart="@+id/textViewGebiet" />
 
-        <include
-            android:id="@+id/includeLimitsForScale4RouteSearch"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textViewLimitsForScale4RouteSearch"
+            android:layout_below="@+id/spinnerAreaRoute"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/spinnerAreaRoute"
-            layout="@layout/main_activity_seekbar_limits_of_scale"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/strLimitForScale"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
             android:layout_alignParentStart="true" />
+
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
+            android:id="@+id/rangeSeekbarLimitsForScale4RouteSearch"
+            android:layout_below="@+id/textViewLimitsForScale4RouteSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:min_value="0"
+            app:max_value="250"
+            app:steps="1"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:right_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:right_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_integer"/>
 
         <TextView
             android:id="@+id/TextViewNumberOfComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/includeLimitsForScale4RouteSearch"
+            android:layout_below="@+id/rangeSeekbarLimitsForScale4RouteSearch"
             android:text="@string/strNumberOfComments"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black" />

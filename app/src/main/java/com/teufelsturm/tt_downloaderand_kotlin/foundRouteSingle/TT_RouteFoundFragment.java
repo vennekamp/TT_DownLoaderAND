@@ -1,12 +1,11 @@
 package com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -14,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,17 +29,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.StoreMyRouteComment;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.StoreMySummitComment;
+import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_Comment_AND;
 import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_Comment_ANDAdapter;
 import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_RoutesFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.foundSummitList.TT_SummitsFoundFragment;
+import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumBegehungsStil;
-import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_Comment_AND;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -84,18 +85,6 @@ public class TT_RouteFoundFragment extends Fragment {
         Log.i(TAG, "Neuer onCreate... ");
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (getView() != null) {
-            ViewGroup parent = (ViewGroup) getView().getParent();
-            if (parent != null) {
-                parent.removeAllViews();
-            }
-        }
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
@@ -119,9 +108,6 @@ public class TT_RouteFoundFragment extends Fragment {
 		Log.i(TAG,
 				"(ListView) findViewById(R.id.list_routes);");
         RecyclerView mRecyclerviewRoutesInRoutesFoundRoute = view.findViewById(R.id.recyclerview_routes_in_routes_found_route);
-		// working Code for the Header Creation:
-		LayoutInflater layoutInflater = (LayoutInflater) getActivity()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		// fill the Data in the Header
 		fillRouteDetails(view);
 
@@ -135,7 +121,12 @@ public class TT_RouteFoundFragment extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(@NotNull View view, @NotNull Bundle savedInstanceState){
+	public void onAttach(Context context) {
+		super.onAttach(context);
+	}
+
+	@Override
+	public void onViewCreated(@NotNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         // ********************************************************
         // Event Listener
@@ -183,6 +174,8 @@ public class TT_RouteFoundFragment extends Fragment {
         Log.i(TAG,
                 "Neuer onCreate komplett abgearbeitet... ");
 
+		((MainActivity)getActivity()).showFAB(ID);
+
     }
 
     private void buttonRouteAscendDaySetOnClickListener() {
@@ -197,7 +190,7 @@ public class TT_RouteFoundFragment extends Fragment {
                 dateFragment = DatePickerFragment.newInstance(
                         TT_RouteFoundFragment.ID, aTT_Route_AND,
                         R.id.buttonRouteAscendDay_route);
-                dateFragment.show(getActivity().getSupportFragmentManager(), DatePickerFragment.ID);
+                dateFragment.show(getActivity().getSupportFragmentManager(), "datePickerDialog");
 
                 // ********************************************************
                 Log.i(TAG,
@@ -265,6 +258,7 @@ public class TT_RouteFoundFragment extends Fragment {
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void editTextMyRouteCommentSetOnTouchListener() {
         // http://stackoverflow.com/questions/9770252/scrolling-editbox-inside-scrollview
         editTextMyRouteComment.setOnTouchListener(new View.OnTouchListener() {
@@ -307,9 +301,9 @@ public class TT_RouteFoundFragment extends Fragment {
 						strSummitName_inComment, strAreaName_inComment));
 		// style of Ascended?
 		// Creating adapter for spinner
-		ArrayAdapter<EnumBegehungsStil> dataAdapter = new ArrayAdapter<EnumBegehungsStil>(
+		ArrayAdapter<SpannableString> dataAdapter = new ArrayAdapter<SpannableString>(
 				getActivity().getApplicationContext(), android.R.layout.simple_spinner_item,
-				EnumBegehungsStil.values());
+				EnumBegehungsStil.getBegehungsStile(getContext()));
 		dataAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_item); /* simple_spinner_dropdown_item */
 		// attaching data adapter to spinner
@@ -324,10 +318,8 @@ public class TT_RouteFoundFragment extends Fragment {
 	}
 
 	// **************************
-	private void openAndQueryDatabase(TT_Route_AND aTT_Route_AND) {
-		Log.i(TAG, "Neuer openAndQueryDatabase... "
-				+ aTT_Route_AND.getStrWegName());
-
+	private void openAndQueryDatabase(@NotNull TT_Route_AND aTT_Route_AND) {
+		Log.i(TAG, "Neuer openAndQueryDatabase... " + aTT_Route_AND.getStrWegName());
 		try {
 			DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
 			newDB = dbHelper.getWritableDatabase();
@@ -336,9 +328,10 @@ public class TT_RouteFoundFragment extends Fragment {
 			Log.i(TAG,
 					"Namen und Gebiet zum Gipfel # : "
 							+ aTT_Route_AND.getIntGipfelNr());
-			QueryString1 = "SELECT a.[strName], a.[strGebiet]  "
-					+ " from [TT_Summit_AND] a where a.[intTTGipfelNr]  = "
-					+ aTT_Route_AND.getIntGipfelNr();
+			QueryString1 = new StringBuilder()
+                    .append("SELECT a.[strName], a.[strGebiet]  ")
+                    .append(" from [TT_Summit_AND] a where a.[intTTGipfelNr]  = ")
+                    .append(aTT_Route_AND.getIntGipfelNr()).toString();
 			cursor = newDB.rawQuery(QueryString1, null);
 			if (cursor != null) {
 				if (cursor.moveToFirst()) {
@@ -346,23 +339,21 @@ public class TT_RouteFoundFragment extends Fragment {
 							.getColumnIndex("strName"));
 					strAreaName_inComment = cursor.getString(cursor
 							.getColumnIndex("strGebiet"));
-					Log.i(TAG,
-							"Neuen Kommentar zum Weg im Gebiet: "
+					Log.i(TAG,"Neuen Kommentar zum Weg im Gebiet: "
 									+ strAreaName_inComment);
 				}
 			}
 
-			QueryString1 = "SELECT a.[intTTWegNr], a.[strEntryKommentar], a.[entryBewertung] "
-					+ ", a.[strEntryUser], a.[entryDatum] "
-					+ "from [TT_RouteComment_AND] a where a.[intTTWegNr]  = "
-					+ aTT_Route_AND.getIntWegNr()
-					+ " ORDER BY a.[entryDatum] ASC ";
-			Log.i(TAG,
-					"Neuen Kommentar zum Weg suchen:\r\n" + QueryString1);
+			QueryString1 = new StringBuilder()
+                    .append("SELECT a.[intTTWegNr], a.[strEntryKommentar], a.[entryBewertung] ")
+                    .append(", a.[strEntryUser], a.[entryDatum] ")
+                    .append("from [TT_RouteComment_AND] a where a.[intTTWegNr]  = ")
+                    .append(aTT_Route_AND.getIntWegNr())
+                    .append(" ORDER BY a.[entryDatum] ASC ").toString();
+			Log.i(TAG,"Neuen Kommentar zum Weg suchen:\r\n" + QueryString1);
 
 			cursor = newDB.rawQuery(QueryString1, null);
-			Log.i(TAG,
-					"Neuen Kommentar zum Weg suchen:\t c != null'"
+			Log.i(TAG,"Neuen Kommentar zum Weg suchen:\t c != null'"
 							+ (cursor != null));
 
 			if (cursor != null) {
@@ -371,26 +362,21 @@ public class TT_RouteFoundFragment extends Fragment {
 					do {
 						int intTTWegNr = cursor.getInt(cursor
 								.getColumnIndex("intTTWegNr"));
-						Log.i(TAG,
-								" -> intTTWegNr..... " + intTTWegNr);
+						Log.i(TAG," -> intTTWegNr..... " + intTTWegNr);
 						String strEntryKommentar = cursor.getString(cursor
 								.getColumnIndex("strEntryKommentar"));
-						Log.i(TAG,
-								" -> strEntryKommentar..... "
+						Log.i(TAG," -> strEntryKommentar..... "
 										+ strEntryKommentar);
 						Integer intEntryBewertung = cursor.getInt(cursor
 								.getColumnIndex("entryBewertung"));
-						Log.i(TAG,
-								" -> intEntryBewertung..... "
+						Log.i(TAG," -> intEntryBewertung..... "
 										+ intEntryBewertung);
 						String strEntryUser = cursor.getString(cursor
 								.getColumnIndex("strEntryUser"));
-						Log.i(TAG,
-								" -> strEntryUser..... " + strEntryUser);
+						Log.i(TAG," -> strEntryUser..... " + strEntryUser);
 						Long longEntryDatum = cursor.getLong(cursor
 								.getColumnIndex("entryDatum"));
-						Log.i(TAG,
-								" -> longEntryDatum..... " + longEntryDatum);
+						Log.i(TAG," -> longEntryDatum..... " + longEntryDatum);
 
 						lstTT_Comment_AND.add(new TT_Comment_AND(intTTWegNr,
 								strEntryKommentar, aTT_Route_AND
@@ -398,8 +384,7 @@ public class TT_RouteFoundFragment extends Fragment {
 										.getStrGipfelName(), aTT_Route_AND
 										.getIntGipfelNr(), intEntryBewertung,
 								strEntryUser, longEntryDatum));
-						Log.i(TAG, ++iCounter
-								+ " -> Neuer Kommentar... " + strEntryUser);
+						Log.i(TAG,++iCounter + " -> Neuer Kommentar... " + strEntryUser);
 					} while (cursor.moveToNext());
 				}
 			}
@@ -520,14 +505,4 @@ public class TT_RouteFoundFragment extends Fragment {
 		savedInstanceState.putString(SAVED_TEXT_KEY, editTextMyRouteComment
 				.getText().toString());
 	}
-	public TT_Route_AND getTT_Route_AND() {
-		return aTT_Route_AND;
-	}
-	public Button getButtonMyAscendDate() {
-		return buttonRouteAscendDay;
-	}
-
-//	public void setHasUnSavedData(boolean hasUnSavedData) {
-//		TT_RouteFoundFragment.hasUnSavedData = hasUnSavedData;
-//	}
 }

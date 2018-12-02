@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tt_downloader" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/tt_downloader">
 
     <RelativeLayout
         android:id="@+id/_main_activity__summit"
@@ -28,18 +29,18 @@
 
 	        <Button
 	            android:id="@+id/button_INFO"
+                style="?android:attr/button"
 	            android:layout_width="0dip"
 	            android:layout_height="wrap_content"
             	android:layout_weight=".35"
-                style="?android:attr/buttonBarButtonStyle"
 	            android:text="@string/INFO" />
 
             <Button
                 android:id="@+id/buttonSearchSummit"
+                style="?android:attr/button"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
             	android:layout_weight=".65"
-                style="?android:attr/buttonBarButtonStyle"
                 android:text="@string/strSearchSummit" />
 		</LinearLayout>
         
@@ -63,6 +64,7 @@
             android:hint="@string/strSearchSummit"
             android:inputType="text"
             android:selectAllOnFocus="false"
+            android:background="@drawable/edittext_background"
             android:layout_alignStart="@+id/textViewSuchTextGipfel"
             android:layout_alignParentEnd="true">
         </AutoCompleteTextView>
@@ -84,25 +86,66 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/textViewGebiet"
             android:layout_below="@+id/textViewGebiet"
+            android:background="@drawable/edittext_background"
             android:layout_alignStart="@+id/textViewGebiet" />
 
-        <include
-            android:id="@+id/includeAnzahlDerWege"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="false"
+        <TextView
+            android:id="@+id/textViewAnzahlDerWege"
             android:layout_below="@+id/spinnerAreaSummit"
-            layout="@layout/main_activity_seekbar_number_of_routes"
-            android:layout_alignParentStart="false" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/strAnzahlDerWege"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:layout_alignParentStart="true" />
 
-        <include
-            android:id="@+id/includeAnzahlDerSternchenWege"
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
+            android:id="@+id/rangeSeekbarAnzahlDerWege"
+            android:layout_below="@+id/textViewAnzahlDerWege"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/includeAnzahlDerWege"
-            android:layout_below="@+id/includeAnzahlDerWege"
-            layout="@layout/main_activity_seekbar_number_of_stared_routes"
-            android:layout_alignStart="@+id/includeAnzahlDerWege" />
+            app:min_value="0"
+            app:max_value="250"
+            app:steps="1"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:right_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:right_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_integer"/>
+
+        <TextView
+            android:id="@+id/textViewAnzahlDerSternchenWege"
+            android:layout_below="@+id/rangeSeekbarAnzahlDerWege"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/strAnzahlDerWege"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black" />
+
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
+            android:id="@+id/rangeSeekbarAnzahlDerSternchenWege"
+            android:layout_below="@+id/textViewAnzahlDerSternchenWege"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:min_value="0"
+            app:max_value="100"
+            app:steps="1"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:right_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:right_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_integer"/>
 
     </RelativeLayout>
 

@@ -4,8 +4,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +20,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.OnFragmentInteractionListener;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_RoutesFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitList.TT_SummitsFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
@@ -97,29 +96,38 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 		Button buttonSearchRoute = view.findViewById(R.id.buttonSearchRoute);
 		buttonSearchRoute.setOnClickListener(this);
 		// ***************************************************************************************
-		// create RangeSeekBar as Integer range between 0 and Macvalue
-		RangeSeekBar<Integer> seekBarLimitsForScale = new RangeSeekBar<>(intMinLimitsForScale,
-				intMaxLimitsForScale, getActivity());
-		seekBarLimitsForScale
-				.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
-					@Override
-					public void onRangeSeekBarValuesChanged(
-							RangeSeekBar<?> bar, Integer minValue,
-							Integer maxValue) {
-						writeLimitsForScale(minValue, maxValue);
-					}
-				});
-		// ***************************************************************************************
-		// add RangeSeekBar to predefined layout
-		ViewGroup layout_activity_seekBarLimitsForScale = view.findViewById(R.id.includeLimitsForScale4RouteSearch);
-		LayoutParams layoutParamsSeekBarAnzahlDerWege = new LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		layoutParamsSeekBarAnzahlDerWege
-				.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		layoutParamsSeekBarAnzahlDerWege.addRule(RelativeLayout.BELOW,
-				R.id.textViewLimitsForScale);
-		seekBarLimitsForScale.setLayoutParams(layoutParamsSeekBarAnzahlDerWege);
-		layout_activity_seekBarLimitsForScale.addView(seekBarLimitsForScale);
+		// create RangeSeekBar as Integer range between 0 and Maxvalue
+
+		BubbleThumbRangeSeekbar seekBarLimitsForScale
+				= view.findViewById(R.id.rangeSeekbarLimitsForScale4RouteSearch);
+        seekBarLimitsForScale.setMinValue(intMinLimitsForScale);
+        seekBarLimitsForScale.setMaxValue(intMaxLimitsForScale);
+        // set listener
+        seekBarLimitsForScale.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                // handle changed range values
+                String strUpdate = getString(R.string.strLimitForScale)
+                        + "\n("
+                        + EnumSachsenSchwierigkeitsGrad
+                        .toStringFromSkaleOrdinal(minValue.intValue())
+                        + " bis "
+                        + EnumSachsenSchwierigkeitsGrad
+                        .toStringFromSkaleOrdinal(maxValue.intValue()) + ")";
+                ((TextView) view.findViewById(R.id.textViewLimitsForScale4RouteSearch))
+                        .setText(strUpdate);
+            }
+        });
+
+        // set final value listener
+        seekBarLimitsForScale.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+            @Override
+            public void finalValue(Number minValue, Number maxValue) {
+                // handle changed range values
+                searchManager.setIntMinAnzahlDerWege(minValue.intValue());
+                searchManager.setIntMaxAnzahlDerWege(maxValue.intValue());
+            }
+        });
 		// ***************************************************************************************
 		// alter the SeekBars in the layout
 		SeekBar seekBarNumberOfComments = view
@@ -161,10 +169,8 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 		intMaxLimitsForScale = maxValue;
 		// Log.v(FragmentSearchRoute.class.getSimpleName(),
 		// "3");
-		View viewLimitsForScale = view
-				.findViewById(R.id.includeLimitsForScale4RouteSearch);
-		((TextView) viewLimitsForScale
-				.findViewById(R.id.textViewLimitsForScale)).setText(strUpdate);
+		((TextView) view
+				.findViewById(R.id.textViewLimitsForScale4RouteSearch)).setText(strUpdate);
 	}
 
 	private void writeLimitsForSeekBar(TextView textView, Integer progress,

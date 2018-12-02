@@ -102,8 +102,7 @@ public class TT_Route_ANDAdapter
         // Transfer the stock data from the data object
         // to the view objects
 //		TT_Route_AND currentTT_Route_AND = lstTT_Routes_AND.get(position);
-        Log.i(TAG, "Suche Weg...: "
-                + currentTT_Route_AND.getStrWegName());
+        Log.i(TAG, "Suche Weg...: " + currentTT_Route_AND.getStrWegName());
         aTT_Route_ANDView.intTTGipfelNr = currentTT_Route_AND.getIntGipfelNr();
         aTT_Route_ANDView.textView_tableCol_RouteName
                 .setText(MessageFormat.format("{0}  ({1})",
@@ -122,45 +121,8 @@ public class TT_Route_ANDAdapter
         aTT_Route_ANDView.textView_tableCol_MeanGrade.setText(MessageFormat.format("{0}{1}",
                 mContext.getResources().getString(R.string.tableCol_MeanGrade),
                 nf.format(currentTT_Route_AND.getFltMittlereWegBewertung())));
-//		aTT_Route_ANDView.CheckBoxAsscended.setChecked(currentTT_Route_AND
-//				.getBegehungsStil() > 1);
-
-        SpannableString ss = new SpannableString("  " + EnumBegehungsStil.values()[currentTT_Route_AND
-                .getBegehungsStil()].toString());
-        Drawable d = mContext.getResources().getDrawable(R.drawable.my_checkbox);
-        switch (currentTT_Route_AND.getBegehungsStil()) {
-            case 1: // EnumBegehungsStil.TO_DO.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_todo);
-                break;
-            case 2: // EnumBegehungsStil.SACK.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.sack);
-                break;
-            case 3: // EnumBegehungsStil.NACHSTIEG.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_vog);
-                break;
-            case 4: // EnumBegehungsStil.SITZSCHLINGE.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_ruheschlinge);
-                break;
-            case 5: // EnumBegehungsStil.ALLESFREI.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_allesfrei);
-                break;
-            case 6: // EnumBegehungsStil.GETEILTEFUEHRUNG.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_seilschaft);
-                break;
-            case 7: // EnumBegehungsStil.ROTPUNKT.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_rp);
-                break;
-            case 8: // EnumBegehungsStil.ONSIGHT.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_onsight);
-                break;
-            case 9: // EnumBegehungsStil.SOLO.ordinal():
-                d = mContext.getResources().getDrawable(R.drawable.ic_solo);
-                break;
-        }
-
-        d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
-        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
-        ss.setSpan(span, 0, 2, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        SpannableString ss = EnumBegehungsStil
+                .getBegehungsStil(mContext, currentTT_Route_AND.getBegehungsStil() );
         aTT_Route_ANDView.textViewStyleAsscended.setText(ss);
         aTT_Route_ANDView.textView_tableCol_DateAsscended
                 .setText(currentTT_Route_AND.getDatumBestiegen());

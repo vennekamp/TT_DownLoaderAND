@@ -14,25 +14,27 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class TT_Summit_AND implements Parcelable {
-	private Integer intTTGipfelNr;
+    private static String TAG = TT_Summit_AND.class.getSimpleName();
+
+	private int intTTGipfelNr;
 	private String str_SummitName;
-	private Integer int_SummitNumberOfficial;
+	private int int_SummitNumberOfficial;
 	private String str_Area;
-	private Integer int_NumberOfRoutes;
-	private Integer int_NumberofStarRoutes;
+	private int int_NumberOfRoutes;
+	private int int_NumberofStarRoutes;
 	private String str_EasiestGrade;
-	private Double dbl_GpsLong;
-	private Double dbl_GpsLat;
-	private Boolean bln_Asscended;
-	private Long long_DateAsscended;
+	private double dbl_GpsLong;
+	private double dbl_GpsLat;
+	private boolean bln_Asscended;
+	private long long_DateAsscended;
 	private String str_MyComment;
 
-	public TT_Summit_AND(Integer intTTGipfelNr,
-			Integer int_SummitNumberOfficial, String str_SummitName,
+	public TT_Summit_AND(int intTTGipfelNr,
+			int int_SummitNumberOfficial, String str_SummitName,
 			String str_Area, Integer int_NumberOfRoutes,
-			Integer int_NumberofStarRoutes, String str_EasiestGrade,
-			Double dbl_GpsLong, Double dbl_GpsLat, Boolean bln_Asscended,
-			Long long_DateAsscended, String str_MyComment) {
+			int int_NumberofStarRoutes, String str_EasiestGrade,
+			double dbl_GpsLong, double dbl_GpsLat, boolean bln_Asscended,
+			long long_DateAsscended, String str_MyComment) {
 		this.intTTGipfelNr = intTTGipfelNr;
 
 		Log.i(this.getClass().getSimpleName(),
@@ -51,31 +53,34 @@ public class TT_Summit_AND implements Parcelable {
 		this.str_MyComment = str_MyComment;
 	}
 	
-	public TT_Summit_AND(Integer intTTGipfelNr, Context aContext ) {
+	public TT_Summit_AND(int intTTGipfelNr, Context aContext ) {
 		this.intTTGipfelNr = intTTGipfelNr;
 
 		Log.i(this.getClass().getSimpleName(),
 				"--> intTTGipfelNr eingetragen...: " + intTTGipfelNr);
-			String QueryString1 =  "SELECT   a.intTTGipfelNr, a.strName, a.strGebiet"
-					+ ", a.intKleFuGipfelNr , a.intAnzahlWege , a.intAnzahlSternchenWege"
-					+ ", a.strLeichtesterWeg, a.dblGPS_Latitude, a.dblGPS_Longitude"
-					+ ", b.[isAscendedSummit], b.[intDateOfAscend], b.[strMySummitComment] "
-					+ " FROM " + " TT_Summit_AND a "
-					+ " LEFT OUTER JOIN myTT_Summit_AND b"
-					+ " ON (a.[intTTGipfelNr] = b.[intTTGipfelNr]) "
-					+ " WHERE a.[intTTGipfelNr] = " + intTTGipfelNr;
-			Log.i(getClass().getSimpleName(), "intTTGipfelNr... : " + intTTGipfelNr);
-			Log.i(getClass().getSimpleName(),
+			String QueryString1 = new StringBuilder()
+					.append("SELECT   a.intTTGipfelNr, a.strName, a.strGebiet")
+					.append(", a.intKleFuGipfelNr , a.intAnzahlWege , a.intAnzahlSternchenWege")
+					.append(", a.strLeichtesterWeg, a.dblGPS_Latitude, a.dblGPS_Longitude")
+					.append(", b.[isAscendedSummit], b.[intDateOfAscend], b.[strMySummitComment] ")
+					.append(" FROM ")
+					.append(" TT_Summit_AND a ")
+					.append(" LEFT OUTER JOIN myTT_Summit_AND b")
+					.append(" ON (a.[intTTGipfelNr] = b.[intTTGipfelNr]) ")
+					.append(" WHERE a.[intTTGipfelNr] = ")
+					.append(intTTGipfelNr).toString();
+			Log.i(TAG, "intTTGipfelNr... : " + intTTGipfelNr);
+			Log.i(TAG,
 					"Neue Wege zum Gipfel suchen:\r\n" + QueryString1);
 			
 			Cursor cursor = null;
-			Log.i(getClass().getSimpleName(),
+			Log.i(TAG,
 					"noch bin ich da....");
 			SQLiteDatabase newDB;
 			DataBaseHelper dbHelper = new DataBaseHelper(aContext );
 			newDB = dbHelper.getWritableDatabase();
 			cursor = newDB.rawQuery(QueryString1, null);
-			Log.i(getClass().getSimpleName(),
+			Log.i(TAG,
 					"Neue Wege zum Gipfel suchen:\t c != null'"
 							+ (cursor != null));
 
@@ -108,7 +113,7 @@ public class TT_Summit_AND implements Parcelable {
 								.getColumnIndex("intDateOfAscend"))  ;
 						this.str_MyComment = cursor.getString(cursor
 								.getColumnIndex("strMySummitComment"));
-						Log.i(getClass().getSimpleName(), ++iCounter
+						Log.i(TAG, ++iCounter
 								+ " -> Neuer Weg... " + WegName);
 					} while (cursor.moveToNext());
 				}
@@ -142,7 +147,7 @@ public class TT_Summit_AND implements Parcelable {
 	public Double getDbl_GpsLat() {
 		return dbl_GpsLat;
 	}
-	public Boolean getBln_Asscended() {
+	public boolean getBln_Asscended() {
 		return bln_Asscended;
 	}
 	public String getStr_DateAsscended() {

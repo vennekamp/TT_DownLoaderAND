@@ -1,5 +1,6 @@
 package com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
@@ -30,10 +32,12 @@ import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundF
 import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
 import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class TT_RoutesFoundFragment extends Fragment
-		implements View.OnClickListener, OnItemClickListener {
+		implements View.OnClickListener {
 
 	public static final String ID = "TT_RoutesFoundFragment";
 	private final static String TAG = TT_RoutesFoundFragment.class.getSimpleName();
@@ -121,6 +125,17 @@ public class TT_RoutesFoundFragment extends Fragment
 		// http://android-er.blogspot.de/2012/05/simple-example-use-osmdroid-and-slf4j.html
         Log.i(TAG,"Neuer onCreate... BEENDET");
 		return view;
+	}
+
+    @Override
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        ((MainActivity)getActivity()).showFAB(ID);
+    }
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
 	}
 
 
@@ -256,7 +271,7 @@ public class TT_RoutesFoundFragment extends Fragment
 						Integer sachsenSchwierigkeitsGrad = cursor
 								.getInt(cursor
 										.getColumnIndex("sachsenSchwierigkeitsGrad"));
-						Integer ohneUnterstützungSchwierigkeitsGrad = cursor
+						Integer ohneUnterstuetzungSchwierigkeitsGrad = cursor
 								.getInt(cursor
 										.getColumnIndex("ohneUnterstützungSchwierigkeitsGrad"));
 						Integer rotPunktSchwierigkeitsGrad = cursor
@@ -279,7 +294,7 @@ public class TT_RoutesFoundFragment extends Fragment
 								blnAusrufeZeichen, intSterne,
 								strSchwierigkeitsGrad,
 								sachsenSchwierigkeitsGrad,
-								ohneUnterstützungSchwierigkeitsGrad,
+								ohneUnterstuetzungSchwierigkeitsGrad,
 								rotPunktSchwierigkeitsGrad,
 								intSprungSchwierigkeitsGrad,
 								intAnzahlDerKommentare,
@@ -308,24 +323,34 @@ public class TT_RoutesFoundFragment extends Fragment
 
 	@Override
 	public void onClick(View v) {
-		Log.e(TAG,"onClick(View v); v.getTag(): "+ v.getTag());
-		Integer bInt = (Integer) v.getTag();
-		Log.i(TAG, "onClick(View v) {... for: " + bInt);
 
-        TT_Summit_AND tt_summit_and = new TT_Summit_AND(bInt, getActivity().getApplicationContext());
-		Fragment tt_summitFoundFragment = TT_SummitFoundFragment.newInstance(tt_summit_and);
-        ((MainActivity)getActivity()).replaceFragment(tt_summitFoundFragment, TT_SummitFoundFragment.ID);
+        // handle click on the row (TextView) with the summit
+        if ( v. getTag() != null ) {
+            int intGipfelNr = (int)v.getTag();
+            TT_Summit_AND tt_summit_and = new TT_Summit_AND(intGipfelNr , getContext() );
+            Log.i(TAG, "onClick(View v) {... heads to summit: " + tt_summit_and.getStr_SummitName());
+            Fragment tt_summitFoundFragment = TT_SummitFoundFragment.newInstance(tt_summit_and);
+            ((MainActivity)getActivity()).replaceFragment(tt_summitFoundFragment, TT_SummitFoundFragment.ID);
+        }
+        // handle click on an item of the RecyclerView (R.layout.routes_lv_item_found)
+        else {
+            int itemPosition = mRecyclerView_RoutesFound.getChildLayoutPosition(v);
+            TT_Route_AND tt_route_and = lstTT_Routes_AND.get(itemPosition);
+            Log.i(TAG, "onClick(View v) {... for route: " + tt_route_and.getStrWegName());
 
+            Fragment tt_summitFoundFragment = TT_RouteFoundFragment.newInstance(tt_route_and);
+            ((MainActivity) getActivity()).replaceFragment(tt_summitFoundFragment, TT_RouteFoundFragment.ID);
+        }
 	}
 
-    // Event Listener
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e(TAG, "onItemClick in TT_RoutesFoundFragment"
-                + view.getTag().toString() );
-        Log.i(TAG,"onItemClick(AdapterView<?> parent, View view, int position, long id) {...");
-
-        Fragment fragment = TT_RouteFoundFragment.newInstance(lstTT_Routes_AND.get(position) );
-        ((MainActivity)getActivity()).replaceFragment(fragment, TT_RouteFoundFragment.ID);
-    }
+//    // Event Listener
+//	@Override
+//	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Log.e(TAG, "onItemClick in TT_RoutesFoundFragment"
+//                + view.getTag().toString() );
+//        Log.i(TAG,"onItemClick(AdapterView<?> parent, View view, int position, long id) {...");
+//
+//        Fragment fragment = TT_RouteFoundFragment.newInstance(lstTT_Routes_AND.get(position) );
+//        ((MainActivity)getActivity()).replaceFragment(fragment, TT_RouteFoundFragment.ID);
+//    }
 }

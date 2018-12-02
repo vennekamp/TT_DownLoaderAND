@@ -34,13 +34,16 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 
 	protected Integer myViewID;
 	protected Integer myEditTextSuchtextID;
-	protected DataBaseHelper myDbHelper;
+//	protected DataBaseHelper myDbHelper;
 	protected AutoCompleteDbAdapter myAutoCompleteDbAdapter;
 	protected AutoCompleteTextView myAutoCompleteTextView;
 	protected String myAutoCompleteTextViewText;
 	protected final int[] to = new int[] { android.R.id.text1 };
 	protected String[] from;
 	protected SimpleCursorAdapter adapter;
+
+	protected SearchManager searchManager = SearchManager.getInstance();
+
 
 	protected static String strGebiet;
 	protected View view;
@@ -164,26 +167,12 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 	 * Function to load the spinner data from SQLite database
 	 * */
 	protected void loadSpinnerData(Context context, Spinner mySpinner) {
-		// database handler
-		myDbHelper = new DataBaseHelper(context);
-		try {
-			myDbHelper.createDataBase();
-
-		} catch (IOException ioe) {
-			throw new Error("Unable to create database");
-		}
-		try {
-			myDbHelper.openDataBase();
-		} catch (SQLException sqle) {
-			throw sqle;
-		}
-		List<String> getAllLabels = myDbHelper.getAllAreas();
-		myDbHelper.close();
 		// Creating adapter for spinner
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context,
-				android.R.layout.simple_spinner_item, getAllLabels);
-		dataAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_item); /* simple_spinner_dropdown_item */
+				android.R.layout.simple_spinner_item,
+                SearchManager.getInstance().getAllAreaLabels(getContext()));
+        /* simple_spinner_dropdown_item */
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
 		// attaching data adapter to spinner
 		mySpinner.setAdapter(dataAdapter);

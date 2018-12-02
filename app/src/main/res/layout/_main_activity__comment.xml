@@ -2,7 +2,8 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/_main_activity__comment"
@@ -45,6 +46,7 @@
             android:layout_alignParentRight="true"
             android:ems="10"
             android:hint="@string/strSearchComment"
+            android:background="@drawable/edittext_background"
             android:inputType="text"
             android:selectAllOnFocus="false" />
 
@@ -65,24 +67,45 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewGebiet"
             android:layout_alignStart="@+id/textViewGebiet"
+            android:background="@drawable/edittext_background"
             android:layout_alignLeft="@+id/textViewGebiet" />
 
-        <include
-            android:id="@+id/includeLimitsForScale4CommentSearch"
-            layout="@layout/main_activity_seekbar_limits_of_scale"
+        <TextView
+            android:id="@+id/textViewLimitsForScale4CommentSearch"
+            android:layout_below="@+id/spinnerAreaComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/strLimitForScale"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Black"
+            android:layout_alignParentStart="true" />
+
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
+            android:id="@+id/rangeSeekbarLimitsForScale4CommentSearch"
+            android:layout_below="@+id/textViewLimitsForScale4CommentSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerAreaComment"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
+            app:min_value="0"
+            app:max_value="250"
+            app:steps="1"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:right_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:right_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_integer"/>
 
         <TextView
             android:id="@+id/TextViewCommmentGrading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/includeLimitsForScale4CommentSearch"
-            android:layout_alignStart="@+id/includeLimitsForScale4CommentSearch"
-            android:layout_alignLeft="@+id/includeLimitsForScale4CommentSearch"
+            android:layout_below="@+id/rangeSeekbarLimitsForScale4CommentSearch"
+            android:layout_alignStart="@+id/rangeSeekbarLimitsForScale4CommentSearch"
+            android:layout_alignLeft="@+id/rangeSeekbarLimitsForScale4CommentSearch"
             android:text="@string/strMinGradingInComment"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black" />

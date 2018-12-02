@@ -3,8 +3,6 @@ package com.teufelsturm.tt_downloaderand_kotlin.searches;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,29 +12,31 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloaderand_kotlin.OnFragmentInteractionListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
+import com.teufelsturm.tt_downloaderand_kotlin.OnFragmentReplaceListener;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_CommentsFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_RoutesFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
 public class FragmentSearchComment extends FragmentSearchAbstract
 		implements OnClickListener, OnSeekBarChangeListener {
-	private static int intMinLimitsForScale = EnumSachsenSchwierigkeitsGrad
-			.getMinInteger();
-	private static int intMaxLimitsForScale = EnumSachsenSchwierigkeitsGrad
-			.getMaxInteger();
-	private static int intMinCommentInComment = EnumTT_WegBewertung
-			.getMinInteger();
+    private static final String TAG = FragmentSearchComment.class.getSimpleName();
+
+    private static int intMinLimitsForScale
+            = EnumSachsenSchwierigkeitsGrad.getMinInteger();
+	private static int intMaxLimitsForScale
+            = EnumSachsenSchwierigkeitsGrad.getMaxInteger();
+	private static int intMinCommentInComment
+            = EnumTT_WegBewertung.getMinInteger();
 	public int getEnumMinLimitsForScale() {
 		return EnumSachsenSchwierigkeitsGrad.values()[intMinLimitsForScale].getValue();
 	}
@@ -58,8 +58,7 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 	@Override
 	protected Cursor getAutoCompleteCursor(CharSequence constraint) {
 		return myAutoCompleteDbAdapter
-				.getAllComments((constraint != null ? constraint.toString()
-						: null));
+				.getAllComments((constraint != null ? constraint.toString() : null));
 	}
 
 		@Override
@@ -79,9 +78,7 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				strGebiet = mySpinner.getSelectedItem().toString();
-				Log.e(FragmentSearchAbstract.class.getSimpleName(),
-						"mySpinner.getSelectedItem()" + strGebiet);
-				
+				Log.e(TAG,"mySpinner.getSelectedItem()" + strGebiet);
 			}
 
 			@Override
@@ -92,61 +89,62 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 
 		});
 		// SEARCH Button
-		Button buttonSearchComment = (Button) view.findViewById(R.id.buttonSearchComments);
+		Button buttonSearchComment = view.findViewById(R.id.buttonSearchComments);
 		buttonSearchComment.setOnClickListener(this);
 		// ***************************************************************************************
 		// create RangeSeekBar as Integer range between 0 and 125 (Route Grading
 		// in Comment)
-		seekBarLimitsForCommentGrade = new RangeSeekBar<Integer>(
-				intMinLimitsForScale, intMaxLimitsForScale, getActivity());
-		seekBarLimitsForCommentGrade
-				.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
-					@Override
-					public void onRangeSeekBarValuesChanged(
-							RangeSeekBar<?> bar, Integer minValue,
-							Integer maxValue) {
+		BubbleThumbRangeSeekbar seekBarLimitsForCommentGrade
+				= view.findViewById(R.id.rangeSeekbarLimitsForScale4CommentSearch);
+        seekBarLimitsForCommentGrade.setMinValue(intMinLimitsForScale);
+        seekBarLimitsForCommentGrade.setMaxValue(intMaxLimitsForScale);
+        // set listener
+        seekBarLimitsForCommentGrade.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                // handle changed range values
+                String strUpdate = getString(R.string.strLimitForScale)
+                        + "\n("
+                        + EnumSachsenSchwierigkeitsGrad
+                        .toStringFromSkaleOrdinal(minValue.intValue())
+                        + " bis "
+                        + EnumSachsenSchwierigkeitsGrad
+                        .toStringFromSkaleOrdinal(maxValue.intValue()) + ")";
+                ((TextView) view.findViewById(R.id.textViewLimitsForScale4CommentSearch))
+                        .setText(strUpdate);
+            }
+        });
 
-						Log.v(getClass().getSimpleName(),
-								"writeLimitsForScale(minValue, maxValue); --> "
-										+ minValue + "  " + maxValue);
-						writeLimitsForScale(minValue, maxValue);
-					}
-				});
-		Log.v(getClass().getSimpleName(), "1");
-		// ***************************************************************************************
-		// add RangeSeekBar to predefined layout
-		ViewGroup layout_activity_seekBarLimitsForScale 
-			= (ViewGroup) view.findViewById(R.id.includeLimitsForScale4CommentSearch);
-		LayoutParams layoutParamsSeekBarAnzahlDerWege = new LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		layoutParamsSeekBarAnzahlDerWege
-				.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		layoutParamsSeekBarAnzahlDerWege.addRule(RelativeLayout.BELOW,
-				R.id.textViewLimitsForScale);
-		seekBarLimitsForCommentGrade
-				.setLayoutParams(layoutParamsSeekBarAnzahlDerWege);
-		layout_activity_seekBarLimitsForScale
-				.addView(seekBarLimitsForCommentGrade);
-		Log.v(getClass().getSimpleName(), "2");
+        // set final value listener
+        seekBarLimitsForCommentGrade.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+            @Override
+            public void finalValue(Number minValue, Number maxValue) {
+                // handle changed range values
+                searchManager.setIntMinAnzahlDerWege(minValue.intValue());
+                searchManager.setIntMaxAnzahlDerWege(maxValue.intValue());
+            }
+        });
+
+
 		// ***************************************************************************************
 		// alter the SeekBars (standard) in the layout
 		SeekBar seekBarMinGradingInCommet 
-			= (SeekBar) view.findViewById(R.id.seekBarMinGradingInComment);
+			= view.findViewById(R.id.seekBarMinGradingInComment);
 
 		seekBarMinGradingInCommet.setMax(EnumTT_WegBewertung.getMaxInteger()
 				- EnumTT_WegBewertung.getMinInteger());
 		seekBarMinGradingInCommet.setOnSeekBarChangeListener(this);
-		Log.v(getClass().getSimpleName(), "3");
+		Log.v(TAG, "3");
 		// ***************************************************************************************
 		// Refresh the text above the seekbar (Range)
-		Log.v(getClass().getSimpleName(), "4");
+		Log.v(TAG, "4");
 		writeLimitsForScale(intMinLimitsForScale, intMaxLimitsForScale);
 		// Refresh the text above the seekbar (Standard)
-		Log.v(getClass().getSimpleName(), "5");
+		Log.v(TAG, "5");
 		writeLimitsForSeekBar(
 				(TextView) view.findViewById(R.id.TextViewCommmentGrading), 0,
 				R.string.strMinGradingInComment);
-		Log.v(getClass().getSimpleName(), "fin");
+		Log.v(TAG, "fin");
 		return view;
 	}
 
@@ -162,19 +160,15 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 		intMaxLimitsForScale = maxValue;
 		// Log.v(FragmentSearchRoute.class.getSimpleName(),
 		// "3");
-		Log.v(getClass().getSimpleName(), "4.1");
-		View viewLimitsForScale = 
-				view.findViewById(R.id.includeLimitsForScale4CommentSearch);
-		Log.v(getClass().getSimpleName(), "4.2");
-		((TextView) viewLimitsForScale
-				.findViewById(R.id.textViewLimitsForScale)).setText(strUpdate);
+		((TextView) view
+				.findViewById(R.id.textViewLimitsForScale4CommentSearch)).setText(strUpdate);
 	}
 	
 	private void writeLimitsForSeekBar(TextView textView, Integer progress,
 			Integer intRstringID) {
 		// handle changed range values
 		intMinCommentInComment = progress + EnumTT_WegBewertung.getMinInteger();
-		Log.v(getClass().getSimpleName(), "writeLimitsForSeekBar --> "
+		Log.v(TAG, "writeLimitsForSeekBar --> "
 				+ intMinCommentInComment + "  progress --> " + progress
 				+ "  EnumTT_WegBewertung.getMinInteger() --> "
 				+ EnumTT_WegBewertung.getMinInteger());
@@ -220,7 +214,7 @@ public class FragmentSearchComment extends FragmentSearchAbstract
                 getEnumMaxLimitsForScale(), getIntMinCommentInComment() );
 
 
-        ((OnFragmentInteractionListener) getActivity())
+        ((OnFragmentReplaceListener) getActivity())
                 .replaceFragment(fragment, TT_CommentsFoundFragment.ID);
 
 	}

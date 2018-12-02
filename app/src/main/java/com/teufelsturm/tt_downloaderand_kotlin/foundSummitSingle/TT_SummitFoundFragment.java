@@ -1,6 +1,7 @@
 package com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -35,6 +36,7 @@ import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_RouteFoundFra
 import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_Route_ANDAdapter;
 import com.teufelsturm.tt_downloaderand_kotlin.foundSummitList.TT_SummitsFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -141,6 +143,13 @@ public class TT_SummitFoundFragment extends Fragment
 		return view;
 	}
 
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		((MainActivity)context).showFAB(ID);
+	}
+
+
     @SuppressLint("ClickableViewAccessibility")
     private void editTextMySummitCommentSetOnTouchListener() {
         editTextMySummitComment.setOnTouchListener(new View.OnTouchListener() {
@@ -218,10 +227,10 @@ public class TT_SummitFoundFragment extends Fragment
         buttonSummitAscendDay_inComment.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // ********************************************************
-//                dateFragment = DatePickerFragment.newInstance(ID,
-//						aTT_Summit_AND,
-//						R.id.buttonSummitAscendDay_inComment);
-//                dateFragment.show(getActivity().getSupportFragmentManager(), DatePickerFragment.ID);
+                dateFragment = DatePickerFragment.newInstance(ID,
+						aTT_Summit_AND,
+						R.id.buttonSummitAscendDay_inComment);
+                dateFragment.show(getActivity().getSupportFragmentManager(),"datePickerDialog");
                 // ********************************************************
                 Log.i(TAG,"datePickerDialog.show()...: ");
                 // ********************************************************
@@ -230,8 +239,8 @@ public class TT_SummitFoundFragment extends Fragment
         hasUnSavedData = false;
         actionListenertextView_GpsCoords();
 
-        Log.i(TAG,
-                "Neuer onCreate komplett abgearbeitet... ");
+        ((MainActivity)getActivity()).showFAB(ID);
+        Log.i(TAG,"Neuer onCreate komplett abgearbeitet... ");
     }
 
 	@Override
@@ -353,9 +362,8 @@ public class TT_SummitFoundFragment extends Fragment
 	}
 
 	private void fillSummitDetails(View view, TT_Summit_AND aTT_Summit_AND) {
-		Log.i(TAG,
-				"aTT_Gipfel_AND - fillSummitDetails: 1"
-						+ aTT_Summit_AND.getInt_TTGipfelNr().toString()
+		Log.i(TAG,"aTT_Gipfel_AND - fillSummitDetails: 1"
+						+ String.valueOf(aTT_Summit_AND.getInt_TTGipfelNr())
 						+ " --> " + aTT_Summit_AND.getStr_SummitName());
 		// Summit Name
 		((TextView) view.findViewById(R.id.textView_SummitName))
@@ -446,6 +454,12 @@ public class TT_SummitFoundFragment extends Fragment
 				int iCounter = 0;
 				Location mainCoordinates = new Location("reverseGeocoded");
 				Location neighborCoordinate = new Location("reverseGeocoded");
+                if ( aTT_Summit_AND == null ) {
+                    throw new NullPointerException(" aTT_Summit_AND == null ");
+                }
+                if ( aTT_Summit_AND == null ) {
+                    throw new NullPointerException(" aTT_Summit_AND == null ");
+                }
 				mainCoordinates.setLatitude(aTT_Summit_AND.getDbl_GpsLat());
 				mainCoordinates.setLongitude(aTT_Summit_AND.getDbl_GpsLong());
 				mainCoordinates.setTime(new Date().getTime());
@@ -623,23 +637,12 @@ public class TT_SummitFoundFragment extends Fragment
 	// ***************************
 	private void updateDateAscended(@NotNull TT_Summit_AND aTT_Summit_AND) {
 		String strDatumBestiegenString = aTT_Summit_AND.getStr_DateAsscended();
-		if (strDatumBestiegenString.equals("")) {
+		if (strDatumBestiegenString == null || strDatumBestiegenString.trim().equals("")) {
 			strDatumBestiegenString = getActivity().getApplicationContext().getResources()
 					.getString(R.string.strChooseDate);
 		}
 		buttonSummitAscendDay_inComment.setText(strDatumBestiegenString);
 	}
-	public TT_Summit_AND getTT_Summit_AND() {
-		return getArguments().getParcelable(TT_GIPFEL_AND);
-	}
-	public Button getButtonMyAscendDate() {
-		return buttonSummitAscendDay_inComment;
-	}
-
-	public void setHasUnSavedData(boolean hasUnSavedData) {
-		TT_SummitFoundFragment.hasUnSavedData = hasUnSavedData;
-	}
-
 
 	@Override
 	public void onClick( View v) {

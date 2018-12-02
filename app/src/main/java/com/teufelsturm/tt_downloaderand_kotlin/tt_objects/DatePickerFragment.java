@@ -21,6 +21,7 @@ import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundF
 import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,15 +30,18 @@ import java.util.Locale;
 // see: http://stackoverflow.com/questions/11886514/android-datapickerdialog-ondatechanged-is-not-firing 
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener, OnClickListener {
-
-    public static final String ID = "DatePickerFragment";
-    public static final String PARENTS_ID = "PARENTS_ID";
-    public static final String TT_ROUTE_AND = "TT_ROUTE_AND";
-    public static final String BUTTON_ASCENDED_DAY_ID = "BUTTON_ASCENDED_DAY_ID";
     private static final String TAG = DatePickerFragment.class.getSimpleName();
 
+    private static final String PARENTS_ID = "PARENTS_ID";
+    private static final String TT_ROUTE_AND = "TT_ROUTE_AND";
+    private static final String TT_SUMMIT_AND = "TT_SUMMIT_AND";
+    private static final String BUTTON_ASCENDED_DAY_ID = "BUTTON_ASCENDED_DAY_ID";
+
     private Calendar calendar;
+    @Nullable
     private TT_Route_AND aTT_Route_AND;
+    @Nullable
+    private TT_Summit_AND aTT_Summit_AND;
     private Button buttonAscendedDay;
 
     public static DialogFragment newInstance(String parents_ID,
@@ -48,6 +52,19 @@ public class DatePickerFragment extends DialogFragment
         Bundle args = new Bundle();
         args.putString(PARENTS_ID, parents_ID);
         args.putParcelable(TT_ROUTE_AND, aTT_Route_AND);
+        args.putInt(BUTTON_ASCENDED_DAY_ID, buttonAscendedDayID);
+        myFragment.setArguments(args);
+
+        return myFragment;
+    }
+    public static DialogFragment newInstance(String parents_ID,
+                                             TT_Summit_AND aTT_Summit_AND,
+                                             int buttonAscendedDayID ) {
+        DatePickerFragment myFragment = new DatePickerFragment();
+
+        Bundle args = new Bundle();
+        args.putString(PARENTS_ID, parents_ID);
+        args.putParcelable(TT_SUMMIT_AND, aTT_Summit_AND);
         args.putInt(BUTTON_ASCENDED_DAY_ID, buttonAscendedDayID);
         myFragment.setArguments(args);
 
@@ -92,19 +109,15 @@ public class DatePickerFragment extends DialogFragment
 
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
-        if (  getArguments() != null && getArguments().containsKey("ID")
-                && getArguments().getString("ID").equals(TT_RouteFoundFragment.ID)) {
-//            TT_RouteFoundFragment tt_routeFoundFragment
-//                    = (TT_RouteFoundFragment) fm.findFragmentByTag(TT_RouteFoundFragment.ID);
+        if (  getArguments() != null && getArguments().containsKey(TT_ROUTE_AND) ) {
             aTT_Route_AND = getArguments().getParcelable(TT_ROUTE_AND);
             if ( aTT_Route_AND.getLong_DateAsscended() != 0 ) {
                 calendar.setTimeInMillis(aTT_Route_AND.getLong_DateAsscended());
             }
-        } else if (getArguments() != null && getArguments().containsKey("ID")
-                && getArguments().getString("ID").equals(TT_SummitFoundFragment.ID)) {
-            TT_SummitFoundFragment tt_summitFoundFragment = (TT_SummitFoundFragment) fm.findFragmentByTag(TT_SummitFoundFragment.ID);
-            if ( tt_summitFoundFragment.getTT_Summit_AND().getLong_DateAsscended() != 0 ) {
-                calendar.setTimeInMillis(tt_summitFoundFragment.getTT_Summit_AND().getLong_DateAsscended());
+        } else if (getArguments() != null && getArguments().containsKey(TT_SUMMIT_AND) ) {
+            aTT_Summit_AND = getArguments().getParcelable(TT_SUMMIT_AND);
+            if ( aTT_Summit_AND.getLong_DateAsscended() != 0 ) {
+                calendar.setTimeInMillis(aTT_Summit_AND.getLong_DateAsscended());
             }
         }
 
@@ -138,11 +151,9 @@ public class DatePickerFragment extends DialogFragment
         // TODO Auto-generated method stub
         Log.v("DatePickerFragment", "onClick im DatePickerFragment");
 
-        if (  getArguments() != null && getArguments().containsKey("ID")
-                && getArguments().getString("ID").equals(TT_RouteFoundFragment.ID)) {
+        if (  getArguments() != null && getArguments().containsKey(TT_ROUTE_AND)) {
             onClick4TT_Route(which);
-        } else if (  getArguments() != null && getArguments().containsKey("ID")
-                && getArguments().getString("ID").equals(TT_SummitFoundFragment.ID)) {
+        } else if (  getArguments() != null && getArguments().containsKey(TT_SUMMIT_AND) ) {
                 onClick4TT_Summit(which);
             }
         }
@@ -168,15 +179,24 @@ public class DatePickerFragment extends DialogFragment
 
     private void onClick4TT_Summit(int which) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        TT_SummitFoundFragment tt_summitFoundFragment = (TT_SummitFoundFragment) fm.findFragmentByTag(TT_SummitFoundFragment.ID);
-        TT_Summit_AND aTT_Summit_AND = tt_summitFoundFragment.getTT_Summit_AND();
+        TT_SummitFoundFragment tt_summitFoundFragment =
+                (TT_SummitFoundFragment) fm.findFragmentByTag(TT_SummitFoundFragment.ID);
         aTT_Summit_AND.setDatumBestiegen(calendar.getTimeInMillis());
-        Button buttonAscendedDay = tt_summitFoundFragment.getButtonMyAscendDate();
-        Log.v(TAG, "buttonAscendedDay: " + buttonAscendedDay);
+
+        int buttonAscendedDayID = getArguments().getInt(BUTTON_ASCENDED_DAY_ID, -1 );
+
+
+        if ( buttonAscendedDayID > 0) {
+            buttonAscendedDay = tt_summitFoundFragment.getView().findViewById(buttonAscendedDayID);
+        }
+        // When the DatePicker is closed the parent view is re-created,
+        // thus the background data also needs to be changed instead of
+        // the text...
         if (onClick4TT_XYZ(which, aTT_Summit_AND.getLong_DateAsscended(), buttonAscendedDay)) {
-            tt_summitFoundFragment.setHasUnSavedData(true);
+//            tt_routeFoundFragment.setHasUnSavedData(true);
             aTT_Summit_AND.setDatumBestiegen(calendar.getTimeInMillis());
         }
+
     }
 
     private boolean onClick4TT_XYZ(int which, Long aLong_DateAsscended,

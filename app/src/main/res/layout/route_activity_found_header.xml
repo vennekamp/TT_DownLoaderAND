@@ -63,7 +63,7 @@
                 <Button
                     android:id="@+id/buttonRouteAscendDay_route"
                     android:layout_width="0dip"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight=".5"
                     android:text="@string/strNoDay"
@@ -80,6 +80,7 @@
                 android:hint="@string/tableCol_MyComment"
                 android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"
                 android:lines="4"
+                android:background="@drawable/edittext_background"
                 android:scrollbarStyle="outsideInset"
                 android:scrollbars="vertical"
                 android:selectAllOnFocus="false"

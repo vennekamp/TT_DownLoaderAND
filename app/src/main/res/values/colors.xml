@@ -6,6 +6,6 @@
     <color name="White">#FFFFFF</color>
     <color name="Yellow">#FFFF00</color>
     <color name="Green">#00FF00</color>
-    <color name="background">#000000 </color>
-    
+    <color name="TT_BG_BLUE">#336699</color>
+    <color name="TT_FG_BLUE">#99ccff</color>
 </resources>
