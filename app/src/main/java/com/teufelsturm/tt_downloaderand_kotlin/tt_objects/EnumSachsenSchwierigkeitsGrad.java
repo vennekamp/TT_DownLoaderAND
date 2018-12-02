@@ -10,7 +10,7 @@ package com.teufelsturm.tt_downloaderand_kotlin.tt_objects;
  */
 public enum EnumSachsenSchwierigkeitsGrad {
     // Die Schwierigkeit 'mal 10'
-    na(Integer.MIN_VALUE), I(10), II(20), III(30), IV(40), V(50), VI(60), 
+    na(0), I(10), II(20), III(30), IV(40), V(50), VI(60),
     VIIa(71), VIIb(72), VIIc(73), VIIIa(81), VIIIb(82), VIIIc(83),
     IXa(91), IXb(92), IXc(93), Xa(101), Xb(102), Xc(103), 
     XIa(111), XIb(112), XIc(113), XIIa(121), XIIb(122), XIIc(123), XIIIa(130),

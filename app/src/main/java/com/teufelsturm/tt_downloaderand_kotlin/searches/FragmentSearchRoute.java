@@ -32,35 +32,14 @@ import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 public class FragmentSearchRoute extends FragmentSearchAbstract
 		implements OnClickListener, OnSeekBarChangeListener {
 
-	private int intMinLimitsForScale = EnumSachsenSchwierigkeitsGrad
-			.getMinInteger();
-	private int intMaxLimitsForScale = EnumSachsenSchwierigkeitsGrad
-			.getMaxInteger();
-	public int getEnumMinLimitsForScale() {
-		return EnumSachsenSchwierigkeitsGrad.values()[intMinLimitsForScale]
-				.getValue();
-	}
-	public int getEnumMaxLimitsForScale() {
-		return EnumSachsenSchwierigkeitsGrad.values()[intMaxLimitsForScale]
-				.getValue();
-	}
-	private int intMinNumberOfComments = 0;
-	private int intMinOfMeanRating = EnumTT_WegBewertung.getMinInteger();
 	private Spinner mySpinner;
 
-	public int getIntMinNumberOfComments() {
-		return intMinNumberOfComments;
-	}
-
-	public int getIntMinOfMeanRating() {
-		return intMinOfMeanRating;
-	}
 
 	@Override
 	protected Cursor getAutoCompleteCursor(CharSequence constraint) {
 		return myAutoCompleteDbAdapter
-				.getAllRoutes(this, (constraint != null ? constraint.toString()
-						: null));
+				.getAllRoutes(searchManager,this,
+                        (constraint != null ? constraint.toString(): null));
 	}
 
 	@Override
@@ -100,24 +79,26 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 
 		BubbleThumbRangeSeekbar seekBarLimitsForScale
 				= view.findViewById(R.id.rangeSeekbarLimitsForScale4RouteSearch);
-        seekBarLimitsForScale.setMinValue(intMinLimitsForScale);
-        seekBarLimitsForScale.setMaxValue(intMaxLimitsForScale);
+        seekBarLimitsForScale.setMinValue(searchManager.getEnumMinLimitsForScale());
+        seekBarLimitsForScale.setMaxValue(searchManager.getEnumMaxLimitsForScale());
+        // ***************************************************************************************
+        // Refresh the text above the seekbars
         // set listener
-        seekBarLimitsForScale.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
-            @Override
-            public void valueChanged(Number minValue, Number maxValue) {
-                // handle changed range values
-                String strUpdate = getString(R.string.strLimitForScale)
-                        + "\n("
-                        + EnumSachsenSchwierigkeitsGrad
-                        .toStringFromSkaleOrdinal(minValue.intValue())
-                        + " bis "
-                        + EnumSachsenSchwierigkeitsGrad
-                        .toStringFromSkaleOrdinal(maxValue.intValue()) + ")";
-                ((TextView) view.findViewById(R.id.textViewLimitsForScale4RouteSearch))
-                        .setText(strUpdate);
-            }
-        });
+//        seekBarLimitsForScale.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+//            @Override
+//            public void valueChanged(Number minValue, Number maxValue) {
+//                // handle changed range values
+//                String strUpdate = getString(R.string.strLimitForScale)
+//                        + "\n("
+//                        + EnumSachsenSchwierigkeitsGrad
+//                        .toStringFromSkaleOrdinal(minValue.intValue())
+//                        + " bis "
+//                        + EnumSachsenSchwierigkeitsGrad
+//                        .toStringFromSkaleOrdinal(maxValue.intValue()) + ")";
+//                ((TextView) view.findViewById(R.id.textViewLimitsForScale4RouteSearch))
+//                        .setText(strUpdate);
+//            }
+//        });
 
         // set final value listener
         seekBarLimitsForScale.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
@@ -140,38 +121,37 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 		// seekBarMinOfMeanRating.setProgress(R.integer.Zero);
 		// ***************************************************************************************
 		// Refresh the text above the seekbars
-		writeLimitsForScale(intMinLimitsForScale, intMaxLimitsForScale);
 		writeLimitsForSeekBar(
 				(TextView) view.findViewById(R.id.TextViewNumberOfComments),
-				intMinNumberOfComments, R.string.strNumberOfComments);
+				searchManager.getIntMinNumberOfComments(), R.string.strNumberOfComments);
 		writeLimitsForSeekBar(
 				(TextView) view.findViewById(R.id.TextViewMinOfMeanRating),
-				intMinOfMeanRating, R.string.strMinOfMeanRating);
+				searchManager.getIntMinOfMeanRating(), R.string.strMinOfMeanRating);
 		return view;
 	}
 
-	private void writeLimitsForScale(Integer minValue, Integer maxValue) {
-		Log.i(getClass().getSimpleName(),
-				"writeLimitsForScale(Integer minValue..." + minValue
-						+ " , Integer maxValue..." + maxValue);
-
-		// handle changed range values
-		String strUpdate = getString(R.string.strLimitForScale)
-				+ "\n("
-				+ EnumSachsenSchwierigkeitsGrad
-						.toStringFromSkaleOrdinal(minValue)
-				+ " bis "
-				+ EnumSachsenSchwierigkeitsGrad
-						.toStringFromSkaleOrdinal(maxValue) + ")";
-		// Log.v(FragmentSearchRoute.class.getSimpleName(),
-		// "2");
-		intMinLimitsForScale = minValue;
-		intMaxLimitsForScale = maxValue;
-		// Log.v(FragmentSearchRoute.class.getSimpleName(),
-		// "3");
-		((TextView) view
-				.findViewById(R.id.textViewLimitsForScale4RouteSearch)).setText(strUpdate);
-	}
+//	private void writeLimitsForScale(int minValue, int maxValue) {
+//		Log.i(getClass().getSimpleName(),
+//				"writeLimitsForScale(Integer minValue..." + minValue
+//						+ " , Integer maxValue..." + maxValue);
+//
+//		// handle changed range values
+//		String strUpdate = getString(R.string.strLimitForScale)
+//				+ "\n("
+//				+ EnumSachsenSchwierigkeitsGrad
+//						.toStringFromSkaleOrdinal(minValue)
+//				+ " bis "
+//				+ EnumSachsenSchwierigkeitsGrad
+//						.toStringFromSkaleOrdinal(maxValue) + ")";
+//		// Log.v(FragmentSearchRoute.class.getSimpleName(),
+//		// "2");
+//		searchManager.setIntMinNumberOfComments(minValue.intValue());
+//		intMaxLimitsForScale = maxValue;
+//		// Log.v(FragmentSearchRoute.class.getSimpleName(),
+//		// "3");
+//		((TextView) view
+//				.findViewById(R.id.textViewLimitsForScale4RouteSearch)).setText(strUpdate);
+//	}
 
 	private void writeLimitsForSeekBar(TextView textView, Integer progress,
 			Integer intRstringID) {
@@ -189,10 +169,10 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 //		startActivity(new Intent(getActivity(), _TT_RoutesFoundActivity.class));
 		String strTextSuchtext = getStrTextSuchtext();
 		String strGebiet = getStrtextViewGebiet();
-		int intMinSchwierigkeit = getEnumMinLimitsForScale();
-		int intMaxSchwierigkeit = getEnumMaxLimitsForScale();
-		int intMinAnzahlDerKommentare = getIntMinNumberOfComments();
-		int intMittlereWegBewertung = getIntMinOfMeanRating();
+		int intMinSchwierigkeit = searchManager.getEnumMinLimitsForScale();
+		int intMaxSchwierigkeit = searchManager.getEnumMaxLimitsForScale();
+		int intMinAnzahlDerKommentare = searchManager.getIntMinNumberOfComments();
+		int intMittlereWegBewertung = searchManager.getIntMinOfMeanRating();
 
         Fragment fragment = TT_RoutesFoundFragment.newInstance(strTextSuchtext, strGebiet,
 				intMinSchwierigkeit, intMaxSchwierigkeit, intMinAnzahlDerKommentare, intMittlereWegBewertung );
@@ -208,16 +188,16 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
 		if (seekBar.getId() == R.id.seekBarNumberOfComments) {
-			intMinNumberOfComments = progress;
+			searchManager.setIntMinNumberOfComments(progress);
 			writeLimitsForSeekBar(
 					(TextView) view.findViewById(R.id.TextViewNumberOfComments),
-					intMinNumberOfComments, R.string.strNumberOfComments);
+					progress, R.string.strNumberOfComments);
 
 		} else if (seekBar.getId() == R.id.seekBarMinOfMeanRating) {
-			intMinOfMeanRating = progress;
+		    searchManager.setIntMinOfMeanRating(progress);
 			writeLimitsForSeekBar(
 					(TextView) view.findViewById(R.id.TextViewMinOfMeanRating),
-					intMinOfMeanRating + EnumTT_WegBewertung.getMinInteger(),
+					progress + EnumTT_WegBewertung.getMinInteger(),
 					R.string.strMinOfMeanRating);
 		}
 	}

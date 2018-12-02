@@ -77,13 +77,15 @@ public class AutoCompleteDbAdapter {
 	/**
 	 * Getting all Areas returns list of Climbing Route Names
 	 * */
-	public Cursor getAllRoutes(FragmentSearchRoute f, String constraint) throws SQLException {
+	public Cursor getAllRoutes(SearchManager searchManager,
+							   FragmentSearchRoute f, String constraint) throws SQLException {
 		Log.v(getClass().getSimpleName(), "getAllRoutes");
-		String strGebiet = f.getStrtextViewGebiet();
-		int intMinSchwierigkeit = f.getEnumMinLimitsForScale();
-		int intMaxSchwierigkeit = f.getEnumMaxLimitsForScale();
-		int intAnzahlDerKommentare = f.getIntMinNumberOfComments();
-		int intMittlereWegBewertung = f.getIntMinOfMeanRating();
+		String strGebiet = searchManager.getAllAreaLabels(f.getContext())
+                .get( searchManager.getMyAreaPositionFromSpinner() );
+		int intMinSchwierigkeit = searchManager.getEnumMinLimitsForScale();
+		int intMaxSchwierigkeit = searchManager.getEnumMaxLimitsForScale();
+		int intAnzahlDerKommentare = searchManager.getIntMinNumberOfComments();
+		int intMittlereWegBewertung = searchManager.getIntMinOfMeanRating();
 		// Select All Query
 		String queryString = "SELECT a.[_id], a.[WegName] from [TT_Route_AND] a "
 				+ "       WHERE a.[intTTGipfelNr] in ("
