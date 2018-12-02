@@ -152,7 +152,7 @@
             <Button
                 android:id="@+id/buttonSummitAscendDay_inComment"
                 android:layout_width="0dip"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:layout_weight=".5"
                 android:text="@string/strNoDay"
@@ -169,8 +169,10 @@
             android:gravity="top|start"
             android:inputType="text|textAutoCorrect|textAutoComplete|textMultiLine"
             android:lines="4"
+            android:hint="@string/tableCol_MyComment"
             android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
+            android:background="@drawable/edittext_background"
             android:selectAllOnFocus="false"/>
 
 

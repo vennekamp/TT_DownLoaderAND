@@ -1,6 +1,7 @@
 package com.teufelsturm.tt_downloaderand_kotlin.dbHelper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.util.Log;
 import com.teufelsturm.tt_downloaderand_kotlin.searches.FragmentSearchRoute;
 import com.teufelsturm.tt_downloaderand_kotlin.searches.FragmentSearchSummit;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
+import com.teufelsturm.tt_downloaderand_kotlin.searches.SearchManager;
 
 public class AutoCompleteDbAdapter {
 
@@ -47,25 +49,28 @@ public class AutoCompleteDbAdapter {
 	 * @throws SQLException
 	 *             if query fails
 	 */
-	public Cursor getAllSummits(FragmentSearchSummit f, String constraint) throws SQLException {
+	public Cursor getAllSummits(Context context, SearchManager searchManager, String constraint) throws SQLException {
 		Log.v(getClass().getSimpleName(), "getAllSummits");
 		// Select Query
-		String strGebiet = f.getStrtextViewGebiet();
-		int intMinAnzahlWege = f.getIntMinAnzahlDerWege();
-		int intMaxAnzahlWege = f.getIntMaxAnzahlDerWege();
-		int intMinAnzahlSternchenWege = f.getIntMinAnzahlDerSternchenWege();
-		int intMaxAnzahlSternchenWege = f.getIntMaxAnzahlDerSternchenWege();
-		String queryString = "SELECT a.[_id], a.[strName] FROM [TT_Summit_AND] a"
-				+ (mActivity.getString(R.string.strAll).equals(strGebiet) ? "       WHERE a.[strGebiet] != \"\" "
-						: "       WHERE a.[strGebiet] = '" + strGebiet + "'")
-				+ "\r\n		AND a.[intAnzahlWege] >= "
-				+ intMinAnzahlWege
-				+ "\r\n		AND a.[intAnzahlWege] <= "
-				+ intMaxAnzahlWege
-				+ "\r\n		AND a.[intAnzahlSternchenWege] >= "
-				+ intMinAnzahlSternchenWege
-				+ "\r\n		AND a.[intAnzahlSternchenWege] <= "
-				+ intMaxAnzahlSternchenWege;
+		String strGebiet =  searchManager.getAllAreaLabels(context)
+				.get(searchManager.getMyAreaPositionFromSpinner());
+		int intMinAnzahlWege = searchManager.getIntMinAnzahlDerWege();
+		int intMaxAnzahlWege = searchManager.getIntMaxAnzahlDerWege();
+		int intMinAnzahlSternchenWege = searchManager.getIntMinAnzahlDerSternchenWege();
+		int intMaxAnzahlSternchenWege = searchManager.getIntMaxAnzahlDerSternchenWege();
+		String queryString = new StringBuilder()
+                .append("SELECT a.[_id], a.[strName] FROM [TT_Summit_AND] a")
+                .append(mActivity.getString(R.string.strAll).equals(strGebiet)
+                        ? "       WHERE a.[strGebiet] != \"\" "
+                        : "       WHERE a.[strGebiet] = '" + strGebiet + "'")
+                .append("\r\n		AND a.[intAnzahlWege] >= ")
+                .append(intMinAnzahlWege)
+                .append("\r\n		AND a.[intAnzahlWege] <= ")
+                .append(intMaxAnzahlWege)
+                .append("\r\n		AND a.[intAnzahlSternchenWege] >= ")
+                .append(intMinAnzahlSternchenWege)
+                .append("\r\n		AND a.[intAnzahlSternchenWege] <= ")
+                .append(intMaxAnzahlSternchenWege).toString();
 		return getAllXYZ(constraint, queryString, "\r\n AND ", "strName");
 	}
 

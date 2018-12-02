@@ -1,5 +1,6 @@
 package com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
 
@@ -109,6 +111,7 @@ public class TT_CommentsFoundFragment extends Fragment {
         return view;
 	}
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.summits_found, menu);
@@ -116,15 +119,17 @@ public class TT_CommentsFoundFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (getView() != null) {
-            ViewGroup parent = (ViewGroup) getView().getParent();
-            if (parent != null) {
-                parent.removeAllViews();
-            }
-        }
+    public void onViewCreated(@NotNull View view, Bundle savedInstance) {
+        super.onViewCreated(view, savedInstance);
+        ((MainActivity)getActivity()).showFAB(ID);
     }
+
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+	}
+
 
 	//**************************
 

@@ -1,5 +1,6 @@
 package com.teufelsturm.tt_downloaderand_kotlin.foundSummitList;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -132,6 +133,17 @@ public class TT_SummitsFoundFragment extends Fragment
 	}
 
 	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+	}
+	@Override
+	public void onViewCreated(@NotNull View view, Bundle savedInstanceState){
+		super.onViewCreated(view, savedInstanceState);
+		((MainActivity)getActivity()).showFAB(ID);
+	}
+
+
+	@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.summits_found, menu);
         super.onCreateOptionsMenu(menu,inflater);
@@ -187,7 +199,7 @@ public class TT_SummitsFoundFragment extends Fragment
 					+ "' AND intAnzahlSternchenWege <= '"
 					+ intMaxAnzahlDerSternchenWege + "'";
 			Log.i(TAG, "QueryString1 erweitern (3)... ");
-			if (strTextSuchtext.equals(""))
+			if (!strTextSuchtext.equals(""))
 				QueryString1 += " AND strName like '%"
 						+ strTextSuchtext + "%'";
 			Log.i(TAG, "Neuen Gipfel suchen:\r\n"
@@ -235,16 +247,13 @@ public class TT_SummitsFoundFragment extends Fragment
 										dbl_GpsLat, bln_Asscended,
 										int_DateAsscended, str_MyComment));
 
-						Log.i(TAG,
-								" -> Neuer Gipfel... " + strGipfelName
-										+ "\r\nTT-Gipfelnummer: "
-										+ intTTGipfelNr);
+						Log.i(TAG," -> Neuer Gipfel... " + strGipfelName
+										+ "\r\nTT-Gipfelnummer: " + intTTGipfelNr);
 					} while (cursor.moveToNext());
 				}
 			}
 		} catch (SQLiteException se) {
-			Log.e(TAG,
-					"Could not create or Open the database");
+			Log.e(TAG,"Could not create or Open the database");
 		} finally {
 			newDB.close();
 			Toast.makeText(getActivity(), lstTT_Gipfel_AND.size() + " Gipfel gefunden",
@@ -260,9 +269,6 @@ public class TT_SummitsFoundFragment extends Fragment
         TT_Summit_AND tt_summit_andNext  = lstTT_Gipfel_AND.get(itemPosition);
         TT_SummitFoundFragment tt_summitFoundFragment =
                 TT_SummitFoundFragment.newInstance(tt_summit_andNext);
-
-        ((MainActivity)getActivity())
-                .replaceFragment(tt_summitFoundFragment, TT_SummitFoundFragment.ID);
-
+        ((MainActivity)getActivity()).replaceFragment(tt_summitFoundFragment, TT_SummitFoundFragment.ID);
     }
 }
