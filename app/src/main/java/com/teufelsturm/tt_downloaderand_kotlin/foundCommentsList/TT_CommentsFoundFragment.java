@@ -28,15 +28,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class TT_CommentsFoundFragment extends Fragment {
-    private static final String TAG = TT_CommentsFoundFragment.class.getSimpleName();
+	private static final String TAG = TT_CommentsFoundFragment.class.getSimpleName();
 	public static final String ID = "TT_CommentsFoundFragment";
 
     private static final String SUCH_TEXT = "SUCH_TEXT";
     private static final String SUCH_GEBIET = "SUCH_GEBIET";
     private static final String SUCH_MIN_SCHWIERIGKEIT= "SUCH_MIN_SCHWIERIGKEIT";
     private static final String SUCH_MAX_SCHWIERIGKEIT= "SUCH_MAX_SCHWIERIGKEIT";
-    private static final String SUCH_MIN_ANZAHL_DER_KOMMENTARE = "SUCH_MIN_ANZAHL_DER_KOMMENTARE";
-    private static final String SUCH_MIN_COMMENTS_IN_COMMENT = "SUCH_MIN_COMMENTS_IN_COMMENT";
+//	public static final String SUCH_MIN_MIN_COMMENT_IN_COMMENT = "SUCH_MIN_MIN_COMMENT_IN_COMMENT";
+	public static final String SUCH_MIN_GRADING_OF_COMMET = "SUCH_MIN_GRADING_OF_COMMET";
 
 	private static ArrayList<TT_Comment_AND> lstTT_Comment_AND;
 	private SQLiteDatabase newDB;
@@ -44,14 +44,14 @@ public class TT_CommentsFoundFragment extends Fragment {
 
 	public static Fragment newInstance(
             String strTextSuchtext, String strGebiet , int intMinSchwierigkeit,
-            int intMaxSchwierigkeit, int intMinMinCommentInComment) {
+            int intMaxSchwierigkeit, int intMinGradingOfComment) {
         TT_CommentsFoundFragment f = new TT_CommentsFoundFragment();
         Bundle bundle = new Bundle();
         bundle.putString(SUCH_TEXT, strTextSuchtext);
         bundle.putString(SUCH_GEBIET, strGebiet);
         bundle.putInt(SUCH_MIN_SCHWIERIGKEIT, intMinSchwierigkeit);
         bundle.putInt(SUCH_MAX_SCHWIERIGKEIT, intMaxSchwierigkeit);
-        bundle.putInt(SUCH_MIN_COMMENTS_IN_COMMENT, intMinMinCommentInComment);
+		bundle.putInt(SUCH_MIN_GRADING_OF_COMMET, intMinGradingOfComment);
         f.setArguments(bundle);
 	    return f;
 	}
@@ -72,7 +72,7 @@ public class TT_CommentsFoundFragment extends Fragment {
 		lstTT_Comment_AND = new ArrayList<>();
 		// query all routes to this summit
 		openAndQueryDatabase();
-		TT_Comment_ANDAdapter listenAdapter = new TT_Comment_ANDAdapter(getActivity(),
+		TT_Comment_ANDAdapter listenAdapter = new TT_Comment_ANDAdapter((MainActivity)getActivity(),
 				lstTT_Comment_AND, true);
 		Log.i(TAG,"(ListView) findViewById(R.id.list_routes);");
 		RecyclerView recyclerview_comment = view.findViewById(R.id.recyclerview_comment);
@@ -85,26 +85,6 @@ public class TT_CommentsFoundFragment extends Fragment {
 
 
         recyclerview_comment.setAdapter(listenAdapter);
-//		// Event Listener
-//		tts = new TextToSpeech(getActivity(), this);
-//		recyclerview_comment.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				Toast.makeText(
-//						getActivity(),
-//								lstTT_Comment_AND.get(position)
-//										.getStrEntryKommentar(), Toast.LENGTH_LONG)
-//						.show();
-//				tts.speak(TT_RouteFoundFragment.ImprovedText4Tts(
-//					lstTT_Comment_AND.get(position)
-//						.getStrEntryKommentar() ), TextToSpeech.QUEUE_FLUSH, null);
-//				// Log.i(TAG, "Click ListItem Number " + position
-//				// + "\r\nGipfelname: "
-//				// + lstTT_Gipfel_AND.get(position).getStr_SummitName());
-//			}
-//		});
-		
 
 		Log.i(TAG,"Neuer onCreate komplett abgearbeitet... ");
 		Log.i(TAG,"Neuer onCreate... BEENDET");
@@ -143,15 +123,15 @@ public class TT_CommentsFoundFragment extends Fragment {
         Log.e(TAG, "strGebiet gesucht... " + strGebiet);
         int intMinSchwierigkeit = bundle.getInt(SUCH_MIN_SCHWIERIGKEIT);
         int intMaxSchwierigkeit = bundle.getInt(SUCH_MAX_SCHWIERIGKEIT);
-        int intMinMinCommentInComment = bundle.getInt(SUCH_MIN_ANZAHL_DER_KOMMENTARE);
+        int intMinGradingOfComment = bundle.getInt(SUCH_MIN_GRADING_OF_COMMET);
         assert strGebiet != null;
         openAndQueryDatabase(strTextSuchtext, strGebiet, intMinSchwierigkeit, intMaxSchwierigkeit,
-                intMinMinCommentInComment);
+                intMinGradingOfComment);
     }
 
 
     private void openAndQueryDatabase(String strTextSuchtext, @NotNull String strGebiet, int intMinSchwierigkeit,
-                                      int intMaxSchwierigkeit, int intMinMinCommentInComment ) {
+                                      int intMaxSchwierigkeit, int intMinGradingOfComment ) {
 		Log.i(TAG, "Neuer openAndQueryDatabase... ");
 
 		try {
@@ -175,7 +155,7 @@ public class TT_CommentsFoundFragment extends Fragment {
 					.append("SELECT a.[intTTWegNr], a.[strEntryKommentar], b.[WegName], b.[strSchwierigkeitsGrad]")
                     .append(" , c.[strName], ").append("b.[intTTGipfelNr], a.[entryBewertung], a.[strEntryUser], a.[entryDatum]")
                     .append("      FROM  [TT_Summit_AND] c, [TT_Route_AND] b, [TT_RouteComment_AND] a")
-                    .append("      WHERE a.[entryBewertung] >= ").append(intMinMinCommentInComment)
+                    .append("      WHERE a.[entryBewertung] >= ").append(intMinGradingOfComment)
                     .append("      AND a.[strEntryKommentar] like ")
                     .append(DatabaseUtils.sqlEscapeString("%" + strTextSuchtext + "%"))
                     .append("     AND a.[intTTWegNr] = b.[intTTWegNr]")
@@ -243,20 +223,4 @@ public class TT_CommentsFoundFragment extends Fragment {
 				.show();
 		}
 	}
-//
-//	@Override
-//	public void onInit(int status) {
-//		tts.setLanguage(Locale.GERMAN);
-//	}
-//
-//	@Override
-//	public void onPause() {
-//	    //Close the Text to Speech Library
-//	    if(tts != null) {
-//	    	tts.stop();
-//	        tts.shutdown();
-//	        Log.d(TAG, "TTS Destroyed");
-//	    }
-//	    super.onPause();
-//	}
 }

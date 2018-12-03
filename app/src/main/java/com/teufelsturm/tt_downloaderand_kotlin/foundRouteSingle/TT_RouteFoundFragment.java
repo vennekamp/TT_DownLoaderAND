@@ -102,7 +102,7 @@ public class TT_RouteFoundFragment extends Fragment {
 		lstTT_Comment_AND = new ArrayList<>();
 		// query all routes to this summit
 		openAndQueryDatabase(aTT_Route_AND);
-		TT_Comment_ANDAdapter listenAdapter = new TT_Comment_ANDAdapter(this.getActivity(),
+		TT_Comment_ANDAdapter listenAdapter = new TT_Comment_ANDAdapter((MainActivity) getActivity(),
 				lstTT_Comment_AND,
 				false);
 		Log.i(TAG,
@@ -396,45 +396,8 @@ public class TT_RouteFoundFragment extends Fragment {
 		}
 	}
 
-	public static String ImprovedText4Tts(String RawText) {
-		RawText = RawText.replace("SU", "Sanduhr");
-		RawText = RawText.replace("AW", "alter Weg");
-		RawText = RawText.replace("RP", "Rotpunkt");
-		RawText = RawText.replace("z.B.", "zum Beispiel");
-		RawText = RawText.replace(" NR.", " nachträglicher Ring");
-		RawText = RawText
-				.replace("XIII",
-						"nu, dass ist schon ganz schön schwere, nicht wahr?")
-				.replace("XII", "Zwölf").replace("XI", "Elf")
-				.replace("X", "Zehn").replace("IX", "Neun")
-				.replace("VIII", "Acht").replace("VII", "Sieben")
-				.replace("VI", "Sechs").replace("IV", "Vier")
-				.replace("V", "Fünf").replace("II", "Zwei")
-				.replace("III", "Drei").replace("I", "Eins")
-				.replace(" 1. R ", " erster Ring ")
-				.replace(" 1.R ", " erster Ring ")
-				.replace(" 2. R ", " zweiter Ring ")
-				.replace(" 2.R ", " zweiter Ring ")
-				.replace(" 3. R ", " dritter Ring ")
-				.replace(" 3.R ", " dritter Ring ")
-				.replace(" 4. R ", " vierter Ring ")
-				.replace(" 4.R ", " vierter Ring ");
-		return RawText;
-	}
-
-//	@Override
-//	public void onInit(int status) {
-//		tts.setLanguage(Locale.GERMAN);
-//	}
-
 	@Override
 	public void onStop() {
-//		// Close the Text to Speech Library
-//		if (tts != null) {
-//			tts.stop();
-//			tts.shutdown();
-//			Log.d(TAG, "TTS Destroyed");
-//		}
 		if (hasUnSavedData) {
 			saveMyRouteComment();
 			hasUnSavedData = false;

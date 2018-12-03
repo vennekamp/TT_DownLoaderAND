@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.teufelsturm.tt_downloaderand_kotlin.R;
+import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumBegehungsStil;
 import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
 
@@ -108,9 +109,15 @@ public class TT_Route_ANDAdapter
                 .setText(MessageFormat.format("{0}  ({1})",
                         currentTT_Route_AND.getStrWegName(),
                         currentTT_Route_AND.getStrSchwierigkeitsGrad()));
-        aTT_Route_ANDView.textView_tableCol_SummitName2Route.setText(MessageFormat.format("{0}{1}",
+
+        TT_Summit_AND tt_summit_and = new TT_Summit_AND(
+                currentTT_Route_AND.getIntGipfelNr(), mContext);
+        aTT_Route_ANDView.textView_tableCol_SummitName2Route.setText(
+                String.format("%s%s (%s)",
                 mContext.getResources().getString(R.string.tableCol_SummitName),
-                currentTT_Route_AND.getStrGipfelName()));
+                currentTT_Route_AND.getStrGipfelName(),
+                tt_summit_and.getStr_Area()));
+
         aTT_Route_ANDView.textView_tableCol_NumberOfComments.setText(MessageFormat.format("{0}  {1}",
                 mContext.getResources().getString(R.string.tableCol_NumberOfComments),
                 currentTT_Route_AND.getIntAnzahlDerKommentare().toString()));

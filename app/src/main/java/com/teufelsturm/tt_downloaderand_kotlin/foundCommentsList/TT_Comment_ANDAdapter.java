@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_RouteFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundFragment;
@@ -31,7 +32,7 @@ import java.util.Locale;
 public class TT_Comment_ANDAdapter
         extends RecyclerView.Adapter<TT_Comment_ANDAdapter.MyViewHolder> {
 	private static final String TAG = TT_Comment_ANDAdapter.class.getSimpleName();
-	private final FragmentActivity activity;
+	private final MainActivity activity;
 	private Boolean showRoute;
 	private ArrayList<TT_Comment_AND> lstTT_Comment_AND;
 
@@ -71,7 +72,7 @@ public class TT_Comment_ANDAdapter
 	}
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TT_Comment_ANDAdapter(FragmentActivity activity,
+    public TT_Comment_ANDAdapter(MainActivity activity,
                                  @NotNull ArrayList<TT_Comment_AND> objects, Boolean showRoute) {
 		Log.i(TAG,"TT_Comment_ANDAdapter starten..." + objects.getClass());
 		this.activity = activity;
@@ -122,11 +123,13 @@ public class TT_Comment_ANDAdapter
                         activity.getApplicationContext().getResources()
                                 .getString(R.string.tableCol_RouteName),
                         currentTT_Comment_AND.getStrWegName()));
+        TT_Summit_AND tt_summit_and = new TT_Summit_AND(
+                currentTT_Comment_AND.getIntTTGipfelNr(), activity);
         aTT_Comment_ANDView.textView_tableCol_SummitName2Comment
-                .setText(MessageFormat.format("{0}{1}",
-                        activity.getApplicationContext().getResources()
-                                .getString(R.string.tableCol_SummitName),
-                        currentTT_Comment_AND.getStrGipfelName()));
+                .setText(String.format("%s%s (%s)", activity.getApplicationContext().getResources()
+                        .getString(R.string.tableCol_SummitName),
+                        currentTT_Comment_AND.getStrGipfelName(),
+                        tt_summit_and.getStr_Area()));
         Log.i(TAG, "Suche UserGrading...: "
                 + currentTT_Comment_AND.getIntEntryBewertung());
         String strUserGrading = EnumTT_WegBewertung.values()[currentTT_Comment_AND
@@ -182,25 +185,10 @@ public class TT_Comment_ANDAdapter
                             Integer bInt = (Integer)v.getTag();
                             Log.i(TAG,
                                     "Intent TT_RouteFoundFragment = new Intent(...");
-//							Intent addonPageRouteFoundActivity = new Intent(
-//									activity, TT_RouteFoundFragment.class);
-//							Log.i(TAG,
-//									"addonPageSummitFoundActivity.putExtra(...");
-//							addonPageRouteFoundActivity.putExtra(
-//									"TT_Route_AND",
-//									new TT_Route_AND(bInt, activity
-//											.getApplicationContext()));
-//							Log.i(TAG,
-//									"startActivity... ");
-//							activity.startActivity(addonPageRouteFoundActivity);
                             Fragment fragment
                                     = TT_RouteFoundFragment.newInstance(
                                     new TT_Route_AND(bInt, activity));
-                            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fragment_container, fragment);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
+                            activity.replaceFragment(fragment, TT_RouteFoundFragment.ID );
                         }
                     });
             aTT_Comment_ANDView.textView_tableCol_SummitName2Comment
@@ -216,15 +204,7 @@ public class TT_Comment_ANDAdapter
                                     "Intent addonPageSummitFoundActivity = new Intent(...");
                             TT_SummitFoundFragment tt_summitFoundFragment
                                     = TT_SummitFoundFragment.newInstance(tt_summit_and);
-                            FragmentManager fm = activity.getSupportFragmentManager();
-                            FragmentTransaction ft = fm.beginTransaction();
-                            // Replace whatever is in the fragment_container view with this fragment,
-                            // and add the transaction to the back stack if needed
-                            ft.replace(R.id.fragment_container, tt_summitFoundFragment,
-                                    TT_RouteFoundFragment.ID);
-                            ft.addToBackStack(null);
-                            // Commit the transaction
-                            ft.commit();
+                            activity.replaceFragment(tt_summitFoundFragment, TT_SummitFoundFragment.ID );
                         }
                     });
         } // end if

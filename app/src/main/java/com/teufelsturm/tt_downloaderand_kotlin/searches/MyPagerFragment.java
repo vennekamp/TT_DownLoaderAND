@@ -1,5 +1,6 @@
 package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class MyPagerFragment extends Fragment
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        mViewPager.setCurrentItem(SearchManager4FragmentSearches.getInstance().getPagerPageSelected());
         ((MainActivity)getActivity()).showFAB(ID);
     }
 
@@ -108,6 +110,7 @@ public class MyPagerFragment extends Fragment
 	public void onPageSelected(int position) {
         Log.e(TAG, "onPageSelected(int position)   --->   " + position);
         this.mTabHost.setCurrentTab(position);
+        SearchManager4FragmentSearches.getInstance().setPagerPageSelected(position);
 	}
 
     // Tabs Creation

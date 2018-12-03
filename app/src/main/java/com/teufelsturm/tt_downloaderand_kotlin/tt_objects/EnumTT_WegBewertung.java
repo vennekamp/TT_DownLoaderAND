@@ -20,19 +20,19 @@ public enum EnumTT_WegBewertung {
     public String toString() {
          switch (this) {
            case KAMIKAZE:
-                return "--- (Kamikaze)";
+                return "'---' (Kamikaze)";
            case SEHR_SCHLECHT:
-                return "-- (sehr schlecht)";
+                return "'--' (sehr schlecht)";
            case SCHLECHT:
-                return "- (schlecht)";
+                return "'-' (schlecht)";
            case NORMAL:
                 return "(Normal)";
            case GUT:
-                return "+ (gut)";
+                return "'+' (gut)";
            case SEHT_GUT:
-                return "++ (sehr gut)";
+                return "'++' (sehr gut)";
            case HERAUSRAGEND:
-                return "+++ (Herausragend)";
+                return "'+++' (Herausragend)";
           }
     return super.toString();
     }

@@ -2,7 +2,6 @@ package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,19 +13,21 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.CursorToStringConverter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.AutoCompleteDbAdapter;
-import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
-
-import java.io.IOException;
-import java.util.List;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 
 public abstract class FragmentSearchAbstract extends Fragment implements
 		OnClickListener {
@@ -34,18 +35,15 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 
 	protected Integer myViewID;
 	protected Integer myEditTextSuchtextID;
-//	protected DataBaseHelper myDbHelper;
 	protected AutoCompleteDbAdapter myAutoCompleteDbAdapter;
 	protected AutoCompleteTextView myAutoCompleteTextView;
-	protected String myAutoCompleteTextViewText;
+    protected Spinner mySpinner;;
 	protected final int[] to = new int[] { android.R.id.text1 };
 	protected String[] from;
 	protected SimpleCursorAdapter adapter;
 
-	protected SearchManager searchManager = SearchManager.getInstance();
+	protected SearchManager4FragmentSearches searchManager4FragmentSearches = SearchManager4FragmentSearches.getInstance();
 
-
-	protected static String strGebiet;
 	protected View view;
 
 	public enum SearchType {
@@ -61,23 +59,7 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 		case COMMENT:
 			return new FragmentSearchComment();
 		}
-		return null;
-	}
-
-	public String getStrTextSuchtext() {
-		// if (myAutoCompleteTextViewText != null)
-		return myAutoCompleteTextViewText;
-		// return "";
-		// if (myAutoCompleteTextView == null)
-		// myAutoCompleteTextView = (AutoCompleteTextView)
-		// findViewById(FragmentSearchAbstract.myEditTextSuchtextXYZ);
-		// return myAutoCompleteTextView.getText().toString();
-	}
-
-	public String getStrtextViewGebiet() {
-		Log.e(FragmentSearchAbstract.class.getSimpleName(),
-				"mySpinner.getSelectedItem()" + strGebiet);
-		return strGebiet;
+		throw new IllegalArgumentException("Incorrect 'SearchType'");
 	}
 
     protected View createView(@NonNull LayoutInflater inflater,
@@ -105,8 +87,7 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 				android.R.layout.simple_dropdown_item_1line, null, from, to);
 		myAutoCompleteDbAdapter = new AutoCompleteDbAdapter(getActivity());
 		myAutoCompleteTextView = view.findViewById(myEditTextSuchtextID);
-		myAutoCompleteTextViewText = myAutoCompleteTextView.getText().toString();
-		myAutoCompleteTextView.setAdapter(adapter);
+        myAutoCompleteTextView.setAdapter(adapter);
 		// ***************************************************************************************
 		// Set the CursorToStringConverter, to provide the labels for the
 		// choices to be displayed in the AutoCompleteTextView.
@@ -139,8 +120,6 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 
 	@Override
 	public void onResume() {
-		myAutoCompleteTextView = view.findViewById(myEditTextSuchtextID);
-		myAutoCompleteTextViewText = myAutoCompleteTextView.getText().toString();
 		super.onResume();
 	}
 
@@ -166,16 +145,62 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 	/**
 	 * Function to load the spinner data from SQLite database
 	 * */
-	protected void loadSpinnerData(Context context, Spinner mySpinner) {
+	protected void loadAreaSpinnerData(Context context, Spinner mySpinner) {
 		// Creating adapter for spinner
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context,
 				android.R.layout.simple_spinner_item,
-                SearchManager.getInstance().getAllAreaLabels(getContext()));
+                SearchManager4FragmentSearches.getInstance().getAllAreaLabels(getContext()));
         /* simple_spinner_dropdown_item */
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
 		// attaching data adapter to spinner
 		mySpinner.setAdapter(dataAdapter);
+		mySpinner.setSelection(searchManager4FragmentSearches.getMyAreaPositionFromSpinner());
+	}
+
+    protected void mySpinnerSetOnItemSelectedListener(final Spinner mySpinner) {
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e(TAG,"mySpinner.getSelectedItem()" + mySpinner.getSelectedItem().toString());
+                searchManager4FragmentSearches.setMyAreaFromSpinner(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+    }
+
+
+	protected void setListenerRangeSeekbarLimitsForScale4RouteSearch(
+            BubbleThumbRangeSeekbar rangeSeekbarLimitsForScale4RouteSearch,
+            final TextView textViewLimitsForScale) {
+		rangeSeekbarLimitsForScale4RouteSearch.setMinValue(EnumSachsenSchwierigkeitsGrad.getMinInteger());
+		rangeSeekbarLimitsForScale4RouteSearch.setMaxValue(EnumSachsenSchwierigkeitsGrad.getMaxInteger());
+		rangeSeekbarLimitsForScale4RouteSearch
+				.setMinStartValue(searchManager4FragmentSearches.getMinLimitsForDifficultyGrade())
+				.setMaxStartValue(searchManager4FragmentSearches.getMaxLimitsForDifficultyGrade()).apply();
+
+		rangeSeekbarLimitsForScale4RouteSearch.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+			@Override
+			public void valueChanged(Number minValue, Number maxValue) {
+				// handle changed range values
+				String strUpdate = getString(R.string.strLimitForScale)
+						+ "\n(" + EnumSachsenSchwierigkeitsGrad.toStringFromSkaleOrdinal(minValue.intValue())
+						+ " bis " + EnumSachsenSchwierigkeitsGrad.toStringFromSkaleOrdinal(maxValue.intValue()) + ")";
+				textViewLimitsForScale.setText(strUpdate);
+			}
+		});
+		// set final value listener
+		rangeSeekbarLimitsForScale4RouteSearch.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+			@Override
+			public void finalValue(Number minValue, Number maxValue) {
+				// handle changed range values
+				searchManager4FragmentSearches.setMinLimitsForDifficultyGrade(minValue.intValue());
+				searchManager4FragmentSearches.setMaxLimitsForDifficultyGrade(maxValue.intValue());
+			}
+		});
 	}
 
 	@Override

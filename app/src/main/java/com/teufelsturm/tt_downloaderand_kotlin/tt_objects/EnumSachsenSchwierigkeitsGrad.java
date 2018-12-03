@@ -4,6 +4,8 @@
  */
 package com.teufelsturm.tt_downloaderand_kotlin.tt_objects;
 
+import android.support.annotation.NonNull;
+
 /**
  *
  * @author Martin
@@ -17,6 +19,7 @@ public enum EnumSachsenSchwierigkeitsGrad {
     Sprung1(151),Sprung2(152),Sprung3(153),Sprung4(154);
     private int value;
     public static Integer getMinInteger(){ return 1; }
+    @NonNull
     public static Integer getMaxInteger(){ return EnumSachsenSchwierigkeitsGrad.values().length - 1; } // 29, but "NA" is skipped!
     
     private EnumSachsenSchwierigkeitsGrad(int value) {
@@ -30,6 +33,7 @@ public enum EnumSachsenSchwierigkeitsGrad {
     
     public static String toStringFromSkaleOrdinal(int valueI){
         switch(valueI){
+            case 0: return "n/a";
             case 1: return "I";
             case 2: return "II";
             case 3: return "III";
@@ -59,43 +63,43 @@ public enum EnumSachsenSchwierigkeitsGrad {
             case 27: return "Sprung 2";
             case 28: return "Sprung 3";
             case 29: return "Sprung 4";
+            default: throw new IllegalArgumentException("Argument is worong: " + valueI);
         }
-        return "";
     }
 
     public static String toString(Integer valueInt){
         switch(valueInt){
-            case 10: return "I";
-            case 20: return "II";
-            case 30: return "III";
-            case 40: return "IV";
-            case 50: return "V";
-            case 60: return "VI";
-            case 71: return "VIIa";
-            case 72: return "VIIb";
-            case 73: return "VIIc";
-            case 81: return "VIIIa";
-            case 82: return "VIIIb";
-            case 83: return "VIIIc";
-            case 91: return "IXa";
-            case 92: return "IXb";
-            case 93: return "IXc";
-            case 101: return "Xa";
-            case 102: return "Xb";
-            case 103: return "Xc";
-            case 111: return "XIa";
-            case 112: return "XIb";
-            case 113: return "XIc";
-            case 121: return "XIIa";
-            case 122: return "XIIb";
-            case 123: return "XIIc";
-            case 130: return "XIIIa";
-            case 151: return "1";
-            case 152: return "2";
-            case 153: return "3";
-            case 154: return "4";
+                case 10: return "I";
+                case 20: return "II";
+                case 30: return "III";
+                case 40: return "IV";
+                case 50: return "V";
+                case 60: return "VI";
+                case 71: return "VIIa";
+                case 72: return "VIIb";
+                case 73: return "VIIc";
+                case 81: return "VIIIa";
+                case 82: return "VIIIb";
+                case 83: return "VIIIc";
+                case 91: return "IXa";
+                case 92: return "IXb";
+                case 93: return "IXc";
+                case 101: return "Xa";
+                case 102: return "Xb";
+                case 103: return "Xc";
+                case 111: return "XIa";
+                case 112: return "XIb";
+                case 113: return "XIc";
+                case 121: return "XIIa";
+                case 122: return "XIIb";
+                case 123: return "XIIc";
+                case 130: return "XIIIa";
+                case 151: return "Sprung 1";
+                case 152: return "Sprung 2";
+                case 153: return "Sprung 3";
+                case 154: return "Sprung 4";
+            default: throw new IllegalArgumentException("Argument is worong: " + valueInt);
         }
-    return "";
     }
     
     
@@ -130,8 +134,8 @@ public enum EnumSachsenSchwierigkeitsGrad {
             case 152: return EnumSachsenSchwierigkeitsGrad.Sprung2;
             case 153: return EnumSachsenSchwierigkeitsGrad.Sprung3;
             case 154: return EnumSachsenSchwierigkeitsGrad.Sprung4;
+            default: throw new IllegalArgumentException("Argument is worong: " + valueInt);
         }
-       return null;
     }
     public static EnumSachsenSchwierigkeitsGrad valuesFromSkaleOrdinal(int rangeSliderValue) {
         switch (rangeSliderValue) {
@@ -164,8 +168,42 @@ public enum EnumSachsenSchwierigkeitsGrad {
             case 27: return EnumSachsenSchwierigkeitsGrad.Sprung2;
             case 28: return EnumSachsenSchwierigkeitsGrad.Sprung3;
             case 29: return EnumSachsenSchwierigkeitsGrad.Sprung4;
+            default: throw new IllegalArgumentException("Argument is worong: " + rangeSliderValue);
             }
-        return null;
     }
+    
+//    public static EnumSachsenSchwierigkeitsGrad getNextEnumSachsenSchwierigkeitsGrad(int anyValueIn) {
+//        if(anyValueIn <= 15) { return EnumSachsenSchwierigkeitsGrad.I;}
+//        if(anyValueIn <= 20) { return EnumSachsenSchwierigkeitsGrad.II;}
+//        if(anyValueIn <= 25) { return EnumSachsenSchwierigkeitsGrad.III;}
+//        if(anyValueIn <= 30) { return EnumSachsenSchwierigkeitsGrad.IV;}
+//        if(anyValueIn <= 35) { return EnumSachsenSchwierigkeitsGrad.V;}
+//        if(anyValueIn <= 40) { return EnumSachsenSchwierigkeitsGrad.VI;}
+//        if(anyValueIn <= 45) { return EnumSachsenSchwierigkeitsGrad.VIIa;}
+//        if(anyValueIn <= 50) { return EnumSachsenSchwierigkeitsGrad.VIIb;}
+//        if(anyValueIn <= 55) { return EnumSachsenSchwierigkeitsGrad.VIIc;}
+//        if(anyValueIn <= 60) { return EnumSachsenSchwierigkeitsGrad.VIIIa;}
+//        if(anyValueIn <= 65) { return EnumSachsenSchwierigkeitsGrad.VIIIb;}
+//        if(anyValueIn <= 70) { return EnumSachsenSchwierigkeitsGrad.VIIIc;}
+//        if(anyValueIn <= 75) { return EnumSachsenSchwierigkeitsGrad.IXa;}
+//        if(anyValueIn <= 80) { return EnumSachsenSchwierigkeitsGrad.IXb;}
+//        if(anyValueIn <= 85) { return EnumSachsenSchwierigkeitsGrad.IXc;}
+//        if(anyValueIn <= 90) { return EnumSachsenSchwierigkeitsGrad.Xa;}
+//        if(anyValueIn <= 95) { return EnumSachsenSchwierigkeitsGrad.Xb;}
+//        if(anyValueIn <= 100) { return EnumSachsenSchwierigkeitsGrad.Xc;}
+//        if(anyValueIn <= 105) { return EnumSachsenSchwierigkeitsGrad.XIa;}
+//        if(anyValueIn <= 110) { return EnumSachsenSchwierigkeitsGrad.XIb;}
+//        if(anyValueIn <= 115) { return EnumSachsenSchwierigkeitsGrad.XIc;}
+//        if(anyValueIn <= 120) { return EnumSachsenSchwierigkeitsGrad.XIIa;}
+//        if(anyValueIn <= 125) { return EnumSachsenSchwierigkeitsGrad.XIIb;}
+//        if(anyValueIn <= 130) { return EnumSachsenSchwierigkeitsGrad.XIIc;}
+//        if(anyValueIn <= 135) { return EnumSachsenSchwierigkeitsGrad.XIIIa;}
+//        if(anyValueIn <= 140) { return EnumSachsenSchwierigkeitsGrad.Sprung1;}
+//        if(anyValueIn <= 145) { return EnumSachsenSchwierigkeitsGrad.Sprung2;}
+//        if(anyValueIn <= 150) { return EnumSachsenSchwierigkeitsGrad.Sprung3;}
+//        return EnumSachsenSchwierigkeitsGrad.Sprung4;
+//
+//    }
+    
 
 }
