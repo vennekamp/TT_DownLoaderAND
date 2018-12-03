@@ -6,27 +6,21 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.LayoutInflaterCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
-import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
-import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DB_BackUp2SDCard;
@@ -39,13 +33,10 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
     private static final String TAG = FragmentSearchSummit.class.getSimpleName();
     private static final String STR_NAME = "strName";
 
-    private Spinner mySpinner;
-
-
 	@Override
 	protected Cursor getAutoCompleteCursor(CharSequence constraint) {
 		return myAutoCompleteDbAdapter
-				.getAllSummits(getContext(), searchManager,
+				.getAllSummits(getContext(), searchManager4FragmentSearches,
                         (constraint != null ? constraint.toString() : null));
 	}
 
@@ -60,10 +51,29 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 		view = super.createView(inflater, container);
 		// ***************************************************************************************
 		// Define Action Listener
+        //
+        myAutoCompleteTextView.setText(searchManager4FragmentSearches.getStrTextSuchtext4Summit());
+        myAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchManager4FragmentSearches.setStrTextSuchtext4Summit(s.toString());
+            }
+        });
+
 		// Spinner 
-		mySpinner = view.findViewById(R.id.spinnerAreaSummit);
-		loadSpinnerData(this.getActivity(), mySpinner);
-		mySpinner.setSelection(searchManager.getMyAreaPositionFromSpinner());
+        super.mySpinner = view.findViewById(R.id.spinnerAreaSummit);
+		super.loadAreaSpinnerData(this.getActivity(), mySpinner);
+        super.mySpinnerSetOnItemSelectedListener(mySpinner);
 		// SEARCH Button
 		Button buttonSearchSummit = view.findViewById(R.id.buttonSearchSummit);
 		buttonSearchSummit.setOnClickListener(this);
@@ -77,8 +87,6 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
         // create RangeSeekBar for number of summits as Integer range between 0 and 200
         BubbleThumbRangeSeekbar seekBarAnzahlDerSternchenWege
                 = view.findViewById(R.id.rangeSeekbarAnzahlDerSternchenWege);
-
-        mySpinnerSetOnItemSelectedListener();
         seekBarAnzahlDerWegeSetOnRangeSeekBarChangeListener(seekBarAnzahlDerWege);
         seekBarAnzahlDerSternchenWegeSetOnRangeSeekBarChangeListener(seekBarAnzahlDerSternchenWege);
 		return view;
@@ -86,6 +94,9 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 
     private void seekBarAnzahlDerSternchenWegeSetOnRangeSeekBarChangeListener(@NotNull BubbleThumbRangeSeekbar
                                                                                       seekBarAnzahlDerSternchenWege) {
+        seekBarAnzahlDerSternchenWege
+                .setMinStartValue(searchManager4FragmentSearches.getIntMinAnzahlDerSternchenWege())
+                .setMaxStartValue(searchManager4FragmentSearches.getIntMaxAnzahlDerSternchenWege()).apply();
         // set listener
         seekBarAnzahlDerSternchenWege.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -103,13 +114,16 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
             @Override
             public void finalValue(Number minValue, Number maxValue) {
                 // handle changed range values
-                searchManager.setIntMinAnzahlDerWege(minValue.intValue());
-                searchManager.setIntMaxAnzahlDerWege(maxValue.intValue());
+                searchManager4FragmentSearches.setIntMinAnzahlDerSternchenWege(minValue.intValue());
+                searchManager4FragmentSearches.setIntMaxAnzahlDerSternchenWege(maxValue.intValue());
             }
         });
     }
 
     private void seekBarAnzahlDerWegeSetOnRangeSeekBarChangeListener(@NotNull BubbleThumbRangeSeekbar seekBarAnzahlDerWege) {
+        seekBarAnzahlDerWege
+                .setMinStartValue(searchManager4FragmentSearches.getIntMinAnzahlDerWege())
+                .setMaxStartValue(searchManager4FragmentSearches.getIntMaxAnzahlDerWege()).apply();
         // set listener
         seekBarAnzahlDerWege.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
             @Override
@@ -127,26 +141,12 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
             @Override
             public void finalValue(Number minValue, Number maxValue) {
                 // handle changed range values
-                searchManager.setIntMinAnzahlDerWege(minValue.intValue());
-                searchManager.setIntMaxAnzahlDerWege(maxValue.intValue());
+                searchManager4FragmentSearches.setIntMinAnzahlDerWege(minValue.intValue());
+                searchManager4FragmentSearches.setIntMaxAnzahlDerWege(maxValue.intValue());
             }
         });
     }
 
-	private void mySpinnerSetOnItemSelectedListener() {
-		mySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				strGebiet = mySpinner.getSelectedItem().toString();
-				Log.e(TAG,"mySpinner.getSelectedItem()" + strGebiet);
-				searchManager.setMyAreaFromSpinner(position);
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-			}
-		});
-	}
 
 
 
@@ -154,16 +154,14 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonSearchSummit) {
 			Log.i(getClass().getSimpleName(), "onClick 'buttonSearchSummit' gedrückt...");
-			myEditTextSuchtextID = R.id.editTextSuchtextGipfel;
-			myAutoCompleteTextViewText = ((AutoCompleteTextView) view
-					.findViewById(myEditTextSuchtextID)).getText().toString();
 
-            String strTextSuchtext = getStrTextSuchtext();
-            String strGebiet = getStrtextViewGebiet();
-            int intMinAnzahlDerWege = searchManager.getIntMinAnzahlDerWege();
-            int intMaxAnzahlDerWege = searchManager.getIntMaxAnzahlDerWege();
-            int intMinAnzahlDerSternchenWege = searchManager.getIntMinAnzahlDerSternchenWege();
-            int intMaxAnzahlDerSternchenWege = searchManager.getIntMaxAnzahlDerSternchenWege();
+
+            String strTextSuchtext = searchManager4FragmentSearches.getStrTextSuchtext4Summit();
+            String strGebiet = searchManager4FragmentSearches.getStrtextViewGebiet();
+            int intMinAnzahlDerWege = searchManager4FragmentSearches.getIntMinAnzahlDerWege();
+            int intMaxAnzahlDerWege = searchManager4FragmentSearches.getIntMaxAnzahlDerWege();
+            int intMinAnzahlDerSternchenWege = searchManager4FragmentSearches.getIntMinAnzahlDerSternchenWege();
+            int intMaxAnzahlDerSternchenWege = searchManager4FragmentSearches.getIntMaxAnzahlDerSternchenWege();
 
 			Fragment fragment = TT_SummitsFoundFragment.newInstance(
                     strTextSuchtext, strGebiet, intMinAnzahlDerWege, intMaxAnzahlDerWege,
@@ -268,7 +266,7 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
     @Override
 	public void onResume() {
 		myViewID = R.layout._main_activity__summit;
-//		loadSpinnerData(this.getActivity(), mySpinner);
+//		loadAreaSpinnerData(this.getActivity(), mySpinner);
 		myEditTextSuchtextID = R.id.editTextSuchtextGipfel;
 		super.onResume();
 	}

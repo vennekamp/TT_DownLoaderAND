@@ -71,7 +71,7 @@
             android:layout_alignLeft="@+id/textViewGebiet" />
 
         <TextView
-            android:id="@+id/textViewLimitsForScale4CommentSearch"
+            android:id="@+id/textViewLimitsForScale44CommentSearch"
             android:layout_below="@+id/spinnerAreaComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,11 +85,11 @@
 
         <com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar
             android:id="@+id/rangeSeekbarLimitsForScale4CommentSearch"
-            android:layout_below="@+id/textViewLimitsForScale4CommentSearch"
+            android:layout_below="@+id/textViewLimitsForScale44CommentSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:min_value="0"
-            app:max_value="250"
+            app:min_value="1"
+            app:max_value="29"
             app:steps="1"
             app:bar_color="@color/TT_FG_BLUE"
             app:bar_highlight_color="@color/TT_BG_BLUE"
@@ -101,9 +101,9 @@
 
         <TextView
             android:id="@+id/TextViewCommmentGrading"
+            android:layout_below="@+id/rangeSeekbarLimitsForScale4CommentSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rangeSeekbarLimitsForScale4CommentSearch"
             android:layout_alignStart="@+id/rangeSeekbarLimitsForScale4CommentSearch"
             android:layout_alignLeft="@+id/rangeSeekbarLimitsForScale4CommentSearch"
             android:text="@string/strMinGradingInComment"

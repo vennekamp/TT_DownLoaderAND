@@ -8,9 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.teufelsturm.tt_downloaderand_kotlin.searches.FragmentSearchRoute;
-import com.teufelsturm.tt_downloaderand_kotlin.searches.FragmentSearchSummit;
 import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.searches.SearchManager;
+import com.teufelsturm.tt_downloaderand_kotlin.searches.SearchManager4FragmentSearches;
 
 public class AutoCompleteDbAdapter {
 
@@ -49,15 +48,15 @@ public class AutoCompleteDbAdapter {
 	 * @throws SQLException
 	 *             if query fails
 	 */
-	public Cursor getAllSummits(Context context, SearchManager searchManager, String constraint) throws SQLException {
+	public Cursor getAllSummits(Context context, SearchManager4FragmentSearches searchManager4FragmentSearches, String constraint) throws SQLException {
 		Log.v(getClass().getSimpleName(), "getAllSummits");
 		// Select Query
-		String strGebiet =  searchManager.getAllAreaLabels(context)
-				.get(searchManager.getMyAreaPositionFromSpinner());
-		int intMinAnzahlWege = searchManager.getIntMinAnzahlDerWege();
-		int intMaxAnzahlWege = searchManager.getIntMaxAnzahlDerWege();
-		int intMinAnzahlSternchenWege = searchManager.getIntMinAnzahlDerSternchenWege();
-		int intMaxAnzahlSternchenWege = searchManager.getIntMaxAnzahlDerSternchenWege();
+		String strGebiet =  searchManager4FragmentSearches.getAllAreaLabels(context)
+				.get(searchManager4FragmentSearches.getMyAreaPositionFromSpinner());
+		int intMinAnzahlWege = searchManager4FragmentSearches.getIntMinAnzahlDerWege();
+		int intMaxAnzahlWege = searchManager4FragmentSearches.getIntMaxAnzahlDerWege();
+		int intMinAnzahlSternchenWege = searchManager4FragmentSearches.getIntMinAnzahlDerSternchenWege();
+		int intMaxAnzahlSternchenWege = searchManager4FragmentSearches.getIntMaxAnzahlDerSternchenWege();
 		String queryString = new StringBuilder()
                 .append("SELECT a.[_id], a.[strName] FROM [TT_Summit_AND] a")
                 .append(mActivity.getString(R.string.strAll).equals(strGebiet)
@@ -77,15 +76,15 @@ public class AutoCompleteDbAdapter {
 	/**
 	 * Getting all Areas returns list of Climbing Route Names
 	 * */
-	public Cursor getAllRoutes(SearchManager searchManager,
+	public Cursor getAllRoutes(SearchManager4FragmentSearches searchManager4FragmentSearches,
 							   FragmentSearchRoute f, String constraint) throws SQLException {
 		Log.v(getClass().getSimpleName(), "getAllRoutes");
-		String strGebiet = searchManager.getAllAreaLabels(f.getContext())
-                .get( searchManager.getMyAreaPositionFromSpinner() );
-		int intMinSchwierigkeit = searchManager.getEnumMinLimitsForScale();
-		int intMaxSchwierigkeit = searchManager.getEnumMaxLimitsForScale();
-		int intAnzahlDerKommentare = searchManager.getIntMinNumberOfComments();
-		int intMittlereWegBewertung = searchManager.getIntMinOfMeanRating();
+		String strGebiet = searchManager4FragmentSearches.getAllAreaLabels(f.getContext())
+                .get( searchManager4FragmentSearches.getMyAreaPositionFromSpinner() );
+		int intMinSchwierigkeit = searchManager4FragmentSearches.getMinLimitsForDifficultyGrade();
+		int intMaxSchwierigkeit = searchManager4FragmentSearches.getMaxLimitsForDifficultyGrade();
+		int intAnzahlDerKommentare = searchManager4FragmentSearches.getIntMinNumberOfComments();
+		int intMittlereWegBewertung = searchManager4FragmentSearches.getIntMinOfMeanRating();
 		// Select All Query
 		String queryString = "SELECT a.[_id], a.[WegName] from [TT_Route_AND] a "
 				+ "       WHERE a.[intTTGipfelNr] in ("

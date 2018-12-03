@@ -38,11 +38,11 @@
     <string name="YES">"Ja, ich weiss was ich mache."</string>
     <string name="searchTextRoute">Suchtext für einen Weg:</string>
     <string name="strLimitForScale">"Schwierigkeits-Skala: "</string>
-    <string name="strNumberOfComments">"Anzahl Kommentare > "</string>
-    <string name="strMinOfMeanRating">"Ø der Wegbewertung > "</string>
+    <string name="strNumberOfComments">"Anzahl Kommentare >= "</string>
+    <string name="strMinOfMeanRating">"Ø der Wegbewertung >= "</string>
     <string name="strSearchRoute">Wege suchen</string>
     <string name="searchTextComment">Suchtext für einen Kommentar:</string>
-    <string name="strMinGradingInComment">"Mindest Wegbewertung im Kommentar"</string>
+    <string name="strMinGradingInComment">"Mindest Wegbewertung im Kommentar: "</string>
     <string name="strSearchComment">"Kommentar suchen"</string>
     <string name="strAll">"Alle"</string>
     <string name="gps_disabled_message">""GPS ist ausgeschaltet.\nSoll es aktiviert werden?"</string>
@@ -52,7 +52,5 @@
     <string name="strToDay">Heute</string>
     <string name="strNoDay">Kein Datum</string>
     <string name="strChooseDate">"Datum"</string>
-    <!-- MAPSFORGE Strings -->
-    <string name="copyright_osm">Map data © OpenStreetMap contributors</string>
 
 </resources>
