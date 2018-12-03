@@ -199,7 +199,7 @@ public class TT_SummitsFoundFragment extends Fragment
 					+ "' AND intAnzahlSternchenWege <= '"
 					+ intMaxAnzahlDerSternchenWege + "'";
 			Log.i(TAG, "QueryString1 erweitern (3)... ");
-			if (!strTextSuchtext.equals(""))
+			if (!"".equals(strTextSuchtext))
 				QueryString1 += " AND strName like '%"
 						+ strTextSuchtext + "%'";
 			Log.i(TAG, "Neuen Gipfel suchen:\r\n"

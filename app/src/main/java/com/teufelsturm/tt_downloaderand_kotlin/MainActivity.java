@@ -18,8 +18,6 @@ public class MainActivity extends FragmentActivity
     public final static String MAP_NAME = "saechsische_schweiz.map";
     public final static String APP_VERSION = "0.99";
 
-//    private FloatingActionButton fab4search;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
