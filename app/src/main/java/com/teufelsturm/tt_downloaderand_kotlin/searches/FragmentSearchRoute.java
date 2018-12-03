@@ -31,6 +31,8 @@ import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 public class FragmentSearchRoute extends FragmentSearchAbstract
 		implements OnClickListener, OnSeekBarChangeListener {
 
+	public static final String WEG_NAME = "WegName";
+
 	@Override
 	protected Cursor getAutoCompleteCursor(CharSequence constraint) {
 		return myAutoCompleteDbAdapter
@@ -43,7 +45,7 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 							 Bundle savedInstanceState) {
 		myViewID = R.layout._main_activity__route;
 		myEditTextSuchtextID = R.id.editTextSuchtextWege;
-		from = new String[] { "WegName" };
+		from = new String[] {WEG_NAME};
 		view = super.createView(inflater, container);
 		// ***************************************************************************************
 		// Define Action Listener
