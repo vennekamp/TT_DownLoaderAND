@@ -1,10 +1,5 @@
-package com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList;
+package com.teufelsturm.tt_downloader3.foundCommentsList;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_RouteFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
+import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +25,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class TT_Comment_ANDAdapter
         extends RecyclerView.Adapter<TT_Comment_ANDAdapter.MyViewHolder> {
 	private static final String TAG = TT_Comment_ANDAdapter.class.getSimpleName();
@@ -36,7 +35,7 @@ public class TT_Comment_ANDAdapter
 	private Boolean showRoute;
 	private ArrayList<TT_Comment_AND> lstTT_Comment_AND;
 
-	// Provide a reference to the views for each data item
+    // Provide a reference to the views for each data item
 	// Complex data items may need more than one view per item, and
 	// you provide access to all the views for a data item in a view holder
 	public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -47,7 +46,7 @@ public class TT_Comment_ANDAdapter
         public TextView textView_Comment_UserGrading;
         public TextView textView_Comment_tableColStrUser;
         public TextView textView_Comment_tableCol_DateOfComment;
-		public MyViewHolder(View rowView) {
+		MyViewHolder(View rowView) {
 			super(rowView);
 
             // Hold the view objects in an object,
@@ -123,12 +122,11 @@ public class TT_Comment_ANDAdapter
                         activity.getApplicationContext().getResources()
                                 .getString(R.string.tableCol_RouteName),
                         currentTT_Comment_AND.getStrWegName()));
-        TT_Summit_AND tt_summit_and = new TT_Summit_AND(
-                currentTT_Comment_AND.getIntTTGipfelNr(), activity);
+        TT_Summit_AND tt_summit_and = new TT_Summit_AND(activity, currentTT_Comment_AND.getIntTTGipfelNr());
         aTT_Comment_ANDView.textView_tableCol_SummitName2Comment
                 .setText(String.format("%s%s (%s)", activity.getApplicationContext().getResources()
                         .getString(R.string.tableCol_SummitName),
-                        currentTT_Comment_AND.getStrGipfelName(),
+                        currentTT_Comment_AND.getStr_TTSummitName(),
                         tt_summit_and.getStr_Area()));
         Log.i(TAG, "Suche UserGrading...: "
                 + currentTT_Comment_AND.getIntEntryBewertung());
@@ -172,12 +170,11 @@ public class TT_Comment_ANDAdapter
                     .setVisibility(View.GONE);
         } else {
             aTT_Comment_ANDView.textView_tableCol_RouteName2Comment
-                    .setTag(currentTT_Comment_AND.getIntWegNr());
+                    .setTag(currentTT_Comment_AND.getIntTT_IDOrdinal());
             aTT_Comment_ANDView.textView_tableCol_RouteName2Comment
                     .setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO Auto-generated method stub
                             Toast.makeText(
                                     activity.getApplicationContext(),
                                     "Click textView_tableCol_RouteName2Comment for Route...",
@@ -187,7 +184,7 @@ public class TT_Comment_ANDAdapter
                                     "Intent TT_RouteFoundFragment = new Intent(...");
                             Fragment fragment
                                     = TT_RouteFoundFragment.newInstance(
-                                    new TT_Route_AND(bInt, activity));
+                                    new TT_Route_AND(activity, bInt));
                             activity.replaceFragment(fragment, TT_RouteFoundFragment.ID );
                         }
                     });
@@ -198,8 +195,7 @@ public class TT_Comment_ANDAdapter
                         @Override
                         public void onClick(View v) {
                             Integer bInt = (Integer)v.getTag();
-                            TT_Summit_AND tt_summit_and = new TT_Summit_AND(bInt, activity
-                                    .getApplicationContext());
+                            TT_Summit_AND tt_summit_and = new TT_Summit_AND(activity, bInt);
                             Log.i(TAG,
                                     "Intent addonPageSummitFoundActivity = new Intent(...");
                             TT_SummitFoundFragment tt_summitFoundFragment

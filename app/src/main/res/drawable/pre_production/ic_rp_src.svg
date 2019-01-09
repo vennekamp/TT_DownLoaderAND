@@ -44,7 +44,7 @@
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:mType
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
       </cc:Work>
@@ -55,7 +55,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       sodipodi:type="arc"
+       sodipodi:mType="arc"
        style="fill:#ff0000"
        id="path3190"
        sodipodi:cx="287.85715"
@@ -86,7 +86,7 @@
        y="511.8418"
        transform="matrix(0.96695439,-0.25494943,-0.42304175,0.90611019,0,0)" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:#28220b"
        id="path3033-8"
        sodipodi:sides="3"
@@ -110,7 +110,7 @@
        y="326.39954"
        transform="matrix(-0.96695439,-0.25494943,0.42304175,0.90611019,0,0)" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:#28220b"
        id="path3033"
        sodipodi:sides="3"
@@ -133,7 +133,7 @@
        x="276.39011"
        y="335.66901" />
     <path
-       sodipodi:type="arc"
+       sodipodi:mType="arc"
        style="fill:#28220b"
        id="path3037"
        sodipodi:cx="343.75"
@@ -150,7 +150,7 @@
        x="247.85117"
        y="404.90359" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:#ff0000"
        id="path3033-8-8"
        sodipodi:sides="3"
@@ -308,7 +308,7 @@
        y1="403.49121"
        x1="279.17938" />
     <path
-       sodipodi:type="arc"
+       sodipodi:mType="arc"
        style="fill:#ff0000"
        id="path3190-7"
        sodipodi:cx="287.85715"

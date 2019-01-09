@@ -216,7 +216,7 @@ public class DatePickerFragment extends DialogFragment
             case DialogInterface.BUTTON_NEGATIVE: // No DATE
                 calendar.setTimeInMillis(0L);
                 buttonAscendedDay.setText(getResources().getString(R.string.strChooseDate));
-                Log.v(TAG,"buttonRouteAscendDay.setText(getApplicationContext().getResources().getString(R.string.strChooseDate));");
+                Log.v(TAG,"buttonRouteAscendDay.setText(getApplicationContext().getResources().getSQL4CommentsSearch(R.string.strChooseDate));");
                 break;
         }
         return (aLong_DateAsscended != (calendar.getTimeInMillis()));

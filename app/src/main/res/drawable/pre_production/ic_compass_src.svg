@@ -5,12 +5,12 @@
     <rdf:RDF>
       <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:mType rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1440" inkscape:window-height="852" id="namedview132" showgrid="false" inkscape:zoom="0.834386" inkscape:cx="277.55239" inkscape:cy="245.06612" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="0" inkscape:current-layer="svg1" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0">
-    <inkscape:grid type="xygrid" id="grid3111" empspacing="5" visible="true" enabled="true" snapvisiblegridlinesonly="true"/>
+    <inkscape:grid mType="xygrid" id="grid3111" empspacing="5" visible="true" enabled="true" snapvisiblegridlinesonly="true"/>
   </sodipodi:namedview>
   <defs id="defs3">
     <linearGradient x1="0.98000002" y1="0.6171875" x2="0.115" y2="0.625" id="linearGradient1589" xlink:href="#linearGradient1590"/>
