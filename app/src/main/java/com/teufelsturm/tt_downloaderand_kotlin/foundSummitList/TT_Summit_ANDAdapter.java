@@ -140,7 +140,7 @@ public class TT_Summit_ANDAdapter
         aTT_Gipfel_Location.setLatitude(currentTT_Gipfel_AND.getDbl_GpsLat() );
 //		aTT_Gipfel_ANDView.textView_tableCol_Gps.setText(
 //				activity.getApplicationContext().getResources()
-//				.getString(R.string.tableCol_Gps)
+//				.getSQL4CommentsSearch(R.string.tableCol_Gps)
 //				+ Location.convert(aTT_Gipfel_Location.getLongitude()
 //						, Location.FORMAT_SECONDS ) + " N; "
 //				+ Location.convert(aTT_Gipfel_Location.getLatitude()

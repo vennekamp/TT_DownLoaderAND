@@ -180,7 +180,7 @@
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:mType
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
       </cc:Work>
@@ -192,7 +192,7 @@
      id="layer1"
      style="display:inline">
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient4404);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985-0"
        sodipodi:sides="3"

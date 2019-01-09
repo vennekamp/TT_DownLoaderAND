@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloaderand_kotlin.dbHelper;
+package com.teufelsturm.tt_downloader3.dbHelper;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,9 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.teufelsturm.tt_downloaderand_kotlin.searches.FragmentSearchRoute;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.searches.SearchManager4FragmentSearches;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.searches.FragmentSearchRoute;
+import com.teufelsturm.tt_downloader3.searches.ViewModel4FragmentSearches;
 
 public class AutoCompleteDbAdapter {
 
@@ -48,15 +48,16 @@ public class AutoCompleteDbAdapter {
 	 * @throws SQLException
 	 *             if query fails
 	 */
-	public Cursor getAllSummits(Context context, SearchManager4FragmentSearches searchManager4FragmentSearches, String constraint) throws SQLException {
+	public Cursor getAllSummits(Context context, ViewModel4FragmentSearches viewModel4FragmentSearches, String constraint) throws SQLException {
 		Log.v(getClass().getSimpleName(), "getAllSummits");
 		// Select Query
-		String strGebiet =  searchManager4FragmentSearches.getAllAreaLabels(context)
-				.get(searchManager4FragmentSearches.getMyAreaPositionFromSpinner());
-		int intMinAnzahlWege = searchManager4FragmentSearches.getIntMinAnzahlDerWege();
-		int intMaxAnzahlWege = searchManager4FragmentSearches.getIntMaxAnzahlDerWege();
-		int intMinAnzahlSternchenWege = searchManager4FragmentSearches.getIntMinAnzahlDerSternchenWege();
-		int intMaxAnzahlSternchenWege = searchManager4FragmentSearches.getIntMaxAnzahlDerSternchenWege();
+		String strGebiet =  viewModel4FragmentSearches.getAllAreaLabels(context)
+				.get(viewModel4FragmentSearches.getMyAreaPositionFromSpinner());
+		int intMinAnzahlWege = viewModel4FragmentSearches.getIntMinAnzahlDerWege();
+		int intMaxAnzahlWege = viewModel4FragmentSearches.getIntMaxAnzahlDerWege();
+		int intMinAnzahlSternchenWege = viewModel4FragmentSearches.getIntMinAnzahlDerSternchenWege();
+		int intMaxAnzahlSternchenWege = viewModel4FragmentSearches.getIntMaxAnzahlDerSternchenWege();
+		// TODO: MOVE to ROOM
 		String queryString = new StringBuilder()
                 .append("SELECT a.[_id], a.[strName] FROM [TT_Summit_AND] a")
                 .append(mActivity.getString(R.string.strAll).equals(strGebiet)
@@ -76,16 +77,17 @@ public class AutoCompleteDbAdapter {
 	/**
 	 * Getting all Areas returns list of Climbing Route Names
 	 * */
-	public Cursor getAllRoutes(SearchManager4FragmentSearches searchManager4FragmentSearches,
+	public Cursor getAllRoutes(ViewModel4FragmentSearches viewModel4FragmentSearches,
 							   FragmentSearchRoute f, String constraint) throws SQLException {
 		Log.v(getClass().getSimpleName(), "getAllRoutes");
-		String strGebiet = searchManager4FragmentSearches.getAllAreaLabels(f.getContext())
-                .get( searchManager4FragmentSearches.getMyAreaPositionFromSpinner() );
-		int intMinSchwierigkeit = searchManager4FragmentSearches.getMinLimitsForDifficultyGrade();
-		int intMaxSchwierigkeit = searchManager4FragmentSearches.getMaxLimitsForDifficultyGrade();
-		int intAnzahlDerKommentare = searchManager4FragmentSearches.getIntMinNumberOfComments();
-		int intMittlereWegBewertung = searchManager4FragmentSearches.getIntMinOfMeanRating();
+		String strGebiet = viewModel4FragmentSearches.getAllAreaLabels(f.getContext())
+                .get( viewModel4FragmentSearches.getMyAreaPositionFromSpinner() );
+		int intMinSchwierigkeit = viewModel4FragmentSearches.getMinLimitsForDifficultyGrade();
+		int intMaxSchwierigkeit = viewModel4FragmentSearches.getMaxLimitsForDifficultyGrade();
+		int intAnzahlDerKommentare = viewModel4FragmentSearches.getIntMinNumberOfComments();
+		float floatMittlereWegBewertung = viewModel4FragmentSearches.getFloatMinOfMeanRating();
 		// Select All Query
+		// TODO: MOVE to ROOM
 		String queryString = "SELECT a.[_id], a.[WegName] from [TT_Route_AND] a "
 				+ "       WHERE a.[intTTGipfelNr] in ("
 				+ "       SELECT DISTINCT b.[intTTKletterWeg4Gipfel] from [TT_Route4SummitAND] b"
@@ -103,7 +105,7 @@ public class AutoCompleteDbAdapter {
 				+ "       AND a.[intAnzahlDerKommentare] >= "
 				+ intAnzahlDerKommentare
 				+ "       AND a.[fltMittlereWegBewertung] >= "
-				+ intMittlereWegBewertung;
+				+ floatMittlereWegBewertung;
 		return getAllXYZ(constraint, queryString, "\r\n AND ", "WegName");
 	}
 

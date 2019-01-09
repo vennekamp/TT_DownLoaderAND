@@ -1,29 +1,27 @@
-package com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList;
+package com.teufelsturm.tt_downloader3.foundRoutesList;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumBegehungsStil;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumBegehungsStil;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TT_Route_ANDAdapter
         extends RecyclerView.Adapter<TT_Route_ANDAdapter.MyViewHolder> {
@@ -33,7 +31,6 @@ public class TT_Route_ANDAdapter
     private View.OnClickListener mOnClickListener;
     private Context mContext;
     private boolean mShowSummit;
-
 
     // Provide a reference to the views for each data item
 // Complex data items may need more than one view per item, and
@@ -110,12 +107,11 @@ public class TT_Route_ANDAdapter
                         currentTT_Route_AND.getStrWegName(),
                         currentTT_Route_AND.getStrSchwierigkeitsGrad()));
 
-        TT_Summit_AND tt_summit_and = new TT_Summit_AND(
-                currentTT_Route_AND.getIntGipfelNr(), mContext);
+        TT_Summit_AND tt_summit_and = new TT_Summit_AND(mContext, currentTT_Route_AND.getIntGipfelNr());
         aTT_Route_ANDView.textView_tableCol_SummitName2Route.setText(
                 String.format("%s%s (%s)",
                 mContext.getResources().getString(R.string.tableCol_SummitName),
-                currentTT_Route_AND.getStrGipfelName(),
+                currentTT_Route_AND.getStr_TTSummitName(),
                 tt_summit_and.getStr_Area()));
 
         aTT_Route_ANDView.textView_tableCol_NumberOfComments.setText(MessageFormat.format("{0}  {1}",

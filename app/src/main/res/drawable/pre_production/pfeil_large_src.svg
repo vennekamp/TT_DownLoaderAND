@@ -78,7 +78,7 @@
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:mType
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
       </cc:Work>
@@ -99,7 +99,7 @@
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:#cccccc;fill-opacity:1"
        id="path2985"
        sodipodi:sides="3"

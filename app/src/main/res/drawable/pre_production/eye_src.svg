@@ -52,7 +52,7 @@
         </dc:rights>
         <dc:date />
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:mType
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <cc:license
            rdf:resource="http://web.resource.org/cc/PublicDomain" />
@@ -195,7 +195,7 @@
          sodipodi:cy="259.77228"
          sodipodi:rx="227.53777"
          sodipodi:ry="227.53777"
-         sodipodi:type="arc"
+         sodipodi:mType="arc"
          style="opacity:1;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:62.48000100000000100;stroke-opacity:1"
          transform="matrix(1.199801,0,0,1.199801,194.5972,214.5061)"
          inkscape:export-filename="C:\Users\Martin\Programming\TT_DownLoaderAND\res\drawable\ic_OnSight.png"
@@ -214,7 +214,7 @@
          sodipodi:r1="206.81926"
          sodipodi:r2="73.729027"
          sodipodi:sides="24"
-         sodipodi:type="star"
+         sodipodi:mType="star"
          style="opacity:1;fill:url(#radialGradient10485);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:62.480001;stroke-opacity:1"
          transform="matrix(0.964567,0.131397,-0.131397,0.964567,652.6546,162.0202)" />
       <path
@@ -230,7 +230,7 @@
          sodipodi:r1="206.81926"
          sodipodi:r2="73.729027"
          sodipodi:sides="24"
-         sodipodi:type="star"
+         sodipodi:mType="star"
          style="opacity:1;fill:url(#radialGradient10487);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:62.480001;stroke-opacity:1"
          transform="matrix(1.138602,0,0,1.138602,639.7583,59.8463)" />
       <path
@@ -240,7 +240,7 @@
          sodipodi:cy="259.77228"
          sodipodi:rx="227.53777"
          sodipodi:ry="227.53777"
-         sodipodi:type="arc"
+         sodipodi:mType="arc"
          style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:62.480001;stroke-opacity:1"
          transform="matrix(0.469923,0,0,0.469923,302.5458,404.1086)" />
       <path
@@ -250,7 +250,7 @@
          sodipodi:cy="340.35858"
          sodipodi:rx="103.34007"
          sodipodi:ry="63.520962"
-         sodipodi:type="arc"
+         sodipodi:mType="arc"
          style="opacity:1;fill:url(#radialGradient10489);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:62.480001;stroke-opacity:1"
          transform="matrix(1.082821,-1.082821,1.082821,1.082821,116.8324,-181.3922)" />
       <path
@@ -260,7 +260,7 @@
          sodipodi:cy="340.35858"
          sodipodi:rx="103.34007"
          sodipodi:ry="63.520962"
-         sodipodi:type="arc"
+         sodipodi:mType="arc"
          style="opacity:1;fill:url(#radialGradient10491);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:62.480001;stroke-opacity:1"
          transform="matrix(0.915538,-0.245317,0.245317,0.915538,585.3109,336.3361)" />
     </g>

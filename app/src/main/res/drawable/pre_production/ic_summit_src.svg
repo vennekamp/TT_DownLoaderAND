@@ -121,7 +121,7 @@
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:mType
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
       </cc:Work>
@@ -132,7 +132,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient3072);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985"
        sodipodi:sides="3"
@@ -152,7 +152,7 @@
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient3084);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985-1"
        sodipodi:sides="3"
@@ -172,7 +172,7 @@
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient3082);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985-7"
        sodipodi:sides="3"
@@ -192,7 +192,7 @@
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient3076);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985-7-4"
        sodipodi:sides="3"
@@ -212,7 +212,7 @@
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient3074);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985-0"
        sodipodi:sides="3"
@@ -232,7 +232,7 @@
        inkscape:export-xdpi="21.6"
        inkscape:export-ydpi="21.6" />
     <path
-       sodipodi:type="star"
+       sodipodi:mType="star"
        style="fill:url(#radialGradient3080);fill-opacity:1;stroke-width:1.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2985-9"
        sodipodi:sides="3"

@@ -23,7 +23,7 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="Solo.svg"><metadata
    id="metadata36"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:mType
          rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
    id="defs34">
   
@@ -80,7 +80,7 @@
    x="184.51758"
    y="115.36732"
    transform="matrix(0.96773516,-0.25196956,-0.42741828,0.90405399,0,0)" /><path
-   sodipodi:type="star"
+   sodipodi:mType="star"
    style="fill:#28220b"
    id="path3033-8"
    sodipodi:sides="3"
@@ -102,7 +102,7 @@
    x="-60.887272"
    y="46.450081"
    transform="matrix(-0.96773516,-0.25196956,0.42741829,0.90405398,0,0)" /><path
-   sodipodi:type="star"
+   sodipodi:mType="star"
    style="fill:#28220b"
    id="path3033"
    sodipodi:sides="3"
@@ -123,7 +123,7 @@
    height="14.346296"
    x="100.25224"
    y="68.16481" /><path
-   sodipodi:type="arc"
+   sodipodi:mType="arc"
    style="fill:#28220b"
    id="path3037"
    sodipodi:cx="343.75"
@@ -138,7 +138,7 @@
    height="8.7018518"
    x="56.350368"
    y="173.33961" /><path
-   sodipodi:type="star"
+   sodipodi:mType="star"
    style="fill:#ffffff"
    id="path3033-8-8"
    sodipodi:sides="3"

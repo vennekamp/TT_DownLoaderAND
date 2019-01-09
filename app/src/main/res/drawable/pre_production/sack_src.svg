@@ -127,7 +127,7 @@
          id="stop58203" />
     </linearGradient>
     <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
+       sodipodi:mType="inkscape:persp3d"
        inkscape:vp_x="0 : 526.18109 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_z="744.09448 : 526.18109 : 1"
@@ -139,7 +139,7 @@
        inkscape:vp_z="1 : 0.5 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
+       sodipodi:mType="inkscape:persp3d" />
     <radialGradient
        id="SVGID_1902_"
        cx="-558.84857"
@@ -644,7 +644,7 @@
        inkscape:vp_z="1 : 0.5 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
+       sodipodi:mType="inkscape:persp3d" />
     <radialGradient
        id="SVGID_837_"
        cx="-823.70612"
@@ -3319,7 +3319,7 @@
        inkscape:vp_z="1 : 0.5 : 1"
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
+       sodipodi:mType="inkscape:persp3d" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient59227"
@@ -3790,7 +3790,7 @@
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
+        <dc:mType
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
       </cc:Work>

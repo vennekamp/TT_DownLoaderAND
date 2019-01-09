@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 1000 1000"
+   enable-background="new 0 0 1000 1000"
+   xml:space="preserve"
+   id="svg8"
+   sodipodi:docname="ic_login.svg"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"><defs
+     id="defs12" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="0.236"
+     inkscape:cx="-27.542373"
+     inkscape:cy="500"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" /><metadata
+     id="metadata2"> Svg Vector Icons : http://www.onlinewebfonts.com/icon <rdf:RDF><cc:Work
+     rdf:about=""><dc:format>image/svg+xml</dc:format><dc:mType
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><path
+     inkscape:connector-curvature="0"
+     id="path4"
+     d="M 500,10 C 231.5,10 10,231.5 10,500 10,768.5 231.5,990 500,990 768.5,990 990,768.5 990,500 990,231.5 768.5,10 500,10 Z M 795.3,835.6 C 795.3,701.4 694.6,587.2 573.8,553.7 647.6,526.9 694.6,453 694.6,372.5 694.6,265.1 607.3,177.8 499.9,177.8 392.5,177.8 305.2,265.1 305.2,372.5 305.2,453 358.9,526.9 426,553.7 298.5,587.3 204.5,701.4 204.5,835.6 110.7,755.1 50.3,634.2 50.3,500 50.3,251.6 251.6,50.3 500,50.3 c 248.4,0 449.7,201.4 449.7,449.7 0,134.2 -60.4,255.1 -154.4,335.6 z"
+     style="fill:#00c400;fill-opacity:1" /></svg>

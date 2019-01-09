@@ -1,16 +1,10 @@
-package com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList;
+package com.teufelsturm.tt_downloader3.foundCommentsList;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,13 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
+import com.teufelsturm.tt_downloader3.repos.Queries;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TT_CommentsFoundFragment extends Fragment {
 	private static final String TAG = TT_CommentsFoundFragment.class.getSimpleName();
@@ -80,7 +82,7 @@ public class TT_CommentsFoundFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getActivity().getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerview_comment.setLayoutManager(linearLayoutManager);
 
 
@@ -138,41 +140,10 @@ public class TT_CommentsFoundFragment extends Fragment {
 			DataBaseHelper dbHelper = new DataBaseHelper( getActivity().getApplicationContext() );
 			newDB = dbHelper.getWritableDatabase();
 			Cursor cursor;
-			String QueryString1;
-//			SELECT a.[intTTWegNr], a.[strEntryKommentar], b.[WegName], b.[strSchwierigkeitsGrad], c.[strName],  b.[intTTGipfelNr], a.[entryBewertung], a.[strEntryUser], a.[entryDatum] 
-//				      FROM  [TT_Summit_AND] c, [TT_Route_AND] b, [TT_RouteComment_AND] a      
-//				      WHERE a.[entryBewertung] >= 0    
-//				      AND a.[strEntryKommentar] like '%%'
-//				      AND a.[intTTWegNr] = b.[intTTWegNr]     
-//				      AND c.[strGebiet] = 'Bielatal' 
-//				      AND c.[intTTGipfelNr] = b.[intTTGipfelNr] 
-//				      AND coalesce(b.[sachsenSchwierigkeitsGrad],
-//							b.[ohneUnterstützungSchwierigkeitsGrad],
-//							b.[rotPunktSchwierigkeitsGrad]
-//							, b.[intSprungSchwierigkeitsGrad] ) BETWEEN 1 AND 15
-//				     ORDER BY b.[intTTGipfelNr] LIMIT 250
-			QueryString1 = new StringBuilder()
-					.append("SELECT a.[intTTWegNr], a.[strEntryKommentar], b.[WegName], b.[strSchwierigkeitsGrad]")
-                    .append(" , c.[strName], ").append("b.[intTTGipfelNr], a.[entryBewertung], a.[strEntryUser], a.[entryDatum]")
-                    .append("      FROM  [TT_Summit_AND] c, [TT_Route_AND] b, [TT_RouteComment_AND] a")
-                    .append("      WHERE a.[entryBewertung] >= ").append(intMinGradingOfComment)
-                    .append("      AND a.[strEntryKommentar] like ")
-                    .append(DatabaseUtils.sqlEscapeString("%" + strTextSuchtext + "%"))
-                    .append("     AND a.[intTTWegNr] = b.[intTTWegNr]")
-                    .append(strGebiet.equals(this.getString(R.string.strAll))
-                            ? "       AND c.[strGebiet] != \"\" ": "       AND c.[strGebiet] = '" + strGebiet + "'")
-                    .append("      AND c.[intTTGipfelNr] = b.[intTTGipfelNr]")
-                    .append("      AND coalesce(b.[sachsenSchwierigkeitsGrad],")
-                    .append("			b.[ohneUnterstützungSchwierigkeitsGrad],")
-                    .append("			b.[rotPunktSchwierigkeitsGrad]")
-                    .append("			, b.[intSprungSchwierigkeitsGrad] ) ")
-                    .append(" BETWEEN ").append(intMinSchwierigkeit)
-                    .append(" AND ").append(intMaxSchwierigkeit)
-                    .append("     ORDER BY c.[strName] LIMIT ")
-                    .append(getResources().getInteger(R.integer.MaxNoItemQuerxy)).toString();
-					Log.i(TAG,"Neue Kommentarr zum Suche finden:\r\n" + QueryString1);
 
-			cursor = newDB.rawQuery(QueryString1, null);
+			String queryString1 = Queries.getSQL4CommentsSearch(getContext(),
+                    strTextSuchtext, strGebiet, intMinSchwierigkeit, intMaxSchwierigkeit, intMinGradingOfComment);
+            cursor = newDB.rawQuery(queryString1, null);
 			Log.i(TAG,"Neuen Kommentar zum Weg suchen:\t c != null'"
 							+ (cursor != null));
 
@@ -223,4 +194,5 @@ public class TT_CommentsFoundFragment extends Fragment {
 				.show();
 		}
 	}
+
 }
