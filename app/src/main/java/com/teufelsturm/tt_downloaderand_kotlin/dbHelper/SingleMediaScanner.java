@@ -12,7 +12,7 @@ public class SingleMediaScanner implements MediaScannerConnectionClient {
 	private MediaScannerConnection mMs;
 	private File mFile;
 
-	public SingleMediaScanner(Context context, File f) {
+	SingleMediaScanner(Context context, File f) {
 		mFile = f;
 		mMs = new MediaScannerConnection(context, this);
 		mMs.connect();

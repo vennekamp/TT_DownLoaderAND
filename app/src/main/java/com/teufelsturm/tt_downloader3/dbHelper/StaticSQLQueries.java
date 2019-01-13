@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.repos;
+package com.teufelsturm.tt_downloader3.dbHelper;
 
 import android.content.Context;
 import android.database.DatabaseUtils;
@@ -8,8 +8,8 @@ import com.teufelsturm.tt_downloader3.R;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Queries {
-    private final static String TAG = Queries.class.getSimpleName();
+public class StaticSQLQueries {
+    private final static String TAG = StaticSQLQueries.class.getSimpleName();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //    Comments /////////////////////////////////////////////////////////////////////////////////
@@ -260,6 +260,15 @@ public class Queries {
                 .append(" 		where b.[intTTHauptGipfelNr] = ")
                 .append(intTTGipfelNr)
                 .append(" )").toString();
+    }
+
+    @NotNull
+    public static String getSQL4AllAreas() {
+        // Select All Query
+        return new StringBuilder()
+                .append("SELECT DISTINCT a.[strGebiet] from [TT_Summit_AND] a ")
+                .append(" where a.[strGebiet] != \"\" ")
+                .append(" ORDER BY a.[strGebiet]").toString();
     }
 
 }

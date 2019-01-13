@@ -20,7 +20,7 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
     private Context mContext;
     private BaseModel.Type mType;
 
-    public Repository(Context context, BaseModel.Type mType) {
+    Repository(Context context, BaseModel.Type mType) {
         this.mContext = context;
         this.mType = mType;
     }
@@ -53,6 +53,7 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
      * @throws RepositoryException if the data cannot be retrieved.
      * @throws ItemMissingException is the data is not present.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public T getItem(int id) throws RepositoryException {
         for (T item : mItems) {

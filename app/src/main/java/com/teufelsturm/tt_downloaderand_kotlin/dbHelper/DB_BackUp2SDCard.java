@@ -1,5 +1,7 @@
 package com.teufelsturm.tt_downloaderand_kotlin.dbHelper;
 
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,15 +27,15 @@ public class DB_BackUp2SDCard {
 	private static String readWriteFile(Context aContext, Boolean isExport) {
 		Log.v("DB_BackUp2SDCard", "********************************"
 				+ "\r\nState: "
-				+ Environment.getExternalStorageState().toString());
-		DataBaseHelper dbHelper = new DataBaseHelper(aContext);
+				+ Environment.getExternalStorageState());
+//		DataBaseHelper dbHelper = new DataBaseHelper(aContext);
 
 		String dirDownLoad = Environment.getExternalStoragePublicDirectory(
 				Environment.DIRECTORY_DOWNLOADS).getPath();
 
 		try {
 			// appDBFile --> the database file used in this application 
-			File appDBFile = new File(dbHelper.getDB_PATH_NAME());
+			File appDBFile = new File(SteinFibelApplication.getDataBaseHelper().getDB_PATH_NAME());
 			Log.v("DB_BackUp2SDCard", "File srcDBFile = " + appDBFile);
 			if (appDBFile.exists()) {
 				Log.v("DB_BackUp2SDCard", "********************************");

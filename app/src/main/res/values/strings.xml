@@ -53,4 +53,7 @@
     <string name="strNoDay">Kein Datum</string>
     <string name="strChooseDate">"Datum"</string>
 
+    <string name="login_btn_txt">login</string>
+    <string name="user_profile_photo">user_profile_photo</string>
+    <string name="not_logged_in">"Warnung: Du bist nicht eingeloggt und kannst keine Kommentare speichern!"</string>
 </resources>

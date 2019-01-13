@@ -2,13 +2,14 @@ package com.teufelsturm.tt_downloader3.dbHelper;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.teufelsturm.tt_downloader3.BuildConfig;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
 
@@ -17,65 +18,101 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+    public class DataBaseHelper extends SQLiteOpenHelper {
 	private static String TAG = DataBaseHelper.class.getSimpleName();
 	private static ArrayList<String> labels;
 	// The Android's default system path of your application database.
 	private static String DB_PATH;
 
-	// = "/data/data/com.teufelsturm.tt_downloader2/";
 	/**
 	 * returns the file-Path of the database on the system.
 	 * */
-	public String getDB_PATH_NAME() {
+	String getDB_PATH_NAME() {
 		return DB_PATH + MainActivity.DB_NAME;
 	}
 
-	private SQLiteDatabase myDataBase;
+    private Context myContext;
 
-	private Context myContext;
+	private static SQLiteDatabase myDataBase;
+    private static WeakReference<DataBaseHelper> sInstance;
 
-	/**
-	 * Constructor Takes and keeps a reference of the passed context in order to
-	 * access to the application assets and resources.
-	 *
-	 * @param context
-	 */
-	public DataBaseHelper(Context context) {
-		super(context, MainActivity.DB_NAME, null, 1);
+
+    public static synchronized DataBaseHelper getInstance(Context context) {
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new WeakReference<>( new DataBaseHelper(context.getApplicationContext()));
+        }
+        if ( myDataBase == null) {
+            myDataBase = sInstance.get().getWritableDatabase();
+        }
+        return sInstance.get();
+    }
+
+    public SQLiteDatabase getMyDataBase(){
+        return myDataBase;
+    }
+        /**
+         * Constructor Takes and keeps a reference of the passed context in order to
+         * access to the application assets and resources.
+         *
+         * @param context   the context for this
+         */
+	private DataBaseHelper(Context context) {
+		super(context, MainActivity.DB_NAME, null, BuildConfig.VERSION_CODE);
 		this.myContext = context;
 		DB_PATH = context.getFilesDir().getAbsolutePath()
 				.replace("files", "databases")
 				+ File.separator;
 		Log.v(TAG, "Constructor(); wurde aufgerufen!");
+        createDataBase();
 	}
 
-	/**
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        // Calling getWritableDatabase() when the database file doesn't exist
+        // causes the open helper onCreate() to be invoked.
+        //            super.onCreate(db); is abstract
+    }
+
+
+        /**
+	 * Check if the database already exist to avoid re-copying the file each
+	 * time you open the application.
+	 *
 	 * Creates a empty database on the system and rewrites it with your own
 	 * database.
 	 * */
-	public void createDataBase() throws IOException {
+	public synchronized void createDataBase()  {
 
 		boolean dbExist = checkDataBase();
-
 		if (dbExist) {
 			Log.v(TAG, "createDataBase(); database already exist:" + "'"
 					+ DB_PATH + MainActivity.DB_NAME + "'");
 			// do nothing - database already exist
-		} else {
+		}
+		else {
+		    if ( myDataBase != null ) {
+		        myDataBase.close();
+		        myDataBase = null;
+            }
 			// By calling this method and empty database will be created into
 			// the default system path
 			// of your application so we are going to be able to overwrite that
 			// database with our database.
-            new File(DB_PATH + MainActivity.DB_NAME).deleteOnExit();
 
-			this.getReadableDatabase();
+            //            File dbFile = new File(DB_PATH + MainActivity.DB_NAME);
+            //            dbFile.deleteOnExit();
+
 			Log.v(TAG, "Rufe copyDataBase(); auf");
-			copyDataBase();
+            copyDataBase();
+            myDataBase = this.getWritableDatabase();
 		}
-
 	}
 
 	/**
@@ -85,15 +122,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * @return true if it exists, false if it doesn't
 	 */
 	private boolean checkDataBase() {
+        if ( myDataBase == null ) {
+            return false;
+        }
 
-		SQLiteDatabase checkDB = null;
-
+        Cursor cursor = null;
 		try {
-			String myPath = DB_PATH + MainActivity.DB_NAME;
-			checkDB = SQLiteDatabase.openDatabase(myPath, null,
-					SQLiteDatabase.OPEN_READONLY);
 			Log.v(TAG, "checkDB.rawQuery(") ;
-			Cursor cursor = checkDB.rawQuery("SELECT name FROM sqlite_master " +
+
+			cursor = myDataBase.rawQuery("SELECT name FROM sqlite_master " +
 					"WHERE type='table' AND name='TT_Summit_AND';"
 					,null);
 			Log.v(TAG, "cursor.moveToFirst();") ;
@@ -103,25 +140,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			Log.v(TAG, "try beendet") ;
 
 		} catch (SQLiteException e) {
-
+            Crashlytics.logException(e);
 			Log.v(TAG, "checkDataBase(); database does't exist yet." + "\r\n'"
 					+ DB_PATH + MainActivity.DB_NAME + "'");
 			Toast.makeText(myContext, "database does't exist yet: Will be copied from default DB",
 					Toast.LENGTH_LONG).show();
-			// database does't exist yet.
-            if (checkDB != null) {
-                checkDB.close();
+            // database does't exist yet.
+            if (cursor != null) {
+                cursor.close();
             }
 			return false;
 		} catch (android.database.CursorIndexOutOfBoundsException e){
-
-			Log.v(TAG, "checkDataBase(); Table does exist,  but seems to be corrupted." + "\r\n'"
-					+ DB_PATH + MainActivity.DB_NAME + "'");
+            Crashlytics.logException(e);
+			Log.e(TAG, "checkDataBase(); Table does exist,  but seems to be corrupted." + "\r\n'"
+					+ DB_PATH + MainActivity.DB_NAME + "'", e);
 			Toast.makeText(myContext, "database does exist,  but seems to be corrupted: Will be overwritten with default DB",
 					Toast.LENGTH_LONG).show();
-			// database does't exist yet.
-            if (checkDB != null) {
-                checkDB.close();
+            // database does't exist yet.
+            if (cursor != null) {
+                cursor.close();
             }
 			return false;
 		}
@@ -137,51 +174,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * handled. This is done by transfering bytestream.
 	 * */
 	private void copyDataBase() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
+        try {
+            // Open your local db as the input stream
+            InputStream myInput = myContext.getAssets().open(MainActivity.DB_NAME);
 
-                    // Open your local db as the input stream
-                    InputStream myInput = myContext.getAssets().open(
-                            MainActivity.DB_NAME);
+            // Path to the just created empty db
+            String outFileName = DB_PATH + MainActivity.DB_NAME;
 
-                    // Path to the just created empty db
-                    String outFileName = DB_PATH + MainActivity.DB_NAME;
+            // Open the empty db as the output stream
+            OutputStream myOutput = new FileOutputStream(outFileName);
 
-                    // Open the empty db as the output stream
-                    OutputStream myOutput = new FileOutputStream(outFileName);
-
-                    // transfer bytes from the inputfile to the outputfile
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = myInput.read(buffer)) > 0) {
-                        myOutput.write(buffer, 0, length);
-                    }
-
-                    // Close the streams
-                    myOutput.flush();
-                    myOutput.close();
-                    myInput.close();
-                    Log.v(TAG, "copyDataBase() aufgerufen.");
-                    Toast.makeText(myContext, "database successfully copied!\r\ncopied kb: " + new File(DB_PATH + MainActivity.DB_NAME).length() / 1024,
-                            Toast.LENGTH_LONG).show();
-                }
-                catch (IOException e) {
-                    Log.e(TAG,e.getMessage(), e);
-                }
+            // transfer bytes from the inputfile to the outputfile
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = myInput.read(buffer)) > 0) {
+                myOutput.write(buffer, 0, length);
             }
-        }).run();
+
+            // Close the streams
+            myOutput.flush();
+            myOutput.close();
+            myInput.close();
+            Log.v(TAG, "copyDataBase() aufgerufen.");
+            Toast.makeText(myContext, "database successfully copied!\r\ncopied kb: "
+                            + new File(DB_PATH + MainActivity.DB_NAME).length() / 1024,
+                    Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e) {
+            Crashlytics.logException(e);
+            Log.e(TAG,e.getMessage(), e);
+        }
 	}
 
-	public void openDataBase() throws SQLException {
-		if (myDataBase != null) {
-			// Open the database
-			String myPath = DB_PATH + MainActivity.DB_NAME;
-			myDataBase = SQLiteDatabase.openDatabase(myPath, null,
-					SQLiteDatabase.OPEN_READONLY);
-		}
-	}
+//	public void openDataBase() throws SQLException {
+//		if (myDataBase != null) {
+//			// Open the database
+//			String myPath = DB_PATH + MainActivity.DB_NAME;
+//			myDataBase = SQLiteDatabase.openDatabase(myPath, null,
+//					SQLiteDatabase.OPEN_READONLY);
+//		}
+//	}
 
 	@Override
 	public synchronized void close() {
@@ -192,14 +224,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onCreate(SQLiteDatabase db) {
-
-	}
-
-	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-	}
+        if( newVersion > oldVersion ) {
+            copyDataBase();
+        }
+    }
 
 	// Add your public helper methods to access and get content from the
 	// database.
@@ -211,18 +240,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	 * Getting all Areas returns list of Climbing Areas
 	 * */
 	public ArrayList<String> getAllAreas() {
+	    createDataBase();
 		if (labels == null) {
 			labels = new ArrayList<>();
-			// Select All Query
-			String queryString;
-			// TODO: MOVE to ROOM
-			queryString = new StringBuilder()
-					.append("SELECT DISTINCT a.[strGebiet] from [TT_Summit_AND] a ")
-					.append(" where a.[strGebiet] != \"\" ")
-					.append(" ORDER BY a.[strGebiet]").toString();
 
-			SQLiteDatabase myDb = this.getReadableDatabase();
-			Cursor cursor = myDb.rawQuery(queryString, null);
+            Cursor cursor = myDataBase.rawQuery(StaticSQLQueries.getSQL4AllAreas(),null);
 
 			// looping through all rows and adding to list
 			labels.add(myContext.getString(R.string.strAll));
@@ -234,9 +256,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 			// closing connection
 			cursor.close();
-			myDb.close();
 		}
 		// Spinner Drop down elements: labels
 		return labels;
 	}
-}
+    }
