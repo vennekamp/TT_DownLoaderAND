@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -23,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
 import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
@@ -318,19 +322,27 @@ public class TT_SummitFoundFragment extends Fragment
 					.setBln_Asscended(checkBoxSummitAsscended.isChecked());
             mViewModel.getaTT_Summit_AND().getValue().setStr_MyComment(editTextMySummitComment
 					.getText().toString());
-			UserSummitComment.storeUserSummitComment(
-                    mViewModel.getaTT_Summit_AND().getValue().getIntTT_IDOrdinal(),
-                    mViewModel.getaTT_Summit_AND().getValue().getBln_Asscended(),
-                    mViewModel.getaTT_Summit_AND().getValue().getLong_DateAsscended(),
-                    mViewModel.getaTT_Summit_AND().getValue().getStr_MyComment(), false);
 
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            if ( firebaseUser == null ) {
+                SteinFibelApplication.showNotLoggedInToast(getActivity().getApplicationContext());
+            }
+            else {
+                UserSummitComment.storeUserSummitComment(
+                        firebaseUser,
+                        mViewModel.getaTT_Summit_AND().getValue().getIntTT_IDOrdinal(),
+                        mViewModel.getaTT_Summit_AND().getValue().getBln_Asscended(),
+                        mViewModel.getaTT_Summit_AND().getValue().getLong_DateAsscended(),
+                        mViewModel.getaTT_Summit_AND().getValue().getStr_MyComment(), false);
 
-			Toast.makeText(getActivity().getApplicationContext(),
-					"Saved Comment for this Summit...\n"
-							+ mViewModel.getaTT_Summit_AND().getValue().getStr_DateAsscended() + ":\n"
-							+ mViewModel.getaTT_Summit_AND().getValue().getStr_TTSummitName(), Toast.LENGTH_SHORT)
-					.show();
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Saved Comment for this Summit...\n"
+                                + mViewModel.getaTT_Summit_AND().getValue().getStr_DateAsscended() + ":\n"
+                                + mViewModel.getaTT_Summit_AND().getValue().getStr_TTSummitName(), Toast.LENGTH_SHORT)
+                        .show();
+            }
 		} catch (Exception ex) {
+            Crashlytics.logException(ex);
 			Log.i(TAG, ex.toString());
 		}
 	}

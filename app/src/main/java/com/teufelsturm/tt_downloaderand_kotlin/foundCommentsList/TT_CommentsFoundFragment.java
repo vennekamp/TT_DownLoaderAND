@@ -2,7 +2,6 @@ package com.teufelsturm.tt_downloader3.foundCommentsList;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +14,9 @@ import android.widget.Toast;
 
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
-import com.teufelsturm.tt_downloader3.repos.Queries;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +40,7 @@ public class TT_CommentsFoundFragment extends Fragment {
 	public static final String SUCH_MIN_GRADING_OF_COMMET = "SUCH_MIN_GRADING_OF_COMMET";
 
 	private static ArrayList<TT_Comment_AND> lstTT_Comment_AND;
-	private SQLiteDatabase newDB;
+//	private SQLiteDatabase newDB;
 //	private TextToSpeech tts;
 
 	public static Fragment newInstance(
@@ -137,13 +136,13 @@ public class TT_CommentsFoundFragment extends Fragment {
 		Log.i(TAG, "Neuer openAndQueryDatabase... ");
 
 		try {
-			DataBaseHelper dbHelper = new DataBaseHelper( getActivity().getApplicationContext() );
-			newDB = dbHelper.getWritableDatabase();
+//			DataBaseHelper dbHelper = new DataBaseHelper( getActivity().getApplicationContext() );
+
 			Cursor cursor;
 
-			String queryString1 = Queries.getSQL4CommentsSearch(getContext(),
+			String queryString1 = StaticSQLQueries.getSQL4CommentsSearch(getContext(),
                     strTextSuchtext, strGebiet, intMinSchwierigkeit, intMaxSchwierigkeit, intMinGradingOfComment);
-            cursor = newDB.rawQuery(queryString1, null);
+            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString1, null);
 			Log.i(TAG,"Neuen Kommentar zum Weg suchen:\t c != null'"
 							+ (cursor != null));
 
@@ -187,7 +186,6 @@ public class TT_CommentsFoundFragment extends Fragment {
 		} catch (SQLiteException se) {
 			Log.e(TAG,"Could not create or Open the database");
 		} finally {
-			newDB.close();
 			Toast.makeText(getActivity(), lstTT_Comment_AND.size() + " Kommentare gefunden"
 					+ ( lstTT_Comment_AND.size()  ==  getResources().getInteger(R.integer.MaxNoItemQuerxy) 
 					? " (Maximalanzahl an Ergebnissen erreicht)" : ""), Toast.LENGTH_LONG)

@@ -2,14 +2,13 @@ package com.teufelsturm.tt_downloader3.foundRouteSingle;
 
 import android.app.Application;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
-import com.teufelsturm.tt_downloader3.repos.Queries;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,14 +27,14 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
     }
 
     private MutableLiveData<TT_Route_AND> aTT_Route_AND = new MutableLiveData<>();
-    public String strSummitName_inComment;
-    public String strAreaName_inComment;
+    String strSummitName_inComment;
+    String strAreaName_inComment;
 
 
-    public MutableLiveData<TT_Route_AND> getaTT_Route_AND() {
+    MutableLiveData<TT_Route_AND> getaTT_Route_AND() {
         return aTT_Route_AND;
     }
-    public void setaTT_Route_AND(TT_Route_AND tt_Route_AND) {
+    void setaTT_Route_AND(TT_Route_AND tt_Route_AND) {
         this.aTT_Route_AND.setValue(tt_Route_AND);
     }
 
@@ -55,20 +54,16 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
         this.openAndQueryDatabase( getaTT_Route_AND().getValue() );
     }
 
-    public boolean hasUnSavedData;
+    boolean hasUnSavedData;
 
 
     // **************************
     private void openAndQueryDatabase(@NotNull TT_Route_AND aTT_Route_AND) {
         Log.i(TAG, "Neuer openAndQueryDatabase... " + aTT_Route_AND.getStrWegName());
-        SQLiteDatabase newDB = null;
+//        SQLiteDatabase newDB = null;
         try {
-            DataBaseHelper dbHelper = new DataBaseHelper( getApplication().getApplicationContext() );
-            newDB = dbHelper.getWritableDatabase();
-            Cursor cursor = null;
-            String queryString1;
             Log.i(TAG,"Namen und Gebiet zum Gipfel # : " + aTT_Route_AND.getIntGipfelNr());
-            cursor = newDB.rawQuery(Queries.getSQL4CommentsBySummit(aTT_Route_AND.getIntGipfelNr()),
+            Cursor cursor  = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(StaticSQLQueries.getSQL4CommentsBySummit(aTT_Route_AND.getIntGipfelNr()),
                     null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
@@ -80,10 +75,10 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
                 }
             }
 
-            String queryString4CommentsByRoute = Queries.getSQL4CommentsByRoute(aTT_Route_AND.getIntTT_IDOrdinal());
+            String queryString4CommentsByRoute = StaticSQLQueries.getSQL4CommentsByRoute(aTT_Route_AND.getIntTT_IDOrdinal());
             Log.i(TAG,"Neuen Kommentar zum Weg suchen:\r\n" + queryString4CommentsByRoute);
 
-            cursor = newDB.rawQuery(queryString4CommentsByRoute, null);
+            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString4CommentsByRoute, null);
             Log.i(TAG,"Neuen Kommentar zum Weg suchen:\t c != null'"
                     + (cursor != null));
 
@@ -118,14 +113,11 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
                         Log.i(TAG,++iCounter + " -> Neuer Kommentar... " + strEntryUser);
                     } while (cursor.moveToNext());
                 }
+                cursor.close();
             }
         } catch (SQLiteException se) {
             Log.e(TAG,
                     "Could not create or Open the database");
-        } finally {
-            newDB.close();
         }
     }
-
-
 }

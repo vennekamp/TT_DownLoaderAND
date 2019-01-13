@@ -8,15 +8,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.searches.FragmentSearchRoute;
 import com.teufelsturm.tt_downloader3.searches.ViewModel4FragmentSearches;
 
+import org.jetbrains.annotations.NotNull;
+
 public class AutoCompleteDbAdapter {
 
-	private DataBaseHelper mDbHelper;
-	private SQLiteDatabase mDb;
+//	private SQLiteDatabase mDb;
 	private final Activity mActivity;
 
+	private static final String TAG = AutoCompleteDbAdapter.class.getSimpleName();
 	/**
 	 * Constructor - takes the context to allow the database to be
 	 * opened/created
@@ -24,18 +27,16 @@ public class AutoCompleteDbAdapter {
 	 * @param activity
 	 *            the Activity that is using the database
 	 */
-	public AutoCompleteDbAdapter(Activity activity) {
+	public AutoCompleteDbAdapter(@NotNull Activity activity) {
 		this.mActivity = activity;
-		this.mDbHelper = new DataBaseHelper(activity.getApplicationContext());
-		this.mDb = mDbHelper.getWritableDatabase();
 	}
 
-	/**
-	 * Closes the database.
-	 */
-	public void close() {
-		mDbHelper.close();
-	}
+//	/**
+//	 * Closes the database.
+//	 */
+//	public void close() {
+////        SteinFibelApplication.getDataBaseHelper().getWritableDatabase().close();
+//	}
 
 	/**
 	 * Return a Cursor that returns all list of Climbing summit where the summit
@@ -48,10 +49,10 @@ public class AutoCompleteDbAdapter {
 	 * @throws SQLException
 	 *             if query fails
 	 */
-	public Cursor getAllSummits(Context context, ViewModel4FragmentSearches viewModel4FragmentSearches, String constraint) throws SQLException {
-		Log.v(getClass().getSimpleName(), "getAllSummits");
+	public Cursor getAllSummits(ViewModel4FragmentSearches viewModel4FragmentSearches, String constraint) throws SQLException {
+		Log.v(TAG, "getAllSummits");
 		// Select Query
-		String strGebiet =  viewModel4FragmentSearches.getAllAreaLabels(context)
+		String strGebiet =  viewModel4FragmentSearches.getAllAreaLabels()
 				.get(viewModel4FragmentSearches.getMyAreaPositionFromSpinner());
 		int intMinAnzahlWege = viewModel4FragmentSearches.getIntMinAnzahlDerWege();
 		int intMaxAnzahlWege = viewModel4FragmentSearches.getIntMaxAnzahlDerWege();
@@ -79,8 +80,8 @@ public class AutoCompleteDbAdapter {
 	 * */
 	public Cursor getAllRoutes(ViewModel4FragmentSearches viewModel4FragmentSearches,
 							   FragmentSearchRoute f, String constraint) throws SQLException {
-		Log.v(getClass().getSimpleName(), "getAllRoutes");
-		String strGebiet = viewModel4FragmentSearches.getAllAreaLabels(f.getContext())
+		Log.v(TAG, "getAllRoutes");
+		String strGebiet = viewModel4FragmentSearches.getAllAreaLabels()
                 .get( viewModel4FragmentSearches.getMyAreaPositionFromSpinner() );
 		int intMinSchwierigkeit = viewModel4FragmentSearches.getMinLimitsForDifficultyGrade();
 		int intMaxSchwierigkeit = viewModel4FragmentSearches.getMaxLimitsForDifficultyGrade();
@@ -94,7 +95,7 @@ public class AutoCompleteDbAdapter {
 				+ "       WHERE b.[intTTHauptGipfelNr] in ("
 				+ "       	   		SELECT DISTINCT c.[intTTGipfelNr] from [TT_Summit_AND] c"
 				+ (strGebiet.equals(mActivity.getString(R.string.strAll)) ? "       where c.[strGebiet] != \"\" "
-						: "       where c.[strGebiet] = " + strGebiet)
+						: "       where c.[strGebiet] = '" + strGebiet + "'")
 				+ "                 )"
 				+ "           )"
 				+ "       AND  coalesce(a.[sachsenSchwierigkeitsGrad], a.[ohneUnterstützungSchwierigkeitsGrad], a.[rotPunktSchwierigkeitsGrad]"
@@ -129,7 +130,7 @@ public class AutoCompleteDbAdapter {
 			// if (queryString.contains(new char[]{ 'W','H','E','R','E'}) )
 			queryString += queryConcater + queryColumnName + " LIKE ?";
 		}
-		Log.v(getClass().getSimpleName(), "constraint: " + constraint);
+		Log.v(TAG, "constraint: " + constraint);
 		String params[] = { constraint };
 		if (constraint == null) {
 			// If no parameters are used in the query,
@@ -137,12 +138,12 @@ public class AutoCompleteDbAdapter {
 			params = null;
 		}
 		queryString += " ORDER BY a.[" + queryColumnName + "]";
-		Log.v(getClass().getSimpleName(), "String queryString: " + queryString);
+		Log.v(TAG, "String queryString: " + queryString);
 
 		try {
-			Cursor cursor = mDb.rawQuery(queryString, params);
-			if (cursor != null) {
-				this.mActivity.startManagingCursor(cursor);
+			Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+                    .rawQuery(queryString, params);
+			if ( cursor != null ) {
 				cursor.moveToFirst();
 				return cursor;
 			}

@@ -1,78 +1,42 @@
-package com.teufelsturm.tt_downloaderand_kotlin.searches;
+package com.teufelsturm.tt_downloader3.searches;
 
 import android.content.Context;
 import android.database.SQLException;
 
-import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class SearchManager4FragmentSearches
+import androidx.lifecycle.ViewModel;
 
-{
-    public SearchManager4FragmentSearches(){
-
-    }
-    private static SearchManager4FragmentSearches thisInstance = null;
-
-
-    public static SearchManager4FragmentSearches getInstance() {
-        if (thisInstance == null ) {
-            thisInstance = new SearchManager4FragmentSearches();
-            thisInstance.myAreaPositionFromSpinner = 0;
-            thisInstance.intMinAnzahlDerWege = 0;
-            thisInstance.intMaxAnzahlDerWege = 100;
-            thisInstance.intMinAnzahlDerSternchenWege = 0;
-            thisInstance.intMaxAnzahlDerSternchenWege = 50;
-
-            thisInstance.intMinLimitsForDifficultyGrade = EnumSachsenSchwierigkeitsGrad.getMinInteger();
-            thisInstance.intMaxLimitsForDifficultyGrade = EnumSachsenSchwierigkeitsGrad.getMaxInteger();
-            thisInstance.intMinNumberOfComments = 0;
-            thisInstance.intMinOfMeanRating = EnumTT_WegBewertung.getMinInteger();
-        }
-        return thisInstance;
-    }
-
+public class ViewModel4FragmentSearches extends ViewModel {
     /**
      * the position of the item currently selected in the {@link MyPagerFragment}
      */
-    private int pagerPageSelected;
-    public int getPagerPageSelected() { return pagerPageSelected; }
-    public void setPagerPageSelected(int position) { pagerPageSelected = position; }
+    private int pagerPageSelected = 0;
+    int getPagerPageSelected() { return pagerPageSelected; }
+    void setPagerPageSelected(int position) { pagerPageSelected = position; }
 
     /**
      * the position of the {@link FragmentSearchAbstract#mySpinner} (used in all three fragments
      * for the Area.
      */
-    private int myAreaPositionFromSpinner;
+    private int myAreaPositionFromSpinner = 0;
     public int getMyAreaPositionFromSpinner (){return myAreaPositionFromSpinner;}
-    public void setMyAreaFromSpinner (int areaPositionFromSpinner){ myAreaPositionFromSpinner = areaPositionFromSpinner;}
+    void setMyAreaFromSpinner (int areaPositionFromSpinner){ myAreaPositionFromSpinner = areaPositionFromSpinner;}
 
     /**
      * All Areas currently available in the database. Used to supply the name of the currently selected
      * area in the {@link FragmentSearchAbstract#mySpinner}
      */
     private ArrayList<String> allAreaLabels;
-    public String getStrtextViewGebiet() { return allAreaLabels.get(myAreaPositionFromSpinner); }
-    public ArrayList<String> getAllAreaLabels(Context context) {
+    String getStrtextViewGebiet() { return getAllAreaLabels().get(myAreaPositionFromSpinner); }
+    public ArrayList<String> getAllAreaLabels() {
         if ( allAreaLabels == null ) {
-            // database handler
-            DataBaseHelper myDbHelper = new DataBaseHelper(context);
-            try {
-                myDbHelper.createDataBase();
-            } catch (IOException ioe) {
-                throw new Error("Unable to create database");
-            }
-            try {
-                myDbHelper.openDataBase();
-            } catch (SQLException sqle) {
-                throw sqle;
-            }
-            allAreaLabels = myDbHelper.getAllAreas();
-            myDbHelper.close();
+            allAreaLabels = SteinFibelApplication.getDataBaseHelper().getAllAreas();
         }
         return allAreaLabels;
     }
@@ -80,25 +44,25 @@ public class SearchManager4FragmentSearches
     /**
      * the searchtext in the {@link FragmentSearchSummit} for the summit
      */
-    private String strTextSuchtext4Summit;
-    public String getStrTextSuchtext4Summit() { return strTextSuchtext4Summit; }
-    public void setStrTextSuchtext4Summit(String textSuchtext4Summit) {
+    private String strTextSuchtext4Summit = "";
+    String getStrTextSuchtext4Summit() { return strTextSuchtext4Summit; }
+    void setStrTextSuchtext4Summit(String textSuchtext4Summit) {
         strTextSuchtext4Summit = textSuchtext4Summit;
     }
     /**
      * the searchtext in the {@link FragmentSearchRoute} for the route
      */
-    private String strTextSuchtext4Route;
-    public String getStrTextSuchtext4Route() { return strTextSuchtext4Route; }
-    public void setStrTextSuchtext4Route(String textSuchtext4Route) {
+    private String strTextSuchtext4Route = "";
+    String getStrTextSuchtext4Route() { return strTextSuchtext4Route; }
+    void setStrTextSuchtext4Route(String textSuchtext4Route) {
         strTextSuchtext4Route = textSuchtext4Route;
     }
     /**
      * the searchtext in the {@link FragmentSearchComment} for the comments
      */
-    private String strTextSuchtext4Comment;
-    public String getStrTextSuchtext4Comment() { return strTextSuchtext4Comment; }
-    public void setStrTextSuchtext4Comment(String textSuchtext4Comment) {
+    private String strTextSuchtext4Comment = "";
+    String getStrTextSuchtext4Comment() { return strTextSuchtext4Comment; }
+    void setStrTextSuchtext4Comment(String textSuchtext4Comment) {
         strTextSuchtext4Comment = textSuchtext4Comment;
     }
 
@@ -108,10 +72,9 @@ public class SearchManager4FragmentSearches
      * grade {@link EnumSachsenSchwierigkeitsGrad}.  The position needs to range between
      * {@link EnumSachsenSchwierigkeitsGrad#getMinInteger()} and {@link EnumSachsenSchwierigkeitsGrad#getMaxInteger()} }.
      */
-    private int intMinLimitsForDifficultyGrade;
-
+    private int intMinLimitsForDifficultyGrade = EnumSachsenSchwierigkeitsGrad.getMinInteger();
     public int getMinLimitsForDifficultyGrade() { return intMinLimitsForDifficultyGrade; }
-    public void setMinLimitsForDifficultyGrade(int minLimitsForDifficultyGrade) {
+    void setMinLimitsForDifficultyGrade(int minLimitsForDifficultyGrade) {
         if ( minLimitsForDifficultyGrade < EnumSachsenSchwierigkeitsGrad.getMinInteger()
                 || minLimitsForDifficultyGrade > EnumSachsenSchwierigkeitsGrad.getMaxInteger()) {
             throw new IllegalArgumentException("Not a valid value: " + minLimitsForDifficultyGrade);
@@ -124,9 +87,9 @@ public class SearchManager4FragmentSearches
      * grade {@link EnumSachsenSchwierigkeitsGrad}.  The position needs to range between
      * {@link EnumSachsenSchwierigkeitsGrad#getMinInteger()} and {@link EnumSachsenSchwierigkeitsGrad#getMaxInteger()} }.
      */
-    private int intMaxLimitsForDifficultyGrade;
+    private int intMaxLimitsForDifficultyGrade = EnumSachsenSchwierigkeitsGrad.getMaxInteger();
     public int getMaxLimitsForDifficultyGrade() { return intMaxLimitsForDifficultyGrade; }
-    public void setMaxLimitsForDifficultyGrade(int maxLimitsForDifficultyGrade) {
+    void setMaxLimitsForDifficultyGrade(int maxLimitsForDifficultyGrade) {
         if ( maxLimitsForDifficultyGrade < EnumSachsenSchwierigkeitsGrad.getMinInteger()
                 || maxLimitsForDifficultyGrade > EnumSachsenSchwierigkeitsGrad.getMaxInteger()) {
             throw new IllegalArgumentException("Not a valid value: " + maxLimitsForDifficultyGrade);
@@ -137,60 +100,60 @@ public class SearchManager4FragmentSearches
     /**
      * the minimum number of routes as filter for teh database query.
      */
-    private int intMinAnzahlDerWege;
+    private int intMinAnzahlDerWege = 0;
     public int getIntMinAnzahlDerWege() { return intMinAnzahlDerWege; }
-    public void setIntMinAnzahlDerWege(Integer minValue) { intMinAnzahlDerWege = minValue;}
+    void setIntMinAnzahlDerWege(Integer minValue) { intMinAnzahlDerWege = minValue;}
     /**
      * the maximum number of routes as filter for teh database query.
      */
-    private int intMaxAnzahlDerWege;
+    private int intMaxAnzahlDerWege = 250;
     public int getIntMaxAnzahlDerWege() { return intMaxAnzahlDerWege; }
-    public void setIntMaxAnzahlDerWege(Integer maxValue) { intMaxAnzahlDerWege = maxValue; }
+    void setIntMaxAnzahlDerWege(Integer maxValue) { intMaxAnzahlDerWege = maxValue; }
     /**
      * the minimum number of very good routes as filter for teh database query.
      */
-    private int intMinAnzahlDerSternchenWege;
+    private int intMinAnzahlDerSternchenWege = 0;
     public int getIntMinAnzahlDerSternchenWege() {
         return intMinAnzahlDerSternchenWege;
     }
-    public void setIntMinAnzahlDerSternchenWege(Integer minValue) {
+    void setIntMinAnzahlDerSternchenWege(Integer minValue) {
         intMinAnzahlDerSternchenWege = minValue;
     }
     /**
      * the maximum number of very good routes as filter for teh database query.
      */
-    private int intMaxAnzahlDerSternchenWege;
+    private int intMaxAnzahlDerSternchenWege = 100;
     public int getIntMaxAnzahlDerSternchenWege() {
         return intMaxAnzahlDerSternchenWege;
     }
 
-    public void setIntMaxAnzahlDerSternchenWege(Integer maxValue) {
+    void setIntMaxAnzahlDerSternchenWege(Integer maxValue) {
         intMaxAnzahlDerSternchenWege = maxValue;
     }
     /**
      *  The minimum number of comments for a route, used as filter in {@link FragmentSearchRoute}
      */
-    private int intMinNumberOfComments;
+    private int intMinNumberOfComments = 0;
     public int getIntMinNumberOfComments() { return intMinNumberOfComments; }
-    public void setIntMinNumberOfComments(int minNumberOfComments ) {
+    void setIntMinNumberOfComments(int minNumberOfComments ) {
         intMinNumberOfComments = minNumberOfComments;
     }
 
     /**
      *  The minimum mean rating of comments for a route, used as filter in {@link FragmentSearchRoute}
      */
-    private int intMinOfMeanRating;
-    public int getIntMinOfMeanRating() { return intMinOfMeanRating; }
-    public void setIntMinOfMeanRating(int minOfMeanRating) {
+    private float intMinOfMeanRating = EnumTT_WegBewertung.getMinInteger();
+    public float getFloatMinOfMeanRating() { return intMinOfMeanRating; }
+    void setFloatMinOfMeanRating(int minOfMeanRating) {
         intMinOfMeanRating = minOfMeanRating;
     }
 
     /**
      *  The minimum mean rating for a comment, used as filter in {@link FragmentSearchComment}
      */
-    private int intMinGradingOfComment;
-    public int getMinGradingOfCommet() {return intMinGradingOfComment; }
-    public void setMinGradingOfCommet(int minGradingInComment) {intMinGradingOfComment = minGradingInComment;
+    private int intMinGradingOfComment = 0;
+    int getMinGradingOfCommet() {return intMinGradingOfComment; }
+    void setMinGradingOfCommet(int minGradingInComment) {intMinGradingOfComment = minGradingInComment;
     }
 
 }

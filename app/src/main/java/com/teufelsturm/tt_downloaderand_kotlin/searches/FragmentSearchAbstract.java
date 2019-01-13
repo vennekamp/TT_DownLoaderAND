@@ -1,11 +1,9 @@
-package com.teufelsturm.tt_downloaderand_kotlin.searches;
+package com.teufelsturm.tt_downloader3.searches;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,31 +16,36 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
-import android.widget.SimpleCursorAdapter.CursorToStringConverter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.AutoCompleteDbAdapter;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.dbHelper.AutoCompleteDbAdapter;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 public abstract class FragmentSearchAbstract extends Fragment implements
 		OnClickListener {
     private static final String TAG = FragmentSearchAbstract.class.getSimpleName();
 
-	protected Integer myViewID;
-	protected Integer myEditTextSuchtextID;
-	protected AutoCompleteDbAdapter myAutoCompleteDbAdapter;
-	protected AutoCompleteTextView myAutoCompleteTextView;
-    protected Spinner mySpinner;;
+	Integer myViewID;
+	Integer myEditTextSuchtextID;
+	AutoCompleteDbAdapter myAutoCompleteDbAdapter;
+	AutoCompleteTextView myAutoCompleteTextView;
+    Spinner mySpinner;
 	protected final int[] to = new int[] { android.R.id.text1 };
 	protected String[] from;
-	protected SimpleCursorAdapter adapter;
+	private SimpleCursorAdapter adapter;
 
-	protected SearchManager4FragmentSearches searchManager4FragmentSearches = SearchManager4FragmentSearches.getInstance();
+//	protected ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModel4FragmentSearches.getInstance();
+	ViewModel4FragmentSearches mViewModel;
 
 	protected View view;
 
@@ -62,7 +65,7 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 		throw new IllegalArgumentException("Incorrect 'SearchType'");
 	}
 
-    protected View createView(@NonNull LayoutInflater inflater,
+    View createView(@NonNull LayoutInflater inflater,
                               @Nullable ViewGroup container) {
 		 if (container == null) {
              // We have different layouts, and in one of them this
@@ -74,6 +77,7 @@ public abstract class FragmentSearchAbstract extends Fragment implements
              // the view hierarchy; it would just never be used.
              return null;
 		 }
+		mViewModel = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
 		view = inflater.inflate(myViewID, container, false);
 		/* has to be of type "layout-ID" */
 		Log.i(TAG,"getExternalStorageDirectory().getAbsolutePath()"
@@ -91,7 +95,7 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 		// ***************************************************************************************
 		// Set the CursorToStringConverter, to provide the labels for the
 		// choices to be displayed in the AutoCompleteTextView.
-		adapter.setCursorToStringConverter(new CursorToStringConverter() {
+		adapter.setCursorToStringConverter(new SimpleCursorAdapter.CursorToStringConverter() {
 			public String convertToString(Cursor cursor) {
 				// Get the label for this row out of the "state" column
 				// final int columnIndex =
@@ -112,26 +116,15 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 		return view;
 	}
 
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+	}
 	public void onDestroy() {
 		adapter.changeCursor(null);
-		myAutoCompleteDbAdapter.close();
+//		myAutoCompleteDbAdapter.close();
 		super.onDestroy();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		if (view != null) {
-			ViewGroup parent = (ViewGroup) view.getParent();
-			if (parent != null) {
-				parent.removeAllViews();
-			}
-		}
 	}
 
 	protected abstract Cursor getAutoCompleteCursor(CharSequence constraint);
@@ -145,25 +138,25 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 	/**
 	 * Function to load the spinner data from SQLite database
 	 * */
-	protected void loadAreaSpinnerData(Context context, Spinner mySpinner) {
+	void loadAreaSpinnerData(Context context, Spinner mySpinner) {
 		// Creating adapter for spinner
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context,
 				android.R.layout.simple_spinner_item,
-                SearchManager4FragmentSearches.getInstance().getAllAreaLabels(getContext()));
+                mViewModel.getAllAreaLabels());
         /* simple_spinner_dropdown_item */
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
 		// attaching data adapter to spinner
 		mySpinner.setAdapter(dataAdapter);
-		mySpinner.setSelection(searchManager4FragmentSearches.getMyAreaPositionFromSpinner());
+		mySpinner.setSelection(mViewModel.getMyAreaPositionFromSpinner());
 	}
 
-    protected void mySpinnerSetOnItemSelectedListener(final Spinner mySpinner) {
+    void mySpinnerSetOnItemSelectedListener(final Spinner mySpinner) {
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e(TAG,"mySpinner.getSelectedItem()" + mySpinner.getSelectedItem().toString());
-                searchManager4FragmentSearches.setMyAreaFromSpinner(position);
+				mViewModel.setMyAreaFromSpinner(position);
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -173,14 +166,14 @@ public abstract class FragmentSearchAbstract extends Fragment implements
     }
 
 
-	protected void setListenerRangeSeekbarLimitsForScale4RouteSearch(
+	void setListenerRangeSeekbarLimitsForScale4RouteSearch(
             BubbleThumbRangeSeekbar rangeSeekbarLimitsForScale4RouteSearch,
             final TextView textViewLimitsForScale) {
 		rangeSeekbarLimitsForScale4RouteSearch.setMinValue(EnumSachsenSchwierigkeitsGrad.getMinInteger());
 		rangeSeekbarLimitsForScale4RouteSearch.setMaxValue(EnumSachsenSchwierigkeitsGrad.getMaxInteger());
 		rangeSeekbarLimitsForScale4RouteSearch
-				.setMinStartValue(searchManager4FragmentSearches.getMinLimitsForDifficultyGrade())
-				.setMaxStartValue(searchManager4FragmentSearches.getMaxLimitsForDifficultyGrade()).apply();
+				.setMinStartValue(mViewModel.getMinLimitsForDifficultyGrade())
+				.setMaxStartValue(mViewModel.getMaxLimitsForDifficultyGrade()).apply();
 
 		rangeSeekbarLimitsForScale4RouteSearch.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
 			@Override
@@ -197,8 +190,8 @@ public abstract class FragmentSearchAbstract extends Fragment implements
 			@Override
 			public void finalValue(Number minValue, Number maxValue) {
 				// handle changed range values
-				searchManager4FragmentSearches.setMinLimitsForDifficultyGrade(minValue.intValue());
-				searchManager4FragmentSearches.setMaxLimitsForDifficultyGrade(maxValue.intValue());
+				mViewModel.setMinLimitsForDifficultyGrade(minValue.intValue());
+				mViewModel.setMaxLimitsForDifficultyGrade(maxValue.intValue());
 			}
 		});
 	}

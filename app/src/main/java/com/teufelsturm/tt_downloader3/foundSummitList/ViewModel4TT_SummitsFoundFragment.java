@@ -2,14 +2,13 @@ package com.teufelsturm.tt_downloader3.foundSummitList;
 
 import android.app.Application;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
-import com.teufelsturm.tt_downloader3.repos.Queries;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import java.util.ArrayList;
 
@@ -52,17 +51,14 @@ public class ViewModel4TT_SummitsFoundFragment extends AndroidViewModel {
     private void openAndQueryDatabase() {
         Log.i(TAG, "Neuer openAndQueryDatabase... ");
         lstTT_Summit_AND.getValue().clear();
-        SQLiteDatabase newDB = null;
         try {
-            DataBaseHelper dbHelper = new DataBaseHelper(getApplication().getApplicationContext());
-            newDB= dbHelper.getWritableDatabase();
             String queryString1;
-            queryString1 = Queries.getSQL4SummitsSearch(strTextSuchtext, strGebiet,
+            queryString1 = StaticSQLQueries.getSQL4SummitsSearch(strTextSuchtext, strGebiet,
                     intMinAnzahlDerWege, intMaxAnzahlDerWege,
                     intMinAnzahlDerSternchenWege, intMaxAnzahlDerSternchenWege);
             Log.i(TAG, "Neuen SuchText: '" + strTextSuchtext + "'");
             Cursor cursor = null;
-            cursor = newDB.rawQuery(queryString1, null);
+            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString1, null);
             Log.i(TAG,
                     "Neuen Gipfel gesucht... 'c != null'" + (cursor != null));
 
@@ -145,7 +141,6 @@ public class ViewModel4TT_SummitsFoundFragment extends AndroidViewModel {
         } catch (SQLiteException se) {
             Log.e(TAG,"Could not create or Open the database");
         } finally {
-            newDB.close();
             Toast.makeText(getApplication().getApplicationContext(), lstTT_Summit_AND.getValue().size() + " Gipfel gefunden",
                     Toast.LENGTH_LONG).show();
         }

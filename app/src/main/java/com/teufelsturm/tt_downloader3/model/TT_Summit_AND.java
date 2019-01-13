@@ -1,15 +1,15 @@
 package com.teufelsturm.tt_downloader3.model;
 
+
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Looper;
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentReference;
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
-import com.teufelsturm.tt_downloader3.repos.Queries;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -68,15 +68,12 @@ public class TT_Summit_AND extends BaseModel {
 
         Log.i(TAG, "--> intTTGipfelNr eingetragen...: " + intTTGipfelNr);
         Log.i(TAG, "intTTGipfelNr... : " + intTTGipfelNr);
-        String queryString1 = Queries.getSQL4SummitObject(intTTGipfelNr);
-        Log.i(TAG, "Neue Wege zum Gipfel suchen:\r\n" + queryString1);
+        String queryStringSQL4SummitObject = StaticSQLQueries.getSQL4SummitObject(intTTGipfelNr);
+        Log.i(TAG, "Neue Wege zum Gipfel suchen:\r\n" + queryStringSQL4SummitObject);
 
-        Cursor cursor = null;
         Log.i(TAG, "noch bin ich da....");
-        SQLiteDatabase newDB;
-        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        newDB = dbHelper.getWritableDatabase();
-        cursor = newDB.rawQuery(queryString1, null);
+        Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+                .rawQuery(queryStringSQL4SummitObject, null);
         Log.i(TAG, "Neue Wege zum Gipfel suchen:\t c != null'" + (cursor != null));
 
         if (cursor != null) {

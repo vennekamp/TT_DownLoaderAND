@@ -2,15 +2,14 @@ package com.teufelsturm.tt_downloader3.foundRoutesList;
 
 import android.app.Application;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.SteinFibelApplication;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
-import com.teufelsturm.tt_downloader3.repos.Queries;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
 
@@ -39,7 +38,7 @@ public class ViewModel4TT_RoutesFoundFragment extends AndroidViewModel {
     MediatorLiveData<ArrayList<TT_Route_AND>> getLstTT_Route_AND() {
         if (lstTT_Routes_AND == null) {
             lstTT_Routes_AND = new MediatorLiveData<>();
-            lstTT_Routes_AND.setValue(new ArrayList<TT_Route_AND>());
+            lstTT_Routes_AND.setValue(new ArrayList<>());
             loadLstTT_Gipfel_AND();
 
         }
@@ -55,15 +54,12 @@ public class ViewModel4TT_RoutesFoundFragment extends AndroidViewModel {
 
     private void openAndQueryDatabase() {
         lstTT_Routes_AND.getValue().clear();
-        SQLiteDatabase newDB = null;
         try {
-            DataBaseHelper dbHelper = new DataBaseHelper(getApplication().getApplicationContext());
-            newDB = dbHelper.getWritableDatabase();
-            String queryString = Queries.getSQL4RoutesSearch(getApplication().getApplicationContext(),
+            String queryString = StaticSQLQueries.getSQL4RoutesSearch(getApplication().getApplicationContext(),
                     intMinAnzahlDerKommentare, floatMittlereWegBewertung, strTextSuchtext, strGebiet,
                     intMinSchwierigkeit, intMaxSchwierigkeit);
 
-            Cursor cursor = newDB.rawQuery(queryString, null);
+            Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString, null);
             Log.i(TAG,"Neue Routen gesucht... 'c != null'" + (cursor != null));
 
             if (cursor != null) {
@@ -153,7 +149,6 @@ public class ViewModel4TT_RoutesFoundFragment extends AndroidViewModel {
         } catch (SQLiteException se) {
             Log.e(TAG,"Could not create or Open the database");
         } finally {
-            newDB.close();
             Toast.makeText(getApplication().getApplicationContext(),
                     lstTT_Routes_AND.getValue().size() + " Wege gefunden"
                     + ( lstTT_Routes_AND.getValue().size()  ==  getApplication().getApplicationContext()
