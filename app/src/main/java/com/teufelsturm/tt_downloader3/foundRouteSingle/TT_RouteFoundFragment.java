@@ -1,6 +1,7 @@
 package com.teufelsturm.tt_downloader3.foundRouteSingle;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -23,11 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserRouteComment;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
-import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.foundCommentsList.TT_Comment_ANDAdapter;
+import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
 import com.teufelsturm.tt_downloader3.tt_enums.DatePickerFragment;
@@ -42,6 +43,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -52,7 +54,7 @@ public class TT_RouteFoundFragment extends Fragment {
     private static final String TAG = TT_RouteFoundFragment.class.getSimpleName();
     public static final String ID = "TT_RouteFoundFragment";
     private static final String SAVED_TEXT_KEY = "SavedText";
-    public static final String TT_ROUTE_AND = "TT_Route_AND";
+    private static final String TT_ROUTE_AND = "TT_Route_AND";
 
     private TT_Comment_ANDAdapter listenAdapter;
     private DialogFragment dateFragment;
@@ -151,6 +153,7 @@ public class TT_RouteFoundFragment extends Fragment {
         updateDateAscended();
 
         Log.i(TAG,"Neuer onCreate komplett abgearbeitet... ");
+        actionListenertextView_ShareBtn();
 
         ((MainActivity)getActivity()).showFAB(ID);
 	}
@@ -210,7 +213,7 @@ public class TT_RouteFoundFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
                 Log.v(TAG,"editTextMyRouteComment.addTextChanged: '" + s + "'");
-                if (!mViewModel.getaTT_Route_AND().getValue().getStrKommentar().equals(s)) {
+                if (!String.valueOf(s).equals( mViewModel.getaTT_Route_AND().getValue().getStrKommentar() )) {
                     mViewModel.getaTT_Route_AND().getValue().setStrKommentar(s.toString());
                     mViewModel.hasUnSavedData = true;
                     //not working: editTextMyRouteComment.removeTextChangedListener(this);
@@ -247,6 +250,44 @@ public class TT_RouteFoundFragment extends Fragment {
                     }
                 }
                 return false;
+            }
+        });
+    }
+
+    private void actionListenertextView_ShareBtn() {
+        // Define Action Listener
+        Button button_ShareBtn = getView().findViewById(R.id.share_btn);
+        // Log.v(TAG, "button_ShareBtn ...: " +
+        // button_ShareBtn.toString());
+
+        // Listener for the Share-Button
+        button_ShareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder shareText = new StringBuilder();
+
+
+                shareText.append( mViewModel.getaTT_Route_AND().getValue().getStrWegName() );
+                shareText.append("\n[");
+                shareText.append(mViewModel.getaTT_Route_AND().getValue().getStr_TTSummitName() );
+                shareText.append("]");
+                shareText.append("\nMein Kommentar:\n");
+                shareText.append( editTextMyRouteComment.getText().toString() );
+                shareText.append("\n\n<https://play.google.com/store/apps/details?id=de.steinfibel.free>");
+
+                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity()
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                android.content.ClipData clip = android.content.ClipData.newPlainText("Steinfibel-Text"
+                        ,shareText);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getActivity().getApplicationContext(), "Kommentar wurde ins Clipboard kopiert.",
+                        Toast.LENGTH_LONG).show();
+
+                ShareCompat.IntentBuilder.from( getActivity() )
+                        .setType("text/plain")
+                        .setChooserTitle("Kommentar zum Weg teilen")
+                        .setText( shareText.toString() )
+                        .startChooser();
             }
         });
     }
@@ -314,7 +355,7 @@ public class TT_RouteFoundFragment extends Fragment {
 		}
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 		if ( firebaseUser == null ) {
-            SteinFibelApplication.showNotLoggedInToast(getActivity().getApplicationContext());
+            TT_DownLoadedApp.showNotLoggedInToast(getActivity().getApplicationContext());
         }
         else {
             // RouteComment

@@ -16,9 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -26,11 +26,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
 import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
-import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.foundRoutesList.TT_Route_ANDAdapter;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
 import com.teufelsturm.tt_downloader3.tt_enums.DatePickerFragment;
@@ -43,6 +43,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -89,6 +90,26 @@ public class TT_SummitFoundFragment extends Fragment
         View view = inflater.inflate(R.layout.summit_found_lv_w_header, container, false);
         mViewModel = ViewModelProviders.of(this).get(ViewModel4TT_SummitFoundFragment.class);
 
+        tt_summit_andMutableLiveData.observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<TT_Summit_AND>() {
+            @Override
+            public void onChanged(TT_Summit_AND tt_summit_and) {
+                Log.e(TAG, "onChanged(TT_Summit_AND tt_summit_and): (line 103) '"
+                        + mViewModel.getaTT_Summit_AND().getValue().getStr_MyComment() + "'");
+                fillSummitDetails(mViewModel.getaTT_Summit_AND().getValue());
+            }
+        });
+        mViewModel.setaTT_Summit_AND(tt_summit_andMutableLiveData.getValue() );
+//        if ( mViewModel.getaTT_Summit_AND().getValue() == null ) {
+//            Log.v(TAG, "aTT_Summit_AND == null...? ");
+//            throw new NullPointerException(" aTT_Summit_AND == null ");
+//        }
+        Log.v(TAG,"(ListView) findViewById(R.id.list_routes);");
+        mRecyclerViewSummitFound = view.findViewById(R.id.list_summit_found_lv_w_header);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        mRecyclerViewSummitFound.setLayoutManager(linearLayoutManager);
+
         assert getArguments() != null;
         TT_Summit_AND tt_summit_and = RepositoryFactory.getSummitRepository(getActivity().getApplicationContext())
                 .getItem( getArguments().getInt(TT_GIPFEL_AND)  );
@@ -96,23 +117,8 @@ public class TT_SummitFoundFragment extends Fragment
         if (tt_summit_andMutableLiveData.getValue() == null ){
             throw new NullPointerException("tt_summit_and is null");
         }
-        tt_summit_andMutableLiveData.observe(this, new androidx.lifecycle.Observer<TT_Summit_AND>() {
-            @Override
-            public void onChanged(TT_Summit_AND tt_summit_and) {
-                fillSummitDetails(tt_summit_and);
-            }
-        });
-        mViewModel.setaTT_Summit_AND(tt_summit_andMutableLiveData.getValue() );
-        if ( mViewModel.getaTT_Summit_AND().getValue() == null ) {
-            Log.i(TAG, "aTT_Summit_AND == null...? ");
-            throw new NullPointerException(" aTT_Summit_AND == null ");
-        }
-        Log.i(TAG,"(ListView) findViewById(R.id.list_routes);");
-        mRecyclerViewSummitFound = view.findViewById(R.id.list_summit_found_lv_w_header);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerViewSummitFound.setLayoutManager(linearLayoutManager);
+        mViewModel.setaTT_Summit_AND( tt_summit_andMutableLiveData.getValue() );
 
         // the editTextMySummitComment is part of the header - can not be found
         // before...
@@ -128,11 +134,11 @@ public class TT_SummitFoundFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // fill the Data in the Header
-        fillSummitDetails( mViewModel.getaTT_Summit_AND().getValue() );
-        mViewModel.getaTT_Summit_AND().observe(this, new androidx.lifecycle.Observer<TT_Summit_AND>() {
+        mViewModel.getaTT_Summit_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<TT_Summit_AND>() {
             @Override
             public void onChanged(TT_Summit_AND tt_summit_and) {
+                Log.e(TAG, "onChanged(TT_Summit_AND tt_summit_and): (line 137) '"
+                        + mViewModel.getaTT_Summit_AND().getValue().getStr_MyComment() + "'");
                 fillSummitDetails( mViewModel.getaTT_Summit_AND().getValue() );
 
                 DocumentReference mDocRef = mViewModel.getaTT_Summit_AND().getValue().getDocRef();
@@ -174,7 +180,7 @@ public class TT_SummitFoundFragment extends Fragment
 
         // recreate content in editTextMySummitComment (if saved)
         // ok we back, load the saved text
-        mViewModel.getLstTT_Route_AND().observe(this, new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
+        mViewModel.getLstTT_Route_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
             @Override
             public void onChanged(ArrayList<TT_Route_AND> tt_route_ands) {
                 listenAdapter = new TT_Route_ANDAdapter( TT_SummitFoundFragment.this,
@@ -182,10 +188,6 @@ public class TT_SummitFoundFragment extends Fragment
                 mRecyclerViewSummitFound.setAdapter(listenAdapter);
             }
         });
-        if (savedInstanceState != null) {
-            String savedText = savedInstanceState.getString(SAVED_TEXT_KEY);
-            editTextMySummitComment.setText(savedText);
-        }
 
         checkBoxSummitAsscended.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,15 +209,25 @@ public class TT_SummitFoundFragment extends Fragment
                         R.id.buttonSummitAscendDay_inComment);
                 dateFragment.show(getActivity().getSupportFragmentManager(),"datePickerDialog");
                 // ********************************************************
-                Log.i(TAG,"datePickerDialog.show()...: ");
+                Log.v(TAG,"datePickerDialog.show()...: ");
                 // ********************************************************
             }
         });
+
+        // fill the Data in the Header
+        Log.e(TAG, "onChanged(TT_Summit_AND tt_summit_and): (line 215) '"
+                + mViewModel.getaTT_Summit_AND().getValue().getStr_MyComment() +"'");
+        fillSummitDetails( mViewModel.getaTT_Summit_AND().getValue() );
+        if (savedInstanceState != null) {
+            String savedText = savedInstanceState.getString(SAVED_TEXT_KEY);
+            editTextMySummitComment.setText(savedText);
+        }
+
         mViewModel.hasUnSavedData = false;
-        actionListenertextView_GpsCoords();
+        actionListenertextView_ShareBtn();
 
         ((MainActivity)getActivity()).showFAB(ID);
-        Log.i(TAG,"Neuer onCreate komplett abgearbeitet... ");
+        Log.v(TAG,"Neuer onCreate komplett abgearbeitet... ");
     }
 
     @Override
@@ -230,9 +242,9 @@ public class TT_SummitFoundFragment extends Fragment
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i(TAG, "onResume ");
+		Log.v(TAG, "onResume ");
 		if (mViewModel.hasUnSavedData) {
-			Log.i(TAG, "onResume; dataHasChanged --> " + mViewModel.hasUnSavedData);
+			Log.v(TAG, "onResume; dataHasChanged --> " + mViewModel.hasUnSavedData);
 			assert getArguments() != null;
 
 			mViewModel.getLstTT_Route_AND().observe(this, new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
@@ -325,7 +337,7 @@ public class TT_SummitFoundFragment extends Fragment
 
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             if ( firebaseUser == null ) {
-                SteinFibelApplication.showNotLoggedInToast(getActivity().getApplicationContext());
+                TT_DownLoadedApp.showNotLoggedInToast(getActivity().getApplicationContext());
             }
             else {
                 UserSummitComment.storeUserSummitComment(
@@ -342,24 +354,25 @@ public class TT_SummitFoundFragment extends Fragment
                         .show();
             }
 		} catch (Exception ex) {
-            Crashlytics.logException(ex);
-			Log.i(TAG, ex.toString());
+            FirebaseCrashlytics.getInstance().recordException(ex);
+
+            Log.v(TAG, ex.toString());
 		}
 	}
 
 	private void actionListenerButton_NeighbourSummit(Button button_NeighbourSummit) {
 		// Define Action Listener
-		Log.i(TAG, "buttonSearchSummit ...: "
+		Log.v(TAG, "buttonSearchSummit ...: "
 				+ button_NeighbourSummit.getText());
 		button_NeighbourSummit.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				Button b = (Button) v;
 				Integer bInt = (Integer) b.getTag();
 				String buttonText = b.getText().toString();
-				Log.i(TAG,"Click button_NeighbourSummit for Summit..." + buttonText + "\r\n" + bInt);
-                Log.i(TAG,"Start TT_RouteFoundFragment... ");
+				Log.v(TAG,"Click button_NeighbourSummit for Summit..." + buttonText + "\r\n" + bInt);
+                Log.v(TAG,"Start TT_RouteFoundFragment... ");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                TT_Summit_AND tt_summit_andNext = new TT_Summit_AND(v.getContext().getApplicationContext(), bInt);
+                TT_Summit_AND tt_summit_andNext = new TT_Summit_AND(bInt);
                 TT_SummitFoundFragment tt_summitFoundFragment =
                         TT_SummitFoundFragment.newInstance(tt_summit_andNext);
                 FragmentTransaction ft = fm.beginTransaction();
@@ -374,22 +387,46 @@ public class TT_SummitFoundFragment extends Fragment
 		});
 	}
 
-	private void actionListenertextView_GpsCoords() {
+	private void actionListenertextView_ShareBtn() {
 		// Define Action Listener
-		Button textView_GpsCoords = (Button) getView().findViewById(R.id.textView_GpsCoords);
-		// Log.i(TAG, "buttonSearchSummit ...: " +
-		// buttonSaveSummit.toString());
-		textView_GpsCoords.setOnClickListener(new TextView.OnClickListener() {
-			public void onClick(View v) {
-				Toast.makeText(getActivity(),
-						"Click on textView_GpsCoords...", Toast.LENGTH_LONG)
-						.show();
-			}
-		});
+		Button button_ShareBtn = getView().findViewById(R.id.share_btn);
+		// Log.v(TAG, "button_ShareBtn ...: " +
+		// button_ShareBtn.toString());
+
+        // Listener for the Share-Button
+        button_ShareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuilder shareText = new StringBuilder();
+                shareText.append(String.format(Locale.GERMANY, "%s   (KleFü #%d)",
+                        mViewModel.getaTT_Summit_AND().getValue().getStr_TTSummitName(),
+                        mViewModel.getaTT_Summit_AND().getValue().getInt_SummitNumberOfficial()));
+                shareText.append(" [");
+                shareText.append( mViewModel.getaTT_Summit_AND().getValue().getStr_Area());
+                shareText.append("]");
+                shareText.append("\nMein Kommentar:\n");
+                shareText.append( editTextMySummitComment.getText().toString() );
+                shareText.append("\n\n<https://play.google.com/store/apps/details?id=de.steinfibel.free>");
+
+                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getActivity()
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                android.content.ClipData clip = android.content.ClipData.newPlainText("Steinfibel-Text"
+                        ,shareText);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getActivity().getApplicationContext(), "Kommentar wurde ins Clipboard kopiert.",
+                        Toast.LENGTH_LONG).show();
+
+                ShareCompat.IntentBuilder.from( getActivity() )
+                        .setType("text/plain")
+                        .setChooserTitle("Kommentar zum Gipfel teilen")
+                        .setText( shareText.toString() )
+                        .startChooser();
+            }
+        });
 	}
 
 	private void fillSummitDetails(@NotNull TT_Summit_AND aTT_Summit_AND) {
-		Log.i(TAG,"aTT_Gipfel_AND - fillSummitDetails: 1"
+		Log.v(TAG,"aTT_Gipfel_AND - fillSummitDetails: 1"
 						+ String.valueOf(aTT_Summit_AND.getIntTT_IDOrdinal())
 						+ " --> " + aTT_Summit_AND.getStr_TTSummitName());
 		// Summit Name
@@ -398,9 +435,10 @@ public class TT_SummitFoundFragment extends Fragment
                         aTT_Summit_AND.getStr_TTSummitName(),
                         aTT_Summit_AND.getInt_SummitNumberOfficial()));
 		// Area Name
-		((TextView) getView().findViewById(R.id.textView_Area)).setText(String.format("%s%s", getResources()
+		((TextView) getView().findViewById(R.id.textView_Area)).setText(String.format("%s%s",
+                getResources()
 				.getString(R.string.lblGebiet), aTT_Summit_AND.getStr_Area()));
-		Log.i(TAG,"aTT_Gipfel_AND - fillSummitDetails: 2");
+//		Log.v(TAG,"aTT_Gipfel_AND - fillSummitDetails: 2");
 		// *******************************************************************************
 		// Create the text for the Neighbor Summit and their actionListener
 		int[] arrNeighbourSummits = new int[] { R.id.button_NeighbourSummit01,
@@ -413,18 +451,18 @@ public class TT_SummitFoundFragment extends Fragment
             ((Button) getView().findViewById(arrNeighbourSummits[iCount])).setTag(strH.getKey());
             // set the TEXT
 			((Button) getView().findViewById(arrNeighbourSummits[iCount])).setText(strH.getValue());
-			Log.i(TAG,"aTT_Gipfel_AND - fillSummitDetails: Neighbor Summit #0" + (iCount + 1));
+//			Log.v(TAG,"aTT_Gipfel_AND - fillSummitDetails: Neighbor Summit #0" + (iCount + 1));
 			actionListenerButton_NeighbourSummit(
                     (Button) getView().findViewById(arrNeighbourSummits[iCount]));
 			iCount++;
 		}
 		// is Ascended?
-		checkBoxSummitAsscended.setChecked(aTT_Summit_AND.getBln_Asscended());
-		Log.i(TAG,"aTT_Gipfel_AND - fillSummitDetails: is Ascended? " + aTT_Summit_AND.getBln_Asscended());
+		checkBoxSummitAsscended.setChecked( aTT_Summit_AND.getBln_Asscended() );
+		Log.d(TAG,"aTT_Gipfel_AND - fillSummitDetails: 1 - is Ascended? " + aTT_Summit_AND.getBln_Asscended());
 		// My Comment
-		editTextMySummitComment.setText(aTT_Summit_AND.getStr_MyComment());
-        Log.i(TAG,"aTT_Gipfel_AND - fillSummitDetails erledigt: " + aTT_Summit_AND.getIntTT_IDOrdinal()
-						+ " --> " + aTT_Summit_AND.getStr_TTSummitName());
+		editTextMySummitComment.setText( aTT_Summit_AND.getStr_MyComment() );
+        Log.d(TAG,"aTT_Gipfel_AND - fillSummitDetails: 1 - getIntTT_IDOrdinal(): " + aTT_Summit_AND.getIntTT_IDOrdinal()
+						+ " -- editTextMySummitComment: " + aTT_Summit_AND.getStr_MyComment());
 	}
 
 	// ***************************

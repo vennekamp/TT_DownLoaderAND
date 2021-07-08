@@ -8,10 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.teufelsturm.tt_downloader3.BuildConfig;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,10 +35,11 @@ import java.util.ArrayList;
 		return DB_PATH + MainActivity.DB_NAME;
 	}
 
-    private Context myContext;
+//    private final Context myContext;
 
 	private static SQLiteDatabase myDataBase;
     private static WeakReference<DataBaseHelper> sInstance;
+		Context context;
 
 
     public static synchronized DataBaseHelper getInstance(Context context) {
@@ -64,7 +66,7 @@ import java.util.ArrayList;
          */
 	private DataBaseHelper(Context context) {
 		super(context, MainActivity.DB_NAME, null, BuildConfig.VERSION_CODE);
-		this.myContext = context;
+		this.context = context;
 		DB_PATH = context.getFilesDir().getAbsolutePath()
 				.replace("files", "databases")
 				+ File.separator;
@@ -88,7 +90,7 @@ import java.util.ArrayList;
 	 * Creates a empty database on the system and rewrites it with your own
 	 * database.
 	 * */
-	public synchronized void createDataBase()  {
+	private synchronized void createDataBase()  {
 
 		boolean dbExist = checkDataBase();
 		if (dbExist) {
@@ -140,10 +142,10 @@ import java.util.ArrayList;
 			Log.v(TAG, "try beendet") ;
 
 		} catch (SQLiteException e) {
-            Crashlytics.logException(e);
+			FirebaseCrashlytics.getInstance().recordException(e);
 			Log.v(TAG, "checkDataBase(); database does't exist yet." + "\r\n'"
 					+ DB_PATH + MainActivity.DB_NAME + "'");
-			Toast.makeText(myContext, "database does't exist yet: Will be copied from default DB",
+			Toast.makeText(context, "database does't exist yet: Will be copied from default DB",
 					Toast.LENGTH_LONG).show();
             // database does't exist yet.
             if (cursor != null) {
@@ -151,10 +153,10 @@ import java.util.ArrayList;
             }
 			return false;
 		} catch (android.database.CursorIndexOutOfBoundsException e){
-            Crashlytics.logException(e);
+			FirebaseCrashlytics.getInstance().recordException(e);
 			Log.e(TAG, "checkDataBase(); Table does exist,  but seems to be corrupted." + "\r\n'"
 					+ DB_PATH + MainActivity.DB_NAME + "'", e);
-			Toast.makeText(myContext, "database does exist,  but seems to be corrupted: Will be overwritten with default DB",
+			Toast.makeText(context, "database does exist,  but seems to be corrupted: Will be overwritten with default DB",
 					Toast.LENGTH_LONG).show();
             // database does't exist yet.
             if (cursor != null) {
@@ -176,7 +178,7 @@ import java.util.ArrayList;
 	private void copyDataBase() {
         try {
             // Open your local db as the input stream
-            InputStream myInput = myContext.getAssets().open(MainActivity.DB_NAME);
+            InputStream myInput = context.getAssets().open(MainActivity.DB_NAME);
 
             // Path to the just created empty db
             String outFileName = DB_PATH + MainActivity.DB_NAME;
@@ -196,13 +198,13 @@ import java.util.ArrayList;
             myOutput.close();
             myInput.close();
             Log.v(TAG, "copyDataBase() aufgerufen.");
-            Toast.makeText(myContext, "database successfully copied!\r\ncopied kb: "
+            Toast.makeText(context, "database successfully copied!\r\ncopied kb: "
                             + new File(DB_PATH + MainActivity.DB_NAME).length() / 1024,
                     Toast.LENGTH_LONG).show();
         }
         catch (IOException e) {
-            Crashlytics.logException(e);
-            Log.e(TAG,e.getMessage(), e);
+        	FirebaseCrashlytics.getInstance().recordException(e);
+			Log.e(TAG,e.getMessage(), e);
         }
 	}
 
@@ -247,7 +249,7 @@ import java.util.ArrayList;
             Cursor cursor = myDataBase.rawQuery(StaticSQLQueries.getSQL4AllAreas(),null);
 
 			// looping through all rows and adding to list
-			labels.add(myContext.getString(R.string.strAll));
+			labels.add(context.getString(R.string.strAll));
 			if (cursor.moveToFirst()) {
 				do {
 					labels.add(cursor.getString(0));

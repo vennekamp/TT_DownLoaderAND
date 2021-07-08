@@ -37,19 +37,19 @@ public class TT_Summit_ANDAdapter
     // Provide a reference to the views for each data item
 // Complex data items may need more than one view per item, and
 // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView_tableCol_SummitName;
-        public TextView textView_tableCol_Area;
-        public TextView textView_tableColSummitNumberOfficial;
-        public TextView textView_tableCol_NumberOfRoutes;
-        public TextView textView_tableCol_NumberofStarRoutes;
-        public TextView textView_tableCol_EasiestGrade;
-        public CheckBox checkBoxAsscended_in_lv;
-        public TextView textView_tableCol_MyComment;
-        public TextView textView_tableCol_DateAsscended;
+        TextView textView_tableCol_SummitName;
+        TextView textView_tableCol_Area;
+        TextView textView_tableColSummitNumberOfficial;
+        TextView textView_tableCol_NumberOfRoutes;
+        TextView textView_tableCol_NumberofStarRoutes;
+        TextView textView_tableCol_EasiestGrade;
+        CheckBox checkBoxAsscended_in_lv;
+        TextView textView_tableCol_MyComment;
+        TextView textView_tableCol_DateAsscended;
 
-        public MyViewHolder(View v) {
+        MyViewHolder(View v) {
             super(v);
             textView_tableCol_SummitName = v.findViewById(R.id.textView_tableCol_SummitName);
             textView_tableCol_Area = v.findViewById(R.id.textView_tableCol_Area);
@@ -66,7 +66,7 @@ public class TT_Summit_ANDAdapter
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TT_Summit_ANDAdapter(View.OnClickListener onClickListener,
+    TT_Summit_ANDAdapter(View.OnClickListener onClickListener,
                                ArrayList<TT_Summit_AND> myDataset) {
         lstTT_Gipfel_AND = myDataset;
         mOnClickListener = onClickListener;

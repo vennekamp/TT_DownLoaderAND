@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
-import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 
 import org.jetbrains.annotations.NotNull;
@@ -123,7 +123,7 @@ public class TT_RoutesFoundFragment extends Fragment
         // handle click on the row (TextView) with the summit
         if ( v. getTag() != null ) {
             int intGipfelNr = (int)v.getTag();
-            TT_Summit_AND tt_summit_and = new TT_Summit_AND(v.getContext().getApplicationContext(), intGipfelNr );
+            TT_Summit_AND tt_summit_and = new TT_Summit_AND( intGipfelNr );
             Log.i(TAG, "onClick(View v) {... heads to summit: " + tt_summit_and.getStr_TTSummitName());
             Fragment tt_summitFoundFragment = TT_SummitFoundFragment.newInstance(tt_summit_and);
             ((MainActivity)getActivity()).replaceFragment(tt_summitFoundFragment, TT_SummitFoundFragment.ID);

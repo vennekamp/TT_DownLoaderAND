@@ -7,9 +7,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
-import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
 
@@ -59,7 +59,7 @@ public class ViewModel4TT_RoutesFoundFragment extends AndroidViewModel {
                     intMinAnzahlDerKommentare, floatMittlereWegBewertung, strTextSuchtext, strGebiet,
                     intMinSchwierigkeit, intMaxSchwierigkeit);
 
-            Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString, null);
+            Cursor cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase().rawQuery(queryString, null);
             Log.i(TAG,"Neue Routen gesucht... 'c != null'" + (cursor != null));
 
             if (cursor != null) {

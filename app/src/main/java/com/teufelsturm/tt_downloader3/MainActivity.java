@@ -7,11 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.teufelsturm.tt_downloader3.searches.MyPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity implements OnFragmentReplaceListener {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    public final static String DB_NAME = "TT_DownLoader_AND.mp3";
-//    public final static String MAP_NAME = "saechsische_schweiz.map";
+    public final static String DB_NAME = "TT_DownLoader_AND.sqlite";
     public static final int RC_SIGN_IN = 3894;
 
     // see http://stackoverflow.com/a/21520641
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentReplace
             Fragment searchPagerWidget = MyPagerFragment.newInstance();
             replaceFragment(searchPagerWidget, MyPagerFragment.ID);
         }
+        findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentReplace
 
     public void showFAB(String mTAG) {
         if ( findViewById(R.id.fab4search) == null ) {
-            Crashlytics.logException(new NullPointerException("findViewById(R.id.fab4search) == null"));
+            FirebaseCrashlytics.getInstance().recordException(new NullPointerException("findViewById(R.id.fab4search) == null"));
             return;
         }
         if (MyPagerFragment.ID.equals(mTAG)) {

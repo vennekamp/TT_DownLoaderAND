@@ -1,15 +1,15 @@
 package com.teufelsturm.tt_downloader3.model;
 
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Looper;
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentReference;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
-import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
+import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
+import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -61,9 +61,10 @@ public class TT_Summit_AND extends BaseModel {
         this.long_DateAsscended = long_DateAsscended;
         this.str_MyComment = str_MyComment;
         updateFireBaseData();
+        RepositoryFactory.getSummitRepository(null).saveItem(this);
     }
 
-    public TT_Summit_AND(Context context, int intTTGipfelNr) {
+    public TT_Summit_AND(int intTTGipfelNr) {
         super.intTT_IDOrdinal = intTTGipfelNr;
 
         Log.i(TAG, "--> intTTGipfelNr eingetragen...: " + intTTGipfelNr);
@@ -72,13 +73,12 @@ public class TT_Summit_AND extends BaseModel {
         Log.i(TAG, "Neue Wege zum Gipfel suchen:\r\n" + queryStringSQL4SummitObject);
 
         Log.i(TAG, "noch bin ich da....");
-        Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+        Cursor cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase()
                 .rawQuery(queryStringSQL4SummitObject, null);
         Log.i(TAG, "Neue Wege zum Gipfel suchen:\t c != null'" + (cursor != null));
 
-        if (cursor != null) {
+        if (cursor != null && cursor.moveToFirst())  {
             int iCounter = 0;
-            if (cursor.moveToFirst()) {
                 do {
                     super.intTT_IDOrdinal = intTTGipfelNr;
                     String WegName = cursor.getString(cursor
@@ -107,12 +107,10 @@ public class TT_Summit_AND extends BaseModel {
                             .getColumnIndex("strMySummitComment")));
                     Log.i(TAG, ++iCounter + " -> Neuer Weg... " + WegName);
                 } while (cursor.moveToNext());
-            }
-        }
-        updateFireBaseData();
-        if (cursor != null) {
             cursor.close();
         }
+        updateFireBaseData();
+        RepositoryFactory.getSummitRepository(null).saveItem(this);
     }
 
     private void updateFireBaseData(){

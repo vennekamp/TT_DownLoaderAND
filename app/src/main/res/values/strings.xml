@@ -23,7 +23,7 @@
     <string name="tableCol_MeanGrade">"Mittlere Wegbewertung: "</string>
     <string name="tableCol_NumberOfComments">""Anzahl der Kommentare: "</string>
     <string name="tableCol_RouteIsAscended">"Geklettert: "</string>
-    <string name="strGpcCoords">"GPS und Karte"</string>
+    <string name="strGpcCoords">"Teilen"</string>
     <string name="strNeighbourSummit">"Nachbargipfel:"</string>
     <!-- <string name="strSave">Speichern</string>  -->
     <string name="tableColStrUser">"Benutzer: "</string>
@@ -56,4 +56,7 @@
     <string name="login_btn_txt">login</string>
     <string name="user_profile_photo">user_profile_photo</string>
     <string name="not_logged_in">"Warnung: Du bist nicht eingeloggt und kannst keine Kommentare speichern!"</string>
+    <string name="found_summit_caption">Gefundene Gipfel:</string>
+    <string name="found_route_caption">Gefundene Wege:</string>
+    <string name="found_comment_caption">Gefundene Kommentare:</string>
 </resources>

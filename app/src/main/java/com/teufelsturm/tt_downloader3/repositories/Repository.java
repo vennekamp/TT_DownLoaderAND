@@ -2,7 +2,6 @@ package com.teufelsturm.tt_downloader3.repositories;
 
 import android.content.Context;
 
-
 import com.teufelsturm.tt_downloader3.model.BaseModel;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
@@ -64,11 +63,11 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
 
         switch (mType) {
             case SUMMIT:
-                T tt_summit_and = (T) new TT_Summit_AND(mContext, id);        // TT_Summit_AND
+                T tt_summit_and = (T) new TT_Summit_AND(id);        // TT_Summit_AND
                 mItems.add(tt_summit_and);
                 return  tt_summit_and;
             case ROUTE:
-                T tt_route_and = (T) new TT_Route_AND(mContext, id);          // TT_Route_AND
+                T tt_route_and = (T) new TT_Route_AND(id);          // TT_Route_AND
                 mItems.add(tt_route_and);
                 return tt_route_and;
             case COMMEMT:

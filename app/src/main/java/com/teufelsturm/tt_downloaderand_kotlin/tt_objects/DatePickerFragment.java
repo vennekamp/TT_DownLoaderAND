@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloaderand_kotlin.tt_objects;
+package com.teufelsturm.tt_downloader3.tt_enums;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -7,18 +7,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_RouteFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
+import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
+import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,6 +24,10 @@ import org.jetbrains.annotations.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 // see: http://stackoverflow.com/questions/11886514/android-datapickerdialog-ondatechanged-is-not-firing 
 public class DatePickerFragment extends DialogFragment
@@ -51,7 +53,7 @@ public class DatePickerFragment extends DialogFragment
 
         Bundle args = new Bundle();
         args.putString(PARENTS_ID, parents_ID);
-        args.putParcelable(TT_ROUTE_AND, aTT_Route_AND);
+        args.putInt(TT_ROUTE_AND, aTT_Route_AND.getIntTT_IDOrdinal());
         args.putInt(BUTTON_ASCENDED_DAY_ID, buttonAscendedDayID);
         myFragment.setArguments(args);
 
@@ -64,7 +66,7 @@ public class DatePickerFragment extends DialogFragment
 
         Bundle args = new Bundle();
         args.putString(PARENTS_ID, parents_ID);
-        args.putParcelable(TT_SUMMIT_AND, aTT_Summit_AND);
+        args.putInt(TT_SUMMIT_AND, aTT_Summit_AND.getIntTT_IDOrdinal());
         args.putInt(BUTTON_ASCENDED_DAY_ID, buttonAscendedDayID);
         myFragment.setArguments(args);
 
@@ -110,12 +112,14 @@ public class DatePickerFragment extends DialogFragment
         FragmentManager fm = getActivity().getSupportFragmentManager();
 
         if (  getArguments() != null && getArguments().containsKey(TT_ROUTE_AND) ) {
-            aTT_Route_AND = getArguments().getParcelable(TT_ROUTE_AND);
+            aTT_Route_AND = RepositoryFactory.getRouteRepository(getActivity().getApplicationContext())
+                    .getItem( getArguments().getInt(TT_ROUTE_AND) );
             if ( aTT_Route_AND.getLong_DateAsscended() != 0 ) {
                 calendar.setTimeInMillis(aTT_Route_AND.getLong_DateAsscended());
             }
         } else if (getArguments() != null && getArguments().containsKey(TT_SUMMIT_AND) ) {
-            aTT_Summit_AND = getArguments().getParcelable(TT_SUMMIT_AND);
+            aTT_Summit_AND = RepositoryFactory.getSummitRepository(getActivity().getApplicationContext())
+            .getItem( getArguments().getInt(TT_SUMMIT_AND) );
             if ( aTT_Summit_AND.getLong_DateAsscended() != 0 ) {
                 calendar.setTimeInMillis(aTT_Summit_AND.getLong_DateAsscended());
             }

@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
-import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
+import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -142,13 +142,12 @@ public class TT_CommentsFoundFragment extends Fragment {
 
 			String queryString1 = StaticSQLQueries.getSQL4CommentsSearch(getContext(),
                     strTextSuchtext, strGebiet, intMinSchwierigkeit, intMaxSchwierigkeit, intMinGradingOfComment);
-            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString1, null);
+            cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase().rawQuery(queryString1, null);
 			Log.i(TAG,"Neuen Kommentar zum Weg suchen:\t c != null'"
 							+ (cursor != null));
 
-			if (cursor != null) {
+			if (cursor != null && cursor.moveToFirst()) {
 				int iCounter = 0;
-				if (cursor.moveToFirst()) {
 					do {
 						int intTTWegNr = cursor.getInt(cursor
 								.getColumnIndex("intTTWegNr"));
@@ -180,7 +179,7 @@ public class TT_CommentsFoundFragment extends Fragment {
 								strEntryUser, longEntryDatum));
 						Log.i(TAG, ++iCounter + " -> Neuer Kommentar... " + strEntryUser);
 					} while (cursor.moveToNext());
-				}
+
 				cursor.close();
 			}
 		} catch (SQLiteException se) {

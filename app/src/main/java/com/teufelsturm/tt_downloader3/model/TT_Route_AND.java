@@ -1,6 +1,5 @@
 package com.teufelsturm.tt_downloader3.model;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Looper;
 import android.util.Log;
@@ -9,9 +8,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
-import com.teufelsturm.tt_downloader3.firestoreHelper.UserRouteComment;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
+import com.teufelsturm.tt_downloader3.firestoreHelper.UserRouteComment;
+import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -72,10 +72,11 @@ public class TT_Route_AND extends BaseModel{
         this.long_DateAsscended = datumBestiegen;
         this.strKommentar= strKommentar;
         updateFireBaseData();
+        RepositoryFactory.getRouteRepository(null).saveItem(this);
     }
 
     //
-    public TT_Route_AND(Context context, int intTTWegNr) {
+    public TT_Route_AND(int intTTWegNr) {
         super.intTT_IDOrdinal = intTTWegNr;
 
         Log.i(TAG, "--> intTTWegNr eingetragen...: " + intTTWegNr);
@@ -85,12 +86,11 @@ public class TT_Route_AND extends BaseModel{
         Log.i(TAG, "noch bin ich da....");
 //        SQLiteDatabase newDB;
 //        DataBaseHelper dbHelper = new DataBaseHelper(context);
-        Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString1, null);
+        Cursor cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase().rawQuery(queryString1, null);
         Log.i(TAG, "Neue Wege zum Gipfel suchen:\t c != null'" + (cursor != null));
 
-        if (cursor != null) {
+        if (cursor != null && cursor.moveToFirst()) {
             int iCounter = 0;
-            if (cursor.moveToFirst()) {
                 do {
                     super.intTT_IDOrdinal = intTTWegNr;
                     String WegName = cursor.getString(cursor
@@ -126,9 +126,11 @@ public class TT_Route_AND extends BaseModel{
                             .getColumnIndex("strMyRouteComment")));
                     Log.i(TAG, ++iCounter + " -> Neuer Weg... " + WegName);
                 } while (cursor.moveToNext());
-            }
+            cursor.close();
         }
         updateFireBaseData();
+
+        RepositoryFactory.getRouteRepository(null).saveItem(this);
     }
 
     private void updateFireBaseData(){

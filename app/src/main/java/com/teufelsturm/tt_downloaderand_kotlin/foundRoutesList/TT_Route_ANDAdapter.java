@@ -107,7 +107,7 @@ public class TT_Route_ANDAdapter
                         currentTT_Route_AND.getStrWegName(),
                         currentTT_Route_AND.getStrSchwierigkeitsGrad()));
 
-        TT_Summit_AND tt_summit_and = new TT_Summit_AND(mContext, currentTT_Route_AND.getIntGipfelNr());
+        TT_Summit_AND tt_summit_and = new TT_Summit_AND(currentTT_Route_AND.getIntGipfelNr());
         aTT_Route_ANDView.textView_tableCol_SummitName2Route.setText(
                 String.format("%s%s (%s)",
                 mContext.getResources().getString(R.string.tableCol_SummitName),

@@ -5,10 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
-import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +63,7 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
 //        SQLiteDatabase newDB = null;
         try {
             Log.i(TAG,"Namen und Gebiet zum Gipfel # : " + aTT_Route_AND.getIntGipfelNr());
-            Cursor cursor  = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(StaticSQLQueries.getSQL4CommentsBySummit(aTT_Route_AND.getIntGipfelNr()),
+            Cursor cursor  = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase().rawQuery(StaticSQLQueries.getSQL4CommentsBySummit(aTT_Route_AND.getIntGipfelNr()),
                     null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
@@ -78,13 +78,12 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
             String queryString4CommentsByRoute = StaticSQLQueries.getSQL4CommentsByRoute(aTT_Route_AND.getIntTT_IDOrdinal());
             Log.i(TAG,"Neuen Kommentar zum Weg suchen:\r\n" + queryString4CommentsByRoute);
 
-            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase().rawQuery(queryString4CommentsByRoute, null);
+            cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase().rawQuery(queryString4CommentsByRoute, null);
             Log.i(TAG,"Neuen Kommentar zum Weg suchen:\t c != null'"
                     + (cursor != null));
 
-            if (cursor != null) {
+            if (cursor != null && cursor.moveToFirst()) {
                 int iCounter = 0;
-                if (cursor.moveToFirst()) {
                     do {
                         int intTTWegNr = cursor.getInt(cursor
                                 .getColumnIndex("intTTWegNr"));
@@ -112,7 +111,7 @@ public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
                                 strEntryUser, longEntryDatum));
                         Log.i(TAG,++iCounter + " -> Neuer Kommentar... " + strEntryUser);
                     } while (cursor.moveToNext());
-                }
+
                 cursor.close();
             }
         } catch (SQLiteException se) {
