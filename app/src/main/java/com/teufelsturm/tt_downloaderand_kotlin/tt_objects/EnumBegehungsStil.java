@@ -17,7 +17,59 @@ import com.teufelsturm.tt_downloaderand_kotlin.R;
 
 /**
  *
- * @author Martin
+ * Andere Varianten 1: (https://www.thecrag.com/dashboard)
+ * Vorstieg Begehungen"
+ * 			Vorstieg
+ * 			Onsight
+ * 			Flash
+ * 			Rotpunkt
+ * 			Pinkpunkt
+ * 			Ground up red point
+ * 			Grünpunkt Onsight
+ * 			Grünpunkt
+ * 			All free with rest
+ * 			mit Hänger
+ * 			Solo frei
+ * 		Allgemeine Begehungen
+ * 			durchgestiegen
+ * 		Nachstieg Begehungen"
+ * 			Nachstieg
+ * 			Nachstieg frei
+ * 			Nachstieg mit Hänger
+ * 		Top-Rope Begehungen"
+ * 			Toprope
+ * 			Toprope on-sight
+ * 			Toprope flash
+ * 			Toprope frei
+ * 			Toprope mit Hänger
+ * 			Solo seilgesichert
+ * 		Technische Begehungen"
+ * 			technisch
+ * 			technisch Solo
+ * 		Solo Begehungen"
+ * 			Solo frei
+ * 			Onsight Solo
+ * 		Versuchte Begehungen"
+ * 			Nemesis
+ * 			Versuch
+ * 			projektiert
+ * 			Rückzug
+ * 		Historische Begehungen"
+ * 			Erstbegehung
+ * 			Erste freie Begehung
+ *
+ * Andere Varianten 2: YacGuide
+ * (https://github.com/vennekamp/yacguide/blob/master/app/src/main/java/com/example/paetz/yacguide/database/Ascend.java)
+ *         "Solo"
+ *         "Onsight";
+ *         "Rotpunkt";
+ *         "Alles frei";
+ *         "Irgendwie hochgeschleudert";
+ *         "Wechselführung";
+ *         "Nachstieg";
+ *         "Hinterhergehampelt";
+ *         "Gesackt";
+ *
  */
 public enum EnumBegehungsStil {
     GARNICHT, 

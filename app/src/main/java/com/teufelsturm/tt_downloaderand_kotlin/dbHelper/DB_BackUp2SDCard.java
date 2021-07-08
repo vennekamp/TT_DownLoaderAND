@@ -1,6 +1,6 @@
 package com.teufelsturm.tt_downloaderand_kotlin.dbHelper;
 
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +35,7 @@ public class DB_BackUp2SDCard {
 
 		try {
 			// appDBFile --> the database file used in this application 
-			File appDBFile = new File(SteinFibelApplication.getDataBaseHelper().getDB_PATH_NAME());
+			File appDBFile = new File(TT_DownLoadedApp.getDataBaseHelper().getDB_PATH_NAME());
 			Log.v("DB_BackUp2SDCard", "File srcDBFile = " + appDBFile);
 			if (appDBFile.exists()) {
 				Log.v("DB_BackUp2SDCard", "********************************");

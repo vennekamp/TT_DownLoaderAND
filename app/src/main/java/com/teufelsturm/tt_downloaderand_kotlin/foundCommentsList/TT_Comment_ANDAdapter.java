@@ -11,9 +11,9 @@ import android.widget.Toast;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
+import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
-import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
 
@@ -122,7 +122,7 @@ public class TT_Comment_ANDAdapter
                         activity.getApplicationContext().getResources()
                                 .getString(R.string.tableCol_RouteName),
                         currentTT_Comment_AND.getStrWegName()));
-        TT_Summit_AND tt_summit_and = new TT_Summit_AND(activity, currentTT_Comment_AND.getIntTTGipfelNr());
+        TT_Summit_AND tt_summit_and = new TT_Summit_AND(currentTT_Comment_AND.getIntTTGipfelNr());
         aTT_Comment_ANDView.textView_tableCol_SummitName2Comment
                 .setText(String.format("%s%s (%s)", activity.getApplicationContext().getResources()
                         .getString(R.string.tableCol_SummitName),
@@ -184,7 +184,7 @@ public class TT_Comment_ANDAdapter
                                     "Intent TT_RouteFoundFragment = new Intent(...");
                             Fragment fragment
                                     = TT_RouteFoundFragment.newInstance(
-                                    new TT_Route_AND(activity, bInt));
+                                    new TT_Route_AND(bInt));
                             activity.replaceFragment(fragment, TT_RouteFoundFragment.ID );
                         }
                     });
@@ -195,7 +195,7 @@ public class TT_Comment_ANDAdapter
                         @Override
                         public void onClick(View v) {
                             Integer bInt = (Integer)v.getTag();
-                            TT_Summit_AND tt_summit_and = new TT_Summit_AND(activity, bInt);
+                            TT_Summit_AND tt_summit_and = new TT_Summit_AND(bInt);
                             Log.i(TAG,
                                     "Intent addonPageSummitFoundActivity = new Intent(...");
                             TT_SummitFoundFragment tt_summitFoundFragment

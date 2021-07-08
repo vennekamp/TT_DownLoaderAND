@@ -6,11 +6,10 @@ import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
-import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -68,7 +67,7 @@ public class ViewModel4TT_SummitFoundFragment extends AndroidViewModel {
         // IMPORTANT: old List needs to be cleared!
         lstTT_Route_AND.getValue().clear();
         try {
-            Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+            Cursor cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase()
                     .rawQuery(StaticSQLQueries.getSQL4SummitsAscension(aTT_Summit_AND.getIntTT_IDOrdinal()), null);
             if (cursor != null && cursor.moveToFirst()) {
                 aTT_Summit_AND.setBln_Asscended(cursor.getInt(cursor
@@ -80,7 +79,7 @@ public class ViewModel4TT_SummitFoundFragment extends AndroidViewModel {
             }
             String queryString4SummitNeighbours = StaticSQLQueries.getSQL4SummitNeighbours(aTT_Summit_AND.getIntTT_IDOrdinal());
             Log.i(TAG, "Neuer Nachbargipfel suchen:\r\n" + queryString4SummitNeighbours);
-            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+            cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase()
                     .rawQuery(queryString4SummitNeighbours, null);
             Log.i(TAG, " --> cursor.getCount() " + cursor.getCount() + "'");
             int iCounter = 0;
@@ -166,7 +165,7 @@ public class ViewModel4TT_SummitFoundFragment extends AndroidViewModel {
 
             String queryString4RoutesBySummit = StaticSQLQueries.getSQL4RoutesBySummit(aTT_Summit_AND.getIntTT_IDOrdinal());
             Log.i(TAG,"Neue Wege zum Gipfel suchen:\r\n" + queryString4RoutesBySummit);
-            cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+            cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase()
                     .rawQuery(queryString4RoutesBySummit, null);
             Log.i(TAG,"Neue Wege zum Gipfel suchen:\t c != null'" + (cursor != null));
 
@@ -248,9 +247,9 @@ public class ViewModel4TT_SummitFoundFragment extends AndroidViewModel {
                 }
             }
         } catch (SQLiteException se) {
-            Crashlytics.logException(se);
             Log.e(TAG,
                     "Could not create or Open the database");
+            throw new RuntimeException(se);
         }
     }
 

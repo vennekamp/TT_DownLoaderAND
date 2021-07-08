@@ -1,10 +1,6 @@
 package com.teufelsturm.tt_downloader3.searches;
 
-import android.content.Context;
-import android.database.SQLException;
-
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
 
@@ -36,7 +32,7 @@ public class ViewModel4FragmentSearches extends ViewModel {
     String getStrtextViewGebiet() { return getAllAreaLabels().get(myAreaPositionFromSpinner); }
     public ArrayList<String> getAllAreaLabels() {
         if ( allAreaLabels == null ) {
-            allAreaLabels = SteinFibelApplication.getDataBaseHelper().getAllAreas();
+            allAreaLabels = TT_DownLoadedApp.getDataBaseHelper().getAllAreas();
         }
         return allAreaLabels;
     }

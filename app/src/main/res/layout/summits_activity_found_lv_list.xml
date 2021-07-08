@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/summits_activity_found_lv_list"
     android:layout_width="wrap_content"
@@ -17,13 +18,22 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
 
-    <android.support.v7.widget.RecyclerView
+    <TextView
+        android:id="@+id/textViewCaption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/found_summit_caption"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_summits_activity_found_lv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewCaption"
         android:divider="@color/Black"
         tools:listitem="@layout/summit_lv_item_found" >
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </RelativeLayout>

@@ -1,14 +1,12 @@
 package com.teufelsturm.tt_downloader3.dbHelper;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.SteinFibelApplication;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.searches.FragmentSearchRoute;
 import com.teufelsturm.tt_downloader3.searches.ViewModel4FragmentSearches;
 
@@ -141,7 +139,7 @@ public class AutoCompleteDbAdapter {
 		Log.v(TAG, "String queryString: " + queryString);
 
 		try {
-			Cursor cursor = SteinFibelApplication.getDataBaseHelper().getMyDataBase()
+			Cursor cursor = TT_DownLoadedApp.getDataBaseHelper().getMyDataBase()
                     .rawQuery(queryString, params);
 			if ( cursor != null ) {
 				cursor.moveToFirst();
