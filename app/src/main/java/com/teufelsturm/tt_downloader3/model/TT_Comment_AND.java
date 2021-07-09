@@ -36,7 +36,7 @@ public class TT_Comment_AND extends BaseModel{
 	}
 
 
-	public TT_Comment_AND(Integer intTTWegNr, String strEntryKommentar, 
+	public TT_Comment_AND(Integer intTTWegNr, String strEntryKommentar,
 			String strWegName, String strGipfelName,  int intTTGipfelNr,
 			Integer intEntryBewertung, String strEntryUser
 			, Long longEntryDatum) {

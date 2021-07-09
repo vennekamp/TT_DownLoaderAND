@@ -1,8 +1,8 @@
-package com.teufelsturm.tt_downloader3.searches;
+package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
-import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
-import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
 import java.util.ArrayList;
 
@@ -17,16 +17,16 @@ public class ViewModel4FragmentSearches extends ViewModel {
     void setPagerPageSelected(int position) { pagerPageSelected = position; }
 
     /**
-     * the position of the {@link FragmentSearchAbstract#mySpinner} (used in all three fragments
+     * the position of the {@link FragmentSearchAbstract mySpinner} (used in all three fragments
      * for the Area.
      */
     private int myAreaPositionFromSpinner = 0;
     public int getMyAreaPositionFromSpinner (){return myAreaPositionFromSpinner;}
-    void setMyAreaFromSpinner (int areaPositionFromSpinner){ myAreaPositionFromSpinner = areaPositionFromSpinner;}
+    public void setMyAreaFromSpinner (int areaPositionFromSpinner){ myAreaPositionFromSpinner = areaPositionFromSpinner;}
 
     /**
      * All Areas currently available in the database. Used to supply the name of the currently selected
-     * area in the {@link FragmentSearchAbstract#mySpinner}
+     * area in the {@link FragmentSearchAbstract mySpinner}
      */
     private ArrayList<String> allAreaLabels;
     String getStrtextViewGebiet() { return getAllAreaLabels().get(myAreaPositionFromSpinner); }
@@ -70,7 +70,7 @@ public class ViewModel4FragmentSearches extends ViewModel {
      */
     private int intMinLimitsForDifficultyGrade = EnumSachsenSchwierigkeitsGrad.getMinInteger();
     public int getMinLimitsForDifficultyGrade() { return intMinLimitsForDifficultyGrade; }
-    void setMinLimitsForDifficultyGrade(int minLimitsForDifficultyGrade) {
+    public void setMinLimitsForDifficultyGrade(int minLimitsForDifficultyGrade) {
         if ( minLimitsForDifficultyGrade < EnumSachsenSchwierigkeitsGrad.getMinInteger()
                 || minLimitsForDifficultyGrade > EnumSachsenSchwierigkeitsGrad.getMaxInteger()) {
             throw new IllegalArgumentException("Not a valid value: " + minLimitsForDifficultyGrade);
@@ -85,7 +85,7 @@ public class ViewModel4FragmentSearches extends ViewModel {
      */
     private int intMaxLimitsForDifficultyGrade = EnumSachsenSchwierigkeitsGrad.getMaxInteger();
     public int getMaxLimitsForDifficultyGrade() { return intMaxLimitsForDifficultyGrade; }
-    void setMaxLimitsForDifficultyGrade(int maxLimitsForDifficultyGrade) {
+    public void setMaxLimitsForDifficultyGrade(int maxLimitsForDifficultyGrade) {
         if ( maxLimitsForDifficultyGrade < EnumSachsenSchwierigkeitsGrad.getMinInteger()
                 || maxLimitsForDifficultyGrade > EnumSachsenSchwierigkeitsGrad.getMaxInteger()) {
             throw new IllegalArgumentException("Not a valid value: " + maxLimitsForDifficultyGrade);

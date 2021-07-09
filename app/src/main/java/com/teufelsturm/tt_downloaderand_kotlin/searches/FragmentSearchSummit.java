@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,15 +12,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
-import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
+import com.teufelsturm.tt_downloader3.BuildConfig;
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DB_BackUp2SDCard;
 import com.teufelsturm.tt_downloaderand_kotlin.foundSummitList.TT_SummitsFoundFragment;
 
@@ -35,8 +37,10 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 
 	@Override
 	protected Cursor getAutoCompleteCursor(CharSequence constraint) {
-		return myAutoCompleteDbAdapter
-				.getAllSummits(getContext(), searchManager4FragmentSearches,
+	    ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
+        return myAutoCompleteDbAdapter
+				.getAllSummits( searchManager4FragmentSearches,
                         (constraint != null ? constraint.toString() : null));
 	}
 
@@ -52,6 +56,8 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 		// ***************************************************************************************
 		// Define Action Listener
         //
+        ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
         myAutoCompleteTextView.setText(searchManager4FragmentSearches.getStrTextSuchtext4Summit());
         myAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,6 +100,8 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 
     private void seekBarAnzahlDerSternchenWegeSetOnRangeSeekBarChangeListener(@NotNull BubbleThumbRangeSeekbar
                                                                                       seekBarAnzahlDerSternchenWege) {
+        ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
         seekBarAnzahlDerSternchenWege
                 .setMinStartValue(searchManager4FragmentSearches.getIntMinAnzahlDerSternchenWege())
                 .setMaxStartValue(searchManager4FragmentSearches.getIntMaxAnzahlDerSternchenWege()).apply();
@@ -121,6 +129,8 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
     }
 
     private void seekBarAnzahlDerWegeSetOnRangeSeekBarChangeListener(@NotNull BubbleThumbRangeSeekbar seekBarAnzahlDerWege) {
+        ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
         seekBarAnzahlDerWege
                 .setMinStartValue(searchManager4FragmentSearches.getIntMinAnzahlDerWege())
                 .setMaxStartValue(searchManager4FragmentSearches.getIntMaxAnzahlDerWege()).apply();
@@ -154,7 +164,7 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
 	public void onClick(View v) {
 		if (v.getId() == R.id.buttonSearchSummit) {
 			Log.i(getClass().getSimpleName(), "onClick 'buttonSearchSummit' gedrückt...");
-
+            ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
 
             String strTextSuchtext = searchManager4FragmentSearches.getStrTextSuchtext4Summit();
             String strGebiet = searchManager4FragmentSearches.getStrtextViewGebiet();
@@ -180,7 +190,7 @@ public class FragmentSearchSummit extends FragmentSearchAbstract
         builder.setIcon(R.drawable.ic_launcher)
                 .setTitle(
                         getString(R.string.app_name) + " Vers.: "
-                                + MainActivity.APP_VERSION)
+                                + BuildConfig.VERSION_NAME)
                 .setMessage(R.string.APP_INFO_TEXT)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 // POSITIVE BUTTON: BackUP Data

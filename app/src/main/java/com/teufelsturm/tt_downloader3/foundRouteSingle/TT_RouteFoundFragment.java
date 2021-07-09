@@ -27,12 +27,12 @@ import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserRouteComment;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
-import com.teufelsturm.tt_downloader3.foundCommentsList.TT_Comment_ANDAdapter;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
-import com.teufelsturm.tt_downloader3.tt_enums.DatePickerFragment;
-import com.teufelsturm.tt_downloader3.tt_enums.EnumBegehungsStil;
+import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_Comment_ANDAdapter;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumBegehungsStil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -109,7 +109,7 @@ public class TT_RouteFoundFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // fill the Data in the Header
         fillRouteDetails(view);
-        mViewModel.getaTT_Route_AND().observe(this, new androidx.lifecycle.Observer<TT_Route_AND>() {
+        mViewModel.getaTT_Route_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<TT_Route_AND>() {
             @Override
             public void onChanged(TT_Route_AND tt_route_and) {
                 fillRouteDetails(getView());
@@ -119,7 +119,7 @@ public class TT_RouteFoundFragment extends Fragment {
         listenAdapter = new TT_Comment_ANDAdapter((MainActivity) getActivity(),
                 mViewModel.getLstTT_Comment_AND().getValue(), false);
         mRecyclerviewRoutesInRoutesFoundRoute.setAdapter(listenAdapter);
-        mViewModel.getLstTT_Comment_AND().observe(this, new androidx.lifecycle.Observer<ArrayList<TT_Comment_AND>>() {
+        mViewModel.getLstTT_Comment_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ArrayList<TT_Comment_AND>>() {
             @Override
             public void onChanged(ArrayList<TT_Comment_AND> tt_route_ands) {
                 listenAdapter = new TT_Comment_ANDAdapter((MainActivity) getActivity(),
@@ -385,7 +385,7 @@ public class TT_RouteFoundFragment extends Fragment {
                     .show();
         }
 	}
-	
+
 
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);

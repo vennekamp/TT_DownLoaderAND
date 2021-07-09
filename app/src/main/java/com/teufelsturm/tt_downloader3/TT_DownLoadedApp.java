@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
 
 import org.jetbrains.annotations.Contract;
 

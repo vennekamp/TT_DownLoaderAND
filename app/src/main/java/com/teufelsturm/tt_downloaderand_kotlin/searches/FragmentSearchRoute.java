@@ -2,29 +2,25 @@ package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
-import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_RoutesFoundFragment;
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.foundRoutesList.TT_RoutesFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
@@ -35,6 +31,8 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 
 	@Override
 	protected Cursor getAutoCompleteCursor(CharSequence constraint) {
+		ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
 		return myAutoCompleteDbAdapter
 				.getAllRoutes(searchManager4FragmentSearches,this,
                         (constraint != null ? constraint.toString(): null));
@@ -49,7 +47,8 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 		view = super.createView(inflater, container);
 		// ***************************************************************************************
 		// Define Action Listener
-        myAutoCompleteTextView.setText(searchManager4FragmentSearches.getStrTextSuchtext4Route());
+		ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+		myAutoCompleteTextView.setText(searchManager4FragmentSearches.getStrTextSuchtext4Route());
         myAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -88,16 +87,17 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
         seekBarNumberOfComments.setProgress(progressSeekBarNumberOfComments);
         // seekBarNumberOfComments.setProgress(R.integer.Zero);
 		SeekBar seekBarMinOfMeanRating = view.findViewById(R.id.seekBarMinOfMeanRating);
-        int progressSeekBarMinOfMeanRating = searchManager4FragmentSearches.getIntMinOfMeanRating();
+
+        float progressSeekBarMinOfMeanRating = searchManager4FragmentSearches.getFloatMinOfMeanRating();
 		seekBarMinOfMeanRating.setOnSeekBarChangeListener(this);
-        seekBarMinOfMeanRating.setProgress(progressSeekBarMinOfMeanRating);
+        seekBarMinOfMeanRating.setProgress((int)progressSeekBarMinOfMeanRating);
 		// seekBarMinOfMeanRating.setProgress(R.integer.Zero);
 		// ***************************************************************************************
 		// Refresh the text above the seekbars
 		writeLimitsForSeekBar((TextView) view.findViewById(R.id.TextViewNumberOfComments),
 				searchManager4FragmentSearches.getIntMinNumberOfComments(), R.string.strNumberOfComments);
         writeLimitsForSeekBar((TextView) view.findViewById(R.id.TextViewMinOfMeanRating),
-				searchManager4FragmentSearches.getIntMinOfMeanRating(), R.string.strMinOfMeanRating);
+				(int)searchManager4FragmentSearches.getFloatMinOfMeanRating(), R.string.strMinOfMeanRating);
 		return view;
 	}
 
@@ -105,6 +105,7 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 	@Override
 	public void onClick(View v) {
 		//		startActivity(new Intent(getActivity(), _TT_RoutesFoundActivity.class));
+		ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
 		String strTextSuchtext =  searchManager4FragmentSearches.getStrTextSuchtext4Route();
 		String strGebiet =  searchManager4FragmentSearches.getStrtextViewGebiet();
 		int intMinSchwierigkeit = EnumSachsenSchwierigkeitsGrad.valuesFromSkaleOrdinal(
@@ -112,7 +113,7 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 		int intMaxSchwierigkeit = EnumSachsenSchwierigkeitsGrad.valuesFromSkaleOrdinal(
                 searchManager4FragmentSearches.getMaxLimitsForDifficultyGrade()).getValue();
 		int intMinAnzahlDerKommentare = searchManager4FragmentSearches.getIntMinNumberOfComments();
-		int intMittlereWegBewertung = searchManager4FragmentSearches.getIntMinOfMeanRating();
+		int intMittlereWegBewertung = (int)searchManager4FragmentSearches.getFloatMinOfMeanRating();
 
         Fragment fragment = TT_RoutesFoundFragment.newInstance(strTextSuchtext, strGebiet,
 				intMinSchwierigkeit, intMaxSchwierigkeit, intMinAnzahlDerKommentare, intMittlereWegBewertung );
@@ -129,6 +130,7 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 			boolean fromUser) {
 //	    // return, if caused by e.g. rotation of device
 //	    if (!fromUser ) return;
+		ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
 		if (seekBar.getId() == R.id.seekBarNumberOfComments) {
 			searchManager4FragmentSearches.setIntMinNumberOfComments(progress);
 			writeLimitsForSeekBar(
@@ -136,7 +138,7 @@ public class FragmentSearchRoute extends FragmentSearchAbstract
 					progress, R.string.strNumberOfComments);
 
 		} else if (seekBar.getId() == R.id.seekBarMinOfMeanRating) {
-		    searchManager4FragmentSearches.setIntMinOfMeanRating(progress);
+		    searchManager4FragmentSearches.setFloatMinOfMeanRating(progress);
             writeLimitsForSeekBar(
 					(TextView) view.findViewById(R.id.TextViewMinOfMeanRating),
 					progress + EnumTT_WegBewertung.getMinInteger(),

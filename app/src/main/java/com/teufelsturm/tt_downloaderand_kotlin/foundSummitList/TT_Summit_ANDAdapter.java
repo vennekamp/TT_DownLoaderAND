@@ -3,10 +3,6 @@ package com.teufelsturm.tt_downloaderand_kotlin.foundSummitList;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.teufelsturm.tt_downloaderand_kotlin.R;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_Route_ANDAdapter;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -107,7 +105,7 @@ public class TT_Summit_ANDAdapter
 
         // Transfer the stock data from the data object
         // to the view objects
-        aTT_Gipfel_ANDView.textView_tableCol_SummitName.setText(currentTT_Gipfel_AND.getStr_SummitName() );
+        aTT_Gipfel_ANDView.textView_tableCol_SummitName.setText(currentTT_Gipfel_AND.getStr_TTSummitName());
         aTT_Gipfel_ANDView.textView_tableCol_Area.setText(
                 new StringBuilder()
                         .append(mContext.getApplicationContext().getResources()
@@ -122,13 +120,13 @@ public class TT_Summit_ANDAdapter
                 new StringBuilder()
                         .append(mContext.getApplicationContext().getResources()
                                 .getString(R.string.tableCol_NumberOfRoutes))
-                        .append(currentTT_Gipfel_AND.getInt_NumberOfRoutes().toString())
+                        .append(currentTT_Gipfel_AND.getInt_NumberOfRoutes() )
                         .toString());
         aTT_Gipfel_ANDView.textView_tableCol_NumberofStarRoutes.setText(
                 new StringBuilder()
                         .append(mContext.getApplicationContext().getResources()
                                 .getString(R.string.tableCol_NumberofStarRoutes))
-                        .append(currentTT_Gipfel_AND.getInt_NumberofStarRoutes().toString())
+                        .append(currentTT_Gipfel_AND.getInt_NumberofStarRoutes())
                         .toString());
         aTT_Gipfel_ANDView.textView_tableCol_EasiestGrade.setText(
                 new StringBuilder()

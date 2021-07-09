@@ -5,30 +5,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRouteSingle.TT_Route_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_SummitFoundFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.foundSummitSingle.TT_Summit_AND;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -231,12 +227,16 @@ public class TT_SummitsFoundFragment extends Fragment
 								.getColumnIndex("dblGPS_Latitude"));
 						double dbl_GpsLong = cursor.getDouble(cursor
 								.getColumnIndex("dblGPS_Longitude"));
-						boolean bln_Asscended = cursor.getInt(cursor
-								.getColumnIndex("isAscendedSummit")) > 0;
-						Long int_DateAsscended = cursor.getLong(cursor
-								.getColumnIndex("intDateOfAscend"));
-						String str_MyComment = cursor.getString(cursor
-								.getColumnIndex("strMySummitComment"));
+//						boolean bln_Asscended = cursor.getInt(cursor
+//								.getColumnIndex("isAscendedSummit")) > 0;
+//						Long int_DateAsscended = cursor.getLong(cursor
+//								.getColumnIndex("intDateOfAscend"));
+//						String str_MyComment = cursor.getString(cursor
+//								.getColumnIndex("strMySummitComment"));
+						// Read from Firebase TODO TODO TODO TODO???
+						MutableLiveData<Boolean> bln_Asscended = new MutableLiveData<>();
+						MutableLiveData<Long> long_DateAsscended = new MutableLiveData<>();
+						MutableLiveData<String> str_MyComment = new MutableLiveData<>();
 
 						lstTT_Gipfel_AND
 								.add(new TT_Summit_AND(intTTGipfelNr,
@@ -245,7 +245,7 @@ public class TT_SummitsFoundFragment extends Fragment
 										int_NumberofStarRoutes,
 										str_EasiestGrade, dbl_GpsLong,
 										dbl_GpsLat, bln_Asscended,
-										int_DateAsscended, str_MyComment));
+										long_DateAsscended, str_MyComment));
 
 						Log.i(TAG," -> Neuer Gipfel... " + strGipfelName
 										+ "\r\nTT-Gipfelnummer: " + intTTGipfelNr);

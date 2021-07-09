@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "458169370623",
+    "firebase_url": "https://tt-downloader3.firebaseio.com",
+    "project_id": "tt-downloader3",
+    "storage_bucket": "tt-downloader3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458169370623:android:b10c6a64b5e82db4",
+        "android_client_info": {
+          "package_name": "com.teufelsturm.tt_downloader3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458169370623-fnmp1d166qo49rg5h4fumasocc9kbl3q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teufelsturm.tt_downloader3",
+            "certificate_hash": "cd922f8d8920881c8073d777d40a9304c3bd36ed"
+          }
+        },
+        {
+          "client_id": "458169370623-6j361q0tlr7mk01qehquuq4ti77u30h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7pCJWxskIgEbk8o9HfmglDCZN5jFwOtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458169370623-6j361q0tlr7mk01qehquuq4ti77u30h1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

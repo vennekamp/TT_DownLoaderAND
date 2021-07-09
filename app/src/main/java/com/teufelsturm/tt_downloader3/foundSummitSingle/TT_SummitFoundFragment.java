@@ -29,11 +29,11 @@ import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
 import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
-import com.teufelsturm.tt_downloader3.foundRoutesList.TT_Route_ANDAdapter;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
-import com.teufelsturm.tt_downloader3.tt_enums.DatePickerFragment;
+import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_Route_ANDAdapter;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -325,7 +325,7 @@ public class TT_SummitFoundFragment extends Fragment
 		}
 		super.onStop();
 	}
-	
+
 	private void saveMySummitComment() {
 //        TT_Summit_AND aTT_Summit_AND = getArguments().getParcelable(TT_GIPFEL_AND);
 

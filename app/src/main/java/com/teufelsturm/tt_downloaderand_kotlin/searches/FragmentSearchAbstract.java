@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.searches;
+package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -23,8 +23,8 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.dbHelper.AutoCompleteDbAdapter;
-import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
+import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.AutoCompleteDbAdapter;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

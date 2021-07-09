@@ -28,7 +28,7 @@ public class RepositoryFactory {
 
     public static IRepository<TT_Comment_AND> getCommentRepository(Context context) {
         if (mCommentRepository == null) {
-            mCommentRepository = new Repository<>(context, BaseModel.Type.COMMEMT);
+            mCommentRepository = new Repository<TT_Comment_AND>(context, BaseModel.Type.COMMEMT);
         }
         return mCommentRepository;
     }

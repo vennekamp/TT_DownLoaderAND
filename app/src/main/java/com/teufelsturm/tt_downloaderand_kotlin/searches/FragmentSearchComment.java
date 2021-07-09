@@ -2,7 +2,6 @@ package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,9 +17,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
+import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloaderand_kotlin.OnFragmentReplaceListener;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
 import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_CommentsFoundFragment;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
 import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
@@ -44,7 +46,9 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 		view = super.createView(inflater, container);
 		// ***************************************************************************************
 		// Define Action Listener
-        myAutoCompleteTextView.setText(searchManager4FragmentSearches.getStrTextSuchtext4Comment());
+			ViewModel4FragmentSearches searches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
+			myAutoCompleteTextView.setText(searches.getStrTextSuchtext4Comment());
         myAutoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,7 +62,9 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchManager4FragmentSearches.setStrTextSuchtext4Comment(s.toString());
+				ViewModel4FragmentSearches searches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
+				searches.setStrTextSuchtext4Comment(s.toString());
             }
         });
 		// Spinner 
@@ -67,7 +73,8 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 		mySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			    searchManager4FragmentSearches.setMyAreaFromSpinner(position);
+				ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+				searchManager4FragmentSearches.setMyAreaFromSpinner(position);
 				Log.e(TAG,"mySpinner.getSelectedItem()" + mySpinner.getSelectedItem().toString());
 			}
 
@@ -93,7 +100,8 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 		// ***************************************************************************************
 		// alter the SeekBars (standard) in the layout
 		SeekBar seekBarMinGradingInCommet = view.findViewById(R.id.seekBarMinGradingInComment);
-        int progressSeekBarMinGradingInCommet = searchManager4FragmentSearches.getMinGradingOfCommet();
+			ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+			int progressSeekBarMinGradingInCommet = searchManager4FragmentSearches.getMinGradingOfCommet();
 		seekBarMinGradingInCommet.setMax(EnumTT_WegBewertung.getMaxInteger() - EnumTT_WegBewertung.getMinInteger());
 		seekBarMinGradingInCommet.setOnSeekBarChangeListener(this);
 		seekBarMinGradingInCommet.setProgress(progressSeekBarMinGradingInCommet);
@@ -113,7 +121,8 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress,
 			boolean fromUser) {
-        searchManager4FragmentSearches.setMinGradingOfCommet(progress);
+		ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+		searchManager4FragmentSearches.setMinGradingOfCommet(progress);
 		writeLimitsForSeekBar(
 				(TextView) view.findViewById(R.id.TextViewCommmentGrading),
 				progress, R.string.strMinGradingInComment);
@@ -136,6 +145,8 @@ public class FragmentSearchComment extends FragmentSearchAbstract
 		// TODO Auto-generated method stub
 		Toast.makeText(getActivity(), "Diese Suche kann etwas dauern...", Toast.LENGTH_SHORT)
 				.show();
+		ViewModel4FragmentSearches searchManager4FragmentSearches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+
 		Fragment fragment = TT_CommentsFoundFragment.newInstance(
                 searchManager4FragmentSearches.getStrTextSuchtext4Comment(),
                 searchManager4FragmentSearches.getStrtextViewGebiet(),

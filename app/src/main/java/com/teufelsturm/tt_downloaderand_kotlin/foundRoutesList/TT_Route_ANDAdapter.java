@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.foundRoutesList;
+package com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList;
 
 import android.content.Context;
 import android.text.SpannableString;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
-import com.teufelsturm.tt_downloader3.tt_enums.EnumBegehungsStil;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumBegehungsStil;
 
 import org.jetbrains.annotations.NotNull;
 

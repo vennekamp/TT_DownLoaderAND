@@ -4,7 +4,8 @@
  */
 package com.teufelsturm.tt_downloaderand_kotlin.tt_objects;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  *

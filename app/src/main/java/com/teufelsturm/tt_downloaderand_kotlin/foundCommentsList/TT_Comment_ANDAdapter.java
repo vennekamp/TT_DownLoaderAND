@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.foundCommentsList;
+package com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
-import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
+import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TT_Comment_ANDAdapter
@@ -170,7 +171,7 @@ public class TT_Comment_ANDAdapter
                     .setVisibility(View.GONE);
         } else {
             aTT_Comment_ANDView.textView_tableCol_RouteName2Comment
-                    .setTag(currentTT_Comment_AND.getIntTT_IDOrdinal());
+                    .setTag(currentTT_Comment_AND.getIntTTGipfelNr());
             aTT_Comment_ANDView.textView_tableCol_RouteName2Comment
                     .setOnClickListener(new OnClickListener() {
                         @Override

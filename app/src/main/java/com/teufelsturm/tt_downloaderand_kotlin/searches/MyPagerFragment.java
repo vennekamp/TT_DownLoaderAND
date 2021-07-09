@@ -1,15 +1,7 @@
 package com.teufelsturm.tt_downloaderand_kotlin.searches;
 
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +11,16 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 
-import com.teufelsturm.tt_downloaderand_kotlin.MainActivity;
-import com.teufelsturm.tt_downloaderand_kotlin.R;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
+
+
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyPagerFragment extends Fragment
-        implements OnTabChangeListener, OnPageChangeListener {
+        implements OnTabChangeListener, ViewPager.OnPageChangeListener {
     private static final String TAG = MyPagerFragment.class.getSimpleName();
     public static String ID = "MyPagerFragment";
     private MyPageAdapter pageAdapter;
@@ -61,7 +61,8 @@ public class MyPagerFragment extends Fragment
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        mViewPager.setCurrentItem(SearchManager4FragmentSearches.getInstance().getPagerPageSelected());
+        ViewModel4FragmentSearches searches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+        mViewPager.setCurrentItem(searches.getPagerPageSelected());
         ((MainActivity)getActivity()).showFAB(ID);
     }
 
@@ -110,7 +111,8 @@ public class MyPagerFragment extends Fragment
 	public void onPageSelected(int position) {
         Log.e(TAG, "onPageSelected(int position)   --->   " + position);
         this.mTabHost.setCurrentTab(position);
-        SearchManager4FragmentSearches.getInstance().setPagerPageSelected(position);
+        ViewModel4FragmentSearches searches = ViewModelProviders.of(getActivity()).get(ViewModel4FragmentSearches.class);
+        searches.setPagerPageSelected(position);
 	}
 
     // Tabs Creation

@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.tt_enums;
+package com.teufelsturm.tt_downloaderand_kotlin.tt_objects;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;

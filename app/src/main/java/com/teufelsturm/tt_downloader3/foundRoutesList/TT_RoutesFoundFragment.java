@@ -14,6 +14,7 @@ import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
 import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
+import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_Route_ANDAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -101,7 +102,7 @@ public class TT_RoutesFoundFragment extends Fragment
         mViewModel.floatMittlereWegBewertung = bundle.getFloat(SUCH_MITTLERE_WEG_BEWERTUNG);
 
 
-        mViewModel.getLstTT_Route_AND().observe(this, new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
+        mViewModel.getLstTT_Route_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
             @Override
             public void onChanged(ArrayList<TT_Route_AND> tt_summit_ands) {
                 listenAdapter = new TT_Route_ANDAdapter(TT_RoutesFoundFragment.this,

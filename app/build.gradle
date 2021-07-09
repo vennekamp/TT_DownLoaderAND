@@ -3,19 +3,8 @@ apply plugin: 'com.android.application'
 
 
 android {
-//    dataBinding {
-//        enabled = true
-//    }
-    signingConfigs {
-        config {
-            keyAlias 'key'
-            keyPassword 'TT_DownLoaded'
-            storeFile file('S:/Programming/git/TT_DownLoaderAND_Kotlin/KeyStore_TTDownLoaded.jks')
-            storePassword 'TT_DownLoaded'
-        }
-    }
     compileSdkVersion 30
-    buildToolsVersion '28.0.3'
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "com.teufelsturm.tt_downloader3"
         minSdkVersion 16
@@ -25,14 +14,14 @@ android {
         setProperty("archivesBaseName", "TT_DownLoaded" + "-v" + versionCode + "_[" + versionName + "]_")
         // FIX FOR: Error: Cannot fit requested classes in a single dex file (# methods: 97493 > 65536)
         multiDexEnabled true
-        signingConfig signingConfigs.config
+//        signingConfig signingConfigs.config
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
         release {
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
     }
     compileOptions {
@@ -51,8 +40,8 @@ configurations {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.4.0-beta01'
-    implementation 'androidx.appcompat:appcompat:1.4.0-alpha02'
+    implementation 'com.google.android.material:material:1.5.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.4.0-alpha03'
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
     implementation 'org.jetbrains:annotations-java5:15.0'
 
@@ -63,16 +52,18 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
 
     // Add the Firebase Admin SDK to your app:
-    implementation 'com.google.firebase:firebase-firestore:23.0.0'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.room:room-runtime:2.4.0-alpha02"
-    implementation 'android.arch.persistence.room:runtime:1.1.1'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    implementation "androidx.room:room-runtime:2.4.0-alpha03"
+    implementation 'androidx.room:room-runtime:2.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.1.0'
+    implementation 'com.google.firebase:firebase-analytics:19.0.0'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
 }
 
 repositories {

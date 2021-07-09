@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 
-import com.teufelsturm.tt_downloaderand_kotlin.R;
+import com.teufelsturm.tt_downloader3.R;
 
 import java.math.BigDecimal;
 

@@ -164,8 +164,8 @@ public class TT_Summit_AND extends BaseModel {
     /*
      * Getter for the Comments
      */
-    public boolean getBln_Asscended() {
-        return bln_Asscended.getValue();
+    public Boolean getBln_Asscended() {
+        return (bln_Asscended != null) && bln_Asscended.getValue() != null && bln_Asscended.getValue();
     }
 
     public Long getLong_DateAsscended() {

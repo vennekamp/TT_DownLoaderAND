@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.dbHelper;
+package com.teufelsturm.tt_downloaderand_kotlin.dbHelper;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -13,6 +13,7 @@ import com.teufelsturm.tt_downloader3.BuildConfig;
 import com.teufelsturm.tt_downloader3.MainActivity;
 import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,7 +65,7 @@ import java.util.ArrayList;
          *
          * @param context   the context for this
          */
-	private DataBaseHelper(Context context) {
+		public DataBaseHelper(Context context) {
 		super(context, MainActivity.DB_NAME, null, BuildConfig.VERSION_CODE);
 		this.context = context;
 		DB_PATH = context.getFilesDir().getAbsolutePath()

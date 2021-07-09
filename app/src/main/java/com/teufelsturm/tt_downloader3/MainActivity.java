@@ -12,7 +12,9 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.teufelsturm.tt_downloader3.searches.MyPagerFragment;
+import com.teufelsturm.tt_downloader3.dbHelper.DownloadFileFromURL;
+import com.teufelsturm.tt_downloaderand_kotlin.OnFragmentReplaceListener;
+import com.teufelsturm.tt_downloaderand_kotlin.searches.MyPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentReplace
 
                 // (optional) download and show to image
                 String userPhotoUrl = String.valueOf (user.getPhotoUrl());
-                new DownloadFileFromURL(this).execute(userPhotoUrl);
+                new DownloadFileFromURL(true).execute(userPhotoUrl);
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentReplace
         }
     }
 
-    @Override
     public void replaceFragment(@NotNull Fragment fragment, String mTAG) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment, mTAG);

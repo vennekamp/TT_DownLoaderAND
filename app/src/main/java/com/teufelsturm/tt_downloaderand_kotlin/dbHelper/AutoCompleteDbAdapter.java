@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.dbHelper;
+package com.teufelsturm.tt_downloaderand_kotlin.dbHelper;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -7,8 +7,8 @@ import android.util.Log;
 
 import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
-import com.teufelsturm.tt_downloader3.searches.FragmentSearchRoute;
-import com.teufelsturm.tt_downloader3.searches.ViewModel4FragmentSearches;
+import com.teufelsturm.tt_downloaderand_kotlin.searches.FragmentSearchRoute;
+import com.teufelsturm.tt_downloaderand_kotlin.searches.ViewModel4FragmentSearches;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class AutoCompleteDbAdapter {
 	/**
 	 * Constructor - takes the context to allow the database to be
 	 * opened/created
-	 * 
+	 *
 	 * @param activity
 	 *            the Activity that is using the database
 	 */
@@ -39,7 +39,7 @@ public class AutoCompleteDbAdapter {
 	/**
 	 * Return a Cursor that returns all list of Climbing summit where the summit
 	 * name begins with the given constraint string.
-	 * 
+	 *
 	 * @param constraint
 	 *            Specifies the first letters of the states to be listed. If
 	 *            null, all rows are returned.
@@ -77,7 +77,7 @@ public class AutoCompleteDbAdapter {
 	 * Getting all Areas returns list of Climbing Route Names
 	 * */
 	public Cursor getAllRoutes(ViewModel4FragmentSearches viewModel4FragmentSearches,
-							   FragmentSearchRoute f, String constraint) throws SQLException {
+                               FragmentSearchRoute f, String constraint) throws SQLException {
 		Log.v(TAG, "getAllRoutes");
 		String strGebiet = viewModel4FragmentSearches.getAllAreaLabels()
                 .get( viewModel4FragmentSearches.getMyAreaPositionFromSpinner() );

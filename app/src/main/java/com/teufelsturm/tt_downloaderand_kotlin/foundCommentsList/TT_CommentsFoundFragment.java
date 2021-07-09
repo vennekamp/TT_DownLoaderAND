@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader3.foundCommentsList;
+package com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -186,7 +186,7 @@ public class TT_CommentsFoundFragment extends Fragment {
 			Log.e(TAG,"Could not create or Open the database");
 		} finally {
 			Toast.makeText(getActivity(), lstTT_Comment_AND.size() + " Kommentare gefunden"
-					+ ( lstTT_Comment_AND.size()  ==  getResources().getInteger(R.integer.MaxNoItemQuerxy) 
+					+ ( lstTT_Comment_AND.size()  ==  getResources().getInteger(R.integer.MaxNoItemQuerxy)
 					? " (Maximalanzahl an Ergebnissen erreicht)" : ""), Toast.LENGTH_LONG)
 				.show();
 		}

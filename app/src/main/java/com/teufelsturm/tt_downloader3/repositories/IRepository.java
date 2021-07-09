@@ -13,33 +13,27 @@ public interface IRepository<T> {
      * Save an individual record
      * @param record the record to save
      * @return the updated record
-     * @throws RepositoryException if the data cannot be saved.
      */
-    T saveItem(T record) throws RepositoryException;
+    T saveItem(T record);
 
     /**
      * Removes an individual record
      * @param record the record to remove
-     * @throws RepositoryException if the data cannot be removed.
-     * @throws ItemMissingException if the data is not present.
      */
-    void removeItem(T record) throws RepositoryException, ItemMissingException;
+    void removeItem(T record);
 
     /**
      * Retrieves an individual record based on the string ID
      * @param id the ID of the item to retrieve
      * @return the retrieved record
-     * @throws RepositoryException if the data cannot be retrieved.
-     * @throws ItemMissingException is the data is not present.
      */
-    T getItem(int id) throws RepositoryException, ItemMissingException;
+    T getItem(int id);
 
     /**
      * Obtain a list of items
      * @return all items in the list
-     * @throws RepositoryException if the data cannot be retrieved.
      */
-    List<T> getmItems() throws RepositoryException;
+    List<T> getmItems();
 
     /**
      * Obtain a list of items, with paging support.  If no more data is
@@ -47,14 +41,12 @@ public interface IRepository<T> {
      * @param start the start index of the items to return
      * @param count the number of items to return
      * @return the requested items.
-     * @throws RepositoryException if the data cannot be retrieved.
      */
-    List<T> getItems(int start, int count) throws RepositoryException;
+    List<T> getItems(int start, int count);
 
     /**
      * Returns the number of items in the repository.
      * @return the number of items in the repository.
-     * @throws RepositoryException if the data cannot be retrieved.
      */
-    int getLength() throws RepositoryException;
+    int getLength();
 }

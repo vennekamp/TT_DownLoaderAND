@@ -7,13 +7,14 @@ package com.teufelsturm.tt_downloaderand_kotlin.tt_objects;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
-import com.teufelsturm.tt_downloaderand_kotlin.R;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
+import com.teufelsturm.tt_downloader3.R;
 
 /**
  *
