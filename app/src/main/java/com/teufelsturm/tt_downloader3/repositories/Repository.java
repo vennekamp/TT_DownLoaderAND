@@ -25,7 +25,7 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
     }
 
     @Override
-    public T saveItem(T record) {
+    public T saveItem(T record) throws RepositoryException {
         /* Update the record so that the updated value is set */
         record.setUpdated(System.currentTimeMillis());
         int index = mItems.indexOf(record);
@@ -38,9 +38,9 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
     }
 
     @Override
-    public void removeItem(T record) {
+    public void removeItem(T record) throws RepositoryException {
         if (!mItems.remove(record)) {
-            throw new IllegalArgumentException(String.format("Item %s does not exist", record.getIntTT_IDOrdinal()));
+            throw new ItemMissingException(String.format("Item %s does not exist", record.getIntTT_IDOrdinal()));
         }
     }
 
@@ -49,10 +49,12 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
      * Retrieves an individual record based on the string ID
      * @param id the ID of the item to retrieve
      * @return the retrieved record
+     * @throws RepositoryException if the data cannot be retrieved.
+     * @throws ItemMissingException is the data is not present.
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T getItem(int id)  {
+    public T getItem(int id) throws RepositoryException {
         for (T item : mItems) {
             if (item.getIntTT_IDOrdinal().equals(id)) {
                 return item;
@@ -70,16 +72,17 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
                 return tt_route_and;
             case COMMEMT:
             default:
-                throw new IllegalArgumentException(String.format("Item %s does not exist: Should never happer have you forgetten to save the comment of the route here?", id));
+                throw new ItemMissingException(String.format("Item %s does not exist: Should never happer have you forgetten to save the comment of the route here?", id));
         }
     }
 
     /**
      * Obtain a list of mItems
      * @return all mItems in the list
+     * @throws RepositoryException if the data cannot be retrieved.
      */
     @Override
-    public List<T> getmItems() {
+    public List<T> getmItems() throws RepositoryException {
         return mItems;
     }
 
@@ -89,9 +92,10 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
      * @param start the start index of the mItems to return
      * @param count the number of mItems to return
      * @return the requested mItems.
+     * @throws RepositoryException if the data cannot be retrieved.
      */
     @Override
-    public List<T> getItems(int start, int count) {
+    public List<T> getItems(int start, int count) throws RepositoryException {
         if (start > mItems.size()) {
             return new ArrayList<>();
         }
@@ -102,9 +106,10 @@ public class Repository<T extends BaseModel> implements IRepository<T> {
     /**
      * Returns the number of mItems in the repository.
      * @return the number of mItems in the repository.
+     * @throws RepositoryException if the data cannot be retrieved.
      */
     @Override
-    public int getLength() {
+    public int getLength() throws RepositoryException {
         return mItems.size();
     }
 }

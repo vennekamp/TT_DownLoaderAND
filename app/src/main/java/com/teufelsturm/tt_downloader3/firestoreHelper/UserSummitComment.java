@@ -2,6 +2,8 @@ package com.teufelsturm.tt_downloader3.firestoreHelper;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,8 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
 
 /**
  * @author Martin

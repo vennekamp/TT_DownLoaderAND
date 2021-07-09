@@ -6,17 +6,17 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
-import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
-import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
+
+import java.util.ArrayList;
 
 public class ViewModel4TT_SummitsFoundFragment extends AndroidViewModel {
     private static final String TAG = ViewModel4TT_SummitsFoundFragment.class.getSimpleName();

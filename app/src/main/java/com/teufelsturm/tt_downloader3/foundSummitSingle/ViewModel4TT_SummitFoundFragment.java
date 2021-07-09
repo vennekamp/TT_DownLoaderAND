@@ -6,6 +6,12 @@ import android.database.sqlite.SQLiteException;
 import android.location.Location;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
@@ -18,12 +24,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 
 public class ViewModel4TT_SummitFoundFragment extends AndroidViewModel {
     private static final String TAG = ViewModel4TT_SummitFoundFragment.class.getSimpleName();

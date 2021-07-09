@@ -15,8 +15,8 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical"
+        android:clipChildren="false" >
 
         <LinearLayout
             android:id="@+id/linearlayout_summitbuttons"
@@ -24,23 +24,63 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:gravity="center_horizontal"
-            android:weightSum="1.0"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            android:clipChildren="false" >
 
-	        <Button
-	            android:id="@+id/button_INFO"
-                style="?android:attr/button"
-	            android:layout_width="0dip"
-	            android:layout_height="wrap_content"
-            	android:layout_weight=".35"
-	            android:text="@string/INFO" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".035" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/imageButtonLogIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".15"
+                android:contentDescription="@string/login_btn_txt"
+                android:scaleType="fitCenter"
+                app:fabSize="normal"
+                app:maxImageSize="56dp"
+                app:borderWidth="0dp"
+                app:elevation="3dp"
+                android:layout_margin="3dp"
+                app:srcCompat="@mipmap/ic_account_user"
+                app:backgroundTint="@android:color/transparent"  />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".035" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/imageButtonInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".15"
+                android:contentDescription="@string/INFO"
+                android:scaleType="fitCenter"
+                app:fabSize="normal"
+                app:maxImageSize="56dp"
+                app:borderWidth="0dp"
+                app:elevation="3dp"
+                android:layout_margin="6dp"
+                app:srcCompat="@mipmap/ic_info"
+                app:backgroundTint="@android:color/transparent"  />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".05" />
 
             <Button
                 android:id="@+id/buttonSearchSummit"
                 style="?android:attr/button"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-            	android:layout_weight=".65"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight=".5"
                 android:text="@string/strSearchSummit" />
 		</LinearLayout>
         

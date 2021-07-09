@@ -6,20 +6,20 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
-import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
-import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumSachsenSchwierigkeitsGrad;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumTT_WegBewertung;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
+import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumSachsenSchwierigkeitsGrad;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumTT_WegBewertung;
+
+import java.util.ArrayList;
 
 public class ViewModel4TT_RoutesFoundFragment extends AndroidViewModel {
     private static String TAG = ViewModel4TT_RoutesFoundFragment.class.getSimpleName();
@@ -32,7 +32,7 @@ public class ViewModel4TT_RoutesFoundFragment extends AndroidViewModel {
     public int intMinSchwierigkeit = EnumSachsenSchwierigkeitsGrad.getMinInteger();
     public int intMaxSchwierigkeit = EnumSachsenSchwierigkeitsGrad.getMaxInteger();
     public int intMinAnzahlDerKommentare = 0;
-    public float floatMittlereWegBewertung = (float) EnumTT_WegBewertung.getMaxInteger();
+    public float floatMittlereWegBewertung = (float)EnumTT_WegBewertung.getMaxInteger();
 
 	private MediatorLiveData<ArrayList<TT_Route_AND>> lstTT_Routes_AND;
     MediatorLiveData<ArrayList<TT_Route_AND>> getLstTT_Route_AND() {

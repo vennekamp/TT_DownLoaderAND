@@ -14,7 +14,7 @@ android {
         setProperty("archivesBaseName", "TT_DownLoaded" + "-v" + versionCode + "_[" + versionName + "]_")
         // FIX FOR: Error: Cannot fit requested classes in a single dex file (# methods: 97493 > 65536)
         multiDexEnabled true
-//        signingConfig signingConfigs.config
+//        signingConfig signingConfigs.config   /// <<<-------- Nur mit signierten Apps klappt das Login in Google
     }
     buildTypes {
         debug {

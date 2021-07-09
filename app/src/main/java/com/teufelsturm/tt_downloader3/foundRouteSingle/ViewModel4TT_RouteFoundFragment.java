@@ -5,6 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.dbHelper.StaticSQLQueries;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
@@ -13,11 +18,6 @@ import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 public class ViewModel4TT_RouteFoundFragment extends AndroidViewModel {
     public static final String TAG = ViewModel4TT_RouteFoundFragment.class.getSimpleName();

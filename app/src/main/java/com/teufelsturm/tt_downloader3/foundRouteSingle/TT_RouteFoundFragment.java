@@ -20,6 +20,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.teufelsturm.tt_downloader3.MainActivity;
@@ -27,12 +35,12 @@ import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserRouteComment;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
+import com.teufelsturm.tt_downloader3.foundCommentsList.TT_Comment_ANDAdapter;
 import com.teufelsturm.tt_downloader3.model.TT_Comment_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
-import com.teufelsturm.tt_downloaderand_kotlin.foundCommentsList.TT_Comment_ANDAdapter;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.EnumBegehungsStil;
+import com.teufelsturm.tt_downloader3.tt_enums.DatePickerFragment;
+import com.teufelsturm.tt_downloader3.tt_enums.EnumBegehungsStil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,14 +49,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ShareCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class TT_RouteFoundFragment extends Fragment {
     private static final String TAG = TT_RouteFoundFragment.class.getSimpleName();
@@ -109,7 +109,7 @@ public class TT_RouteFoundFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // fill the Data in the Header
         fillRouteDetails(view);
-        mViewModel.getaTT_Route_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<TT_Route_AND>() {
+        mViewModel.getaTT_Route_AND().observe(this, new androidx.lifecycle.Observer<TT_Route_AND>() {
             @Override
             public void onChanged(TT_Route_AND tt_route_and) {
                 fillRouteDetails(getView());
@@ -119,7 +119,7 @@ public class TT_RouteFoundFragment extends Fragment {
         listenAdapter = new TT_Comment_ANDAdapter((MainActivity) getActivity(),
                 mViewModel.getLstTT_Comment_AND().getValue(), false);
         mRecyclerviewRoutesInRoutesFoundRoute.setAdapter(listenAdapter);
-        mViewModel.getLstTT_Comment_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ArrayList<TT_Comment_AND>>() {
+        mViewModel.getLstTT_Comment_AND().observe(this, new androidx.lifecycle.Observer<ArrayList<TT_Comment_AND>>() {
             @Override
             public void onChanged(ArrayList<TT_Comment_AND> tt_route_ands) {
                 listenAdapter = new TT_Comment_ANDAdapter((MainActivity) getActivity(),
@@ -385,7 +385,7 @@ public class TT_RouteFoundFragment extends Fragment {
                     .show();
         }
 	}
-
+	
 
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);

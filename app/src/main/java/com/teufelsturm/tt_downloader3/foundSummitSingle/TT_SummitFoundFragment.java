@@ -16,6 +16,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -29,29 +41,17 @@ import com.teufelsturm.tt_downloader3.R;
 import com.teufelsturm.tt_downloader3.TT_DownLoadedApp;
 import com.teufelsturm.tt_downloader3.firestoreHelper.UserSummitComment;
 import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
+import com.teufelsturm.tt_downloader3.foundRoutesList.TT_Route_ANDAdapter;
 import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
 import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
 import com.teufelsturm.tt_downloader3.repositories.RepositoryFactory;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_Route_ANDAdapter;
-import com.teufelsturm.tt_downloaderand_kotlin.tt_objects.DatePickerFragment;
+import com.teufelsturm.tt_downloader3.tt_enums.DatePickerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ShareCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class TT_SummitFoundFragment extends Fragment
         implements View.OnClickListener {
@@ -325,7 +325,7 @@ public class TT_SummitFoundFragment extends Fragment
 		}
 		super.onStop();
 	}
-
+	
 	private void saveMySummitComment() {
 //        TT_Summit_AND aTT_Summit_AND = getArguments().getParcelable(TT_GIPFEL_AND);
 

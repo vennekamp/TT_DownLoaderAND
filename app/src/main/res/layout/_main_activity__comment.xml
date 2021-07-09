@@ -88,6 +88,7 @@
             android:layout_below="@+id/textViewLimitsForScale44CommentSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:corner_radius="10"
             app:min_value="1"
             app:max_value="29"
             app:steps="1"
@@ -110,16 +111,22 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black" />
 
-        <SeekBar
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbSeekbar
             android:id="@+id/seekBarMinGradingInComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TextViewCommmentGrading"
             android:layout_alignStart="@+id/TextViewCommmentGrading"
             android:layout_alignLeft="@+id/TextViewCommmentGrading"
-            android:max="@integer/Six"
-            android:progress="@integer/Zero" />
-
+            app:corner_radius="10"
+            app:min_value="0"
+            app:max_value="@integer/Six"
+            app:steps="1"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_integer"/>
     </RelativeLayout>
 
 </ScrollView>

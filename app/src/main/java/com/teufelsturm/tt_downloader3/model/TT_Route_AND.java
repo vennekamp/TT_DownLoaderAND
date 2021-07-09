@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -19,8 +21,6 @@ import org.jetbrains.annotations.Nullable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-import androidx.lifecycle.MutableLiveData;
 
 public class TT_Route_AND extends BaseModel{
     public static final String TAG = TT_Route_AND.class.getSimpleName();

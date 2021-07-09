@@ -8,24 +8,23 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.teufelsturm.tt_downloader3.MainActivity;
-import com.teufelsturm.tt_downloader3.R;
-import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
-import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
-import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
-import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
-import com.teufelsturm.tt_downloaderand_kotlin.foundRoutesList.TT_Route_ANDAdapter;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.teufelsturm.tt_downloader3.MainActivity;
+import com.teufelsturm.tt_downloader3.R;
+import com.teufelsturm.tt_downloader3.foundRouteSingle.TT_RouteFoundFragment;
+import com.teufelsturm.tt_downloader3.foundSummitSingle.TT_SummitFoundFragment;
+import com.teufelsturm.tt_downloader3.model.TT_Route_AND;
+import com.teufelsturm.tt_downloader3.model.TT_Summit_AND;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 public class TT_RoutesFoundFragment extends Fragment
 		implements View.OnClickListener {
@@ -102,7 +101,7 @@ public class TT_RoutesFoundFragment extends Fragment
         mViewModel.floatMittlereWegBewertung = bundle.getFloat(SUCH_MITTLERE_WEG_BEWERTUNG);
 
 
-        mViewModel.getLstTT_Route_AND().observe(getViewLifecycleOwner(), new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
+        mViewModel.getLstTT_Route_AND().observe(this, new androidx.lifecycle.Observer<ArrayList<TT_Route_AND>>() {
             @Override
             public void onChanged(ArrayList<TT_Route_AND> tt_summit_ands) {
                 listenAdapter = new TT_Route_ANDAdapter(TT_RoutesFoundFragment.this,

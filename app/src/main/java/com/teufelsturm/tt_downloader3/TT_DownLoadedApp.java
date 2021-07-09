@@ -4,13 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.multidex.MultiDex;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.teufelsturm.tt_downloaderand_kotlin.dbHelper.DataBaseHelper;
+import com.teufelsturm.tt_downloader3.dbHelper.DataBaseHelper;
 
 import org.jetbrains.annotations.Contract;
-
-import androidx.multidex.MultiDex;
 
 public class TT_DownLoadedApp extends Application {
 

@@ -110,15 +110,22 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black" />
 
-        <SeekBar
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbSeekbar
             android:id="@+id/seekBarNumberOfComments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/TextViewNumberOfComments"
+            android:layout_alignStart="@+id/TextViewNumberOfComments"
             android:layout_below="@+id/TextViewNumberOfComments"
-            android:max="@integer/Twenty"
-            android:progress="@integer/Zero"
-            android:layout_alignStart="@+id/TextViewNumberOfComments" />
+            app:corner_radius="10"
+            app:min_value="@integer/Zero"
+            app:max_value="@integer/Twenty"
+            app:steps="1"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_integer"/>
 
         <TextView
             android:id="@+id/TextViewMinOfMeanRating"
@@ -132,15 +139,22 @@
             android:textColor="@color/Black"
             android:layout_alignStart="@+id/seekBarNumberOfComments" />
 
-        <SeekBar
+        <com.crystal.crystalrangeseekbar.widgets.BubbleThumbSeekbar
             android:id="@+id/seekBarMinOfMeanRating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/TextViewMinOfMeanRating"
             android:layout_below="@+id/TextViewMinOfMeanRating"
-            android:max="@integer/Six"
-            android:progress="@integer/Zero"
-            android:layout_alignStart="@+id/TextViewMinOfMeanRating" />
+            android:layout_alignLeft="@+id/TextViewMinOfMeanRating"
+            android:layout_alignStart="@+id/TextViewMinOfMeanRating"
+            app:corner_radius="10"
+            app:min_value="0.0"
+            app:max_value="6.0"
+            app:steps="0.5"
+            app:bar_color="@color/TT_FG_BLUE"
+            app:bar_highlight_color="@color/TT_BG_BLUE"
+            app:left_thumb_image="@drawable/seek_thumb_normal"
+            app:left_thumb_image_pressed="@drawable/seek_thumb_pressed"
+            app:data_type="_double"/>
 
     </RelativeLayout>
 
