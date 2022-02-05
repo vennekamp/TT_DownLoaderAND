@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyDialogText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/header_small</item>
+        <item name="android:background">@color/Black</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="MyDialogTextSmall" parent="MyDialogText">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="tv_item_recyclerview" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/Blue</item>
+        <item name="android:focusable">false</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">@dimen/lv_item</item>
+        <item name="android:layout_marginStart">1dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="layout_constraintHorizontal_weight">1</item>
+    </style>
+
+
+    <style name="tv_header1_recyclerview" parent="tv_item_recyclerview">
+        <item name="android:textSize">@dimen/lv_header</item>
+    </style>
+
+    <style name="tv_header2_recyclerview" parent="tv_item_recyclerview">
+        <item name="android:textSize">@dimen/header_small</item>
+    </style>
+
+
+    <style name="my_check_box_style" parent="tv_item_recyclerview">
+        <item name="android:clickable">false</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:layout_marginEnd">1dp</item>
+    </style>
+
+
+<style name="carousel_text" parent="TextAppearance.AppCompat">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:maxWidth">100dp</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:maxHeight">70dp</item>
+    <item name="android:textSize">14sp</item>
+    <item name="elevation">1dp</item>
+    <item name="android:textColor">@color/LightBlue</item>
+    <item name="android:shadowRadius">0.7</item>
+    <item name="android:shadowDx">0.35</item>
+    <item name="android:shadowDy">0.2</item>
+    <item name="android:shadowColor">@color/Black</item>
+</style>
+
+
+
+</resources>

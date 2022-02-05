@@ -1,0 +1,143 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.results.ui.RoutesListResultFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/summits_activity_found_lv_list"
+        style="@style/my_top_level_layout"
+        android:background="@color/Yellow">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSummitsFound"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:divider="@color/Black"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/listitem_summit" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/radio_button_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel4SummitsResult.viewModelSummitOrderWidget.visibility}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" >
+
+
+            <TextView
+                android:id="@+id/tv_order_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:background="@color/White"
+                android:gravity="center"
+                android:text="@string/order_label"
+                android:textSize="@dimen/lv_header"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/switch_order"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/button_flow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                app:constraint_referenced_ids="rb_SummitName,rb_SummitNumber,rb_NumberOfRoutes,rb_Area,rb_EasiestGrade,rb_NumberOfStarredRoutes"
+                app:flow_wrapMode="aligned"
+                app:flow_maxElementsWrap="3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_order_label" />
+
+
+            <RadioButton
+                android:id="@+id/rb_SummitName"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByName}"
+                android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
+                android:text="@string/name" />
+
+            <RadioButton
+                android:id="@+id/rb_SummitNumber"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByGipfelNr}"
+                android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
+                android:text="@string/tableCol_Grade" />
+
+            <RadioButton
+                android:id="@+id/rb_NumberOfRoutes"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByAnzahlWege}"
+                android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
+                android:text="@string/comments_count" />
+
+            <RadioButton
+                android:id="@+id/rb_Area"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByGebiet}"
+                android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
+
+                android:text="@string/tableCol_MeanRating"/>
+
+            <RadioButton
+                android:id="@+id/rb_EasiestGrade"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByLeichtesterWeg}"
+                android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
+                android:text="@string/star_count" />
+
+            <RadioButton
+                android:id="@+id/rb_NumberOfStarredRoutes"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByAnzahlSternchenWege}"
+                android:onClick="@{(view) -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
+                android:text="@string/my_ascent" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_order"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.sortOrder}"
+                android:onCheckedChanged="@{(view, value) -> viewModel4SummitsResult.viewModelSummitOrderWidget.setCheckState(value)}"
+                android:text="@string/descending"
+                app:layout_constraintLeft_toRightOf="@+id/tv_order_label"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="50dp"
+            android:visibility="@{viewModel4SummitsResult.queryRunning ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/listSummitsFound"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel4SummitsResult"
+            type="com.teufelsturm.tt_downloader_kotlin.results.vm.SummitsListResultViewModel" />
+    </data>
+
+</layout>

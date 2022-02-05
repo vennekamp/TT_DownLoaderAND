@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="@color/Black"
+        android:padding="1.5dp">
+
+
+        <TextView
+            android:id="@+id/tv_comment_in_comments"
+            style="@style/tv_item_recyclerview"
+            tools:text="@string/tableCol_Comment"
+            app:tvCommentInCommentFormatted="@{comment}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_route_name_in_comments"
+            style="@style/tv_item_recyclerview"
+            android:layout_width="0dp"
+            android:singleLine="false"
+            android:visibility="@{comment}"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_arrow2route"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_comment_in_comments"
+            app:tvRouteNameInCommentFormatted="@{comment}"
+            tools:text="@string/tableCol_RouteName" />
+
+        <ImageView
+            android:id="@+id/image_view_arrow2route"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/arrow"
+            android:scaleType="fitXY"
+            android:paddingStart="2dp"
+            android:paddingEnd="0dp"
+            android:paddingTop="2dp"
+            android:onClick="@{() -> clickListenerRoute.onClick(comment)}"
+            android:visibility="@{comment}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_route_name_in_comments"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_comment_in_comments"
+            app:srcCompat="@drawable/blue_arrow_to_left" />
+
+        <TextView
+            android:id="@+id/tv_summit_name_in_comments"
+            style="@style/tv_item_recyclerview"
+            android:layout_width="0dp"
+            tools:text="@string/tableCol_SummitName"
+            android:singleLine="false"
+            app:summitExtendedTextFormatted="@{comment}"
+            android:visibility="@{comment}"
+            app:layout_constraintEnd_toStartOf="@+id/image_view_arrow2summit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_route_name_in_comments" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating_bar"
+            style="@style/mRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/Blue"
+            android:gravity="center_vertical"
+            android:numStars="6"
+            android:stepSize="1"
+            app:fltRatingFormattedFormatted="@{comment}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_user_name_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_name_in_comments"
+            app:layout_constraintWidth_min="2dp"
+            tools:rating="2" />
+
+        <ImageView
+            android:id="@+id/image_view_arrow2summit"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/arrow"
+            android:paddingStart="2dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="0dp"
+            android:scaleType="fitXY"
+            android:onClick="@{() -> clickListenerSummit.onClick(comment)}"
+            android:visibility="@{comment}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_summit_name_in_comments"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_view_arrow2route"
+            app:srcCompat="@drawable/blue_arrow_to_left" />
+
+        <TextView
+            android:id="@+id/tv_user_grade_label"
+            style="@style/tv_item_recyclerview"
+            android:layout_height="0dp"
+            android:text="@string/tableCol_UserGrade"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_user_grade_text"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_comment_date_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_name_in_comments" />
+
+        <TextView
+            android:id="@+id/tv_user_grade_text"
+            style="@style/tv_item_recyclerview"
+            app:layout_constraintEnd_toStartOf="@+id/rating_bar"
+            app:layout_constraintStart_toEndOf="@id/tv_user_grade_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_name_in_comments"
+            app:tvUserGradeTextFormatted="@{comment}"
+            tools:text="herrausragend" />
+
+        <TextView
+            android:id="@+id/tv_user_name_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableColStrUser"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_comment_date_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_grade_label" />
+
+        <TextView
+            android:id="@+id/tv_user_name_text"
+            style="@style/tv_item_recyclerview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_user_grade_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_grade_text"
+            app:tvUserNameTextFormatted="@{comment}"
+            tools:text="Klaus" />
+
+        <TextView
+            android:id="@+id/main_anchor__tv_comment_date_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableCol_DateOfComment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name_label" />
+
+        <TextView
+            android:id="@+id/tv_comment_date_text"
+            style="@style/tv_item_recyclerview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_comment_date_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name_text"
+            app:tvCommentDateTextFormatted="@{comment}"
+            tools:text="30.Feb.2001" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <variable
+            name="comment"
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit" />
+        <variable
+            name="clickListenerRoute"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.TTCommentClickListener" />
+        <variable
+            name="clickListenerSummit"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.TTCommentClickListener" />
+
+    </data>
+</layout>

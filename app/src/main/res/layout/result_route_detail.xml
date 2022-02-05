@@ -1,0 +1,135 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.results.ui.RouteDetailResultFragment">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/my_top_level_layout"
+        android:background="@color/Green">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_show_my_comments"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_read_more_anim_in2"
+                android:enabled="true"
+                android:onClick="@{() -> viewModel4RouteResultInSummit.onClickShowMyComments()}"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                android:gravity="center"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/til_route_ascent_type"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tableCol_summit_name_in_comment" />
+
+            <TextView
+                android:id="@+id/editTextMyRouteComment_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/header_small"
+                android:textColor="@color/Black"
+                android:background="@drawable/edittext_background"
+                android:gravity="start|end"
+                android:hint="@string/tableCol_MyComment"
+                app:myExtendedCommentStringFormatted="@{viewModel4RouteResultInSummit.mTTRouteAND}"
+                android:maxLines="5"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_show_my_comments" />
+
+            <TextView
+                android:id="@+id/tv_tableCol_summit_name_in_comment"
+                style="@style/tv_header2_recyclerview"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tableCol_route_name_in_comment"
+                app:summitExtendedTextFormatted="@{viewModel4RouteResultInSummit.MTTSummitAND}"
+                tools:text="@string/tableCol_SummitName" />
+
+            <TextView
+                android:id="@+id/tv_tableCol_route_name_in_comment"
+                style="@style/tv_header1_recyclerview"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tvRouteNameInCommentFormatted="@{viewModel4RouteResultInSummit.mTTRouteAND.ttRouteAND}"
+                tools:text="@string/tableCol_RouteName" />
+
+            <TextView
+                android:id="@+id/til_route_ascent_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:textSize="@dimen/header_small"
+                android:textColor="@color/Black"
+                android:background="@drawable/edittext_background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:myAscentFormatted="@{viewModel4RouteResultInSummit.mMyTTRouteANDWithPhotos}"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_show_my_comments"
+                app:layout_constraintEnd_toStartOf="@+id/btn_show_my_comments"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btn_show_my_comments"
+                tools:drawableStart="@drawable/ic_ruheschlinge"
+                tools:text="  RS: mit Ruheschlinge"  />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listCommentFound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:divider="@color/Black"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextMyRouteComment_route"
+                tools:listitem="@layout/listitem_comment"
+                tools:nestedScrollingEnabled="false" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel4RouteResultInSummit.queriesRunning > 0 ? View.VISIBLE : View.GONE}"
+                android:paddingTop="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextMyRouteComment_route"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel4RouteResultInSummit"
+            type="com.teufelsturm.tt_downloader_kotlin.results.vm.RouteDetailResultViewModel" />
+    </data>
+
+</layout>

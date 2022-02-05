@@ -2,29 +2,36 @@
 buildscript {
     repositories {
         google()
-        jcenter()
-//        // Add the Crashlytics repositories and dependency to your project-level build.gradle file:
-//        // @see https://firebase.google.com/docs/crashlytics/get-started?authuser=0
+        mavenCentral()
     }
+
+
+    ext {
+        kotlin_version = '1.6.10'
+        archLifecycleVersion = '1.1.1'
+        coroutine_version = '1.6.0-native-mt'
+        gradleVersion = '7.1.1'
+        navigationVersion = '2.3.5'
+        room_version = '2.4.1'
+        hilt_version = '2.40.5'
+        dataBindingCompilerVersion = gradleVersion // Always need to be the same.
+    }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        // Check for v3.1.2 or higher
-        classpath 'com.google.gms:google-services:4.3.8'
-        // For Android Studio 3.0, use firebase-plugins version 1.1.5
-        classpath 'com.google.firebase:firebase-plugins:2.0.0'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
-        // Add the Crashlytics repositories and dependency to your project-level build.gradle file:
-        // Add dependency
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath "com.android.tools.build:gradle:$gradleVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // HILT - Dagger2
+        classpath("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
+
+        // Adding the safe-args dependency to the project Gradle file
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
+
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-//        // Add the Crashlytics repositories and dependency to your project-level build.gradle file:
-        maven {
-            url 'https://maven.google.com/'
-        }
-    }
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

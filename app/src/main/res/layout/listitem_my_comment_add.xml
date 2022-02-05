@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:onClick="@{() -> clickListenerComment.onClick(routeComments)}"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/img_comment_add"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                app:tint="@color/Green"
+                android:contentDescription="@string/addComment"
+                android:src="@drawable/ic_baseline_add_circle_24"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tv_comment_add" />
+
+            <TextView
+                android:id="@+id/tv_comment_add"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/addComment"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/img_comment_add"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+    <data>
+        <variable
+            name="routeComments"
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments" />
+        <variable
+            name="clickListenerComment"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteCommentsClickListener" />
+    </data>
+</layout>

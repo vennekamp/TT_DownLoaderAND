@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/Blue"
+        app:strokeWidth="15dp"
+        app:cardCornerRadius="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+            
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/ml_comment_photos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:carousel_emptyViewsBehavior="gone"
+                app:layoutDescription="@xml/carousel_scene"
+                app:layout_constraintBottom_toTopOf="@+id/til_image_caption"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_0"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:contentDescription="@string/image_caption"
+                        android:scaleType="centerInside"
+                        tools:src="@tools:sample/avatars[0]"  />
+                    <TextView
+                        android:id="@+id/tv_0"
+                        style="@style/carousel_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        tools:text="@tools:sample/cities[1]" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_2"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/image_caption"
+                        android:scaleType="centerInside"
+                        tools:src="@tools:sample/avatars[1]" />
+
+                    <TextView
+                        android:id="@+id/tv_1"
+                        style="@style/carousel_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        tools:text="@tools:sample/lorem/random" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_2"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:contentDescription="@string/image_caption"
+                        android:scaleType="centerInside"
+                        tools:src="@tools:sample/avatars[2]" />
+
+                    <TextView
+                        android:id="@+id/tv_2"
+                        style="@style/carousel_text"
+                        android:maxWidth="180dp"
+                        android:ellipsize="end"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        tools:text="@tools:sample/lorem/random" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll_2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.2">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/image_caption"
+                        android:scaleType="centerInside"
+                        tools:src="@tools:sample/avatars[3]" />
+
+                    <TextView
+                        android:id="@+id/tv_3"
+                        style="@style/carousel_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        tools:text="@tools:sample/cities[3]" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ll_3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.2">
+
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="@string/image_caption"
+                        android:scaleType="centerInside"
+                        tools:src="@tools:sample/avatars[4]" />
+                    <TextView
+                        android:id="@+id/tv_4"
+                        style="@style/carousel_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        tools:text="@tools:sample/cities[4]" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.helper.widget.Carousel
+                    android:id="@+id/carousel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:carousel_backwardTransition="@+id/backward"
+                    app:carousel_firstView="@+id/imageView2"
+                    app:carousel_forwardTransition="@+id/forward"
+                    app:carousel_infinite="true"
+                    app:carousel_nextState="@+id/next"
+                    app:carousel_previousState="@+id/previous"
+                    app:carousel_touchUpMode="immediateStop"
+                    app:constraint_referenced_ids="ll_0,ll_1,ll_2,ll_3,ll_4" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="80dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="80dp" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{() -> clickListenerComment.onClick(myRouteWithPhotos)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_edit_24"
+                    tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+            <TextView
+                android:id="@+id/til_image_caption"
+                style="@style/tv_item_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_image"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ml_comment_photos"  />
+
+            <TextView
+                android:id="@+id/til_date_of_ascend"
+                style="@style/tv_item_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tvDateAndTypeOfAscend="@{myRouteWithPhotos}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_image_caption"
+                tools:text="tv_date_of_ascend" />
+
+            <TextView
+                android:id="@+id/til_ascended_partner"
+                style="@style/tv_item_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tvMyAscendedPartner="@{myRouteWithPhotos}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_date_of_ascend"
+                tools:text="tv_ascended_partner" />
+
+            <TextView
+                android:id="@+id/tv_my_summit_comment"
+                style="@style/tv_item_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@{myRouteWithPhotos.myTTRouteAND.strMyRouteComment}"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_ascended_partner"
+                tools:text="tv_my_summit_comment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <data>
+
+        <variable
+            name="myRouteWithPhotos"
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments.MyTTRouteANDWithPhotos" />
+
+        <variable
+            name="clickListenerComment"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteCommentsClickListener" />
+    </data>
+</layout>

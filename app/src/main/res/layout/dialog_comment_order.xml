@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.OrderCommentsDialogFragment">
+
+    <data>
+        <variable
+            name="viewModel4CommentOrder"
+            type="com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.ViewModel4CommentOrder" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_order_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:background="@color/White"
+            android:gravity="center"
+            android:text="@string/order_label"
+            android:textSize="@dimen/lv_header"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/switch_order"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/button_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            app:constraint_referenced_ids="rb_comment_rating_dia,rb_comment_user_dia,rb_comment_date_dia"
+            app:flow_wrapMode="aligned"
+            app:flow_maxElementsWrap="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_label" / -->
+<RadioGroup
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_order_label">
+        <RadioButton
+            android:id="@+id/rb_comment_rating_dia"
+            style="@style/MyRadioButton"
+            android:textSize="16sp"
+            android:checked="@{viewModel4CommentOrder.isCheckedByBewertungDia()}"
+            android:onClick="@{(view)  -> viewModel4CommentOrder.onClickBewertung()}"
+            android:text="@string/tableCol_UserGrade" />
+
+        <RadioButton
+            android:id="@+id/rb_comment_user_dia"
+            style="@style/MyRadioButton"
+            android:textSize="16sp"
+            android:checked="@{viewModel4CommentOrder.isCheckedByKommentatorDia()}"
+            android:onClick="@{(view)  -> viewModel4CommentOrder.onClickKommentator()}"
+            android:text="@string/tableColStrUser" />
+
+        <RadioButton
+            android:id="@+id/rb_comment_date_dia"
+            style="@style/MyRadioButton"
+            android:textSize="16sp"
+            android:checked="@{viewModel4CommentOrder.isCheckedByKommentarDatumDia()}"
+            android:onClick="@{(view)  -> viewModel4CommentOrder.onClickKommentarDatum()}"
+            android:text="@string/tableCol_DateOfComment" />
+</RadioGroup>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_order"
+            android:paddingRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:checked="@{viewModel4CommentOrder.sortOrder}"
+            android:onCheckedChanged="@{(view, value) -> viewModel4CommentOrder.setCheckState(value)}"
+            android:text="@string/descending"
+            app:layout_constraintLeft_toRightOf="@+id/tv_order_label"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

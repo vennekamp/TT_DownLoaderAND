@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/summit_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/Black"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="1.5dp">
+
+        <CheckBox
+            android:id="@+id/cb_is_ascended"
+            style="@style/my_check_box_style"
+            android:clickable="false"
+            app:isAscendedFormatted="@{summit}"
+            android:text="@string/tableCol_IsAscended"
+            app:buttonTint="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_easiest_route_grade_label"
+            tools:checked="true" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewArrow"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/arrow"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_my_comment_text"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{() -> clickListener.onClick(summit)}"
+            app:srcCompat="@drawable/blue_arrow_to_left" />
+
+        <TextView
+            android:id="@+id/tv_summit_text"
+            style="@style/tv_header1_recyclerview"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:summitTextFormatted="@{summit}"
+            tools:text="Falkenstein" />
+
+
+        <TextView
+            android:id="@+id/tv_area_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableCol_Area"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_text" />
+
+        <TextView
+            android:id="@+id/tv_area_text"
+            style="@style/tv_item_recyclerview"
+            app:areaTextFormatted="@{summit}"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_text"
+            tools:text="#33" />
+
+        <TextView
+            android:id="@+id/main_anchor__tv_summit_number_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableColSummitNumberOfficial"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_area_label" />
+
+        <TextView
+            android:id="@+id/tv_summit_number_text"
+            style="@style/tv_item_recyclerview"
+            app:summitNumberTextFormatted="@{summit}"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_area_text"
+            tools:text="#13" />
+
+        <TextView
+            android:id="@+id/tv_route_count_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableCol_NumberOfRoutes"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_anchor__tv_summit_number_label" />
+
+        <TextView
+            android:id="@+id/tv_route_count_text"
+            style="@style/tv_item_recyclerview"
+            app:routeCountTextFormatted="@{summit}"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_number_text"
+            tools:text="19" />
+
+        <TextView
+            android:id="@+id/tv_starred_route_count_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableCol_NumberOfStarredRoutes"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_route_count_label" />
+
+        <TextView
+            android:id="@+id/tv_starred_route_count_text"
+            style="@style/tv_item_recyclerview"
+            app:starredRouteCountTextFormatted="@{summit}"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_route_count_text"
+            tools:text="11" />
+
+        <TextView
+            android:id="@+id/tv_easiest_route_grade_label"
+            style="@style/tv_item_recyclerview"
+            android:text="@string/tableCol_EasiestGrade"
+            app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_starred_route_count_label" />
+
+        <TextView
+            android:id="@+id/tv_easiest_route_grade_text"
+            style="@style/tv_item_recyclerview"
+            app:easiestRouteGradeTextFormatted="@{summit}"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_starred_route_count_text"
+            tools:text="VIIa" />
+
+        <TextView
+            android:id="@+id/tv_ascension_date"
+            style="@style/tv_item_recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:ascensionDateFormatted="@{summit}"
+            app:layout_constraintBottom_toBottomOf="@id/cb_is_ascended"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_easiest_route_grade_text"
+            tools:text="31.Dez.2222" />
+
+
+        <TextView
+            android:id="@+id/tv_my_comment_label"
+            style="@style/tv_item_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:singleLine="false"
+            android:text="@string/tableCol_MyComment"
+            android:visibility="@{summit}"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_comment"
+            app:layout_constraintHeight_min="38dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrier_ascent"
+            app:layout_constraintWidth_max="90dp" />
+
+        <TextView
+            android:id="@+id/tv_my_comment_text"
+            style="@style/tv_item_recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="false"
+            android:visibility="@{summit}"
+            app:myCommentTextFormatted="@{summit}"
+            app:layout_constraintBottom_toBottomOf="@id/barrier_comment"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:layout_constraintHeight_min="38dp"
+            app:layout_constraintStart_toEndOf="@+id/tv_my_comment_label"
+            app:layout_constraintTop_toBottomOf="@+id/barrier_ascent"
+            tools:text="Total toller Alter Weg" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_ascent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="cb_is_ascended,tv_ascension_date"
+            app:layout_constraintHeight_min="100dp" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_my_comment_label,tv_my_comment_text"
+            app:layout_constraintHeight_min="100dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <variable
+            name="clickListener"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.SummitClickListener" />
+        <variable
+            name="summit"
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment" />
+    </data>
+
+</layout>

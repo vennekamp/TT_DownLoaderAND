@@ -1,22 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <style name="tv_item_cardview" parent="TextAppearance.AppCompat">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/lv_item</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:background">@drawable/textview_bg</item>
+        <item name="android:layout_marginTop">2.5dp</item>
+        <item name="android:layout_marginBottom">2.5dp</item>
+        <item name="android:padding">2dp</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="android:windowBackground">@color/TT_BG_BLUE</item>
+    <style name="input_item_cardview" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/lv_item</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:background">@drawable/textview_bg</item>
+        <item name="android:layout_marginTop">2.5dp</item>
+        <item name="android:layout_marginBottom">2.5dp</item>
+        <item name="android:padding">2dp</item>
     </style>
 
-    <!-- Default theme -->
+    <style name="my_top_level_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:clipToPadding">true</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
+
+    <style name="mRatingBar" parent="@style/Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/abc_ratingbar_small_material</item>
+        <item name="android:indeterminateDrawable">@drawable/abc_ratingbar_small_material</item>
+        <item name="colorControlNormal">@color/LightBlue</item>
+        <item name="colorControlActivated">@color/LightGreen</item>
+    </style>
+
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="MyRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="MyDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
+    </style>
+
 </resources>

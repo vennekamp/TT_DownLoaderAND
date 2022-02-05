@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.feature.inputs.ui.DialogDeleteOrOpen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Black">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_dialog_move"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:endIconCheckable="true"
+            app:endIconContentDescription="dialog"
+            app:endIconDrawable="@drawable/ic_baseline_arrow_circle_right_24"
+            app:endIconMode="custom"
+            app:endIconOnClickListener="@{(view) -> viewModel4Carousel.onMoveCurrentImageRight()}"
+            app:endIconTint="@color/white"
+
+            app:startIconContentDescription="dialog"
+            app:startIconDrawable="@drawable/ic_baseline_arrow_circle_left_24"
+            app:startIconOnClickListener="@{(view) -> viewModel4Carousel.onMoveCurrentImageLeft()}"
+            app:startIconTint="@color/white"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconCheckable="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/MyDialogText"
+                android:layout_gravity="top"
+                android:cursorVisible="false"
+                android:enabled="false"
+                android:text="@string/move" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/til_dialog_move_helper"
+            style="@style/MyDialogTextSmall"
+            android:text="@{viewModel4Carousel.carouselAdapterData.dialogMoveHelperText}"
+            tools:text="1 2 3 4 5 "
+            android:padding="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_dialog_move" />
+
+        <TextView
+            android:id="@+id/tv_dialog_delete"
+            style="@style/MyDialogText"
+            android:text="@string/delete"
+            android:onClick="@{(view) -> viewModel4Carousel.onDeleteItem()}"
+            app:drawableEndCompat="@drawable/ic_baseline_delete_24"
+            app:layout_constraintBottom_toTopOf="@+id/tv_dialog_open_or_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_dialog_move_helper" />
+
+
+        <TextView
+            android:id="@+id/tv_dialog_open_or_edit"
+            style="@style/MyDialogText"
+            android:text="@string/open_with"
+            android:onClick="@{(view) -> viewModel4Carousel.onItemShow()}"
+            app:drawableEndCompat="@drawable/ic_baseline_send_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dialog_delete" />
+
+        <TextView
+            android:id="@+id/tv_dialog_add"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            style="@style/MyDialogText"
+            android:backgroundTint="#000000"
+            android:background="@color/Black"
+            android:text="@string/addComment"
+            android:onClick="@{(view) -> viewModel4Carousel.onItemAdd()}"
+            app:drawableEndCompat="@drawable/add_image_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dialog_open_or_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="viewModel4Carousel"
+            type="com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel" />
+    </data>
+</layout>

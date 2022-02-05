@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.results.ui.SummitDetailResultFragment">
+
+    <item
+        android:id="@+id/summit_detail_menu_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/summit_detail_menu_sort"
+        android:icon="@drawable/ic_baseline_sort_24"
+        android:title="@string/sort"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/summit_detail_menu_add"
+        android:icon="@drawable/ic_baseline_add_circle_24"
+        android:title="@string/edit"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="Zero">0</integer>
-    <integer name="One">1</integer>
-    <integer name="Two">2</integer>
-    <integer name="Six">6</integer>
-    <integer name="Twenty">20</integer>
-    <integer name="MaxNoItemQuerxy">250</integer>
-</resources>

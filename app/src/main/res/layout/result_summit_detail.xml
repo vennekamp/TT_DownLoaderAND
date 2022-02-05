@@ -1,0 +1,305 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.results.ui.SummitDetailResultFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/results_summit_summit_search_w_header"
+        style="@style/my_top_level_layout"
+        android:background="@color/Yellow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_result_summit_deatls"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_neighbour_summit1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/NoGap"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(0)}"
+                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 0 ? viewModel4SummitResult.ttNeigbours.get(0).strName : @string/no_data}"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Falkenstein WächterNadel Lange" />
+
+            <Button
+                android:id="@+id/btn_neighbour_summit2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/NoGap"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(1)}"
+                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 2 ? viewModel4SummitResult.ttNeigbours.get(1).strName : @string/no_data}"
+                app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit1"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Furz" />
+
+
+            <Button
+                android:id="@+id/btn_neighbour_summit3"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/NoGap"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(2)}"
+                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 3 ? viewModel4SummitResult.ttNeigbours.get(2).strName : @string/no_data}"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="kurz" />
+            <Button
+                android:id="@+id/btn_neighbour_summit4"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/NoGap"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(3)}"
+                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 2 ? viewModel4SummitResult.ttNeigbours.get(3).strName : @string/no_data}"
+                app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit3"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="lang lang lang lang lang lang lang lang lang" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSummitAscendDay_inComment"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_baseline_read_more_24"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                android:gravity="center"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded"
+                app:layout_constraintStart_toEndOf="@+id/cb_summit_ascended"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flow_neighbours_row2"/>
+
+            <CheckBox
+                android:id="@+id/cb_summit_ascended"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:focusable="false"
+                android:text="@string/tableCol_RouteIsAscended"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/header_small"
+                app:isAscendedFormatted="@{summit}"
+                android:clickable="false"
+                app:flow_verticalBias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonSummitAscendDay_inComment"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonSummitAscendDay_inComment"
+                app:layout_constraintTop_toTopOf="@+id/buttonSummitAscendDay_inComment" />
+
+            <EditText
+                android:id="@+id/edt_my_summit_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:configChanges="orientation|keyboardHidden"
+                android:gravity="top|start"
+                android:hint="@string/tableCol_MyComment"
+                app:myCommentStringFormatted="@{summit}"
+                android:importantForAutofill="no"
+                android:inputType="text|textMultiLine"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="vertical"
+                android:selectAllOnFocus="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonSummitAscendDay_inComment" />
+
+            <TextView
+                android:id="@+id/tv_summit_name"
+                style="@style/tv_header1_recyclerview"
+                app:summitTextFormatted="@{summit.ttSummitAND}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/tableCol_SummitName" />
+
+            <TextView
+                android:id="@+id/tv_area"
+                style="@style/tv_header2_recyclerview"
+                android:text="@{viewModel4SummitResult.mTTSummit.ttSummitAND.strGebiet}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_summit_name"
+                tools:text="@string/tableCol_Area" />
+
+
+            <TextView
+                android:id="@+id/tv_neighbour_summit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/strNeighbourSummit"
+                android:textColor="@color/Black"
+                android:textSize="@dimen/header_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_area" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow_neighbours_row1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="btn_neighbour_summit1,btn_neighbour_summit2"
+                app:flow_horizontalBias="0"
+                app:flow_horizontalStyle="packed"
+                app:flow_verticalBias="0"
+                app:flow_wrapMode="chain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_neighbour_summit" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow_neighbours_row2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="btn_neighbour_summit3,btn_neighbour_summit4"
+                app:flow_horizontalBias="0"
+                app:flow_horizontalStyle="packed"
+                app:flow_verticalBias="0"
+                app:flow_wrapMode="chain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flow_neighbours_row1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_Route_Found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:divider="@color/Black"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_my_summit_comment"
+                tools:listitem="@layout/listitem_route"
+                tools:nestedScrollingEnabled="false">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel4SummitResult.queriesRunning == 0 ? View.GONE : View.VISIBLE}"
+                android:paddingTop="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_my_summit_comment"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/radio_button_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="@{viewModel4SummitResult.viewModelRouteOrderWidget.visibility}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
+        tools:alpha="0.75"
+        >
+        <TextView
+            android:id="@+id/tv_order_label"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_min="250dp"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:gravity="center"
+            android:text="@string/order_label"
+            android:textSize="@dimen/lv_header"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_label" >
+
+            <RadioButton
+                android:id="@+id/rb_route_name"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.isCheckedByName}"
+                android:onClick="@{() -> viewModel4SummitResult.viewModelRouteOrderWidget.onClickName()}"
+                android:text="@string/route_name" />
+
+            <RadioButton
+                android:id="@+id/rb_grade"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.isCheckedByGrade}"
+                android:onClick="@{() -> viewModel4SummitResult.viewModelRouteOrderWidget.onClickGrade()}"
+                android:text="@string/tableCol_Grade" />
+
+            <RadioButton
+                android:id="@+id/rb_NumberOfComments"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.isCheckedByCommentCount()}"
+                android:onClick="@{() -> viewModel4SummitResult.viewModelRouteOrderWidget.onClickCommentCount()}"
+                android:text="@string/tableCol_NumberOfComments" />
+
+            <RadioButton
+                android:id="@+id/rb_mean_rating"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.isCheckedByMeanRating}"
+                android:onClick="@{() -> viewModel4SummitResult.viewModelRouteOrderWidget.onClickMeanRating()}"
+                android:text="@string/tableCol_MeanRating" />
+
+            <RadioButton
+                android:id="@+id/rb_stars"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.isCheckedByStars()}"
+                android:onClick="@{() -> viewModel4SummitResult.viewModelRouteOrderWidget.onClickStars()}"
+                android:text="@string/stars" />
+
+            <RadioButton
+                android:id="@+id/rb_my_ascend"
+                style="@style/MyRadioButton"
+                android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.isCheckedByMyAscend}"
+                android:onClick="@{() -> viewModel4SummitResult.viewModelRouteOrderWidget.onClickMyAscend()}"
+                android:text="@string/my_ascend" />
+        </RadioGroup>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:text="@string/descending"
+            app:layout_constraintRight_toRightOf="parent"
+            android:onCheckedChanged="@{(view, value) -> viewModel4SummitResult.viewModelRouteOrderWidget.setCheckState(value)}"
+            android:checked="@{viewModel4SummitResult.viewModelRouteOrderWidget.sortOrder}"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_label" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="summit"
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment" />
+        <variable
+            name="viewModel4SummitResult"
+            type="com.teufelsturm.tt_downloader_kotlin.results.vm.SummitDetailResultViewModel" />
+    </data>
+</layout>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.feature.inputs.ui.CommentInputFragment">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/my_top_level_layout" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/input_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:layout_margin="5dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:fabSize="mini"
+                android:onClick="@{(view) -> viewModel4CommentInut.onDeleteComment()}"
+                app:layout_constraintTop_toTopOf="@id/carouselView"
+                app:layout_constraintRight_toRightOf="@+id/carouselView"
+                android:src="@drawable/ic_baseline_delete_24" />
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:fillColor="#80000000"
+                app:pageColor="@color/White"
+                app:radius="4dp"
+                app:indicatorMarginVertical="40dp"
+                app:indicatorVisibility="visible"
+                app:slideInterval="0"
+                app:pageTransformer="flow"
+                app:strokeColor="#FF777777"
+                app:strokeWidth="1dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/til_image_caption"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_image_caption"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/carouselView"
+                android:hint="@string/image_caption" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_image_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="@{viewModel4Carousel.carouselAdapterData.canEdit}"
+                android:focusableInTouchMode="@{viewModel4Carousel.carouselAdapterData.canEdit}"
+                android:cursorVisible="@{viewModel4Carousel.carouselAdapterData.canEdit}"
+                android:text="@={viewModel4Carousel.carouselAdapterData.imageCaptionVM.imageCaption}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_route_ascent_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ascent_style"
+                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_image_caption"
+                app:layout_constraintVertical_bias="0.5"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/spinnerRouteAsscendedEditTextStub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text=" "
+                    android:cursorVisible="false"
+                    android:inputType="none"/>
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinnerRouteAsscended_inComment_route"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="-56dp"
+                    android:adapter="@{viewModel4CommentInut.spinnerHowAscended.adapter}"
+                    android:gravity="start"
+                    android:inputType="none"
+                    android:selection="@{viewModel4CommentInut.spinnerHowAscended.selected}"
+                    android:onItemSelected="@{(adapter, view, position, id) -> viewModel4CommentInut.spinnerHowAscended.onItemSelected(view.id, position)}"
+                    tools:listitem="@layout/listitem_spinner_how_ascended" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_date_of_ascend"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_of_ascent"
+                app:helperText="@string/helper_text_ascent_date"
+
+                app:endIconCheckable="true"
+                app:endIconContentDescription="dialog"
+                app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down_circle_24"
+                app:endIconMode="custom"
+                app:endIconOnClickListener="@{(view) -> viewModel4CommentInut.onShowDateDialog()}"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/imgbtn_clock"
+                app:layout_constraintTop_toBottomOf="@+id/til_route_ascent_type"
+
+                app:startIconCheckable="true"
+                app:startIconContentDescription="dialog"
+                app:startIconDrawable="@drawable/ic_baseline_calendar_month_24"
+                app:startIconOnClickListener="@{(view) -> viewModel4CommentInut.onShowDateDialog()}" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_date_of_ascend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:text="@={viewModel4CommentInut.ascentData.ascentDate}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ImageButton
+                android:id="@+id/imgbtn_clock"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:onClick="@{(view) -> viewModel4CommentInut.onShowTimeWidget()}"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_baseline_access_time_24"
+                app:layout_constraintBottom_toBottomOf="@+id/til_date_of_ascend"
+                app:layout_constraintLeft_toRightOf="@+id/til_date_of_ascend"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_route_ascent_type"
+                app:layout_constraintVertical_bias="0.2" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_ascended_partner"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_date_of_ascend"
+                android:hint="@string/ascent_partner" >
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/act_ascended_partner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_baseline_group_add_24"
+                    android:drawablePadding="16dp"
+                    android:minHeight="56dp"
+                    android:paddingStart="16dp"
+                    android:completionThreshold="0"
+                    app:adapter="@{viewModel4CommentInut.partnerAdapter}"
+                    android:text="@={viewModel4CommentInut.ascentData.ascentPartner}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_my_summit_comment"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:hint="@string/my_comment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_ascended_partner">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/til_my_summit_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:minLines="7"
+                android:text="@={viewModel4CommentInut.ascentData.ascentComment}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <data>
+        <variable
+            name="viewModel4CommentInut"
+            type="com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CommentInputViewModel" />
+
+        <variable
+            name="viewModel4Carousel"
+            type="com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel" />
+
+        <variable
+            name="clickListenerComment"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteCommentsClickListener" />
+        <variable
+            name="asscentTypeClickListener"
+            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteAscentTypeOnItemSelected" />
+    </data>
+</layout>

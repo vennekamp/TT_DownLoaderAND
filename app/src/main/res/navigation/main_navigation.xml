@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mainSearchCollectionFragment">
+
+    <fragment
+        android:id="@+id/mainSearchCollectionFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.TabOfSearchesFragment"
+        android:label="Suchen"
+        tools:layout="@layout/collection_of_searches_tab">
+        <action
+            android:id="@+id/action_mainSearchCollectionFragment_to_summitsResultFragment"
+            app:destination="@id/summitsResultFragment" />
+        <action
+            android:id="@+id/action_mainSearchCollectionFragment_to_routesListResultFragment"
+            app:destination="@id/routesListResultFragment" />
+        <action
+            android:id="@+id/action_mainSearchCollectionFragment_to_commentsListResultFragment"
+            app:destination="@id/commentsListResultFragment" />
+        <argument
+            android:name="startTab"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/summitSearchFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.SummitSearchFragment"
+        android:label="Gipfelsuche"
+        tools:layout="@layout/search__summits" />
+
+    <fragment
+        android:id="@+id/searchRouteFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.RouteSearchFragment"
+        android:label="Wege suchen"
+        tools:layout="@layout/search__routes" />
+
+    <fragment
+        android:id="@+id/commentSearchFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.CommentSearchFragment"
+        android:label="Kommentare suchen"
+        tools:layout="@layout/search__comments" />
+    <fragment
+        android:id="@+id/summitsResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.SummitsListResultFragment"
+        android:label="gefundene Gipfel"
+        tools:layout="@layout/results_summits_list">
+        <action
+            android:id="@+id/action_summitsResultFragment_to_summit_ResultFragment"
+            app:destination="@id/summit_DetailResultFragment"
+            app:popUpTo="@id/summit_DetailResultFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_summitsResultFragment_to_mainSearchCollectionFragment"
+            app:destination="@id/mainSearchCollectionFragment"
+            app:popUpTo="@id/mainSearchCollectionFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="eventSearchSummitParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventSearchSummitParameter" />
+    </fragment>
+    <fragment
+        android:id="@+id/summit_DetailResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.SummitDetailResultFragment"
+        android:label="Gipfeldetail"
+        tools:layout="@layout/result_summit_detail">
+        <action
+            android:id="@+id/action_summit_ResultFragment_self"
+            app:destination="@id/summit_DetailResultFragment"
+            app:popUpTo="@id/summitsResultFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_summit_ResultFragment_to_routeDetailResultFragment"
+            app:destination="@id/routeDetailResultFragment" />
+        <action
+            android:id="@+id/action_summit_DetailResultFragment_to_mainSearchCollectionFragment"
+            app:destination="@id/mainSearchCollectionFragment"
+            app:popUpTo="@id/mainSearchCollectionFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="eventNavigatingToSummit"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventNavigatingToSummit" />
+    </fragment>
+    <fragment
+        android:id="@+id/routeDetailResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.RouteDetailResultFragment"
+        android:label="Wegdetail"
+        tools:layout="@layout/result_route_detail">
+        <action
+            android:id="@+id/action_routeDetailResultFragment_to_mainSearchCollectionFragment"
+            app:destination="@id/mainSearchCollectionFragment"
+            app:popUpTo="@id/mainSearchCollectionFragment" />
+        <argument
+            android:name="eventSearchRouteParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventNavigatingToRoute" />
+        <action
+            android:id="@+id/action_routeDetailResultFragment_to_orderCommentsDialogFragment"
+            app:destination="@id/orderCommentsDialogFragment"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_routeDetailResultFragment_to_commentInputFragment"
+            app:destination="@id/commentInputFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/routesListResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.RoutesListResultFragment"
+        android:label="gefundene Wege"
+        tools:layout="@layout/results_summits_list">
+        <action
+            android:id="@+id/action_routesListResultFragment_to_summitDetailResultFragment"
+            app:destination="@id/summit_DetailResultFragment" />
+        <action
+            android:id="@+id/action_routesListResultFragment_to_routeDetailResultFragment"
+            app:destination="@id/routeDetailResultFragment" />
+        <action
+            android:id="@+id/action_routesListResultFragment_to_mainSearchCollectionFragment"
+            app:destination="@id/mainSearchCollectionFragment"
+            app:popUpTo="@id/mainSearchCollectionFragment" />
+        <argument
+            android:name="eventSearchRouteParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventSearchRouteParameter" />
+    </fragment>
+    <fragment
+        android:id="@+id/commentsListResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.CommentsListResultFragment"
+        android:label="Kommentare"
+        tools:layout="@layout/results_comments_list">
+        <action
+            android:id="@+id/action_commentsListResultFragment_to_summit_DetailResultFragment"
+            app:destination="@id/summit_DetailResultFragment" />
+        <action
+            android:id="@+id/action_commentsListResultFragment_to_routeDetailResultFragment"
+            app:destination="@id/routeDetailResultFragment" />
+        <action
+            android:id="@+id/action_commentsListResultFragment_to_mainSearchCollectionFragment"
+            app:destination="@id/mainSearchCollectionFragment"
+            app:popUpTo="@id/mainSearchCollectionFragment" />
+        <argument
+            android:name="eventSearchCommentParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventSearchCommentParameter" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderCommentsDialogFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.OrderCommentsDialogFragment"
+        android:label="dialog_comment_order"
+        tools:layout="@layout/dialog_comment_order" />
+    <fragment
+        android:id="@+id/commentInputFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.inputs.ui.CommentInputFragment"
+        android:label="@string/my_comment"
+        tools:layout="@layout/input_my_comment">
+        <argument
+            android:name="mMyTTRouteAnd"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTRouteAND" />
+        <argument
+            android:name="lstMyTT_RoutePhotos_AND"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND[]"  />
+        <argument
+            android:name="MyRouteName"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_commentInputFragment_to_dialogDeleteOrOpen"
+            app:destination="@id/dialogDeleteOrOpen"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dialogDeleteOrOpen"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.inputs.ui.DialogDeleteOrOpen"
+        android:label="dialog_delete_or_edit"
+        tools:layout="@layout/dialog_delete_or_edit" />
+
+</navigation>

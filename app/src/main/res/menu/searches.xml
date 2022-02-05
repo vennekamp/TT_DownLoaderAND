@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction" >
+
+    <item
+        android:id="@+id/search_menu_show_results_text"
+        app:showAsAction="always"
+        android:title="@string/show" />
+    <item
+        android:id="@+id/search_menu_show_results_icon"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_send_24"
+        android:title="@string/show" />
+</menu>
