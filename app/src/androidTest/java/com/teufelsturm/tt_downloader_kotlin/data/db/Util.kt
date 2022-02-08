@@ -10,7 +10,7 @@ fun createRandomString(len: Int): String {
     return (0..len)
         .map { i -> if (i % 7 == 0) 0 else kotlin.random.Random.nextInt(0, charPool.size) }
         .map(charPool::get)
-        .joinToString("");
+        .joinToString("")
 }
 
 fun <T> LiveData<T>.getValueBlocking(): T? {

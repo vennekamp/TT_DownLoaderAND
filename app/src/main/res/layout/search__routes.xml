@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.CommentSearchFragment" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tt_downloader">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/_main_activity__route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:scrollbars="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/editTextSuchtextWege"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:textSize="22sp"
+                android:hint="@string/strSearchSummit"
+                android:inputType="text"
+                android:onTextChanged="@{viewModel4RouteSearch.searchTextVM::onTextChanged}"
+                android:selectAllOnFocus="false"
+                android:text="@{viewModel4RouteSearch.searchTextVM.searchText}"
+                android:completionThreshold="3"
+                app:adapter="@{viewModel4RouteSearch.routeAdapter}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSearchTextRoutes" />
+
+
+            <Spinner
+                android:id="@+id/spinnerAreaRoute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:entries="@{viewModel4RouteSearch.spinnerAreaRoute.entries}"
+                android:minWidth="@android:dimen/app_icon_size"
+                android:minHeight="@dimen/lv_header"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel4RouteSearch.spinnerAreaRoute.onItemSelected(id, position)}"
+                android:selectedItemPosition="@{viewModel4RouteSearch.spinnerAreaRoute.selected}"
+                app:layout_constraintEnd_toStartOf="@+id/cb_mine_only"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textViewGebiet"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGebiet"
+                tools:entries="@android:array/postalAddressTypes" />
+
+            <TextView
+                android:id="@+id/textViewSearchTextRoutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchTextRoute"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewGebiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lblGebiet"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="@+id/editTextSuchtextWege"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSuchtextWege" />
+
+
+            <TextView
+                android:id="@+id/cb_mine_only"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:gravity="end"
+                android:minHeight="@dimen/lv_header"
+                android:onClick="@{() -> viewModel4RouteSearch.onClickJustMySummit()}"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="Nur meine \nWege "
+                android:textAlignment="gravity"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerAreaRoute"
+                app:layout_constraintEnd_toEndOf="@+id/editTextSuchtextWege" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|bottom"
+                android:layout_marginStart="5dp"
+                android:checked="@{viewModel4RouteSearch.justMyRoute}"
+                android:onClick="@{() -> viewModel4RouteSearch.onClickJustMySummit()}"
+                app:layout_constraintBottom_toBottomOf="@+id/cb_mine_only"
+                app:layout_constraintStart_toStartOf="@+id/cb_mine_only" />
+
+            <TextView
+                android:id="@+id/textViewLimitsForScale4RouteSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@{viewModel4RouteSearch.rangeSliderMinMaxGradeInRouteSearch.label}"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerAreaRoute"
+                tools:text="@string/strLimitForScale" />
+
+
+            <TextView
+                android:id="@+id/TextViewNumberOfComments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel4RouteSearch.sliderNumberOfComments.label}"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rangeSliderGradeLimits4RouteSearch"
+                tools:text="@string/strNumberOfComments" />
+
+            <TextView
+                android:id="@+id/TextViewMinOfMeanRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{viewModel4RouteSearch.sliderMinOfMeanRating.label}"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sliderNumberOfComments"
+                tools:text="@string/strMinOfMeanRating" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/rangeSliderGradeLimits4RouteSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1.0"
+                android:valueFrom="@{viewModel4RouteSearch.rangeSliderMinMaxGradeInRouteSearch.valueFrom}"
+                android:valueTo="@{viewModel4RouteSearch.rangeSliderMinMaxGradeInRouteSearch.valueTo}"
+                app:addOnChangeListener="@{(theView, value, fromUser) -> viewModel4RouteSearch.rangeSliderMinMaxGradeInRouteSearch.onChange(theView.values)}"
+                app:haloColor="#ff00ff"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLimitsForScale4RouteSearch"
+                app:values="@{viewModel4RouteSearch.rangeSliderMinMaxGradeInRouteSearch.values}" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderNumberOfComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1.0"
+                android:value="@{viewModel4RouteSearch.sliderNumberOfComments.value}"
+                android:valueFrom="0"
+                android:valueTo="@{viewModel4RouteSearch.sliderNumberOfComments.valueTo}"
+                app:addOnChangeListener="@{(theView, value, fromUser) -> viewModel4RouteSearch.sliderNumberOfComments.onChange( value)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TextViewNumberOfComments"
+                app:trackColorActive="@color/material_slider_inactive_track_color"
+                app:trackColorInactive="@color/material_slider_active_track_color"
+                tools:value="5"
+                tools:valueTo="10" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderMinOfMeanRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="0.25"
+                android:value="@{viewModel4RouteSearch.sliderMinOfMeanRating.value}"
+                android:valueFrom="0"
+                android:valueTo="@{viewModel4RouteSearch.sliderMinOfMeanRating.valueTo}"
+                app:addOnChangeListener="@{(theView, value, fromUser) -> viewModel4RouteSearch.sliderMinOfMeanRating.onChange(value)}"
+                app:layout_constraintStart_toStartOf="@+id/TextViewMinOfMeanRating"
+                app:layout_constraintTop_toBottomOf="@+id/TextViewMinOfMeanRating"
+                app:trackColorActive="@color/material_slider_inactive_track_color"
+                app:trackColorInactive="@color/material_slider_active_track_color"
+                tools:value="5"
+                tools:valueTo="10" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <data>
+        <variable
+            name="viewModel4RouteSearch"
+            type="com.teufelsturm.tt_downloader_kotlin.feature.searches.vm.RouteSearchViewModel" />
+    </data>
+</layout>

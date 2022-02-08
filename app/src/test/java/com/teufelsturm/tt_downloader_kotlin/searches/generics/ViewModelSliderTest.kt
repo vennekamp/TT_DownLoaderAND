@@ -2,6 +2,7 @@ package com.teufelsturm.tt_downloader_kotlin.searches.generics
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.ViewModelSlider
 import com.teufelsturm.tt_downloader_kotlin.util.getOrAwaitValueTest
 
 import junit.framework.TestCase

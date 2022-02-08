@@ -3,8 +3,6 @@
     <string name="strSearchSummit">Gipfel</string>
     <string name="strSearchRoute">Wege</string>
     <string name="strSearchComment">Kommentare</string>
-    <string name="login_btn_txt">login</string>
-    <string name="INFO">App Info</string>
     <string name="lblGebiet">Gebiet </string>
     <string name="searchTextSummit">Suchtext für die Gipfel </string>
     <string name="strAnzahlDerWege">Anzahl der Wege </string>
@@ -20,15 +18,11 @@
     <string name="strNeighbourSummit">Nachbargipfel </string>
     <string name="tableCol_RouteIsAscended">geklettert </string>
     <string name="tableCol_MyComment">Eigener <br />Kommentar </string>
-    <string name="share">Teilen</string>
     <string name="tableColSummitNumberOfficial">Gipfelnummer (KleFü) </string>
     <string name="tableCol_NumberOfRoutes">Anzahl der Wege </string>
     <string name="tableCol_NumberOfStarredRoutes">Anzahl der *-Wege </string>
     <string name="tableCol_EasiestGrade">leichtester Weg </string>
     <string name="tableCol_IsAscended">Bestiegen, am </string>
-    <string name="found_summit_caption">Gefundene Gipfel </string>
-    <string name="found_route_caption">Gefundene Wege </string>
-    <string name="found_route_comments">Kommentare </string>
     <string name="arrow">Pfeil</string>
     <string name="tableCol_RouteName">Weg </string>
     <string name="tableCol_NumberOfComments">Kommentare</string>
@@ -43,10 +37,10 @@
     <string name="tableCol_UserGrade">Bewertung </string>
     <string name="tableColStrUser">Benutzer </string>
     <string name="tableCol_DateOfComment">Kommentardatum </string>
-    <string name="edit_aendern">ändern</string>
     <string name="summit_number_area">%1s (#%2s), %3s</string>
     <string name="formatted_summit_number">%1s (#%2s)</string>
     <string name="formatted_route_summit_name">%1s (%2s), %3s</string>
+    <string name="neighbour_text_formatted">%1s in %2sm</string>
     <string name="sharpSummitNumber">#%1s</string>
     <string name="show">anzeigen</string>
     <string name="descending">absteigend</string>
@@ -55,8 +49,6 @@
     <string name="stars">Sterne</string>
     <string name="my_ascend">Eigene Begehung</string>
     <string name="name">Name</string>
-    <string name="comments_count">Kommentaranzahl</string>
-    <string name="star_count">Sternanzahl</string>
     <string name="my_ascent">Meine Begehung</string>
     <string name="image_caption">Bildbeschreibung</string>
     <string name="ascent_partner">Seilpartner</string>
@@ -70,5 +62,6 @@
     <string name="image_edit">Bild bearbeiten</string>
     <string name="ok">Okay</string>
     <string name="no_image">Keine Bilder vorhanden</string>
+    <string name="tabLayout_content_description">Gipfel oder Wege oder Kommentar suchen</string>
 
 </resources>

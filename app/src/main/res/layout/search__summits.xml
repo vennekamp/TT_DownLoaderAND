@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.SummitSearchFragment" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tt_downloader">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/_main_activity__summit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:scrollbars="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/editTextSuchtextGipfel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:completionThreshold="3"
+                android:ems="10"
+                android:hint="@string/strSearchSummit"
+                android:inputType="text"
+                android:onTextChanged="@{viewModel4SummitSearch.searchTextVM.onTextChanged}"
+                android:selectAllOnFocus="false"
+                android:text="@{viewModel4SummitSearch.searchTextVM.searchText}"
+                app:adapter="@{viewModel4SummitSearch.summitAdapter}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewSuchTextGipfel"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSuchTextGipfel" />
+
+
+            <Spinner
+                android:id="@+id/spinnerAreaSummit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/edittext_background"
+                android:entries="@{viewModel4SummitSearch.spinnerAreaSummit.entries}"
+                android:minWidth="@android:dimen/app_icon_size"
+                android:minHeight="@dimen/lv_header"
+                android:onItemSelected="@{(parent, view, position, id) -> viewModel4SummitSearch.spinnerAreaSummit.onItemSelected(id, position)}"
+                android:selectedItemPosition="@{viewModel4SummitSearch.spinnerAreaSummit.selected}"
+                app:layout_constraintEnd_toStartOf="@+id/cb_my_summits_only"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textViewGebiet"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGebiet"
+                tools:entries="@android:array/postalAddressTypes" />
+
+            <TextView
+                android:id="@+id/cb_my_summits_only"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nur meine\nGipfel"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="end"
+                android:textAlignment="gravity"
+                android:background="@drawable/edittext_background"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+                android:minHeight="@dimen/lv_header"
+                android:onClick="@{() -> viewModel4SummitSearch.onClickJustMySummit()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerAreaSummit" />
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|bottom"
+                android:layout_marginStart="5dp"
+                android:checked="@{viewModel4SummitSearch.justMySummit}"
+                android:onClick="@{() -> viewModel4SummitSearch.onClickJustMySummit()}"
+                app:layout_constraintBottom_toBottomOf="@+id/cb_my_summits_only"
+                app:layout_constraintStart_toStartOf="@+id/cb_my_summits_only" />
+            <TextView
+                android:id="@+id/textViewGebiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lblGebiet"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="@+id/editTextSuchtextGipfel"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSuchtextGipfel" />
+
+            <TextView
+                android:id="@+id/textViewSuchTextGipfel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchTextSummit"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewAnzahlDerWege"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@{viewModel4SummitSearch.rangeSliderAnzahlDerWege.label}"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerAreaSummit"
+                tools:text="@string/strAnzahlDerWege" />
+
+            <TextView
+                android:id="@+id/textViewAnzahlDerSternchenWege"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@{viewModel4SummitSearch.rangeSliderAnzahlDerSternchenWege.label}"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/Black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rangeSliderAnzahlDerWege"
+                tools:text="@string/strAnzahlDerSternchenWege" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/rangeSliderAnzahlDerWege"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1.0"
+                android:valueFrom="0"
+                android:valueTo="@{viewModel4SummitSearch.rangeSliderAnzahlDerWege.valueTo}"
+                app:addOnChangeListener="@{(theView, value, fromUser) -> viewModel4SummitSearch.rangeSliderAnzahlDerWege.onChange(theView.values)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnzahlDerWege"
+                app:values="@{viewModel4SummitSearch.rangeSliderAnzahlDerWege.values}" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/rangeSliderAnzahlDerSternchenWege"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stepSize="1.0"
+                android:valueFrom="0"
+                android:valueTo="@{viewModel4SummitSearch.rangeSliderAnzahlDerSternchenWege.valueTo}"
+                app:addOnChangeListener="@{(theView, value, fromUser) -> viewModel4SummitSearch.rangeSliderAnzahlDerSternchenWege.onChange( theView.values)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAnzahlDerSternchenWege"
+                app:values="@{viewModel4SummitSearch.rangeSliderAnzahlDerSternchenWege.values}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <data>
+
+        <variable
+            name="viewModel4SummitSearch"
+            type="com.teufelsturm.tt_downloader_kotlin.feature.searches.vm.SummitSearchViewModel" />
+    </data>
+</layout>

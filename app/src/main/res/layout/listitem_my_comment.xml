@@ -103,6 +103,7 @@
                         android:layout_height="match_parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
+                        android:onClick="@{clickListenerImage::onClick}"
                         android:contentDescription="@string/image_caption"
                         android:scaleType="centerInside"
                         tools:src="@tools:sample/avatars[2]" />
@@ -270,9 +271,11 @@
         <variable
             name="myRouteWithPhotos"
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments.MyTTRouteANDWithPhotos" />
-
+        <variable
+            name="clickListenerImage"
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener" />
         <variable
             name="clickListenerComment"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteCommentsClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener" />
     </data>
 </layout>

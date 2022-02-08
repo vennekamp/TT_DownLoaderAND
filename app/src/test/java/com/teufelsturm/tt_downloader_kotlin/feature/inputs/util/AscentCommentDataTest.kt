@@ -1,8 +1,8 @@
 package com.teufelsturm.tt_downloader_kotlin.feature.inputs.util
 
 import com.google.common.truth.Truth.assertThat
-import com.teufelsturm.tt_downloader_kotlin.searches.generics.convertDateTimeStringToLong
-import com.teufelsturm.tt_downloader_kotlin.searches.generics.convertLongToDateTimeString
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertDateTimeStringToLong
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateTimeString
 
 
 import junit.framework.TestCase

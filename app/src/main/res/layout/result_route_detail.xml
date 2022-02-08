@@ -99,6 +99,7 @@
                 android:layout_marginTop="10dp"
                 android:divider="@color/Black"
                 app:layoutManager="LinearLayoutManager"
+                android:layoutAnimation="@anim/layout_animation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +130,7 @@
 
         <variable
             name="viewModel4RouteResultInSummit"
-            type="com.teufelsturm.tt_downloader_kotlin.results.vm.RouteDetailResultViewModel" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.vm.RouteDetailResultViewModel" />
     </data>
 
 </layout>

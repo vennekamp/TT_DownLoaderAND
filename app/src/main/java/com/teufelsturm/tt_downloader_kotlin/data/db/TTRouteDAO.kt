@@ -44,7 +44,7 @@ interface TTRouteDAO {
 						                WHERE  b.strGebiet = (CASE WHEN LENGTH (:area) THEN (:area) ELSE (strGebiet) END))
                             AND a.wegName like :partialRouteName"""
     )
-    suspend fun getMaxAnzahlDerKommentare(
+    fun getMaxAnzahlDerKommentare(
         partialRouteName: String,
         area: String,
         intMinSchwierigkeit: Int,
@@ -63,7 +63,7 @@ interface TTRouteDAO {
                WHERE  b.strGebiet = (CASE WHEN LENGTH (:area) THEN (:area) ELSE (strGebiet) END))
          AND a.wegName LIKE :partialRouteName"""
     )
-    suspend fun getMaxMeanRating(
+    fun getMaxMeanRating(
         partialRouteName: String,
         area: String,
         intMinSchwierigkeit: Int,

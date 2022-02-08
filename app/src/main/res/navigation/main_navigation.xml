@@ -2,23 +2,34 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation"
     app:startDestination="@id/mainSearchCollectionFragment">
 
     <fragment
         android:id="@+id/mainSearchCollectionFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.TabOfSearchesFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.TabOfSearchesFragment"
         android:label="Suchen"
         tools:layout="@layout/collection_of_searches_tab">
         <action
             android:id="@+id/action_mainSearchCollectionFragment_to_summitsResultFragment"
-            app:destination="@id/summitsResultFragment" />
+            app:destination="@id/summitsResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_mainSearchCollectionFragment_to_routesListResultFragment"
-            app:destination="@id/routesListResultFragment" />
+            app:destination="@id/routesListResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_mainSearchCollectionFragment_to_commentsListResultFragment"
-            app:destination="@id/commentsListResultFragment" />
+            app:destination="@id/commentsListResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <argument
             android:name="startTab"
             app:argType="integer" />
@@ -26,123 +37,149 @@
 
     <fragment
         android:id="@+id/summitSearchFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.SummitSearchFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.SummitSearchFragment"
         android:label="Gipfelsuche"
         tools:layout="@layout/search__summits" />
 
     <fragment
         android:id="@+id/searchRouteFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.RouteSearchFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.RouteSearchFragment"
         android:label="Wege suchen"
         tools:layout="@layout/search__routes" />
 
     <fragment
         android:id="@+id/commentSearchFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.searches.ui.CommentSearchFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.CommentSearchFragment"
         android:label="Kommentare suchen"
         tools:layout="@layout/search__comments" />
     <fragment
         android:id="@+id/summitsResultFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.SummitsListResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.ui.SummitsListResultFragment"
         android:label="gefundene Gipfel"
         tools:layout="@layout/results_summits_list">
         <action
             android:id="@+id/action_summitsResultFragment_to_summit_ResultFragment"
             app:destination="@id/summit_DetailResultFragment"
             app:popUpTo="@id/summit_DetailResultFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_summitsResultFragment_to_mainSearchCollectionFragment"
             app:destination="@id/mainSearchCollectionFragment"
             app:popUpTo="@id/mainSearchCollectionFragment"
             app:popUpToInclusive="false" />
         <argument
-            android:name="eventSearchSummitParameter"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventSearchSummitParameter" />
+            android:name="argSearchSummitParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventSearchSummitParameter" />
     </fragment>
     <fragment
         android:id="@+id/summit_DetailResultFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.SummitDetailResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.ui.SummitDetailResultFragment"
         android:label="Gipfeldetail"
         tools:layout="@layout/result_summit_detail">
         <action
             android:id="@+id/action_summit_ResultFragment_self"
             app:destination="@id/summit_DetailResultFragment"
             app:popUpTo="@id/summitsResultFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="false"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_summit_ResultFragment_to_routeDetailResultFragment"
-            app:destination="@id/routeDetailResultFragment" />
+            app:destination="@id/routeDetailResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_summit_DetailResultFragment_to_mainSearchCollectionFragment"
             app:destination="@id/mainSearchCollectionFragment"
             app:popUpTo="@id/mainSearchCollectionFragment"
             app:popUpToInclusive="false" />
         <argument
-            android:name="eventNavigatingToSummit"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventNavigatingToSummit" />
+            android:name="argNavigatingToSummit"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit" />
     </fragment>
     <fragment
         android:id="@+id/routeDetailResultFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.RouteDetailResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.ui.RouteDetailResultFragment"
         android:label="Wegdetail"
         tools:layout="@layout/result_route_detail">
         <action
             android:id="@+id/action_routeDetailResultFragment_to_mainSearchCollectionFragment"
             app:destination="@id/mainSearchCollectionFragment"
             app:popUpTo="@id/mainSearchCollectionFragment" />
-        <argument
-            android:name="eventSearchRouteParameter"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventNavigatingToRoute" />
         <action
             android:id="@+id/action_routeDetailResultFragment_to_orderCommentsDialogFragment"
-            app:destination="@id/orderCommentsDialogFragment"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:destination="@id/orderCommentsDialogFragment"  />
         <action
             android:id="@+id/action_routeDetailResultFragment_to_commentInputFragment"
-            app:destination="@id/commentInputFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/commentInputFragment"  />
+        <argument
+            android:name="argSearchRouteParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToRoute" />
+        <action
+            android:id="@+id/action_routeDetailResultFragment_to_zoomImageView"
+            app:destination="@id/zoomImageView" />
     </fragment>
     <fragment
         android:id="@+id/routesListResultFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.RoutesListResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.ui.RoutesListResultFragment"
         android:label="gefundene Wege"
         tools:layout="@layout/results_summits_list">
         <action
             android:id="@+id/action_routesListResultFragment_to_summitDetailResultFragment"
-            app:destination="@id/summit_DetailResultFragment" />
+            app:destination="@id/summit_DetailResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_routesListResultFragment_to_routeDetailResultFragment"
-            app:destination="@id/routeDetailResultFragment" />
+            app:destination="@id/routeDetailResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_routesListResultFragment_to_mainSearchCollectionFragment"
             app:destination="@id/mainSearchCollectionFragment"
             app:popUpTo="@id/mainSearchCollectionFragment" />
         <argument
-            android:name="eventSearchRouteParameter"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventSearchRouteParameter" />
+            android:name="argSearchRouteParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventSearchRouteParameter" />
     </fragment>
     <fragment
         android:id="@+id/commentsListResultFragment"
-        android:name="com.teufelsturm.tt_downloader_kotlin.results.ui.CommentsListResultFragment"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.ui.CommentsListResultFragment"
         android:label="Kommentare"
         tools:layout="@layout/results_comments_list">
         <action
             android:id="@+id/action_commentsListResultFragment_to_summit_DetailResultFragment"
-            app:destination="@id/summit_DetailResultFragment" />
+            app:destination="@id/summit_DetailResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_commentsListResultFragment_to_routeDetailResultFragment"
-            app:destination="@id/routeDetailResultFragment" />
+            app:destination="@id/routeDetailResultFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
         <action
             android:id="@+id/action_commentsListResultFragment_to_mainSearchCollectionFragment"
             app:destination="@id/mainSearchCollectionFragment"
             app:popUpTo="@id/mainSearchCollectionFragment" />
         <argument
-            android:name="eventSearchCommentParameter"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.searches.generics.EventSearchCommentParameter" />
+            android:name="argSearchCommentParameter"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventSearchCommentParameter" />
     </fragment>
     <fragment
         android:id="@+id/orderCommentsDialogFragment"
@@ -166,16 +203,21 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_commentInputFragment_to_dialogDeleteOrOpen"
-            app:destination="@id/dialogDeleteOrOpen"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:destination="@id/dialogDeleteOrOpen" />
     </fragment>
     <fragment
         android:id="@+id/dialogDeleteOrOpen"
         android:name="com.teufelsturm.tt_downloader_kotlin.feature.inputs.ui.DialogDeleteOrOpen"
         android:label="dialog_delete_or_edit"
         tools:layout="@layout/dialog_delete_or_edit" />
+    <fragment
+        android:id="@+id/zoomImageView"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.ZoomImageView"
+        android:label="Bildanzeige"
+        tools:layout="@layout/result_zoom_image">
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

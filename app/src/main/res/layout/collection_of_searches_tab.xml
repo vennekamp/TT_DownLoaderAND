@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:Context="com.teufelsturm.tt_downloader_kotlin.searches.ui.TabOfSearchesFragment">
+    tools:Context="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.TabOfSearchesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,23 +18,22 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tabs_searches"
-            app:userInputEnabled="@{false}" />
+            app:layout_constraintBottom_toTopOf="@+id/tabs_searches"  />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs_searches"
-            app:tabTextAppearance="@style/MineCustomTabText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_pager_searches"
             app:tabGravity="fill"
+            app:tabIndicatorColor="@color/Blue"
+            app:tabIndicatorGravity="top"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"
             app:tabSelectedTextColor="#A34F4F"
-            app:tabIndicatorGravity="top"
-            app:tabIndicatorColor="@color/Blue"
-            app:layout_constraintTop_toBottomOf="@+id/view_pager_searches"
-            app:layout_constraintBottom_toBottomOf="parent"
-             />
+            android:contentDescription="@string/tabLayout_content_description"
+            app:tabTextAppearance="@style/MineCustomTabText"  />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

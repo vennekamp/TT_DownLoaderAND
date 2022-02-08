@@ -1,9 +1,26 @@
 package com.teufelsturm.tt_downloader_kotlin.data.entity
 
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+@Entity(tableName = "Summit_TSP_Order")
+class SummitTravSalePersOrder {
+    //      RecNo	FieldName	            SQLType
+    //      1	    _id	                    INTEGER
+    //      2	    _idTimStamp             BIGINT
+    //      3	    intTTHauptGipfelNr	    int
+    //      4	    intTTNachbarGipfelNr	int
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
+    var _id = 0
+
+    @ColumnInfo(name = "intTTGipfelNr")
+    var intTTGipfelNr: Int = 0
+}
 
 @Entity(tableName = "TT_NeigbourSummit_AND")
 class TTNeigbourSummitAND {
@@ -28,5 +45,7 @@ class TTNeigbourSummitAND {
 
 data class TTNeigbourANDTTName(
     val intTTNachbarGipfelNr: Int,
-    val strName: String
+    val strName: String,
+    val dblGPS_Latitude: Double?,
+    val dblGPS_Longitude: Double?
 )

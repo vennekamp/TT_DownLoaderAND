@@ -16,6 +16,7 @@
             android:layout_marginTop="15dp"
             android:divider="@color/Black"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layoutAnimation="@anim/layout_animation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,29 +74,28 @@
                 style="@style/MyRadioButton"
                 android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByGipfelNr}"
                 android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
-                android:text="@string/tableCol_Grade" />
+                android:text="@string/tableColSummitNumberOfficial" />
 
             <RadioButton
                 android:id="@+id/rb_NumberOfRoutes"
                 style="@style/MyRadioButton"
                 android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByAnzahlWege}"
                 android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
-                android:text="@string/comments_count" />
+                android:text="@string/strAnzahlDerWege" />
 
             <RadioButton
                 android:id="@+id/rb_Area"
                 style="@style/MyRadioButton"
                 android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByGebiet}"
                 android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
-
-                android:text="@string/tableCol_MeanRating"/>
+                android:text="@string/tableCol_Area"/>
 
             <RadioButton
                 android:id="@+id/rb_EasiestGrade"
                 style="@style/MyRadioButton"
                 android:checked="@{viewModel4SummitsResult.viewModelSummitOrderWidget.isCheckedByLeichtesterWeg}"
                 android:onClick="@{(view)  -> viewModel4SummitsResult.viewModelSummitOrderWidget.onCheckRadioButton(view.id)}"
-                android:text="@string/star_count" />
+                android:text="@string/tableCol_EasiestGrade" />
 
             <RadioButton
                 android:id="@+id/rb_NumberOfStarredRoutes"
@@ -106,7 +106,8 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_order"
-                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/White"
@@ -137,7 +138,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel4SummitsResult"
-            type="com.teufelsturm.tt_downloader_kotlin.results.vm.SummitsListResultViewModel" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitsListResultViewModel" />
     </data>
 
 </layout>

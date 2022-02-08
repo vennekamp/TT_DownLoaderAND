@@ -204,9 +204,9 @@
 
         <variable
             name="clickListenerComment"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteCommentsClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener" />
         <variable
             name="asscentTypeClickListener"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteAscentTypeOnItemSelected" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentTypeOnItemSelected" />
     </data>
 </layout>

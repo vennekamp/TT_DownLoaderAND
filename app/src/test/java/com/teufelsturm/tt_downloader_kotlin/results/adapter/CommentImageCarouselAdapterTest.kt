@@ -1,6 +1,5 @@
 package com.teufelsturm.tt_downloader_kotlin.results.adapter
 
-import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import junit.framework.TestCase
 import org.junit.Test

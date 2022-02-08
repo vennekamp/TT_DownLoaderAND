@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.teufelsturm.tt_downloader_kotlin.searches.ui.RouteSearchFragment" >
+    tools:context="com.teufelsturm.tt_downloader_kotlin.feature.searches.ui.RouteSearchFragment" >
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +29,7 @@
             android:ems="10"
             android:hint="@string/strSearchComment"
             android:inputType="text"
-            android:onTextChanged="@{viewModel4CommentSearch.searchTextVM.onTextChanged}"
+            android:onTextChanged="@{viewModel4CommentSearch.searchTextVM::onTextChanged}"
             android:selectAllOnFocus="false"
             android:text="@{viewModel4CommentSearch.searchTextVM.searchText}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,7 @@
             android:id="@+id/textViewLimitsForScale44CommentSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:Text="@{viewModel4CommentSearch.rangeSliderMinMaxGradeInCommentSearch.label}"
+            android:text="@{viewModel4CommentSearch.rangeSliderMinMaxGradeInCommentSearch.label}"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -125,6 +125,6 @@
     <data>
         <variable
             name="viewModel4CommentSearch"
-            type="com.teufelsturm.tt_downloader_kotlin.searches.vm.CommentsSearchViewModel" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.searches.vm.CommentsSearchViewModel" />
     </data>
 </layout>

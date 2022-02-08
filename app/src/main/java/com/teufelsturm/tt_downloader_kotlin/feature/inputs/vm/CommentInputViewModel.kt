@@ -15,10 +15,10 @@ import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTRouteAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.AscentCommentData
-import com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteAscentType
-import com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteAscentTypeOnItemSelected
-import com.teufelsturm.tt_downloader_kotlin.searches.generics.AutoCompleteAdapter
-import com.teufelsturm.tt_downloader_kotlin.searches.generics.ViewModelSpinnerSpannable
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentType
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentTypeOnItemSelected
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.AutoCompleteAdapter
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.ViewModelSpinnerSpannable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -30,7 +30,6 @@ class CommentInputViewModel @Inject constructor(
     val application: Application,
     private val myTTRouteDAO: MyTTRouteDAO,
 ) : ViewModel() {
-
 
     // region properties
     private val _partnerAdapter = MutableLiveData<ArrayAdapter<String>>()
@@ -61,7 +60,7 @@ class CommentInputViewModel @Inject constructor(
     init {
         adapter.setDropDownViewResource(R.layout.listitem_spinner_how_ascended) /* simple_spinner_dropdown_item */
         _partnerAdapter.value =
-            AutoCompleteAdapter(application, ::findPartner, R.id.editTextSuchtextWege)
+            AutoCompleteAdapter(application, ::findPartner, R.id.act_ascended_partner)
     }
 
     // Creating adapter for the ascent type spinner
@@ -129,11 +128,11 @@ class CommentInputViewModel @Inject constructor(
             && carouselItemViewModels.size == 1
         ) {
             val deletedRows = myTTRouteDAO.deleteMyCommentById(myTTRouteAND.Id)
-            val msg = if (deletedRows > 0) "Kommentar gelöscht" else "Löschen gescheitert!"
+            val msg = if (deletedRows > 0) "Kommentar gelöscht" else "Keine Änderungen gespeichert."
             Toast.makeText(
                 application.applicationContext,
                 msg,
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
             myTTRouteAND.Id
         } else {

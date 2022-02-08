@@ -31,16 +31,6 @@
             app:layout_constraintRight_toLeftOf="@+id/switch_order"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/button_flow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/White"
-            app:constraint_referenced_ids="rb_comment_rating_dia,rb_comment_user_dia,rb_comment_date_dia"
-            app:flow_wrapMode="aligned"
-            app:flow_maxElementsWrap="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_order_label" / -->
 <RadioGroup
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

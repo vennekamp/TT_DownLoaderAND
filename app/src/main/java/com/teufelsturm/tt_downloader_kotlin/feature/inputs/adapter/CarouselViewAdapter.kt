@@ -1,7 +1,6 @@
 package com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.content.res.ResourcesCompat
@@ -14,8 +13,6 @@ import com.synnapps.carouselview.ImageListener
 import com.synnapps.carouselview.ViewListener
 import com.teufelsturm.tt_downloader_kotlin.BuildConfig
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
 import com.teufelsturm.tt_downloader_kotlin.databinding.CustomCarouselBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CustomCarouselViewModel
@@ -30,7 +27,8 @@ class CarouselViewAdapter constructor(
     private lateinit var carouselView: CarouselView
 
     companion object {
-        const val ADD_IMAGE = "android.resource:// ${BuildConfig.APPLICATION_ID} /drawable/add_image"
+        const val ADD_IMAGE =
+            "android.resource:// ${BuildConfig.APPLICATION_ID} /drawable/add_image"
     }
 
     private val _dialogMoveHelperText = MutableLiveData<String>("???")
@@ -42,7 +40,9 @@ class CarouselViewAdapter constructor(
         if (carouselViewAdapterViewModel.carouselAdapterData.getCarouselItemViewModels()
                 .remove(selectedViewModel)
         ) {
-            carouselViewAdapterViewModel.carouselAdapterData.deletedCarouselItemViewModels.add(selectedViewModel)
+            carouselViewAdapterViewModel.carouselAdapterData.deletedCarouselItemViewModels.add(
+                selectedViewModel
+            )
             carouselView.pageCount--
         }
     }

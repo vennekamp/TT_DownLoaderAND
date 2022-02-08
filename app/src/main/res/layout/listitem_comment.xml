@@ -157,10 +157,10 @@
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit" />
         <variable
             name="clickListenerRoute"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.TTCommentClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener" />
         <variable
             name="clickListenerSummit"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.TTCommentClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener" />
 
     </data>
 </layout>

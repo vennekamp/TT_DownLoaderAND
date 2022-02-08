@@ -1,7 +1,7 @@
 package com.teufelsturm.tt_downloader_kotlin.data.order
 
 import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
-import com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteGrade
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 
 /**
  * Ordering for [com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND]

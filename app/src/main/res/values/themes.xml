@@ -16,17 +16,4 @@
     </style>
 
 
-
-    <style name="MyTheme" parent="Theme.TT_DownLoaderAND_Kotlin">
-        <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
-    </style>
-
-    <style name="MyTheme.ActionBarStyle" parent="Theme.TT_DownLoaderAND_Kotlin">
-        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
-    </style>
-
-    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/Orange</item>
-    </style>
-
 </resources>

@@ -3,7 +3,7 @@ package com.teufelsturm.tt_downloader_kotlin.results.vm.generics
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWithSummitBy
-import com.teufelsturm.tt_downloader_kotlin.data.order.SortSummitWithMySummitCommentBy
+import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.generics.ViewModelCommentOrderWidget
 import com.teufelsturm.tt_downloader_kotlin.util.getOrAwaitValueTest
 import junit.framework.TestCase
 import org.junit.Before

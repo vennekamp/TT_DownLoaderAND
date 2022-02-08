@@ -12,17 +12,6 @@
         <item name="android:padding">2dp</item>
     </style>
 
-    <style name="input_item_cardview" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/lv_item</item>
-        <item name="android:layout_marginStart">5dp</item>
-        <item name="android:layout_marginEnd">5dp</item>
-        <item name="android:background">@drawable/textview_bg</item>
-        <item name="android:layout_marginTop">2.5dp</item>
-        <item name="android:layout_marginBottom">2.5dp</item>
-        <item name="android:padding">2dp</item>
-    </style>
-
     <style name="my_top_level_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

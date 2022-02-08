@@ -7,8 +7,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.teufelsturm.tt_downloader_kotlin.data.order.Order
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWithSummitBy
-import com.teufelsturm.tt_downloader_kotlin.results.vm.generics.ViewModelRadioButtonCwRwS
-import com.teufelsturm.tt_downloader_kotlin.results.vm.generics.convertBooleanToOrder
+import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.generics.ViewModelRadioButtonCwRwS
+import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.generics.convertBooleanToOrder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

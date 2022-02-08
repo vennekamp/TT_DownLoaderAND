@@ -15,7 +15,8 @@ const val NO_ID = 0L
         MyTTSummitAND::class,
         MyTTRouteAND::class,
         MyTT_RoutePhotos_AND::class,
-        TTNeigbourSummitAND::class
+        TTNeigbourSummitAND::class,
+        SummitTravSalePersOrder::class
     ], version = 2, exportSchema = false
 )
 abstract class TTDataBase : RoomDatabase() {

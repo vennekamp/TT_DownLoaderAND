@@ -7,8 +7,8 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTRouteAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
-import com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteAscentType
-import com.teufelsturm.tt_downloader_kotlin.searches.generics.convertLongToDateTimeString
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentType
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateTimeString
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.*

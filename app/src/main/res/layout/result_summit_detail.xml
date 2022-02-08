@@ -25,8 +25,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/NoGap"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:textAllCaps="false"
+                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(0)}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(0)}"
-                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 0 ? viewModel4SummitResult.ttNeigbours.get(0).strName : @string/no_data}"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Falkenstein WächterNadel Lange" />
 
@@ -36,8 +40,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/NoGap"
-                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(1)}"
-                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 2 ? viewModel4SummitResult.ttNeigbours.get(1).strName : @string/no_data}"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:textAllCaps="false"
+                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(2)}"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(2)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit1"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Furz" />
@@ -49,8 +57,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/NoGap"
-                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(2)}"
-                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 3 ? viewModel4SummitResult.ttNeigbours.get(2).strName : @string/no_data}"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:textAllCaps="false"
+                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(1)}"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(1)}"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="kurz" />
             <Button
@@ -59,8 +71,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/NoGap"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:textAllCaps="false"
+                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(3)}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(3)}"
-                android:text="@{viewModel4SummitResult.ttNeigbours.size() > 2 ? viewModel4SummitResult.ttNeigbours.get(3).strName : @string/no_data}"
                 app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit3"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="lang lang lang lang lang lang lang lang lang" />
@@ -121,17 +137,32 @@
             <TextView
                 android:id="@+id/tv_summit_name"
                 style="@style/tv_header1_recyclerview"
-                app:summitTextFormatted="@{summit.ttSummitAND}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_neighbour_summit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:summitTextFormatted="@{summit.ttSummitAND}"
                 tools:text="@string/tableCol_SummitName" />
 
+            <ImageButton
+                android:id="@+id/btn_neighbour_summit"
+                style="@style/Widget.AppCompat.ButtonBar"
+                android:padding="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:onClick="@{(view) -> viewModel4SummitResult.onSummitGeoClick()}"
+                android:src="@drawable/ic_baseline_location_on_24"
+                app:tint="@color/design_default_color_primary"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_summit_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_summit_name"/>
             <TextView
                 android:id="@+id/tv_area"
                 style="@style/tv_header2_recyclerview"
+                android:layout_marginTop="8dp"
                 android:text="@{viewModel4SummitResult.mTTSummit.ttSummitAND.strGebiet}"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_summit_name"
                 tools:text="@string/tableCol_Area" />
@@ -141,7 +172,7 @@
                 android:id="@+id/tv_neighbour_summit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/strNeighbourSummit"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/header_small"
@@ -181,6 +212,7 @@
                 android:layout_marginTop="10dp"
                 android:divider="@color/Black"
                 app:layoutManager="LinearLayoutManager"
+                android:layoutAnimation="@anim/layout_animation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_my_summit_comment"
@@ -213,7 +245,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible"
-        tools:alpha="0.75"
+        tools:alpha="0"
         >
         <TextView
             android:id="@+id/tv_order_label"
@@ -300,6 +332,6 @@
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment" />
         <variable
             name="viewModel4SummitResult"
-            type="com.teufelsturm.tt_downloader_kotlin.results.vm.SummitDetailResultViewModel" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitDetailResultViewModel" />
     </data>
 </layout>

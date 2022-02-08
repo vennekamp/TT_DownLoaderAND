@@ -17,6 +17,7 @@
             android:layout_marginTop="15dp"
             android:divider="@color/Black"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layoutAnimation="@anim/layout_animation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +131,6 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel4CommentsResult"
-            type="com.teufelsturm.tt_downloader_kotlin.results.vm.CommentsListResultViewModel" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.vm.CommentsListResultViewModel" />
     </data>
 </layout>

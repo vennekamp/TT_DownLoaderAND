@@ -201,7 +201,7 @@
     <data>
         <variable
             name="clickListener"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.SummitClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.SummitClickListener" />
         <variable
             name="summit"
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment" />

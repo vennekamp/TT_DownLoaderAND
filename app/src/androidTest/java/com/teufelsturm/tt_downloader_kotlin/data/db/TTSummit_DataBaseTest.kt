@@ -134,17 +134,17 @@ class TTSummitDataBaseTest {
         val data = runBlocking { summitWithMySummitComment.first() }
 
         Assert.assertNotNull("loadConstrainedSummitsAndMyCommentsTest", data)
-        Assert.assertEquals(1, data?.size)
+        Assert.assertEquals(1, data.size)
 
         Log.d(
             "loadConstrainedSummitsAndMyCommentsTest",
-            data?.get(0)?.ttSummitAND?.strName.toString()
+            data.get(0).ttSummitAND.strName.toString()
         )
         Log.d(
             "loadConstrainedSummitsAndMyCommentsTest",
-            data?.get(0)?.ttSummitAND?.strGebiet.toString()
+            data.get(0).ttSummitAND.strGebiet.toString()
         )
-        data?.get(0)?.myTTSummitANDList?.forEach {
+        data.get(0).myTTSummitANDList.forEach {
             Log.d(
                 "loadConstrainedSummitsAndMyCommentsTest",
                 "comment: " + it.isAscendedSummit.toString()

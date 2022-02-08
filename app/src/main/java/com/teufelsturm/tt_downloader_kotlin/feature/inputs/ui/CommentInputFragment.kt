@@ -316,7 +316,7 @@ class CommentInputFragment : Fragment() {
                 } else {
                     val msg = "clicked image not found!! "
                     Log.e(TAG, msg)
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     val fallbackPos =
                         viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().size - 1
                     viewModelCarousel.onImageClick(fallbackPos)

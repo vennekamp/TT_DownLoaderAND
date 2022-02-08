@@ -3,7 +3,8 @@
     <alpha
         android:duration="@android:integer/config_mediumAnimTime"
         android:fromAlpha="0.0"
-        android:toAlpha="1.0" />
+        android:toAlpha="1.0"
+          />
     <scale
         android:duration="@android:integer/config_mediumAnimTime"
         android:fromXScale="0.2"

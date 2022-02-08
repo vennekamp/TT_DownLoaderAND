@@ -214,14 +214,14 @@
         <import type="android.view.View"/>
         <variable
             name="clickListenerRoute"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.TTRouteClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener" />
         <variable
             name="route"
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments.RouteWithMyRouteComment" />
 
         <variable
             name="clickListenerSummit"
-            type="com.teufelsturm.tt_downloader_kotlin.results.adapter.util.TTSummitClickListener" />
+            type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTSummitClickListener" />
         <variable
             name="summit"
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND" />

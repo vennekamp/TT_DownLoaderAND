@@ -4,6 +4,7 @@ import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortSummitWithMySummitCommentBy
+import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.generics.ViewModelSummitOrderWidget
 import com.teufelsturm.tt_downloader_kotlin.util.getOrAwaitValueTest
 import junit.framework.TestCase
 import kotlinx.coroutines.flow.firstOrNull

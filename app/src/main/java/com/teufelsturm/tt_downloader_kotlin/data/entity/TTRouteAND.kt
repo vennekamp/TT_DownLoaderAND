@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.teufelsturm.tt_downloader_kotlin.data.db.NO_ID
-import com.teufelsturm.tt_downloader_kotlin.results.adapter.util.RouteGrade
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 
 @Entity(tableName = "TT_Route_AND")
 data class TTRouteAND(
