@@ -1,7 +1,6 @@
 package com.teufelsturm.tt_downloader_kotlin.app
 
 import android.content.Context
-import androidx.room.Room
 import com.teufelsturm.tt_downloader_kotlin.data.db.*
 import dagger.Module
 import dagger.Provides
@@ -46,7 +45,7 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideMyTTRouteANDWithPhotos(ttDatabase: TTDataBase): MyTTRouteDAO {
-        return ttDatabase.myTTRouteDAO
+    fun provideMyTTRouteANDWithPhotos(ttDatabase: TTDataBase): MyTTCommentDAO {
+        return ttDatabase.myTTCommentDAO
     }
 }

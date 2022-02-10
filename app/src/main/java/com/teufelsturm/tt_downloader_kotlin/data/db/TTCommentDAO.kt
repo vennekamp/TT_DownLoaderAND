@@ -1,29 +1,29 @@
 package com.teufelsturm.tt_downloader_kotlin.data.db
 
 import androidx.room.*
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TTCommentDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(routeComment: RouteComments.TTRouteCommentAND)
+    fun insert(comment: Comments.TTCommentAND)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(routeComment: RouteComments.TTRouteCommentAND)
+    fun update(comment: Comments.TTCommentAND)
 
     @Query("DELETE FROM TT_Comment_AND WHERE _id = :idNr")
     fun deleteById(idNr: Int)
 
     @Query("SELECT * FROM TT_Comment_AND WHERE _id = :idNr")
-    fun get(idNr: Int): RouteComments.TTRouteCommentAND?
+    fun get(idNr: Int): Comments.TTCommentAND?
 
     @Query("SELECT * from TT_Comment_AND")
-    fun getAll(): List<RouteComments.TTRouteCommentAND>
+    fun getAll(): List<Comments.TTCommentAND>
 
     @Query("SELECT * from TT_Comment_AND WHERE intTTWegNr = :intTTWegNr")
-    fun getByRoute(intTTWegNr: Int): Flow<List<RouteComments.TTRouteCommentAND>>
+    fun getByRoute(intTTWegNr: Int): Flow<List<Comments.TTCommentAND>>
 
     @Query(
         """SELECT 
@@ -59,7 +59,7 @@ interface TTCommentDAO {
         area: String,
         intMinSchwierigkeit: Int,
         intMaxSchwierigkeit: Int
-    ): Flow<List<CommentsWithRouteWithSummit>>
+    ): Flow<List<CommentsSummit.CommentsWithRouteWithSummit>>
 
     @Query(
         """SELECT 

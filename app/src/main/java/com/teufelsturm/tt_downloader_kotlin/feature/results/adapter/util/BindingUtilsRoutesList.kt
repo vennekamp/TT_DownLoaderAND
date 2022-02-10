@@ -8,7 +8,7 @@ import android.widget.CheckBox
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.*
 import java.text.DecimalFormat
@@ -25,52 +25,56 @@ fun TextView.routeTextFormatted(ttRouteAND: TTRouteAND?) {
                 "&#10071; ".toHTMLSpan()
             }
             append((item.WegName ?: "").toHTMLSpan())
-            item.intSterne?.let { append(" ") }
-            item.intSterne?.let { repeat(item.intSterne!!) { append("*") } }
+            item.intSterne?.let { sterne ->
+                append(" ")
+                repeat(sterne) { append("*") }
+            }
         }
+        text = span
     }
-    text = span
 }
 
 @BindingAdapter("gradeTextFormatted")
-fun TextView.gradeTextFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun TextView.gradeTextFormatted(item: Comments.RouteWithMyComment) {
     val sb =
         StringBuilder(item.ttRouteAND.strSchwierigkeitsGrad ?: "???")
     text = sb.toString().toHTMLSpan()
 }
 
 @BindingAdapter("commentCountTextFormatted")
-fun TextView.commentCountTextFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun TextView.commentCountTextFormatted(item: Comments.RouteWithMyComment) {
     text = item.ttRouteAND.intAnzahlDerKommentare.toString()
 }
 
 @BindingAdapter("meanGradeTextFormatted")
-fun TextView.meanGradeTextFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun TextView.meanGradeTextFormatted(item: Comments.RouteWithMyComment) {
     val df = DecimalFormat("#.##")
     text = df.format(item.ttRouteAND.fltMittlereWegBewertung)
 }
 
 @BindingAdapter("fltRatingFormattedFormatted")
-fun RatingBar.fltRatingFormattedFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun RatingBar.fltRatingFormattedFormatted(item: Comments.RouteWithMyComment) {
     rating = item.ttRouteAND.fltMittlereWegBewertung ?: 0f
 }
 
 
 @BindingAdapter("isAscendedRouteFormatted")
-fun CheckBox.isAscendedRouteFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun CheckBox.isAscendedRouteFormatted(item: Comments.RouteWithMyComment) {
     isChecked = isAscendedRoute(item)
 }
 
 @BindingAdapter("ascensionDateRouteFormatted")
-fun TextView.ascensionDateRouteFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun TextView.ascensionDateRouteFormatted(item: Comments.RouteWithMyComment) {
     var myDate: Long? = null
-    item.myTTRouteANDList.let { list ->
+    item.myTTCommentANDList.let { list ->
         list.forEach {
-            it.myIntDateOfAscendRoute?.let { itDate ->
+            it.myIntDateOfAscend?.let { itDate ->
                 myDate = if (myDate == null) {
                     convertDateTimeStringToLong(itDate)
                 } else {
-                    (myDate!!).coerceAtMost(convertDateTimeStringToLong(itDate) ?: Long.MIN_VALUE)
+                    (myDate!!).coerceAtMost(
+                        convertDateTimeStringToLong(itDate) ?: Long.MIN_VALUE
+                    )
                 }
             }
         }
@@ -79,7 +83,7 @@ fun TextView.ascensionDateRouteFormatted(item: RouteComments.RouteWithMyRouteCom
 }
 
 @BindingAdapter("myAscentFormatted")
-fun TextView.myAscentFormatted(myRouteList: List<RouteComments.MyTTRouteANDWithPhotos>?) {
+fun TextView.myAscentFormatted(myRouteList: List<Comments.MyTTRouteANDWithPhotos>?) {
     val spSB = SpannableStringBuilder()
     myRouteList?.let {
         val maxAscent = maxAscentRoute(it)
@@ -97,35 +101,35 @@ fun TextView.myAscentFormatted(myRouteList: List<RouteComments.MyTTRouteANDWithP
 }
 
 @BindingAdapter("myExtendedCommentStringFormatted")
-fun TextView.myExtendedCommentStringFormatted(route: RouteComments.RouteWithMyRouteComment?) {
+fun TextView.myExtendedCommentStringFormatted(route: Comments.RouteWithMyComment?) {
     val spSB = SpannableStringBuilder()
     spSB.apply {
-        route?.myTTRouteANDList?.forEach { comment ->
-            comment.isAscendedRouteType?.let { type ->
+        route?.myTTCommentANDList?.forEach { comment ->
+            comment.isAscendedType.let { type ->
                 append(" ")
                 val mDrawable = RouteAscentType.values()[type].drawable(context)
                 mDrawable?.setBounds(0, 0, lineHeight, lineHeight)
                 val span = mDrawable?.let { d -> ImageSpan(d, ImageSpan.ALIGN_BASELINE) }
                 setSpan(span, this.length - 1, this.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             }
-            comment.myIntDateOfAscendRoute?.let {
+            comment.myIntDateOfAscend?.let {
                 append("[${it}]") ?: append("[ --- ]")
             }
             append(" ")
-            append("${comment.strMyRouteComment}")
-            if (comment != route.myTTRouteANDList.last()) append("<br>".toHTMLSpan())
+            append("${comment.strMyComment}")
+            if (comment != route.myTTCommentANDList.last()) append("<br>".toHTMLSpan())
         }
     }
     text = spSB
 }
 
 @BindingAdapter("myCommentRouteTextFormatted")
-fun TextView.myCommentRouteTextFormatted(item: RouteComments.RouteWithMyRouteComment) {
+fun TextView.myCommentRouteTextFormatted(item: Comments.RouteWithMyComment) {
     text = formatRouteComments(item)
 }
 
 
 @BindingAdapter("android:visibility")
-fun View.setVisibility(item: RouteComments.RouteWithMyRouteComment) {
-    visibility = if (item.myTTRouteANDList.isEmpty()) View.GONE else View.VISIBLE
+fun View.setVisibility(item: Comments.RouteWithMyComment) {
+    visibility = if (item.myTTCommentANDList.isEmpty()) View.GONE else View.VISIBLE
 }

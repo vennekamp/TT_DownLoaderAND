@@ -9,10 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTRouteDAO
+import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.NO_ID
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTRouteAND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.AscentCommentData
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentType
@@ -28,7 +28,7 @@ private const val TAG = "CommentInputViewModel"
 @HiltViewModel
 class CommentInputViewModel @Inject constructor(
     val application: Application,
-    private val myTTRouteDAO: MyTTRouteDAO,
+    private val myTTCommentDAO: MyTTCommentDAO,
 ) : ViewModel() {
 
     // region properties
@@ -48,7 +48,7 @@ class CommentInputViewModel @Inject constructor(
     // region ViewModel and Adapter and DataHolder
     /** Returns a search result for the given partner start title. **/
     private fun findPartner(partNamePart: String): List<String> {
-        return myTTRouteDAO.getDistinctPartner(partNamePart)
+        return myTTCommentDAO.getDistinctPartner(partNamePart)
     }
 
     val adapter: ArrayAdapter<SpannableString> = ArrayAdapter(
@@ -78,15 +78,15 @@ class CommentInputViewModel @Inject constructor(
     }
 
     fun getMyTTRouteANDId(): Long {
-        return ascentData.myTTRouteANDWithPhotos.myTTRouteAND.Id
+        return ascentData.myTTRouteANDWithPhotos.myTTCommentAND.Id
     }
 
-    fun setMyTTRouteANDWithPhotos(mMyTTRouteANDWithPhotos: RouteComments.MyTTRouteANDWithPhotos) {
+    fun setMyTTRouteANDWithPhotos(mMyTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos) {
 
         ascentData.setMyTTRouteANDWithPhotos(mMyTTRouteANDWithPhotos)
         spinnerHowAscended.onItemSelected(
             null,
-            ascentData.myTTRouteANDWithPhotos.myTTRouteAND.isAscendedRouteType
+            ascentData.myTTRouteANDWithPhotos.myTTCommentAND.isAscendedType
         )
 
     }
@@ -116,44 +116,44 @@ class CommentInputViewModel @Inject constructor(
     }
 
     fun saveModifiedComment(
-        myTTRouteAND: MyTTRouteAND,
+        myTTCommentAND: MyTTCommentAND,
         carouselItemViewModels: MutableList<CustomCarouselViewModel>,
         deletedCarouselItemViewModels: MutableList<CustomCarouselViewModel>
     ) {
         val rowIDRoute: Long = if (
-            myTTRouteAND.isAscendedRouteType == 0
-            && myTTRouteAND.myIntDateOfAscendRoute.isNullOrBlank()
-            && myTTRouteAND.myAscendedPartner.isNullOrBlank()
-            && myTTRouteAND.strMyRouteComment.isNullOrBlank()
+            myTTCommentAND.isAscendedType == 0
+            && myTTCommentAND.myIntDateOfAscend.isNullOrBlank()
+            && myTTCommentAND.myAscendedPartner.isNullOrBlank()
+            && myTTCommentAND.strMyComment.isNullOrBlank()
             && carouselItemViewModels.size == 1
         ) {
-            val deletedRows = myTTRouteDAO.deleteMyCommentById(myTTRouteAND.Id)
+            val deletedRows = myTTCommentDAO.deleteMyCommentById(myTTCommentAND.Id)
             val msg = if (deletedRows > 0) "Kommentar gelöscht" else "Keine Änderungen gespeichert."
             Toast.makeText(
                 application.applicationContext,
                 msg,
                 Toast.LENGTH_SHORT
             ).show()
-            myTTRouteAND.Id
+            myTTCommentAND.Id
         } else {
-            saveMyRoute(myTTRouteAND)
+            saveMyRoute(myTTCommentAND)
         }
         Log.v(
             TAG,
-            "saveModifiedComment(...myTTRouteAND for ${myTTRouteAND.myIntTTWegNr} in row -> $rowIDRoute"
+            "saveModifiedComment(...myTTRouteAND for ${myTTCommentAND.myIntTTWegNr} in row -> $rowIDRoute"
         )
         carouselItemViewModels.forEach {
-            saveMyPhoto(it, rowIDRoute, myTTRouteAND)
+            saveMyPhoto(it, rowIDRoute, myTTCommentAND)
         }
         deletedCarouselItemViewModels.forEach {
-            myTTRouteDAO.deletePhotoById(it.getMyTT_RoutePhotos_AND().Id)
+            myTTCommentDAO.deletePhotoById(it.getMyTT_RoutePhotos_AND().Id)
         }
     }
 
     private fun saveMyPhoto(
         it: CustomCarouselViewModel,
         rowIDRoute: Long,
-        myTTRouteAND: MyTTRouteAND
+        myTTCommentAND: MyTTCommentAND
     ) {
         if (it.getMyTT_RoutePhotos_AND().uri != CarouselViewAdapter.ADD_IMAGE) {
             val commentPhoto = it.getMyTT_RoutePhotos_AND()
@@ -162,15 +162,15 @@ class CommentInputViewModel @Inject constructor(
             val rowIDComment: Long = if (commentPhoto.Id == NO_ID) {
                 Log.e(
                     TAG,
-                    "saveModifiedComment(...commentPhoto for ${myTTRouteAND.myIntTTWegNr} insert"
+                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} insert"
                 )
-                myTTRouteDAO.insert(commentPhoto)
+                myTTCommentDAO.insert(commentPhoto)
             } else {
                 Log.e(
                     TAG,
-                    "saveModifiedComment(...commentPhoto for ${myTTRouteAND.myIntTTWegNr} update"
+                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} update"
                 )
-                myTTRouteDAO.update(commentPhoto)
+                myTTCommentDAO.update(commentPhoto)
                 commentPhoto.Id
             }
             Log.e(
@@ -180,19 +180,19 @@ class CommentInputViewModel @Inject constructor(
         }
     }
 
-    private fun saveMyRoute(myTTRouteAND: MyTTRouteAND) =
-        if (myTTRouteAND.Id == NO_ID) {
+    private fun saveMyRoute(myTTCommentAND: MyTTCommentAND) =
+        if (myTTCommentAND.Id == NO_ID) {
             Log.e(
                 TAG,
-                "saveModifiedComment(...myTTRouteAND for ${myTTRouteAND.myIntTTWegNr} insert"
+                "saveModifiedComment(...myTTRouteAND for ${myTTCommentAND.myIntTTWegNr} insert"
             )
-            myTTRouteDAO.insert(myTTRouteAND)
+            myTTCommentDAO.insert(myTTCommentAND)
         } else {
             Log.e(
                 TAG,
-                "saveModifiedComment(...myTTRouteAND for ${myTTRouteAND.myIntTTWegNr} update"
+                "saveModifiedComment(...myTTRouteAND for ${myTTCommentAND.myIntTTWegNr} update"
             )
-            myTTRouteDAO.update(myTTRouteAND)
-            myTTRouteAND.Id
+            myTTCommentDAO.update(myTTCommentAND)
+            myTTCommentAND.Id
         }
 }

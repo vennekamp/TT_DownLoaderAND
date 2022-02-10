@@ -3,8 +3,8 @@ package com.teufelsturm.tt_downloader_kotlin.feature.searches.generics
 import android.annotation.SuppressLint
 import android.text.Spanned
 import android.util.Log
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.toHTMLSpan
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -92,10 +92,10 @@ fun convertDateTimeStringToLong(_ascentDate: String?): Long? {
     return ascentDateObject?.time?.plus(mGMTOffset)
 }
 
-fun formatSummitComments(summit: SummitWithMySummitComment): Spanned {
+fun formatSummitComments(mySummits: List<MyTTSummitAND>): Spanned {
     val sb = StringBuilder()
     sb.apply {
-        summit.myTTSummitANDList.forEach { comment ->
+        mySummits.forEach { comment ->
             append(if (comment.isAscendedSummit == true) "&#9745;" else " &#10060;")
             append(
                 if (comment.myIntDateOfAscend != null) "[${
@@ -106,29 +106,29 @@ fun formatSummitComments(summit: SummitWithMySummitComment): Spanned {
             )
             append(" ")
             append("${comment.strMySummitComment}")
-            if (comment != summit.myTTSummitANDList.last()) append("<br>")
+            if (comment != mySummits.last()) append("<br>")
         }
     }
     return sb.toString().toHTMLSpan()
 }
 
-fun formatRouteComments(route: RouteComments.RouteWithMyRouteComment): Spanned {
+fun formatRouteComments(route: Comments.RouteWithMyComment): Spanned {
     val sb = StringBuilder()
     sb.apply {
-        route.myTTRouteANDList.forEach { comment ->
-            append(if (comment.isAscendedRouteType?.let { it > 2 } == true) "&#9745;" else " &#10060;")
-            append(comment.myIntDateOfAscendRoute?.let { "[$it]" } ?: "[ --- ]")
+        route.myTTCommentANDList.forEach { comment ->
+            append(if (comment.isAscendedType.let { it > 2 }) "&#9745;" else " &#10060;")
+            append(comment.myIntDateOfAscend?.let { "[$it]" } ?: "[ --- ]")
             append(" ")
-            append("${comment.strMyRouteComment}")
-            if (comment != route.myTTRouteANDList.last()) append("<br>")
+            append("${comment.strMyComment}")
+            if (comment != route.myTTCommentANDList.last()) append("<br>")
         }
     }
     return sb.toString().toHTMLSpan()
 }
 
-fun isAscendedRoute(route: RouteComments.RouteWithMyRouteComment): Boolean {
-    route.myTTRouteANDList.forEach { route ->
-        if ((route.isAscendedRouteType?.let { it > 2 } == true)) {
+fun isAscendedRoute(route: Comments.RouteWithMyComment): Boolean {
+    route.myTTCommentANDList.forEach { route ->
+        if ((route.isAscendedType.let { it > 2 } == true)) {
             Log.i("isAscendedFormatted", " ==> TRUE")
             return true
         }
@@ -136,20 +136,20 @@ fun isAscendedRoute(route: RouteComments.RouteWithMyRouteComment): Boolean {
     return false
 }
 
-fun maxAscentRoute(routes: List<RouteComments.MyTTRouteANDWithPhotos>): Int {
+fun maxAscentRoute(routes: List<Comments.MyTTRouteANDWithPhotos>): Int {
     var maxAscent = 0 // set the value
     routes.forEach { myRoute ->
-        myRoute.myTTRouteAND.isAscendedRouteType?.let {
+        myRoute.myTTCommentAND.isAscendedType.let {
             if (it > maxAscent) maxAscent = it
         }
     }
     return maxAscent
 }
 
-fun maxAscentRoute(route: RouteComments.RouteWithMyRouteComment): Int {
+fun maxAscentRoute(route: Comments.RouteWithMyComment): Int {
     var maxAscent = 0 // set the value
-    route.myTTRouteANDList.forEach { myRoute ->
-        myRoute.isAscendedRouteType?.let {
+    route.myTTCommentANDList.forEach { myRoute ->
+        myRoute.isAscendedType.let {
             if (it > maxAscent) maxAscent = it
         }
     }

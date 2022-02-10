@@ -10,12 +10,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTRouteDAO
+import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTRouteDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTSummitDAO
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTRouteAND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWithSummitBy
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsBy
@@ -32,7 +32,7 @@ class RouteDetailResultViewModel @Inject constructor(
     private val ttCommentDAO: TTCommentDAO,
     private val ttRouteDAO: TTRouteDAO,
     private val ttSummitDAO: TTSummitDAO,
-    private val myTTRouteDAO: MyTTRouteDAO
+    private val myTTCommentDAO: MyTTCommentDAO
 ) : ViewModel() {
 
     val adapter: ArrayAdapter<Spannable> = ArrayAdapter(
@@ -56,28 +56,28 @@ class RouteDetailResultViewModel @Inject constructor(
 //    // Creating adapter for spinner
 //    val spinnerHowAscended = ViewModelSpinnerSpannable(adapter)
 
-    private val _mTTRouteComments: MutableLiveData<List<RouteComments.TTRouteCommentAND>> =
-        MutableLiveData<List<RouteComments.TTRouteCommentAND>>()
-    val mTTRouteComments: LiveData<List<RouteComments.TTRouteCommentAND>>
+    private val _mTTRouteComments: MutableLiveData<List<Comments.TTCommentAND>> =
+        MutableLiveData<List<Comments.TTCommentAND>>()
+    val mTTRouteComments: LiveData<List<Comments.TTCommentAND>>
         get() = _mTTRouteComments
 
-    private val _mMyTTRouteANDWithPhotos: MutableLiveData<List<RouteComments.MyTTRouteANDWithPhotos>> =
-        MutableLiveData<List<RouteComments.MyTTRouteANDWithPhotos>>()
-    val mMyTTRouteANDWithPhotos: LiveData<List<RouteComments.MyTTRouteANDWithPhotos>>
+    private val _mMyTTRouteANDWithPhotos: MutableLiveData<List<Comments.MyTTRouteANDWithPhotos>> =
+        MutableLiveData<List<Comments.MyTTRouteANDWithPhotos>>()
+    val mMyTTRouteANDWithPhotos: LiveData<List<Comments.MyTTRouteANDWithPhotos>>
         get() = _mMyTTRouteANDWithPhotos
 
-    private val _mTTRouteAND: MutableLiveData<RouteComments.RouteWithMyRouteComment> =
+    private val _mTTRouteAND: MutableLiveData<Comments.RouteWithMyComment> =
         MutableLiveData()
-    val mTTRouteAND: LiveData<RouteComments.RouteWithMyRouteComment>
+    val mTTRouteAND: LiveData<Comments.RouteWithMyComment>
         get() = _mTTRouteAND
 
     private val _mTTSummitAND: MutableLiveData<TTSummitAND> = MutableLiveData()
     val mTTSummitAND: LiveData<TTSummitAND>
         get() = _mTTSummitAND
 
-    private val _navigateToCommentInputFragment: MutableLiveData<RouteComments.MyTTRouteANDWithPhotos?> =
+    private val _navigateToCommentInputFragment: MutableLiveData<Comments.MyTTRouteANDWithPhotos?> =
         MutableLiveData()
-    val navigateToCommentInputFragment: LiveData<RouteComments.MyTTRouteANDWithPhotos?>
+    val navigateToCommentInputFragment: LiveData<Comments.MyTTRouteANDWithPhotos?>
         get() = _navigateToCommentInputFragment
 
     private val _navigateToImageFragment: MutableLiveData<View?> =
@@ -104,7 +104,7 @@ class RouteDetailResultViewModel @Inject constructor(
 
     private suspend fun queryTTSummitAndAsync(intTTGipfelNr: Int) {
         // mTTSummitAND =
-        ttSummitDAO.get(intTTGipfelNr).collect {
+        ttSummitDAO.getSummit(intTTGipfelNr).collect {
             Log.i(TAG, "ttSummitDAO.get(intTTGipfelNr).collect + ${it.strName}")
             _mTTSummitAND.value = it
             _queriesRunning.apply { value = value?.minus(1) }
@@ -124,7 +124,7 @@ class RouteDetailResultViewModel @Inject constructor(
 
     private suspend fun queryMYTTRouteWithPhotoAsync(intTTWegNr: Int) {
         // mMyTTRouteANDWithPhotos =
-        myTTRouteDAO.getCommentWithPhoto(intTTWegNr).collect {
+        myTTCommentDAO.getCommentWithPhoto(intTTWegNr).collect {
             Log.v(TAG, "ttRouteDAO.getCommentWithPhoto(intTTWegNr).collect ${it.size}")
             _mMyTTRouteANDWithPhotos.value = it
         }
@@ -154,16 +154,18 @@ class RouteDetailResultViewModel @Inject constructor(
     }
 
 
-    fun onClickComment(routeComments: RouteComments) {
-        when (routeComments) {
-            is RouteComments.AddComment -> _navigateToCommentInputFragment.value =
-                RouteComments.MyTTRouteANDWithPhotos(
-                    MyTTRouteAND(myIntTTWegNr = mTTRouteAND.value!!.ttRouteAND.intTTWegNr)
+    fun onClickComment(comments: Comments) {
+        when (comments) {
+            is Comments.AddComment -> _navigateToCommentInputFragment.value =
+                Comments.MyTTRouteANDWithPhotos(
+                    MyTTCommentAND(
+                        intTTGipfelNr = mTTSummitAND.value!!.intTTGipfelNr,
+                        myIntTTWegNr = mTTRouteAND.value!!.ttRouteAND.intTTWegNr)
                 )
-            is RouteComments.MyTTRouteANDWithPhotos -> _navigateToCommentInputFragment.value =
-                routeComments
-            is RouteComments.RouteWithMyRouteComment -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${routeComments.javaClass}")
-            is RouteComments.TTRouteCommentAND -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${routeComments.javaClass}")
+            is Comments.MyTTRouteANDWithPhotos -> _navigateToCommentInputFragment.value =
+                comments
+            is Comments.RouteWithMyComment -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${comments.javaClass}")
+            is Comments.TTCommentAND -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${comments.javaClass}")
         }
     }
 

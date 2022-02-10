@@ -8,8 +8,14 @@ import com.teufelsturm.tt_downloader_kotlin.data.entity.TTNeigbourANDTTName
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
 import java.text.DecimalFormat
 
-@BindingAdapter(value = ["bind:summit4NeighbourTextFormatted", "bind:neighbour4NeighbourTextFormatted"], requireAll = true)
-fun TextView.neighbourTextFormatted(summit: TTSummitAND?, neighbour: TTNeigbourANDTTName?) {
+@BindingAdapter(
+    value = ["bind:summit4NeighbourTextFormatted", "bind:neighbour4NeighbourTextFormatted"],
+    requireAll = true
+)
+fun TextView.neighbourTextFormatted(
+    summit: TTSummitAND?,
+    neighbour: TTNeigbourANDTTName?
+) {
 
     if (neighbour == null) text = context.resources.getString(R.string.no_data)
     else if (summit == null) text = neighbour.strName
@@ -23,7 +29,7 @@ fun TextView.neighbourTextFormatted(summit: TTSummitAND?, neighbour: TTNeigbourA
         neighborCoordinate.latitude = neighbour.dblGPS_Latitude!!
         neighborCoordinate.longitude = neighbour.dblGPS_Longitude!!
         val distance = mainCoordinates.distanceTo(neighborCoordinate)
-        val aDecimalFormat = DecimalFormat("##");
+        val aDecimalFormat = DecimalFormat("##")
         text = context.resources.getString(
             R.string.neighbour_text_formatted,
             neighbour.strName,

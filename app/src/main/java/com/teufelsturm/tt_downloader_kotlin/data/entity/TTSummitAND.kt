@@ -1,32 +1,15 @@
 package com.teufelsturm.tt_downloader_kotlin.data.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import android.os.Parcelable
+import androidx.room.*
+import com.teufelsturm.tt_downloader_kotlin.data.db.NO_ID
+import kotlinx.parcelize.Parcelize
 
 @Entity(
     tableName = "TT_Summit_AND",
     indices = [Index(value = ["intTTGipfelNr"], unique = true)]
 )
 data class TTSummitAND(
-
-    //      RecNo	FieldName	                SQLType
-    //      1	    _id	                        INTEGER
-    //      2	    _idTimStamp                 BIGINT
-    //      3	    intTTGipfelNr               INT
-    //      4	    strName	                    VARCHAR
-    //      5	    strGebiet	                VARCHAR
-    //      6	    intKleFuGipfelNr	        INT
-    //      7	    intAnzahlWege	            INT
-    //      8	    intAnzahlSternchenWege	    INT
-    //      9	    strLeichtesterWeg	        VARCHAR
-    //      10	    dblGPS_Latitude	            DOUBLE
-    //      11	    dblGPS_Longitude	        DOUBLE
-    //      12	    fltGPS_Altitude	            FLOAT
-    //      13	    osm_type	                VARCHAR
-    //      14	    osm_ID	                    INT
-    //      15	    osm_display_name	        TEXT
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
@@ -74,3 +57,22 @@ data class TTSummitAND(
     @ColumnInfo(name = "osm_display_name")
     var osm_display_name: String? = null
 ) : SummitInterface
+
+
+@Parcelize
+@Entity(tableName = "MyTT_SummitPhotos_AND")
+class MyTT_SummitPhotos_AND(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
+    var Id: Long = NO_ID,
+
+    @ColumnInfo(name = "commentID")
+    var commentID: Long = 0L,
+
+    @ColumnInfo(name = "uri")
+    var uri: String? = null,
+
+    @ColumnInfo(name = "caption")
+    var caption: String? = null
+) : Parcelable
+

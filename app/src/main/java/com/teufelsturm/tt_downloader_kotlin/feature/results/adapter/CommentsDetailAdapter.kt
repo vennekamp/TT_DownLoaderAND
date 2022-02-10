@@ -5,16 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemCommentBinding
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener
+
+private const val ITEM_VIEW_TYPE_COMMENT = 0
+private const val ITEM_VIEW_TYPE_MY_COMMENT = 1
+private const val ITEM_VIEW_TYPE_MY_ROUTE_COMMENT = 2
+private const val ITEM_VIEW_TYPE_ADD_COMMENT = 3
 
 /**
  * Display the routes (aka 'Details') to a summit used for the recyclerview in
  * [com.teufelsturm.tt_downloader_kotlin.databinding.ResultsCommentsListBinding] fills [ListitemCommentBinding]
  */
 class CommentsListdapter :
-    ListAdapter<CommentsWithRouteWithSummit, CommentsListdapter.ViewHolder>(
+    ListAdapter<CommentsSummit.CommentsWithRouteWithSummit, CommentsListdapter.ViewHolder>(
         CommentsWithRouteWithSummitDiffCallback()
     ) {
 
@@ -28,20 +33,31 @@ class CommentsListdapter :
         this.clickListenerRoute = onClickListenerRoute
         this.clickListenerSummit = onClickListenerSummit
     }
-
+/*
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is CommentsSummit.TTSummitAND -> TODO()
+            is CommentsSummit.SummitWithMySummitComment -> TODO()
+            is CommentsSummit.MyTTSummitANDWithPhotos -> TODO()
+            CommentsSummit.AddComment -> TODO()
+        }
+    }
+*/
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind( getItem(position), clickListenerRoute, clickListenerSummit)
+        holder.bind(getItem(position), clickListenerRoute, clickListenerSummit)
     }
 
     class ViewHolder private constructor(val binding: ListitemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CommentsWithRouteWithSummit,
-                 onClickListenerRoute: TTCommentClickListener?,
-                 onClickListenerSummit: TTCommentClickListener?) {
+        fun bind(
+            item: CommentsSummit.CommentsWithRouteWithSummit,
+            onClickListenerRoute: TTCommentClickListener?,
+            onClickListenerSummit: TTCommentClickListener?
+        ) {
             binding.comment = item
             onClickListenerRoute?.let { binding.clickListenerRoute = it }
             onClickListenerSummit?.let { binding.clickListenerSummit = it }
@@ -60,17 +76,17 @@ class CommentsListdapter :
 }
 
 class CommentsWithRouteWithSummitDiffCallback :
-    DiffUtil.ItemCallback<CommentsWithRouteWithSummit>() {
+    DiffUtil.ItemCallback<CommentsSummit.CommentsWithRouteWithSummit>() {
     override fun areItemsTheSame(
-        oldItem: CommentsWithRouteWithSummit,
-        newItem: CommentsWithRouteWithSummit
+        oldItem: CommentsSummit.CommentsWithRouteWithSummit,
+        newItem: CommentsSummit.CommentsWithRouteWithSummit
     ): Boolean {
         return oldItem._id == newItem._id
     }
 
     override fun areContentsTheSame(
-        oldItem: CommentsWithRouteWithSummit,
-        newItem: CommentsWithRouteWithSummit
+        oldItem: CommentsSummit.CommentsWithRouteWithSummit,
+        newItem: CommentsSummit.CommentsWithRouteWithSummit
     ): Boolean {
         return oldItem == newItem
     }

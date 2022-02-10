@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteWithMyCommentWithSummit
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
 import kotlinx.coroutines.flow.first
@@ -112,11 +112,11 @@ class TTRoute_DataBaseTest {
     @Test
     @Throws(Exception::class)
     fun getRouteWithMyCommen() {
-        val ttRouteANDList1: RouteComments.RouteWithMyRouteComment =
+        val ttRouteANDList1: Comments.RouteWithMyComment =
             runBlocking { tt_Route_DAO.getRouteWithMySummitCommentByRoute(12).first() }
         Assert.assertNotNull("No List<RouteWithMyRouteComment> object received.", ttRouteANDList1)
 
-        val ttRouteANDList2: List<RouteComments.RouteWithMyRouteComment> =
+        val ttRouteANDList2: List<Comments.RouteWithMyComment> =
             runBlocking { tt_Route_DAO.getRouteWithMySummitCommentBySummit(12).first() }
 
         Assert.assertNotNull("No List<RouteWithMyRouteComment> object received.", ttRouteANDList2)
@@ -141,9 +141,9 @@ class TTRoute_DataBaseTest {
         )
         Assert.assertNotNull(
             "No List<RouteWithMyCommentWithSummit> object received.",
-            data1?.myTTRouteANDList
+            data1?.myTTCommentANDList
         )
-        Assert.assertEquals(2, data1?.myTTRouteANDList?.size)
+        Assert.assertEquals(2, data1?.myTTCommentANDList?.size)
     }
 
     @Test
@@ -160,8 +160,8 @@ class TTRoute_DataBaseTest {
         Assert.assertEquals(6, data1?.size)
         Assert.assertNotNull(
             "No List<RouteWithMyCommentWithSummit> object received.",
-            data1?.get(0)?.myTTRouteANDList
+            data1?.get(0)?.myTTCommentANDList
         )
-        Assert.assertEquals(2, data1?.get(0)?.myTTRouteANDList?.size)
+        Assert.assertEquals(2, data1?.get(0)?.myTTCommentANDList?.size)
     }
 }

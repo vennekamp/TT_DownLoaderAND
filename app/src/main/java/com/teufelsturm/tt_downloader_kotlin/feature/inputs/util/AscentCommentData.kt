@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.teufelsturm.tt_downloader_kotlin.BR
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.appendOrReplaceTime
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertDateTimeStringToLong
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateString
@@ -14,16 +14,16 @@ private const val TAG = "AscentData"
 
 class AscentCommentData : BaseObservable() {
 
-    lateinit var myTTRouteANDWithPhotos: RouteComments.MyTTRouteANDWithPhotos
+    lateinit var myTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos
         private set
 
-    fun setMyTTRouteANDWithPhotos (_myTTRouteANDWithPhotos: RouteComments.MyTTRouteANDWithPhotos) {
+    fun setMyTTRouteANDWithPhotos (_myTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos) {
             if (!this::myTTRouteANDWithPhotos.isInitialized || myTTRouteANDWithPhotos != _myTTRouteANDWithPhotos) {
                 myTTRouteANDWithPhotos = _myTTRouteANDWithPhotos
             }
-        setAscentDate(myTTRouteANDWithPhotos.myTTRouteAND.myIntDateOfAscendRoute)
-        setAscentPartner(myTTRouteANDWithPhotos.myTTRouteAND.myAscendedPartner)
-        setAscentComment(myTTRouteANDWithPhotos.myTTRouteAND.strMyRouteComment)
+        setAscentDate(myTTRouteANDWithPhotos.myTTCommentAND.myIntDateOfAscend)
+        setAscentPartner(myTTRouteANDWithPhotos.myTTCommentAND.myAscendedPartner)
+        setAscentComment(myTTRouteANDWithPhotos.myTTCommentAND.strMyComment)
         }
 
 
@@ -46,7 +46,7 @@ class AscentCommentData : BaseObservable() {
             ascentDate = convertLongToDateString(_ascentDateInMillis)
         }
         Log.e(TAG, "ascent date is now: $ascentDate")
-        myTTRouteANDWithPhotos.myTTRouteAND.myIntDateOfAscendRoute = ascentDate
+        myTTRouteANDWithPhotos.myTTCommentAND.myIntDateOfAscend = ascentDate
         notifyPropertyChanged(BR.ascentDate)
     }
 
@@ -70,7 +70,7 @@ class AscentCommentData : BaseObservable() {
                     convertLongToDateTimeString(it)
                 }
             }")
-        myTTRouteANDWithPhotos.myTTRouteAND.myIntDateOfAscendRoute = _ascentDate
+        myTTRouteANDWithPhotos.myTTCommentAND.myIntDateOfAscend = _ascentDate
         notifyPropertyChanged(BR.ascentDate)
     }
 
@@ -83,7 +83,7 @@ class AscentCommentData : BaseObservable() {
         if (ascentPartner == _ascentPartner) return
         ascentPartner = _ascentPartner
         Log.e(TAG, "ascent partner is now: $ascentPartner")
-        myTTRouteANDWithPhotos.myTTRouteAND.myAscendedPartner = _ascentPartner
+        myTTRouteANDWithPhotos.myTTCommentAND.myAscendedPartner = _ascentPartner
         notifyPropertyChanged(BR.ascentPartner)
     }
 
@@ -96,7 +96,7 @@ class AscentCommentData : BaseObservable() {
         if (ascentComment == _ascentComment) return
         ascentComment = _ascentComment
         Log.e(TAG, "ascent comment is now: $ascentComment")
-        myTTRouteANDWithPhotos.myTTRouteAND.strMyRouteComment = _ascentComment
+        myTTRouteANDWithPhotos.myTTCommentAND.strMyComment = _ascentComment
         notifyPropertyChanged(BR.ascentComment)
     }
 

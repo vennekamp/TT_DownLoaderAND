@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTCommentDAO
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWithSummitBy
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsWithRouteSummitBy
 import com.teufelsturm.tt_downloader_kotlin.feature.results.ui.CommentsListResultFragmentArgs
@@ -27,9 +27,9 @@ class CommentsListResultViewModel @Inject constructor(
 
     val viewModelCommentOrderWidget = ViewModelCommentOrderWidget()
 
-    private var _ttCommentANDList: MutableLiveData<List<CommentsWithRouteWithSummit>> =
+    private var _ttCommentANDList: MutableLiveData<List<CommentsSummit.CommentsWithRouteWithSummit>> =
         MutableLiveData()
-    val ttCommentANDList: LiveData<List<CommentsWithRouteWithSummit>>
+    val ttCommentANDList: LiveData<List<CommentsSummit.CommentsWithRouteWithSummit>>
         get() = _ttCommentANDList
     private val _queryRunning: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val queryRunning: LiveData<Boolean>
@@ -74,6 +74,10 @@ class CommentsListResultViewModel @Inject constructor(
 
     fun onChangeSortOrder(sortCommentsWithRouteWithSummitBy: SortCommentsWithRouteWithSummitBy) {
         _ttCommentANDList.value =
-            _ttCommentANDList.value?.let { _ttCommentANDList.value!!.sortCommentsWithRouteSummitBy(sortCommentsWithRouteWithSummitBy) }
+            _ttCommentANDList.value?.let {
+                _ttCommentANDList.value!!.sortCommentsWithRouteSummitBy(
+                    sortCommentsWithRouteWithSummitBy
+                )
+            }
     }
 }

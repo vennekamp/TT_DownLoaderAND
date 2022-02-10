@@ -3,9 +3,7 @@ package com.teufelsturm.tt_downloader_kotlin.feature.results.vm
 import android.app.Application
 import androidx.lifecycle.*
 import com.teufelsturm.tt_downloader_kotlin.data.db.*
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
-import com.teufelsturm.tt_downloader_kotlin.data.entity.TTNeigbourANDTTName
+import com.teufelsturm.tt_downloader_kotlin.data.entity.*
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortRouteWithMyRouteCommentBy
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortRoutesBy
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.generics.ViewModelRouteOrderWidget
@@ -29,13 +27,18 @@ class SummitDetailResultViewModel @Inject constructor(
     private val _queriesRunning: MutableLiveData<Int> = MutableLiveData<Int>(3)
     val queriesRunning: LiveData<Int>
         get() = _queriesRunning
-    val _mTTSummit: MutableLiveData<SummitWithMySummitComment> = MutableLiveData()
-    val mTTSummit: LiveData<SummitWithMySummitComment>
+    private val _mTTSummit: MutableLiveData<TTSummitAND> = MutableLiveData()
+    val mTTSummit: LiveData<TTSummitAND>
         get() = _mTTSummit
-    val _ttRoutes: MutableLiveData<List<RouteComments.RouteWithMyRouteComment>> = MutableLiveData()
-    val ttRoutes: LiveData<List<RouteComments.RouteWithMyRouteComment>>
+
+    private val _mMYTTSummit: MutableLiveData<List<MyTTSummitAND>> = MutableLiveData()
+    val mMYTTSummit: LiveData<List<MyTTSummitAND>>
+        get() = _mMYTTSummit
+
+    private val _ttRoutes: MutableLiveData<List<Comments.RouteWithMyComment>> = MutableLiveData()
+    val ttRoutes: LiveData<List<Comments.RouteWithMyComment>>
         get() = _ttRoutes
-    val _ttNeigbours: MutableLiveData<List<TTNeigbourANDTTName>> = MutableLiveData()
+    private val _ttNeigbours: MutableLiveData<List<TTNeigbourANDTTName>> = MutableLiveData()
     val ttNeigbours: LiveData<List<TTNeigbourANDTTName>>
         get() = _ttNeigbours
 
@@ -48,8 +51,16 @@ class SummitDetailResultViewModel @Inject constructor(
 
     private suspend fun queryTTSummitAsync(intTTGipfelNr: Int) {
         // mTTSummit =
-        ttSummitDAO.getSummitWithMySummitComment(intTTGipfelNr).collect {
+        ttSummitDAO.getSummit(intTTGipfelNr).collect {
             _mTTSummit.value = it
+            _queriesRunning.apply { value = value?.minus(1) }
+        }
+    }
+
+    private suspend fun queryMyTTSummitAsync(intTTGipfelNr: Int) {
+        // mMyTTSummit =
+        ttSummitDAO.getSummitWithMySummitComment(intTTGipfelNr).collect {
+            _mMYTTSummit.value = it.myTTSummitANDList
             _queriesRunning.apply { value = value?.minus(1) }
         }
     }
@@ -67,10 +78,6 @@ class SummitDetailResultViewModel @Inject constructor(
             _ttRoutes.value = it.sortRoutesBy(viewModelRouteOrderWidget.sortRoutesBy.value)
             _queriesRunning.apply { value = value?.minus(1) }
         }
-    }
-
-    fun upDateMyData() {
-
     }
 
     /**

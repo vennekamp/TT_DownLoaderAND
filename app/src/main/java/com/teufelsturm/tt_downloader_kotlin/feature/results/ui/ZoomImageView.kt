@@ -1,6 +1,5 @@
-package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util
+package com.teufelsturm.tt_downloader_kotlin.feature.results.ui
 
-import android.R.attr.path
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,8 +18,10 @@ private const val TAG = "ZoomImageView"
 class ZoomImageView : Fragment(R.layout.result_zoom_image) {
     private lateinit var imageSource: ImageSource
     private lateinit var imageUri: Uri
+    private lateinit var description: String
 
     private var _binding: ResultZoomImageBinding? = null
+
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
@@ -35,6 +36,7 @@ class ZoomImageView : Fragment(R.layout.result_zoom_image) {
         val args = ZoomImageViewArgs.fromBundle(requireArguments())
         imageUri = Uri.parse(args.imageUri)
         imageSource = ImageSource.uri(imageUri)
+        description = args.description
     }
 
     override fun onCreateView(
@@ -60,9 +62,11 @@ class ZoomImageView : Fragment(R.layout.result_zoom_image) {
         return when (item.itemId) {
             R.id.zoom_image_menu_share -> {
                 val shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.type = "image/*"
+                shareIntent.putExtra(Intent.EXTRA_TEXT, description)
                 shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                // set type after putExtra to enable image & text
+                shareIntent.type = "image/*"
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 startActivity(Intent.createChooser(shareIntent, "Bild teilen"))
                 true
             }

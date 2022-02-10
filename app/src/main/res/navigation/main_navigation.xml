@@ -192,8 +192,8 @@
         android:label="@string/my_comment"
         tools:layout="@layout/input_my_comment">
         <argument
-            android:name="mMyTTRouteAnd"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTRouteAND" />
+            android:name="mMyTTCommentAnd"
+            app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND" />
         <argument
             android:name="lstMyTT_RoutePhotos_AND"
             app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND[]"  />
@@ -212,11 +212,14 @@
         tools:layout="@layout/dialog_delete_or_edit" />
     <fragment
         android:id="@+id/zoomImageView"
-        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.ZoomImageView"
+        android:name="com.teufelsturm.tt_downloader_kotlin.feature.results.ui.ZoomImageView"
         android:label="Bildanzeige"
         tools:layout="@layout/result_zoom_image">
         <argument
             android:name="imageUri"
+            app:argType="string" />
+        <argument
+            android:name="description"
             app:argType="string" />
     </fragment>
 

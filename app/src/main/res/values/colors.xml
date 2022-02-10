@@ -12,6 +12,8 @@
     <color name="Blue">#4466cc</color>
     <color name="LightBlue">#375FD5</color>
     <color name="Yellow">#FFFF00</color>
+    <color name="PaleYellow">#FFFFE6</color>
+    <color name="PaleBlue">#E6E6FF</color>
     <color name="White">#FFFFFF</color>
     <color name="Green">#00FF00</color>
     <color name="Red">#FF0000</color>

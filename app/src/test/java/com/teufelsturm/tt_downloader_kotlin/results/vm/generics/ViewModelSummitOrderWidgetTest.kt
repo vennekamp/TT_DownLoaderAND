@@ -43,54 +43,54 @@ class ViewModelSummitOrderWidgetTest : TestCase() {
     fun `Initially SortSummitBy is set correctly`() {
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Name())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Name())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Name()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.GipfelNr())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.GipfelNr())!!.isChecked.getOrAwaitValueTest()).isTrue()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.GipfelNr()).isChecked.getOrAwaitValueTest()).isTrue()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Gebiet())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Gebiet())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Gebiet()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlSternchenWege())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlSternchenWege())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlSternchenWege()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlWege())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlWege())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlWege()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg()).isChecked.getOrAwaitValueTest()).isFalse()
 
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg()).isChecked.getOrAwaitValueTest()).isFalse()
 
         vm.onClick(SortSummitWithMySummitCommentBy.LeichtesterWeg())
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Name())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Name())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Name()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.GipfelNr())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.GipfelNr())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.GipfelNr()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Gebiet())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Gebiet())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.Gebiet()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlSternchenWege())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlSternchenWege())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlSternchenWege()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlWege())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlWege())!!.isChecked.getOrAwaitValueTest()).isFalse()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.AnzahlWege()).isChecked.getOrAwaitValueTest()).isFalse()
 
 
         assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg())).isNotNull()
-        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg())!!.isChecked.getOrAwaitValueTest()).isTrue()
+        assertThat(vm.getViewModelRadioButton(SortSummitWithMySummitCommentBy.LeichtesterWeg()).isChecked.getOrAwaitValueTest()).isTrue()
 
     }
 

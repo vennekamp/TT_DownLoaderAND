@@ -27,7 +27,7 @@ interface TTSummitDAO {
     fun getBaseDataBySummit(intTTGipfelNr: Int): TT_SummitBaseData?
 
     @Query("SELECT * from TT_Summit_AND where intTTGipfelNr = :intTTGipfelNr")
-    fun get(intTTGipfelNr: Int): Flow<TTSummitAND>
+    fun getSummit(intTTGipfelNr: Int): Flow<TTSummitAND>
 
     @Query("SELECT * from TT_Summit_AND where strName like :searchSummit and strGebiet in (:searchAreas)")
     fun getByName(searchSummit: String, searchAreas: String = "strGebiet"): List<TTSummitAND>?
@@ -50,22 +50,25 @@ interface TTSummitDAO {
                         WHERE a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (strGebiet) END)
                            AND [a].[strName] LIKE :searchText;"""
     )
-   suspend fun getMaxAnzahlDerWege(searchAreas: String = "", searchText: String = "%"): Int?
+    suspend fun getMaxAnzahlDerWege(searchAreas: String = "", searchText: String = "%"): Int?
 
     @Query(
         """SELECT MAX(a.intAnzahlSternchenWege) from TT_Summit_AND a
                         WHERE a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (strGebiet) END)
                             AND [a].[strName] LIKE :searchText;"""
     )
-    suspend fun getMaxAnzahlDerSternchenWege(searchAreas: String = "", searchText: String = "%"): Int?
+    suspend fun getMaxAnzahlDerSternchenWege(
+        searchAreas: String = "",
+        searchText: String = "%"
+    ): Int?
 
     @Query(
         """SELECT COUNT (DISTINCT(a._id))
-                FROM   TT_Summit_AND a, MyTT_Summit_AND b
+                FROM   TT_Summit_AND a, MyTT_Comment_AND b
                 WHERE  a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
                     AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
                     AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
-                    AND a.intTTGipfelNr = (CASE WHEN :just_mine THEN b.myIntTTGipfelNr ELSE a.intTTGipfelNr END)
+                    AND a.intTTGipfelNr = (CASE WHEN :just_mine THEN b.intTTGipfelNr ELSE a.intTTGipfelNr END)
                     AND a.strName LIKE :searchText;"""
     )
     suspend fun getConstrainedCount(
@@ -82,6 +85,7 @@ interface TTSummitDAO {
     @Query("SELECT * FROM TT_Summit_AND")
     fun getSummitsListWithMySummitComment(): LiveData<List<SummitWithMySummitComment>>
 
+    @Deprecated("needs to be replaced with <MyTTSummitANDWithPhotos>")
     @Transaction
     @Query("SELECT * FROM TT_Summit_AND WHERE intTTGipfelNr = :intTTGipfelNr")
     fun getSummitWithMySummitComment(intTTGipfelNr: Int): Flow<SummitWithMySummitComment>
@@ -119,11 +123,11 @@ interface TTSummitDAO {
                       a.osm_type, 
                       a.osm_ID, 
                       a.osm_display_name
-                    FROM TT_Summit_AND a, MyTT_Summit_AND b
+                    FROM TT_Summit_AND a, MyTT_Comment_AND b
                 WHERE a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
                     AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
                     AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
-                    AND a.intTTGipfelNr = (CASE WHEN :just_mine THEN b.myIntTTGipfelNr ELSE a.intTTGipfelNr END)
+                    AND a.intTTGipfelNr = (CASE WHEN :just_mine THEN b.intTTGipfelNr ELSE a.intTTGipfelNr END)
                     AND a.strName LIKE :searchText;"""
     )
     fun loadConstrainedSummitsAndMyComments(
@@ -135,5 +139,4 @@ interface TTSummitDAO {
         just_mine: Boolean,
         searchText: String
     ): Flow<List<SummitWithMySummitComment>>
-
 }

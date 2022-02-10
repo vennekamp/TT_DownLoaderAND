@@ -31,11 +31,6 @@ class CarouselViewAdapter constructor(
             "android.resource:// ${BuildConfig.APPLICATION_ID} /drawable/add_image"
     }
 
-    private val _dialogMoveHelperText = MutableLiveData<String>("???")
-    val dialogMoveHelperText: LiveData<String>
-        get() = _dialogMoveHelperText
-
-
     fun deleteItem(selectedViewModel: CustomCarouselViewModel) {
         if (carouselViewAdapterViewModel.carouselAdapterData.getCarouselItemViewModels()
                 .remove(selectedViewModel)

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemRouteBinding
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteWithMyCommentWithSummit
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.DiffCallBacks
@@ -46,7 +46,7 @@ class RoutesListAdapter :
             onClickListenerRoute: TTRouteClickListener?,
             onClickListenerSummit: TTSummitClickListener?
         ) {
-            binding.route = RouteComments.RouteWithMyRouteComment(item.ttRouteAND, item.myTTRouteANDList)
+            binding.route = Comments.RouteWithMyComment(item.ttRouteAND, item.myTTCommentANDList)
             binding.summit = item.ttSummitAND
             onClickListenerRoute?.let { binding.clickListenerRoute = it }
             onClickListenerSummit?.let { binding.clickListenerSummit = it }

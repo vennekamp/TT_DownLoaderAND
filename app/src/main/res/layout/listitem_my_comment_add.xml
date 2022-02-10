@@ -49,7 +49,7 @@
     <data>
         <variable
             name="routeComments"
-            type="com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments" />
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.Comments" />
         <variable
             name="clickListenerComment"
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener" />

@@ -57,17 +57,17 @@ class TTSummitDataBaseTest {
             tt_Summit_AND.strName = "TEST"
             tt_Summit_AND.intTTGipfelNr = -123
             tt_Summit_DAO.insert(tt_Summit_AND)
-            val summit = tt_Summit_DAO.get(-123).first()
+            val summit = tt_Summit_DAO.getSummit(-123).first()
             Assert.assertEquals("TEST", summit.strName)
             tt_Summit_DAO.deleteByTTGipfelNr(-123)
-            Assert.assertNull("TEST", tt_Summit_DAO.get(-123))
+            Assert.assertNull("TEST", tt_Summit_DAO.getSummit(-123))
         }
     }
 
     @Test
     fun getSummitByID() {
         runBlocking {
-            val tt_Summit_AND = tt_Summit_DAO.get(12).first()
+            val tt_Summit_AND = tt_Summit_DAO.getSummit(12).first()
             Assert.assertNotNull("No summit object received.", tt_Summit_AND)
             Assert.assertEquals("Riegelkopf", tt_Summit_AND.strName)
         }

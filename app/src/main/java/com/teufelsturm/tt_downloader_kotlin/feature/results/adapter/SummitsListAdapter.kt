@@ -35,7 +35,8 @@ class SummitsListAdapter :
     class ViewHolder private constructor(val binding: ListitemSummitBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SummitWithMySummitComment, clickListener: SummitClickListener?) {
-            binding.summit = item
+            binding.summit = item.ttSummitAND
+            binding.listMySummit = item.myTTSummitANDList
             clickListener?.let { binding.clickListener = it }
             binding.executePendingBindings()
         }

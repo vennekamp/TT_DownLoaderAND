@@ -1,7 +1,5 @@
 package com.teufelsturm.tt_downloader_kotlin.data.entity
 
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

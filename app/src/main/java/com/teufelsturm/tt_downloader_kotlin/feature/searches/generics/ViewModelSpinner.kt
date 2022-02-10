@@ -3,7 +3,6 @@ package com.teufelsturm.tt_downloader_kotlin.feature.searches.generics
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.runBlocking
 
 private const val TAG = "ViewModelSpinner"
 

@@ -93,15 +93,15 @@ interface TTRouteDAO {
 
     @Transaction
     @Query("SELECT * FROM TT_Route_AND")
-    fun getRouteWithMySummitComment(): LiveData<List<RouteComments.RouteWithMyRouteComment>>
+    fun getRouteWithMySummitComment(): LiveData<List<Comments.RouteWithMyComment>>
 
     @Transaction
     @Query("SELECT * FROM TT_Route_AND WHERE intTTWegNr = :intTTWegNr")
-    fun getRouteWithMySummitCommentByRoute(intTTWegNr: Int): Flow<RouteComments.RouteWithMyRouteComment>
+    fun getRouteWithMySummitCommentByRoute(intTTWegNr: Int): Flow<Comments.RouteWithMyComment>
 
     @Transaction
     @Query("SELECT * FROM TT_Route_AND WHERE intTTGipfelNr = :intTTGipfelNr")
-    fun getRouteWithMySummitCommentBySummit(intTTGipfelNr: Int): Flow<List<RouteComments.RouteWithMyRouteComment>>
+    fun getRouteWithMySummitCommentBySummit(intTTGipfelNr: Int): Flow<List<Comments.RouteWithMyComment>>
 
     @Transaction
     @Query("SELECT * FROM TT_Route_AND WHERE intTTWegNr = :intTTWegNr")
@@ -142,7 +142,7 @@ interface TTRouteDAO {
                                  AND COALESCE (a.sachsenSchwierigkeitsGrad, a.ohneUnterstuetzungSchwierigkeitsGrad, a.rotPunktSchwierigkeitsGrad, a.intSprungSchwierigkeitsGrad) BETWEEN :intMinSchwierigkeit AND :intMaxSchwierigkeit
                                  AND a.intTTGipfelNr IN (SELECT c.intTTGipfelNr FROM   TT_Summit_AND c
                                                                 WHERE  c.strGebiet = (CASE WHEN LENGTH (:area) THEN (:area) ELSE (c.strGebiet) END))
-                                 AND a.intTTWegNr IN (SELECT DISTINCT (d.myIntTTWegNr) FROM   MyTT_Route_AND d)
+                                 AND a.intTTWegNr IN (SELECT DISTINCT (d.myIntTTWegNr) FROM   MyTT_Comment_AND d)
                                  AND a.wegName LIKE :partialRouteName;"""
     )
     suspend fun getConstrainedJustMineCount(
@@ -213,7 +213,7 @@ interface TTRouteDAO {
 							AND a.intAnzahlDerKommentare >= :minNumberOfComments
 							AND COALESCE (a.sachsenSchwierigkeitsGrad, a.ohneUnterstuetzungSchwierigkeitsGrad, a.rotPunktSchwierigkeitsGrad, a.intSprungSchwierigkeitsGrad) BETWEEN :intMinSchwierigkeit AND :intMaxSchwierigkeit
                     AND a.intTTGipfelNr IN (SELECT c.intTTGipfelNr FROM   TT_Summit_AND c WHERE  c.strGebiet = (CASE WHEN LENGTH (:area) THEN (:area) ELSE (strGebiet) END))
-                    AND a.intTTWegNr IN (SELECT DISTINCT (d.myIntTTWegNr) FROM MyTT_Route_AND d)
+                    AND a.intTTWegNr IN (SELECT DISTINCT (d.myIntTTWegNr) FROM MyTT_Comment_AND d)
                             AND a.wegName like :partialRouteName"""
     )
     fun loadRouteListWithMyCommentWithSummitConstrainedJustMine(

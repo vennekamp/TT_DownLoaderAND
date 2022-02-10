@@ -154,7 +154,7 @@
     <data>
         <variable
             name="comment"
-            type="com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit" />
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit.CommentsWithRouteWithSummit" />
         <variable
             name="clickListenerRoute"
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener" />

@@ -217,7 +217,7 @@
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener" />
         <variable
             name="route"
-            type="com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments.RouteWithMyRouteComment" />
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.Comments.RouteWithMyComment" />
 
         <variable
             name="clickListenerSummit"

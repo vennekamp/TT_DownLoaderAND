@@ -57,7 +57,7 @@ class CarouselAdapterData : BaseObservable() {
         selectedCarouselVM = _imageCaption
         Log.v(TAG, "imageCaption is now: ${selectedCarouselVM!!.getImageCaption()}")
         setCanEdit(selectedCarouselVM != carouselItemViewModels.last())
-        Log.v(TAG, "canEdit is now: ${canEdit}")
+        Log.v(TAG, "canEdit is now: $canEdit")
         notifyPropertyChanged(BR.imageCaptionVM)
     }
 

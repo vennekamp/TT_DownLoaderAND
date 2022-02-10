@@ -9,14 +9,18 @@ import com.teufelsturm.tt_downloader_kotlin.data.entity.*
 const val NO_ID = 0L
 
 @Database(
-    entities = [TTSummitAND::class,
-        TTRouteAND::class,
-        RouteComments.TTRouteCommentAND::class,
+    entities = [
+        TTSummitAND::class,
         MyTTSummitAND::class,
-        MyTTRouteAND::class,
+        // MyTT_SummitPhotos_AND::class,
+
+        TTRouteAND::class,
+        MyTTCommentAND::class,
         MyTT_RoutePhotos_AND::class,
+
         TTNeigbourSummitAND::class,
-        SummitTravSalePersOrder::class
+        SummitTravSalePersOrder::class,
+        Comments.TTCommentAND::class
     ], version = 2, exportSchema = false
 )
 abstract class TTDataBase : RoomDatabase() {
@@ -25,7 +29,7 @@ abstract class TTDataBase : RoomDatabase() {
     abstract val ttRouteDAO: TTRouteDAO
     abstract val ttCommentDAO: TTCommentDAO
     abstract val myTTSummitDAO: MyTTSummitDAO
-    abstract val myTTRouteDAO: MyTTRouteDAO
+    abstract val myTTCommentDAO: MyTTCommentDAO
     abstract val ttNeigbourSummitANDDAO: TTNeigbourSummitANDDAO
 
     companion object {

@@ -25,7 +25,7 @@ import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.app.MainActivity
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.databinding.InputMyCommentBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.FieldValidators
@@ -57,7 +57,7 @@ class CommentInputFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
             viewModelComment.saveModifiedComment(
-                viewModelComment.ascentData.myTTRouteANDWithPhotos.myTTRouteAND,
+                viewModelComment.ascentData.myTTRouteANDWithPhotos.myTTCommentAND,
                 viewModelCarousel.carouselAdapterData.getCarouselItemViewModels(),
                 viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
 
@@ -92,8 +92,8 @@ class CommentInputFragment : Fragment() {
         val toolBar = (requireActivity() as MainActivity).supportActionBar
         arguments?.let { itBundle ->
             val args = CommentInputFragmentArgs.fromBundle(itBundle)
-            val commentData = RouteComments.MyTTRouteANDWithPhotos(
-                args.mMyTTRouteAnd,
+            val commentData = Comments.MyTTRouteANDWithPhotos(
+                args.mMyTTCommentAnd,
                 args.lstMyTTRoutePhotosAND.toMutableList()
             )
             viewModelComment.setMyTTRouteANDWithPhotos(commentData)
@@ -205,7 +205,7 @@ class CommentInputFragment : Fragment() {
 
         viewModelComment.spinnerHowAscended.selected.observe(viewLifecycleOwner, {
             binding.spinnerRouteAsscendedEditTextStub.requestFocus()
-            viewModelComment.ascentData.myTTRouteANDWithPhotos.myTTRouteAND.isAscendedRouteType = it
+            viewModelComment.ascentData.myTTRouteANDWithPhotos.myTTCommentAND.isAscendedType = it
         })
 
         viewModelCarousel.carouselImageDelete.observe(viewLifecycleOwner, { deleteItem ->
@@ -302,7 +302,7 @@ class CommentInputFragment : Fragment() {
         return when (item.itemId) {
             R.id.comment_input_menu -> {
                 viewModelComment.saveModifiedComment(
-                    viewModelComment.ascentData.myTTRouteANDWithPhotos.myTTRouteAND,
+                    viewModelComment.ascentData.myTTRouteANDWithPhotos.myTTCommentAND,
                     viewModelCarousel.carouselAdapterData.getCarouselItemViewModels(),
                     viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
                 )

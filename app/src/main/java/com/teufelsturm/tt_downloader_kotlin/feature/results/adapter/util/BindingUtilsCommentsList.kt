@@ -7,20 +7,20 @@ import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateTimeString
 
 
 @BindingAdapter("tvCommentInCommentFormatted")
-fun TextView.tvCommentInCommentFormatted(item: CommentsWithRouteWithSummit) {
+fun TextView.tvCommentInCommentFormatted(item: CommentsSummit.CommentsWithRouteWithSummit) {
     val comm = item.strEntryKommentar ?: " --- "
     text = comm.toHTMLSpan()
 }
 
 @BindingAdapter("tvUserGradeTextFormatted")
-fun TextView.tvUserGradeTextFormatted(item: CommentsWithRouteWithSummit) {
+fun TextView.tvUserGradeTextFormatted(item: CommentsSummit.CommentsWithRouteWithSummit) {
     text = when (item.entryBewertung) {
         0 -> "kamikaze"
         1 -> "sehr schlecht"
@@ -34,27 +34,27 @@ fun TextView.tvUserGradeTextFormatted(item: CommentsWithRouteWithSummit) {
 }
 
 @BindingAdapter("tvUserNameTextFormatted")
-fun TextView.tvUserNameTextFormatted(item: CommentsWithRouteWithSummit) {
+fun TextView.tvUserNameTextFormatted(item: CommentsSummit.CommentsWithRouteWithSummit) {
     text = item.strEntryUser
 }
 
 @BindingAdapter("tvCommentDateTextFormatted")
-fun TextView.tvCommentDateTextFormatted(item: CommentsWithRouteWithSummit) {
+fun TextView.tvCommentDateTextFormatted(item: CommentsSummit.CommentsWithRouteWithSummit) {
     text = item.entryDatum?.let { dt -> convertLongToDateTimeString(dt) } ?: ""
 }
 
 @BindingAdapter("fltRatingFormattedFormatted")
-fun RatingBar.fltRatingFormattedFormatted(item: CommentsWithRouteWithSummit) {
+fun RatingBar.fltRatingFormattedFormatted(item: CommentsSummit.CommentsWithRouteWithSummit) {
     rating = item.entryBewertung?.toFloat() ?: 0f
 }
 
 @BindingAdapter("android:visibility")
-fun View.setVisibility(item: CommentsWithRouteWithSummit?) {
+fun View.setVisibility(item: CommentsSummit.CommentsWithRouteWithSummit?) {
     visibility = if (item?.intTTGipfelNr != null) View.VISIBLE else View.GONE
 }
 
 @BindingAdapter("tvRouteNameInCommentFormatted")
-fun TextView.tvRouteNameInCommentFormatted(item: CommentsWithRouteWithSummit?) {
+fun TextView.tvRouteNameInCommentFormatted(item: CommentsSummit.CommentsWithRouteWithSummit?) {
     item?.let {
         val sb = StringBuilder()
         sb.apply {
@@ -93,16 +93,15 @@ fun TextView.tvRouteNameInCommentFormatted(ttRouteAND: TTRouteAND?) {
 }
 
 @BindingAdapter("myIntDateOfMyAscendRouteFormatted")
-fun TextView.myIntDateOfMyAscendRouteFormatted(item: RouteComments.MyTTRouteANDWithPhotos?) {
-    text = item?.myTTRouteAND?.myIntDateOfAscendRoute?.let { it }
-        ?: ""
+fun TextView.myIntDateOfMyAscendRouteFormatted(item: Comments.MyTTRouteANDWithPhotos?) {
+    text = item?.myTTCommentAND?.myIntDateOfAscend ?: ""
 }
 
 @BindingAdapter("tvDateAndTypeOfAscend")
-fun TextView.tvDateAndTypeOfAscend(item: RouteComments.MyTTRouteANDWithPhotos?) {
+fun TextView.tvDateAndTypeOfAscend(item: Comments.MyTTRouteANDWithPhotos?) {
     val spSB = SpannableStringBuilder()
     spSB.apply {
-        item?.myTTRouteAND?.isAscendedRouteType?.let { type ->
+        item?.myTTCommentAND?.isAscendedType?.let { type ->
             append(" ")
             val mDrawable = RouteAscentType.values()[type].drawable(context)
             mDrawable?.setBounds(0, 0, lineHeight, lineHeight)
@@ -110,7 +109,7 @@ fun TextView.tvDateAndTypeOfAscend(item: RouteComments.MyTTRouteANDWithPhotos?) 
             setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             append(RouteAscentType.values()[type].text())
             append(", ")
-            item.myTTRouteAND.myIntDateOfAscendRoute?.let { dt -> append(dt)}
+            item.myTTCommentAND.myIntDateOfAscend?.let { dt -> append(dt) }
         }
     }
     text = spSB
@@ -122,6 +121,6 @@ fun TextView.getTextFromReferencedTextView(anotherTextView: TextView) {
 }
 
 @BindingAdapter("tvMyAscendedPartner")
-fun TextView.tvMyAscendedPartner(item: RouteComments.MyTTRouteANDWithPhotos?) {
-    "Partner: ${item?.myTTRouteAND?.myAscendedPartner}".also { text = it }
+fun TextView.tvMyAscendedPartner(item: Comments.MyTTRouteANDWithPhotos?) {
+    "Partner: ${item?.myTTCommentAND?.myAscendedPartner}".also { text = it }
 }

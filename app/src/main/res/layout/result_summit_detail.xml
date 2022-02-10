@@ -28,7 +28,7 @@
                 android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
-                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:summit4NeighbourTextFormatted="@{summit}"
                 app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(0)}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(0)}"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
                 android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
-                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:summit4NeighbourTextFormatted="@{summit}"
                 app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(2)}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(2)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit1"
@@ -60,7 +60,7 @@
                 android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
-                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:summit4NeighbourTextFormatted="@{summit}"
                 app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(1)}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(1)}"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
                 android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
-                app:summit4NeighbourTextFormatted="@{summit.ttSummitAND}"
+                app:summit4NeighbourTextFormatted="@{summit}"
                 app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(3)}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(3)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit3"
@@ -108,7 +108,7 @@
                 android:text="@string/tableCol_RouteIsAscended"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/header_small"
-                app:isAscendedFormatted="@{summit}"
+                app:isAscendedFormatted="@{listMySummit}"
                 android:clickable="false"
                 app:flow_verticalBias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,9 +124,10 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:gravity="top|start"
                 android:hint="@string/tableCol_MyComment"
-                app:myCommentStringFormatted="@{summit}"
+                android:focusable="false"
+                android:inputType="none"
+                app:myCommentStringFormatted="@{listMySummit}"
                 android:importantForAutofill="no"
-                android:inputType="text|textMultiLine"
                 android:scrollbarStyle="outsideInset"
                 android:scrollbars="vertical"
                 android:selectAllOnFocus="false"
@@ -140,7 +141,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btn_neighbour_summit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:summitTextFormatted="@{summit.ttSummitAND}"
+                app:summitTextFormatted="@{summit}"
                 tools:text="@string/tableCol_SummitName" />
 
             <ImageButton
@@ -160,7 +161,7 @@
                 android:id="@+id/tv_area"
                 style="@style/tv_header2_recyclerview"
                 android:layout_marginTop="8dp"
-                android:text="@{viewModel4SummitResult.mTTSummit.ttSummitAND.strGebiet}"
+                android:text="@{viewModel4SummitResult.mTTSummit.strGebiet}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -245,7 +246,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible"
-        tools:alpha="0"
+        tools:alpha="0.5"
         >
         <TextView
             android:id="@+id/tv_order_label"
@@ -326,10 +327,20 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
+
         <import type="android.view.View" />
+
+        <import type="java.util.List" />
+
+        <variable
+            name="listMySummit"
+            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND&gt;" />
+
         <variable
             name="summit"
-            type="com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment" />
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND" />
+
+
         <variable
             name="viewModel4SummitResult"
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitDetailResultViewModel" />

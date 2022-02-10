@@ -3,8 +3,6 @@ package com.teufelsturm.tt_downloader_kotlin.feature.searches.generics
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 private const val TAG = "ViewModelEditText"
 
@@ -16,14 +14,14 @@ class ViewModelEditText(startValue: String, private val scope: CoroutineScope) {
         get() = _searchText
 
     fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        val searchText =  s.toString().trim()
+        val searchText = s.toString().trim()
 //        if ( searchText == debounceSearchFor ) return
 //        debounceSearchFor = searchText
 //        scope.launch{
 //            delay(300 ) // debounce timeout
 //            if ( searchText != debounceSearchFor) return@launch
-            _searchText.value = s.toString()
-            Log.i(TAG, " ---> $s")
-        }
+        _searchText.value = s.toString()
+        Log.i(TAG, " ---> $s")
+    }
 //    }
 }

@@ -16,7 +16,7 @@ object FieldValidators {
      * @return true if contain else false
      */
     fun isValidDate(inDate: String): Boolean {
-        if (inDate.isNullOrEmpty()) return true
+        if (inDate.isBlank()) return true
         if (inDate.contains(Regex("\\d\\d\\d\\d\\d"))) return false
         if (inDate.contains("..")) return false
         if (inDate.contains("/")) return false

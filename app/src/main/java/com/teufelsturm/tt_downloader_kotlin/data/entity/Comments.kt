@@ -3,10 +3,10 @@ package com.teufelsturm.tt_downloader_kotlin.data.entity
 import androidx.room.*
 import com.teufelsturm.tt_downloader_kotlin.data.db.NO_ID
 
-sealed class RouteComments {
+sealed class Comments {
 
     @Entity(tableName = "TT_Comment_AND")
-    data class TTRouteCommentAND(
+    data class TTCommentAND(
         //      RecNo	FieldName	            SQLType
         //      1	    _id	                    INTEGER
         //      2	    _idTimStamp             BIGINT
@@ -36,25 +36,25 @@ sealed class RouteComments {
 
         @ColumnInfo(name = "entryDatum")
         override var entryDatum: Long? = null
-    ) : CommentInterface, RouteComments()
+    ) : CommentInterface, Comments()
 
     data class MyTTRouteANDWithPhotos(
-        @Embedded val myTTRouteAND: MyTTRouteAND,
+        @Embedded val myTTCommentAND: MyTTCommentAND,
         @Relation(
             parentColumn = "_id",
             entityColumn = "commentID"
         )
-        val myTT_Route_PhotosANDList: MutableList<MyTT_RoutePhotos_AND> = mutableListOf()
-    ) : RouteComments()
+        val myTT_route_PhotosANDList: MutableList<MyTT_RoutePhotos_AND> = mutableListOf()
+    ) : Comments()
 
-    data class RouteWithMyRouteComment(
+    data class RouteWithMyComment(
         @Embedded override val ttRouteAND: TTRouteAND,
         @Relation(
             parentColumn = "intTTWegNr",
             entityColumn = "myIntTTWegNr"
         )
-        override val myTTRouteANDList: List<MyTTRouteAND>
-    ) : RouteWithMyRouteCommentInterface, RouteComments()
+        override val myTTCommentANDList: List<MyTTCommentAND>
+    ) : RouteWithMyRouteCommentInterface, Comments()
 
-    object AddComment : RouteComments()
+    object AddComment : Comments()
 }

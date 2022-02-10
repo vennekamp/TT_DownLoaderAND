@@ -1,5 +1,6 @@
 package com.teufelsturm.tt_downloader_kotlin.feature.results.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,7 +12,7 @@ import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsWithRouteWithSummit
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsWithRouteSummitBy
 import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsCommentsListBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.CommentsListdapter
@@ -37,6 +38,7 @@ class CommentsListResultFragment @Inject constructor() : Fragment() {
 
     private val viewModel by viewModels<CommentsListResultViewModel>()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,10 +66,10 @@ class CommentsListResultFragment @Inject constructor() : Fragment() {
         binding.listCommentsFound.adapter = commentsListdapter
 
         commentsListdapter.setOnClickListener(
-            onClickListenerRoute = TTCommentClickListener { comment: CommentsWithRouteWithSummit ->
+            onClickListenerRoute = TTCommentClickListener { comment: CommentsSummit.CommentsWithRouteWithSummit ->
                 this.viewModel.onClickItem(comment.intTTWegNr, comment.intTTGipfelNr!!)
             },
-            onClickListenerSummit = TTCommentClickListener { comment: CommentsWithRouteWithSummit ->
+            onClickListenerSummit = TTCommentClickListener { comment: CommentsSummit.CommentsWithRouteWithSummit ->
                 this.viewModel.onClickItem(null, comment.intTTGipfelNr!!)
             },
         )

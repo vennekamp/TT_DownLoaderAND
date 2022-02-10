@@ -18,7 +18,7 @@
             android:id="@+id/cb_is_ascended"
             style="@style/my_check_box_style"
             android:clickable="false"
-            app:isAscendedFormatted="@{summit}"
+            app:isAscendedFormatted="@{listMySummit}"
             android:text="@string/tableCol_IsAscended"
             app:buttonTint="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
@@ -139,7 +139,7 @@
             style="@style/tv_item_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:ascensionDateFormatted="@{summit}"
+            app:ascensionDateFormatted="@{listMySummit}"
             app:layout_constraintBottom_toBottomOf="@id/cb_is_ascended"
             app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
             app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
@@ -156,7 +156,7 @@
             android:lines="2"
             android:singleLine="false"
             android:text="@string/tableCol_MyComment"
-            android:visibility="@{summit}"
+            android:visibility="@{listMySummit}"
             app:layout_constraintBottom_toBottomOf="@id/barrier_comment"
             app:layout_constraintHeight_min="38dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,8 +170,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="false"
-            android:visibility="@{summit}"
-            app:myCommentTextFormatted="@{summit}"
+            android:visibility="@{listMySummit}"
+            app:myCommentTextFormatted="@{listMySummit}"
             app:layout_constraintBottom_toBottomOf="@id/barrier_comment"
             app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
             app:layout_constraintHeight_min="38dp"
@@ -199,12 +199,19 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
+        <import type="java.util.List" />
+
+        <variable
+            name="listMySummit"
+            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND&gt;" />
+
         <variable
             name="clickListener"
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.SummitClickListener" />
+
         <variable
             name="summit"
-            type="com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment" />
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND" />
     </data>
 
 </layout>

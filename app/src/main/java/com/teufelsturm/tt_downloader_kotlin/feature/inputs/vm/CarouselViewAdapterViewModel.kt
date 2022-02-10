@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.CarouselAdapterData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -84,9 +84,9 @@ class CarouselViewAdapterViewModel @Inject constructor() : ViewModel() {
         _imagedClicked.value = null
     }
 
-    fun setMyTTRouteANDWithPhotos(myTTRouteANDWithPhotos: RouteComments.MyTTRouteANDWithPhotos) {
+    fun setMyTTRouteANDWithPhotos(myTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos) {
         carouselAdapterData.getCarouselItemViewModels().clear()
-        myTTRouteANDWithPhotos.myTT_Route_PhotosANDList.forEach {
+        myTTRouteANDWithPhotos.myTT_route_PhotosANDList.forEach {
             carouselAdapterData.addCustomCarouselViewModel(CustomCarouselViewModel(it))
         }
         carouselAdapterData.addCustomCarouselViewModel(

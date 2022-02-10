@@ -17,7 +17,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.OrderCommentsDialogFragment
 import com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.ViewModel4CommentOrder
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsBy
@@ -25,8 +25,10 @@ import com.teufelsturm.tt_downloader_kotlin.databinding.ResultRouteDetailBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.RouteDetailAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.toHTMLSpan
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.RouteDetailResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.StringBuilder
 
 private const val TAG = "RouteDetailResultFrag"
 
@@ -108,8 +110,8 @@ class RouteDetailResultFragment : Fragment() {
             myComment?.let { mRoute ->
                 val action =
                     RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToCommentInputFragment(
-                        mRoute.myTTRouteAND,
-                        mRoute.myTT_Route_PhotosANDList.toTypedArray(),
+                        mRoute.myTTCommentAND,
+                        mRoute.myTT_route_PhotosANDList.toTypedArray(),
                         viewModel.mTTRouteAND.value?.ttRouteAND?.let {
                             resources.getString(
                                 R.string.formatted_route_summit_name,
@@ -123,6 +125,9 @@ class RouteDetailResultFragment : Fragment() {
                 viewModel.doneNavigationToCommentInputFragment()
             }
         })
+
+
+
         viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
             if (view == null) return@observe
             ViewCompat.setTransitionName(view, "small_image")
@@ -130,13 +135,37 @@ class RouteDetailResultFragment : Fragment() {
 
             val action =
                 RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToZoomImageView(
-                    view.getTag(R.id.imageView2*256) as String
-                )
+                    view.getTag(R.id.imageView2 * 256) as String,
+                    getDescription()
+                    )
 
             findNavController().navigate(action, extras)
             viewModel.doneNavigationToCommentImageFragment()
         })
         return binding.root
+    }
+
+    private fun getDescription() : String {
+        val describtion = StringBuilder(
+            "${
+                requireContext().getString(
+                    R.string.formatted_summit_number,
+                    viewModel.mTTSummitAND.value?.strName,
+                    viewModel.mTTSummitAND.value?.intTTGipfelNr?.toString()
+                )
+            }\r\n"
+        )
+        viewModel.mTTRouteAND.value?.ttRouteAND?.let {
+            if (it.blnAusrufeZeichen == true) {
+                "&#10071; ".toHTMLSpan()
+            }
+            describtion.append((it.WegName ?: "").toHTMLSpan())
+            it.intSterne?.let { sterne ->
+                describtion.append(" ")
+                repeat(sterne) { describtion.append("*") }
+            }
+        }
+        return describtion.toString()
     }
 
     override fun onResume() {
@@ -209,9 +238,9 @@ class RouteDetailResultFragment : Fragment() {
                 if (viewModel.showMyComments.value == true) {
 
                     viewModel.mMyTTRouteANDWithPhotos.value?.let { comments ->
-                        val commmentsPlusAdd = mutableListOf<RouteComments>()
+                        val commmentsPlusAdd = mutableListOf<Comments>()
                         commmentsPlusAdd.addAll(comments)
-                        commmentsPlusAdd.add(RouteComments.AddComment)
+                        commmentsPlusAdd.add(Comments.AddComment)
                         routeDetailAdapter.submitList(commmentsPlusAdd)
                     }
                 } else {
@@ -242,7 +271,7 @@ class RouteDetailResultFragment : Fragment() {
                 true
             }
             R.id.route_detail_menu_add -> {
-                viewModel.onClickComment(RouteComments.AddComment)
+                viewModel.onClickComment(Comments.AddComment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

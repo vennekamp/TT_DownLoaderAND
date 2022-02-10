@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemRouteBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.DiffCallBacks
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener
@@ -17,7 +17,7 @@ private const val TAG = "SummitDetailAdapter"
  * [com.teufelsturm.tt_downloader_kotlin.databinding.ResultSummitDetailBinding] fills [ListitemRouteBinding]
  */
 class SummitDetailAdapter :
-    ListAdapter<RouteComments.RouteWithMyRouteComment, SummitDetailAdapter.ViewHolder>(
+    ListAdapter<Comments.RouteWithMyComment, SummitDetailAdapter.ViewHolder>(
         DiffCallBacks.RouteWithMyRouteCommentDiffCallback()
     ) {
 
@@ -40,7 +40,7 @@ class SummitDetailAdapter :
     class ViewHolder private constructor(val binding: ListitemRouteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            item: RouteComments.RouteWithMyRouteComment,
+            item: Comments.RouteWithMyComment,
             clickListener: TTRouteClickListener?
         ) {
             binding.route = item

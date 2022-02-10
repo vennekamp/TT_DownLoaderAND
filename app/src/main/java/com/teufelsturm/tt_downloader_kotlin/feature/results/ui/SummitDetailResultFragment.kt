@@ -75,7 +75,7 @@ class SummitDetailResultFragment : Fragment() {
                     SummitDetailResultFragmentDirections.actionSummitResultFragmentToRouteDetailResultFragment(
                         EventNavigatingToRoute(
                             intTTWegNr = intTTRouteNr,
-                            intTTSummitNr = viewModel.mTTSummit.value?.ttSummitAND?.intTTGipfelNr
+                            intTTSummitNr = viewModel.mTTSummit.value?.intTTGipfelNr
                                 ?: -1
                         )
                     )
@@ -86,7 +86,7 @@ class SummitDetailResultFragment : Fragment() {
         viewModel.navigateToSummitGeo.observe(viewLifecycleOwner, { doNavigate ->
             if (doNavigate != true) return@observe
             val gmmIntentUri = Uri.parse(
-                "geo:${viewModel._mTTSummit.value?.ttSummitAND?.dblGPS_Latitude},${viewModel._mTTSummit.value?.ttSummitAND?.dblGPS_Longitude}"
+                "geo:${viewModel.mTTSummit.value?.dblGPS_Latitude},${viewModel.mTTSummit.value?.dblGPS_Longitude}"
             )
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             startActivity(mapIntent)
@@ -104,9 +104,12 @@ class SummitDetailResultFragment : Fragment() {
             }
         })
         viewModel.mTTSummit.observe(viewLifecycleOwner, Observer {
-            viewModel.upDateMyData()
             binding.summit = it
         })
+        viewModel.mMYTTSummit.observe(viewLifecycleOwner, {
+            binding.listMySummit = it
+        })
+
         // this Fragment has a ActionBar Options Menu
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.title = "Gipfel"

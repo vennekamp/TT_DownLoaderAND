@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.teufelsturm.tt_downloader_kotlin.R
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitBaseDataInterface
 import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
@@ -29,14 +30,14 @@ fun TextView.summitTextFormatted(item: TTSummitAND?) {
 }
 
 @BindingAdapter("myCommentStringFormatted")
-fun EditText.myCommentStringFormatted(summitWithMySummitComment: SummitWithMySummitComment?) {
-    text = summitWithMySummitComment?.let { formatSummitComments(it) as Editable }
+fun EditText.myCommentStringFormatted(mySummits: List<MyTTSummitAND>?) {
+    text = mySummits?.let { formatSummitComments(it) as Editable }
 }
 
 @BindingAdapter("isAscendedFormatted")
-fun CheckBox.isAscendedFormatted(summitWithMySummitComment: SummitWithMySummitComment?) {
+fun CheckBox.isAscendedFormatted(listMySummitComment: List<MyTTSummitAND>?) {
     var mIsChecked = false // set the value
-    summitWithMySummitComment?.myTTSummitANDList?.let { list ->
+    listMySummitComment?.let { list ->
         list.forEach {
             if (mIsChecked || (it.isAscendedSummit != null && it.isAscendedSummit!!)) {
                 mIsChecked = true
@@ -62,35 +63,35 @@ fun TextView.summitExtendedTextFormatted(item: SummitBaseDataInterface?) {
 
 
 @BindingAdapter("areaTextFormatted")
-fun TextView.areaTextFormatted(item: SummitWithMySummitComment) {
-    text = item.ttSummitAND.strGebiet
+fun TextView.areaTextFormatted(item: TTSummitAND) {
+    text = item.strGebiet
 }
 
 @BindingAdapter("summitNumberTextFormatted")
-fun TextView.summitNumberTextFormatted(item: SummitWithMySummitComment) {
-    text = context.getString(R.string.sharpSummitNumber, item.ttSummitAND.intKleFuGipfelNr ?: "??")
+fun TextView.summitNumberTextFormatted(item: TTSummitAND) {
+    text = context.getString(R.string.sharpSummitNumber, item.intKleFuGipfelNr ?: "??")
 }
 
 @BindingAdapter("routeCountTextFormatted")
-fun TextView.routeCountTextFormatted(item: SummitWithMySummitComment) {
-    text = item.ttSummitAND.intAnzahlWege.toString()
+fun TextView.routeCountTextFormatted(item: TTSummitAND) {
+    text = item.intAnzahlWege.toString()
 }
 
 @BindingAdapter("starredRouteCountTextFormatted")
-fun TextView.starredRouteCountTextFormatted(item: SummitWithMySummitComment) {
-    text = item.ttSummitAND.intAnzahlSternchenWege.toString()
+fun TextView.starredRouteCountTextFormatted(item: TTSummitAND) {
+    text = item.intAnzahlSternchenWege.toString()
 }
 
 @BindingAdapter("easiestRouteGradeTextFormatted")
-fun TextView.easiestRouteGradeTextFormatted(item: SummitWithMySummitComment) {
-    text = item.ttSummitAND.strLeichtesterWeg.toString()
+fun TextView.easiestRouteGradeTextFormatted(item: TTSummitAND) {
+    text = item.strLeichtesterWeg.toString()
 }
 
 
 @BindingAdapter("ascensionDateFormatted")
-fun TextView.ascensionDateFormatted(item: SummitWithMySummitComment) {
+fun TextView.ascensionDateFormatted(items: List<MyTTSummitAND>) {
     var myDate: Long? = null
-    item.myTTSummitANDList.let { list ->
+    items.let { list ->
         list.forEach {
             it.myIntDateOfAscend?.let { itDate ->
                 myDate = if (myDate == null) {
@@ -105,11 +106,11 @@ fun TextView.ascensionDateFormatted(item: SummitWithMySummitComment) {
 }
 
 @BindingAdapter("myCommentTextFormatted")
-fun TextView.myCommentTextFormatted(item: SummitWithMySummitComment) {
-    text = formatSummitComments(item)
+fun TextView.myCommentTextFormatted(mySummits: List<MyTTSummitAND>) {
+    text = formatSummitComments(mySummits)
 }
 
 @BindingAdapter("android:visibility")
-fun View.setVisibility(item: SummitWithMySummitComment) {
-    visibility = if (item.myTTSummitANDList.isEmpty()) View.GONE else View.VISIBLE
+fun View.setVisibility(items: List<MyTTSummitAND>) {
+    visibility = if (items.isEmpty()) View.GONE else View.VISIBLE
 }

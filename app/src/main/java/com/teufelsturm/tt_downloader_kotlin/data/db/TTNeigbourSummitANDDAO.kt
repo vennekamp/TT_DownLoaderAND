@@ -25,7 +25,7 @@ interface TTNeigbourSummitANDDAO {
 
 
     @Query("DELETE FROM TT_NeigbourSummit_AND WHERE _id = :id")
-    fun deleteByID(id: Int): Unit
+    fun deleteByID(id: Int)
 
     @Query(
         """SELECT a.*, b.strName,

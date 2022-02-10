@@ -88,23 +88,23 @@ fun <E : RouteWithMyCommentWithSummit> List<E>.sortRoutesWithSummitBy(
 
 
 private fun comparatorCommentDescending() = compareByDescending<RouteWithMyRouteCommentInterface> {
-    it.myTTRouteANDList.firstOrNull()?.myIntDateOfAscendRoute
+    it.myTTCommentANDList.firstOrNull()?.myIntDateOfAscend
 }
     .thenByDescending {
         val letterCount = 0
-        it.myTTRouteANDList.forEach {
-            letterCount.plus(it.strMyRouteComment?.length ?: 0)
+        it.myTTCommentANDList.forEach {
+            letterCount.plus(it.strMyComment?.length ?: 0)
         }
         letterCount
     }
 
 private fun comparatorComment() = compareBy<RouteWithMyRouteCommentInterface> {
-    it.myTTRouteANDList.firstOrNull()?.myIntDateOfAscendRoute
+    it.myTTCommentANDList.firstOrNull()?.myIntDateOfAscend
 }
     .thenBy {
         val letterCount = 0
-        it.myTTRouteANDList.forEach {
-            letterCount.plus(it.strMyRouteComment?.length ?: 0)
+        it.myTTCommentANDList.forEach {
+            letterCount.plus(it.strMyComment?.length ?: 0)
         }
         letterCount
     }

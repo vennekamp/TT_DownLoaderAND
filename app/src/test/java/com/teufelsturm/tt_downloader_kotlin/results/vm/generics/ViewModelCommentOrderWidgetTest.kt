@@ -30,54 +30,54 @@ class ViewModelCommentOrderWidgetTest : TestCase() {
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()).isChecked.getOrAwaitValueTest())
             .isTrue()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         vm.onClickKommentator()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()).isChecked.getOrAwaitValueTest())
             .isTrue()
 
 
@@ -85,27 +85,27 @@ class ViewModelCommentOrderWidgetTest : TestCase() {
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()).isChecked.getOrAwaitValueTest())
             .isTrue()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
 
@@ -113,27 +113,27 @@ class ViewModelCommentOrderWidgetTest : TestCase() {
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.WegName()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.GipfelName()).isChecked.getOrAwaitValueTest())
             .isTrue()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Bewertung()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.KommentarDatum()).isChecked.getOrAwaitValueTest())
             .isFalse()
 
         Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()))
             .isNotNull()
-        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer())!!.isChecked.getOrAwaitValueTest())
+        Truth.assertThat(vm.getViewModelRadioButton(SortCommentsWithRouteWithSummitBy.Benutzer()).isChecked.getOrAwaitValueTest())
             .isFalse()
     }
 }

@@ -1,7 +1,7 @@
 package com.teufelsturm.tt_downloader_kotlin.data.db
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteComments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -44,7 +44,7 @@ class TTCommentDataBaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetComment() {
-        val tt_Comment_AND = RouteComments.TTRouteCommentAND()
+        val tt_Comment_AND = Comments.TTCommentAND()
         tt_Comment_AND.strEntryKommentar = "TEST"
         tt_Comment_AND._id = -123
         ttCommentDAO.insert(tt_Comment_AND)
