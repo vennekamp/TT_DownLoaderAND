@@ -83,9 +83,9 @@ fun TextView.ascensionDateRouteFormatted(item: Comments.RouteWithMyComment) {
 }
 
 @BindingAdapter("myAscentFormatted")
-fun TextView.myAscentFormatted(myRouteList: List<Comments.MyTTRouteANDWithPhotos>?) {
+fun TextView.myAscentFormatted(myCommentList: List<Comments.MyTTCommentANDWithPhotos>?) {
     val spSB = SpannableStringBuilder()
-    myRouteList?.let {
+    myCommentList?.let {
         val maxAscent = maxAscentRoute(it)
         spSB.apply {
             append(" ")

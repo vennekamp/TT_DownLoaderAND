@@ -289,7 +289,7 @@
 
         <variable
             name="myRouteWithPhotos"
-            type="com.teufelsturm.tt_downloader_kotlin.data.entity.Comments.MyTTRouteANDWithPhotos" />
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.Comments.MyTTCommentANDWithPhotos" />
         <variable
             name="clickListenerImage"
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener" />

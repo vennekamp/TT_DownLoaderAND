@@ -11,12 +11,12 @@ const val NO_ID = 0L
 @Database(
     entities = [
         TTSummitAND::class,
-        MyTTSummitAND::class,
+        // MyTTSummitAND::class,
         // MyTT_SummitPhotos_AND::class,
 
         TTRouteAND::class,
         MyTTCommentAND::class,
-        MyTT_RoutePhotos_AND::class,
+        MyTTCommentPhotosAND::class,
 
         TTNeigbourSummitAND::class,
         SummitTravSalePersOrder::class,
@@ -28,9 +28,8 @@ abstract class TTDataBase : RoomDatabase() {
     abstract val ttSummitDAO: TTSummitDAO
     abstract val ttRouteDAO: TTRouteDAO
     abstract val ttCommentDAO: TTCommentDAO
-    abstract val myTTSummitDAO: MyTTSummitDAO
     abstract val myTTCommentDAO: MyTTCommentDAO
-    abstract val ttNeigbourSummitANDDAO: TTNeigbourSummitANDDAO
+    abstract val ttNeighbourSummitANDDAO: TTNeighbourSummitANDDAO
 
     companion object {
         @Volatile

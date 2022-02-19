@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
+import com.google.common.truth.Truth
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -106,7 +107,7 @@ class TTSummitDataBaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun getSummitWithMySummitComment() {
+    fun getSummitWithMySummitCommentTest() {
         val summitWithMySummitComment =
             runBlocking { tt_Summit_DAO.getSummitsListWithMySummitComment() }
 
@@ -115,6 +116,8 @@ class TTSummitDataBaseTest {
         Assert.assertNotNull("TEST", data)
         Assert.assertEquals(1149, data?.size)
     }
+
+
 
     @Test
     @Throws(Exception::class)
@@ -126,8 +129,7 @@ class TTSummitDataBaseTest {
                 minAnzahlSternchenWege = 0,
                 maxAnzahlSternchenWege = 34,
                 searchAreas = "",
-                searchText = "%Bärensteinwächter%",
-                just_mine = false
+                searchText = "%Bärensteinwächter%"
             )
         }
 
@@ -138,22 +140,22 @@ class TTSummitDataBaseTest {
 
         Log.d(
             "loadConstrainedSummitsAndMyCommentsTest",
-            data.get(0).ttSummitAND.strName.toString()
+            data[0].ttSummitAND.strName.toString()
         )
         Log.d(
             "loadConstrainedSummitsAndMyCommentsTest",
-            data.get(0).ttSummitAND.strGebiet.toString()
+            data[0].ttSummitAND.strGebiet.toString()
         )
-        data.get(0).myTTSummitANDList.forEach {
-            Log.d(
-                "loadConstrainedSummitsAndMyCommentsTest",
-                "comment: " + it.isAscendedSummit.toString()
-            )
-            Log.d(
-                "loadConstrainedSummitsAndMyCommentsTest",
-                "comment: " + it.strMySummitComment.toString()
-            )
-        }
+//        data[0].myTTCommentANDWithPhotos.forEach {
+//            Log.d(
+//                "loadConstrainedSummitsAndMyCommentsTest",
+//                "comment: " + it.myTTCommentAND.strMyComment
+//            )
+//            Log.d(
+//                "loadConstrainedSummitsAndMyCommentsTest",
+//                "comment: " + it.myTTCommentAND.strMyComment
+//            )
+//        }
 
     }
 

@@ -2,7 +2,7 @@ package com.teufelsturm.tt_downloader_kotlin.data.db
 
 import androidx.room.*
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import kotlinx.coroutines.flow.Flow
 
@@ -19,39 +19,45 @@ interface MyTTCommentDAO {
     fun deleteMyCommentById(id: Long) : Int
 
     @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTWegNr = :myIntTTWegNr")
-    fun getMyTTRouteAND(myIntTTWegNr: Int): Flow<MyTTCommentAND>
+    fun getMyCommentANDByRoute(myIntTTWegNr: Int): Flow<List<MyTTCommentAND>>
 
     @Query("SELECT * FROM MyTT_Comment_AND WHERE _id = :id")
-    fun getMyTTRouteANDByID(id: Long): Flow<MyTTCommentAND>
+    fun getMyTTCommentANDByID(id: Long): Flow<MyTTCommentAND>
 
     // endregion
     // region PHOTOS
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(commentPhoto: MyTT_RoutePhotos_AND): Long
+    fun insert(commentPhoto: MyTTCommentPhotosAND): Long
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    fun update(commentPhoto: MyTT_RoutePhotos_AND): Int
+    fun update(commentPhoto: MyTTCommentPhotosAND): Int
 
-    @Query("DELETE FROM MyTT_RoutePhotos_AND WHERE _id = :Id")
+    @Query("DELETE FROM MyTT_CommentPhotos_AND WHERE _id = :Id")
     fun deletePhotoById(Id: Long)
 
-    @Query("SELECT * FROM MyTT_RoutePhotos_AND WHERE _id = :Id")
-    fun getPhotosByID(Id: Long): Flow<MyTT_RoutePhotos_AND>
+    @Query("SELECT * FROM MyTT_CommentPhotos_AND WHERE _id = :Id")
+    fun getPhotosByID(Id: Long): Flow<MyTTCommentPhotosAND>
 
-    @Query("DELETE FROM MyTT_RoutePhotos_AND WHERE commentID = :commentID")
+    @Query("DELETE FROM MyTT_CommentPhotos_AND WHERE commentID = :commentID")
     fun deleteMyRoutePhotoByCommentId(commentID: Int)
 
-    @Query("SELECT * FROM MyTT_RoutePhotos_AND WHERE commentID = :comentID")
-    fun getMyTTRoutePhotosAND(comentID: Int): Flow<MyTT_RoutePhotos_AND>
+    @Query("SELECT * FROM MyTT_CommentPhotos_AND WHERE commentID = :comentID")
+    fun getMyTTRoutePhotosAND(comentID: Int): Flow<MyTTCommentPhotosAND>
     // endregion
 
     // region MyTTRouteANDWithPhotos
 
     @Query("SELECT * FROM MyTT_Comment_AND")
-    fun getAllCommentWithPhoto(): Flow<List<Comments.MyTTRouteANDWithPhotos>>
+    fun getAllCommentWithPhoto(): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
     @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTWegNr = :myIntTTWegNr")
-    fun getCommentWithPhoto(myIntTTWegNr: Int): Flow<List<Comments.MyTTRouteANDWithPhotos>>
+    fun getCommentWithPhotoByRoute(myIntTTWegNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
+
+    @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr AND myIntTTWegNr IS NULL")
+    fun getCommentWithPhotoBySummit(myIntTTGipfelNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
+
+    @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr AND myIntTTWegNr IS NULL")
+    fun getSummitCommentWithPhotoBySummit(myIntTTGipfelNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
     @Query("SELECT DISTINCT(a.myAscendedPartner) FROM MyTT_Comment_AND a WHERE a.myAscendedPartner LIKE :partName ORDER BY LOWER(a.myAscendedPartner)")
     fun getDistinctPartner(partName: String): List<String>

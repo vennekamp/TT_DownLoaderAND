@@ -1,11 +1,11 @@
-package com.teufelsturm.tt_downloader_kotlin.results
+package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemSummitBinding
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.DiffCallBacks
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.SummitClickListener
 
@@ -16,7 +16,7 @@ private const val TAG = "SummitsListAdapter"
  * [com.teufelsturm.tt_downloader_kotlin.databinding.ResultsSummitsListBinding] fills [ListitemSummitBinding]
  */
 class SummitsListAdapter :
-    ListAdapter<SummitWithMySummitComment, SummitsListAdapter.ViewHolder>(DiffCallBacks.TTSummitANDDiffCallback()) {
+    ListAdapter<CommentsSummit.SummitWithMySummitComment, SummitsListAdapter.ViewHolder>(DiffCallBacks.TTSummitANDDiffCallback()) {
 
     private var clickListener: SummitClickListener? = null
 
@@ -34,7 +34,7 @@ class SummitsListAdapter :
 
     class ViewHolder private constructor(val binding: ListitemSummitBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SummitWithMySummitComment, clickListener: SummitClickListener?) {
+        fun bind(item: CommentsSummit.SummitWithMySummitComment, clickListener: SummitClickListener?) {
             binding.summit = item.ttSummitAND
             binding.listMySummit = item.myTTSummitANDList
             clickListener?.let { binding.clickListener = it }

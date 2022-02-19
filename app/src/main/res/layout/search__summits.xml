@@ -22,30 +22,41 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:scrollbars="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/editTextSuchtextGipfel"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSuchtextGipfel"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
-                android:completionThreshold="3"
-                android:ems="10"
-                android:hint="@string/strSearchSummit"
-                android:inputType="text"
-                android:onTextChanged="@{viewModel4SummitSearch.searchTextVM.onTextChanged}"
-                android:selectAllOnFocus="false"
-                android:text="@{viewModel4SummitSearch.searchTextVM.searchText}"
-                app:adapter="@{viewModel4SummitSearch.summitAdapter}"
+                android:background="@color/PaleYellow"
+                android:inputType="textNoSuggestions|textCapSentences|textAutoComplete|textVisiblePassword"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textViewSuchTextGipfel"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSuchTextGipfel" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewSuchTextGipfel">
 
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/editTextSuchtextGipfel"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/PaleYellow"
+                    android:completionThreshold="2"
+                    android:hint="@string/strSearchSummit"
+                    android:inputType="textNoSuggestions|textCapSentences|textAutoComplete|textVisiblePassword"
+                    android:minHeight="48dp"
+                    android:onTextChanged="@{viewModel4SummitSearch.searchTextVM::onTextChanged}"
+                    android:selectAllOnFocus="false"
+                    android:text="@{viewModel4SummitSearch.searchTextVM.searchText}"
+                    android:textSize="22sp"
+                    app:adapter="@{viewModel4SummitSearch.summitAdapter}" />
 
+            </com.google.android.material.textfield.TextInputLayout>
             <Spinner
                 android:id="@+id/spinnerAreaSummit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/edittext_background"
+                android:background="@drawable/edittext_background_summit"
                 android:entries="@{viewModel4SummitSearch.spinnerAreaSummit.entries}"
                 android:minWidth="@android:dimen/app_icon_size"
                 android:minHeight="@dimen/lv_header"
@@ -61,13 +72,13 @@
                 android:id="@+id/cb_my_summits_only"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nur meine\nGipfel"
+                android:text="@string/nur_meine_gipfel"
                 android:paddingEnd="5dp"
                 android:paddingStart="5dp"
                 android:layout_marginTop="5dp"
                 android:gravity="end"
                 android:textAlignment="gravity"
-                android:background="@drawable/edittext_background"
+                android:background="@drawable/edittext_background_summit"
                 android:textColor="@color/Black"
                 android:textSize="20sp"
                 android:minHeight="@dimen/lv_header"
@@ -93,8 +104,8 @@
                 android:text="@string/lblGebiet"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/Black"
-                app:layout_constraintStart_toStartOf="@+id/editTextSuchtextGipfel"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSuchtextGipfel" />
+                app:layout_constraintStart_toStartOf="@+id/tilSuchtextGipfel"
+                app:layout_constraintTop_toBottomOf="@+id/tilSuchtextGipfel" />
 
             <TextView
                 android:id="@+id/textViewSuchTextGipfel"

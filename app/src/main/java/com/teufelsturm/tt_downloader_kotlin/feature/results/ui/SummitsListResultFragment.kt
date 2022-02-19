@@ -14,7 +14,7 @@ import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsSummitsListBindin
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.SummitClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitsListResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
-import com.teufelsturm.tt_downloader_kotlin.results.SummitsListAdapter
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

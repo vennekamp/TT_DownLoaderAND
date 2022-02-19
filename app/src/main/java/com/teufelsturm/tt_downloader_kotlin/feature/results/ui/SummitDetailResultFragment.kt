@@ -18,7 +18,7 @@ import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRoute
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitDetailResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToRoute
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
-import com.teufelsturm.tt_downloader_kotlin.results.SummitDetailAdapter
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 
@@ -106,8 +106,8 @@ class SummitDetailResultFragment : Fragment() {
         viewModel.mTTSummit.observe(viewLifecycleOwner, Observer {
             binding.summit = it
         })
-        viewModel.mMYTTSummit.observe(viewLifecycleOwner, {
-            binding.listMySummit = it
+        viewModel.mMYTTComment.observe(viewLifecycleOwner, {
+            binding.listMyComment = it
         })
 
         // this Fragment has a ActionBar Options Menu

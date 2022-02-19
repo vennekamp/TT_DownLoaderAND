@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTSummitDAO
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortSummitWithMySummitCommentBy
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortRoutesBy
 import com.teufelsturm.tt_downloader_kotlin.feature.results.ui.SummitsListResultFragmentArgs
@@ -24,8 +24,9 @@ class SummitsListResultViewModel @Inject constructor(
 ) :
     AndroidViewModel(application) {
 
-    private var _ttSummits: MutableLiveData<List<SummitWithMySummitComment>> = MutableLiveData()
-    val ttSummits: LiveData<List<SummitWithMySummitComment>>
+    private var _ttSummits: MutableLiveData<List<CommentsSummit.SummitWithMySummitComment>> =
+        MutableLiveData()
+    val ttSummits: LiveData<List<CommentsSummit.SummitWithMySummitComment>>
         get() = _ttSummits
     private val _queryRunning: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val queryRunning: LiveData<Boolean>
@@ -43,17 +44,32 @@ class SummitsListResultViewModel @Inject constructor(
     ) {
         with(args.argSearchSummitParameter) {
             // ttSummits = // ttSummitDAO.getSummitWithMySummitComment() /*
-            ttSummitDAO.loadConstrainedSummitsAndMyComments(
-                minAnzahlWege = minAnzahlWege,
-                maxAnzahlWege = maxAnzahlWege,
-                minAnzahlSternchenWege = minAnzahlSternchenWege,
-                maxAnzahlSternchenWege = maxAnzahlSternchenWege,
-                searchAreas = searchAreas,
-                just_mine = just_my_summit,
-                searchText = searchText
-            ).collect {
-                _ttSummits.value = it.sortRoutesBy(viewModelSummitOrderWidget.sortSummitBy.value)
-                _queryRunning.value = false
+            if (just_my_summit) {
+                ttSummitDAO.loadConstrainedSummitsAndMyCommentsJustMine(
+                    minAnzahlWege = minAnzahlWege,
+                    maxAnzahlWege = maxAnzahlWege,
+                    minAnzahlSternchenWege = minAnzahlSternchenWege,
+                    maxAnzahlSternchenWege = maxAnzahlSternchenWege,
+                    searchAreas = searchAreas,
+                    searchText = searchText
+                ).collect {
+                    _ttSummits.value =
+                        it.sortRoutesBy(viewModelSummitOrderWidget.sortSummitBy.value)
+                    _queryRunning.value = false
+                }
+            } else {
+                ttSummitDAO.loadConstrainedSummitsAndMyComments(
+                    minAnzahlWege = minAnzahlWege,
+                    maxAnzahlWege = maxAnzahlWege,
+                    minAnzahlSternchenWege = minAnzahlSternchenWege,
+                    maxAnzahlSternchenWege = maxAnzahlSternchenWege,
+                    searchAreas = searchAreas,
+                    searchText = searchText
+                ).collect {
+                    _ttSummits.value =
+                        it.sortRoutesBy(viewModelSummitOrderWidget.sortSummitBy.value)
+                    _queryRunning.value = false
+                }
             }
         }
     }

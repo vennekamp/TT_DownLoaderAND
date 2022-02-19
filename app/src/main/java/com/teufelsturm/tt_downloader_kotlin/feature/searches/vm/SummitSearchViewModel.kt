@@ -26,7 +26,7 @@ class SummitSearchViewModel @Inject constructor(
         get() = _eventSearchSummit
     val justMySummit = ObservableBoolean(false)
     fun onClickJustMySummit() {
-        justMySummit.set( !justMySummit.get() )
+        justMySummit.set(!justMySummit.get())
         refreshSummitCount()
     }
 
@@ -36,14 +36,14 @@ class SummitSearchViewModel @Inject constructor(
 
     val searchTextVM = ViewModelEditText("", viewModelScope)
 
-    val rangeSliderAnzahlDerWege : ViewModelRangeSlider = ViewModelRangeSlider(
+    val rangeSliderAnzahlDerWege: ViewModelRangeSlider = ViewModelRangeSlider(
         application.applicationContext.resources.getString(R.string.strAnzahlDerWege),
-        runBlocking {  ttSummitDAO.getMaxAnzahlDerWege()?.toFloat() ?: 200f}
+        runBlocking { ttSummitDAO.getMaxAnzahlDerWege()?.toFloat() ?: 200f }
     )
 
     val rangeSliderAnzahlDerSternchenWege = ViewModelRangeSlider(
         application.applicationContext.resources.getString(R.string.strAnzahlDerSternchenWege),
-        runBlocking {ttSummitDAO.getMaxAnzahlDerSternchenWege()?.toFloat() ?: 100f}
+        runBlocking { ttSummitDAO.getMaxAnzahlDerSternchenWege()?.toFloat() ?: 100f }
     )
 
     fun refreshRangeSlider() {
@@ -52,12 +52,16 @@ class SummitSearchViewModel @Inject constructor(
                 spinnerAreaSummit.entries.value?.get(spinnerAreaSummit.selected.value ?: 0) ?: "",
                 "%" + searchTextVM.searchText.value + "%"
             )?.toFloat()
-            maxAnzahlDerWege?.let {  rangeSliderAnzahlDerWege.setValueTo(maxAnzahlDerWege)}
+            maxAnzahlDerWege?.let { rangeSliderAnzahlDerWege.setValueTo(maxAnzahlDerWege) }
             val maxAnzahlDerSternchenWege: Float? = ttSummitDAO.getMaxAnzahlDerSternchenWege(
                 spinnerAreaSummit.entries.value?.get(spinnerAreaSummit.selected.value ?: 0) ?: "",
                 "%" + searchTextVM.searchText.value + "%"
             )?.toFloat()
-            maxAnzahlDerSternchenWege?.let {  rangeSliderAnzahlDerSternchenWege.setValueTo(maxAnzahlDerSternchenWege)}
+            maxAnzahlDerSternchenWege?.let {
+                rangeSliderAnzahlDerSternchenWege.setValueTo(
+                    maxAnzahlDerSternchenWege
+                )
+            }
         }
     }
 
@@ -80,16 +84,30 @@ class SummitSearchViewModel @Inject constructor(
         }
     }
 
-    private suspend fun upDateSummitCount(): Int  {
-        return ttSummitDAO.getConstrainedCount(
+    private suspend fun upDateSummitCount(): Int {
+
+        val rtnVal = if (justMySummit.get())
+            ttSummitDAO.getConstrainedJustMineCount(
+                minAnzahlWege = rangeSliderAnzahlDerWege.values.value?.get(0)?.toInt() ?: 0,
+                maxAnzahlWege = rangeSliderAnzahlDerWege.values.value?.get(1)?.toInt() ?: 9999,
+                minAnzahlSternchenWege = rangeSliderAnzahlDerSternchenWege.values.value?.get(0)
+                    ?.toInt() ?: 0,
+                maxAnzahlSternchenWege = rangeSliderAnzahlDerSternchenWege.values.value?.get(1)
+                    ?.toInt() ?: 9999,
+                searchAreas = spinnerAreaSummit.selectedItem.value ?: "",
+                searchText = "%" + searchTextVM.searchText.value + "%"
+            )
+        else ttSummitDAO.getConstrainedCount(
             minAnzahlWege = rangeSliderAnzahlDerWege.values.value?.get(0)?.toInt() ?: 0,
             maxAnzahlWege = rangeSliderAnzahlDerWege.values.value?.get(1)?.toInt() ?: 9999,
-            minAnzahlSternchenWege = rangeSliderAnzahlDerSternchenWege.values.value?.get(0)?.toInt() ?: 0,
-            maxAnzahlSternchenWege = rangeSliderAnzahlDerSternchenWege.values.value?.get(1)?.toInt() ?: 9999,
+            minAnzahlSternchenWege = rangeSliderAnzahlDerSternchenWege.values.value?.get(0)
+                ?.toInt() ?: 0,
+            maxAnzahlSternchenWege = rangeSliderAnzahlDerSternchenWege.values.value?.get(1)
+                ?.toInt() ?: 9999,
             searchAreas = spinnerAreaSummit.selectedItem.value ?: "",
-            just_mine = justMySummit.get(),
             searchText = "%" + searchTextVM.searchText.value + "%"
         )
+        return rtnVal
     }
 
     /**

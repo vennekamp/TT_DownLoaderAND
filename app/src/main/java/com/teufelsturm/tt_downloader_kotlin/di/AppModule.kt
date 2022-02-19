@@ -39,8 +39,8 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideTTNeigbourDAO(ttDatabase: TTDataBase): TTNeigbourSummitANDDAO {
-        return ttDatabase.ttNeigbourSummitANDDAO
+    fun provideTTNeigbourDAO(ttDatabase: TTDataBase): TTNeighbourSummitANDDAO {
+        return ttDatabase.ttNeighbourSummitANDDAO
     }
 
     @Singleton

@@ -61,10 +61,10 @@ class RouteDetailResultViewModel @Inject constructor(
     val mTTRouteComments: LiveData<List<Comments.TTCommentAND>>
         get() = _mTTRouteComments
 
-    private val _mMyTTRouteANDWithPhotos: MutableLiveData<List<Comments.MyTTRouteANDWithPhotos>> =
-        MutableLiveData<List<Comments.MyTTRouteANDWithPhotos>>()
-    val mMyTTRouteANDWithPhotos: LiveData<List<Comments.MyTTRouteANDWithPhotos>>
-        get() = _mMyTTRouteANDWithPhotos
+    private val _mMyTTCommentANDWithPhotos: MutableLiveData<List<Comments.MyTTCommentANDWithPhotos>> =
+        MutableLiveData<List<Comments.MyTTCommentANDWithPhotos>>()
+    val mMyTTCommentANDWithPhotos: LiveData<List<Comments.MyTTCommentANDWithPhotos>>
+        get() = _mMyTTCommentANDWithPhotos
 
     private val _mTTRouteAND: MutableLiveData<Comments.RouteWithMyComment> =
         MutableLiveData()
@@ -75,9 +75,9 @@ class RouteDetailResultViewModel @Inject constructor(
     val mTTSummitAND: LiveData<TTSummitAND>
         get() = _mTTSummitAND
 
-    private val _navigateToCommentInputFragment: MutableLiveData<Comments.MyTTRouteANDWithPhotos?> =
+    private val _navigateToCommentInputFragment: MutableLiveData<Comments.MyTTCommentANDWithPhotos?> =
         MutableLiveData()
-    val navigateToCommentInputFragment: LiveData<Comments.MyTTRouteANDWithPhotos?>
+    val navigateToCommentInputFragment: LiveData<Comments.MyTTCommentANDWithPhotos?>
         get() = _navigateToCommentInputFragment
 
     private val _navigateToImageFragment: MutableLiveData<View?> =
@@ -124,9 +124,9 @@ class RouteDetailResultViewModel @Inject constructor(
 
     private suspend fun queryMYTTRouteWithPhotoAsync(intTTWegNr: Int) {
         // mMyTTRouteANDWithPhotos =
-        myTTCommentDAO.getCommentWithPhoto(intTTWegNr).collect {
+        myTTCommentDAO.getCommentWithPhotoByRoute(intTTWegNr).collect {
             Log.v(TAG, "ttRouteDAO.getCommentWithPhoto(intTTWegNr).collect ${it.size}")
-            _mMyTTRouteANDWithPhotos.value = it
+            _mMyTTCommentANDWithPhotos.value = it
         }
     }
 
@@ -157,12 +157,12 @@ class RouteDetailResultViewModel @Inject constructor(
     fun onClickComment(comments: Comments) {
         when (comments) {
             is Comments.AddComment -> _navigateToCommentInputFragment.value =
-                Comments.MyTTRouteANDWithPhotos(
+                Comments.MyTTCommentANDWithPhotos(
                     MyTTCommentAND(
-                        intTTGipfelNr = mTTSummitAND.value!!.intTTGipfelNr,
+                        myIntTTGipfelNr = mTTSummitAND.value!!.intTTGipfelNr,
                         myIntTTWegNr = mTTRouteAND.value!!.ttRouteAND.intTTWegNr)
                 )
-            is Comments.MyTTRouteANDWithPhotos -> _navigateToCommentInputFragment.value =
+            is Comments.MyTTCommentANDWithPhotos -> _navigateToCommentInputFragment.value =
                 comments
             is Comments.RouteWithMyComment -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${comments.javaClass}")
             is Comments.TTCommentAND -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${comments.javaClass}")

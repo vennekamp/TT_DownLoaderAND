@@ -2,7 +2,7 @@ package com.teufelsturm.tt_downloader_kotlin.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
 import kotlinx.coroutines.flow.Flow
 
@@ -64,11 +64,10 @@ interface TTSummitDAO {
 
     @Query(
         """SELECT COUNT (DISTINCT(a._id))
-                FROM   TT_Summit_AND a, MyTT_Comment_AND b
+                FROM   TT_Summit_AND a
                 WHERE  a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
                     AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
                     AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
-                    AND a.intTTGipfelNr = (CASE WHEN :just_mine THEN b.intTTGipfelNr ELSE a.intTTGipfelNr END)
                     AND a.strName LIKE :searchText;"""
     )
     suspend fun getConstrainedCount(
@@ -77,18 +76,30 @@ interface TTSummitDAO {
         minAnzahlSternchenWege: Int,
         maxAnzahlSternchenWege: Int,
         searchAreas: String,
-        just_mine: Boolean,
+        searchText: String
+    ): Int
+
+    @Query(
+        """SELECT COUNT (DISTINCT(a._id))
+                FROM   TT_Summit_AND a, MyTT_Comment_AND b
+                WHERE  a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
+                    AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
+                    AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
+                    AND a.intTTGipfelNr = b.myIntTTGipfelNr
+                    AND a.strName LIKE :searchText;"""
+    )
+    suspend fun getConstrainedJustMineCount(
+        minAnzahlWege: Int,
+        maxAnzahlWege: Int,
+        minAnzahlSternchenWege: Int,
+        maxAnzahlSternchenWege: Int,
+        searchAreas: String,
         searchText: String
     ): Int
 
     @Transaction
     @Query("SELECT * FROM TT_Summit_AND")
-    fun getSummitsListWithMySummitComment(): LiveData<List<SummitWithMySummitComment>>
-
-    @Deprecated("needs to be replaced with <MyTTSummitANDWithPhotos>")
-    @Transaction
-    @Query("SELECT * FROM TT_Summit_AND WHERE intTTGipfelNr = :intTTGipfelNr")
-    fun getSummitWithMySummitComment(intTTGipfelNr: Int): Flow<SummitWithMySummitComment>
+    fun getSummitsListWithMySummitComment(): LiveData<List<CommentsSummit.SummitWithMySummitComment>>
 
     @Query(
         """SELECT a.* FROM TT_Summit_AND a
@@ -123,11 +134,10 @@ interface TTSummitDAO {
                       a.osm_type, 
                       a.osm_ID, 
                       a.osm_display_name
-                    FROM TT_Summit_AND a, MyTT_Comment_AND b
+                    FROM TT_Summit_AND a
                 WHERE a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
                     AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
                     AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
-                    AND a.intTTGipfelNr = (CASE WHEN :just_mine THEN b.intTTGipfelNr ELSE a.intTTGipfelNr END)
                     AND a.strName LIKE :searchText;"""
     )
     fun loadConstrainedSummitsAndMyComments(
@@ -136,7 +146,38 @@ interface TTSummitDAO {
         minAnzahlSternchenWege: Int,
         maxAnzahlSternchenWege: Int,
         searchAreas: String,
-        just_mine: Boolean,
         searchText: String
-    ): Flow<List<SummitWithMySummitComment>>
+    ): Flow<List<CommentsSummit.SummitWithMySummitComment>>
+    @Query(
+        """SELECT 
+                    DISTINCT(a._id),
+                      a._idTimeStamp, 
+                      a.intTTGipfelNr, 
+                      a.strName, 
+                      a.dblGPS_Latitude, 
+                      a.dblGPS_Longitude, 
+                      a.strGebiet, 
+                      a.intKleFuGipfelNr, 
+                      a.intAnzahlWege, 
+                      a.intAnzahlSternchenWege, 
+                      a.strLeichtesterWeg, 
+                      a.fltGPS_Altitude, 
+                      a.osm_type, 
+                      a.osm_ID, 
+                      a.osm_display_name
+                    FROM TT_Summit_AND a, MyTT_Comment_AND b
+                WHERE a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
+                    AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
+                    AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
+                    AND a.intTTGipfelNr = b.myIntTTGipfelNr
+                    AND a.strName LIKE :searchText;"""
+    )
+    fun loadConstrainedSummitsAndMyCommentsJustMine(
+        minAnzahlWege: Int,
+        maxAnzahlWege: Int,
+        minAnzahlSternchenWege: Int,
+        maxAnzahlSternchenWege: Int,
+        searchAreas: String,
+        searchText: String
+    ): Flow<List<CommentsSummit.SummitWithMySummitComment>>
 }

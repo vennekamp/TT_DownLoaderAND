@@ -1,4 +1,4 @@
-package com.teufelsturm.tt_downloader_kotlin.results
+package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

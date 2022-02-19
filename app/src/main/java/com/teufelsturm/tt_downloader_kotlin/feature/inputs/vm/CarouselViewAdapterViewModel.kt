@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.CarouselAdapterData
@@ -84,14 +84,14 @@ class CarouselViewAdapterViewModel @Inject constructor() : ViewModel() {
         _imagedClicked.value = null
     }
 
-    fun setMyTTRouteANDWithPhotos(myTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos) {
+    fun setMyTTRouteANDWithPhotos(myTTCommentANDWithPhotos: Comments.MyTTCommentANDWithPhotos) {
         carouselAdapterData.getCarouselItemViewModels().clear()
-        myTTRouteANDWithPhotos.myTT_route_PhotosANDList.forEach {
+        myTTCommentANDWithPhotos.myTT_comment_PhotosANDList.forEach {
             carouselAdapterData.addCustomCarouselViewModel(CustomCarouselViewModel(it))
         }
         carouselAdapterData.addCustomCarouselViewModel(
             CustomCarouselViewModel(
-                MyTT_RoutePhotos_AND(0, 0, CarouselViewAdapter.ADD_IMAGE, "Bild hinzufügen...")
+                MyTTCommentPhotosAND(0, 0, CarouselViewAdapter.ADD_IMAGE, "Bild hinzufügen...")
             )
         )
     }

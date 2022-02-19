@@ -38,13 +38,13 @@ sealed class Comments {
         override var entryDatum: Long? = null
     ) : CommentInterface, Comments()
 
-    data class MyTTRouteANDWithPhotos(
+    data class MyTTCommentANDWithPhotos(
         @Embedded val myTTCommentAND: MyTTCommentAND,
         @Relation(
             parentColumn = "_id",
             entityColumn = "commentID"
         )
-        val myTT_route_PhotosANDList: MutableList<MyTT_RoutePhotos_AND> = mutableListOf()
+        val myTT_comment_PhotosANDList: MutableList<MyTTCommentPhotosAND> = mutableListOf()
     ) : Comments()
 
     data class RouteWithMyComment(

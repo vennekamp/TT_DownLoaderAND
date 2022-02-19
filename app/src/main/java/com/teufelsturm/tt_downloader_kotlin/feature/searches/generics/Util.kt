@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.text.Spanned
 import android.util.Log
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.toHTMLSpan
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -92,20 +92,14 @@ fun convertDateTimeStringToLong(_ascentDate: String?): Long? {
     return ascentDateObject?.time?.plus(mGMTOffset)
 }
 
-fun formatSummitComments(mySummits: List<MyTTSummitAND>): Spanned {
+fun formatSummitComments(mySummits: List<MyTTCommentAND>): Spanned {
     val sb = StringBuilder()
     sb.apply {
         mySummits.forEach { comment ->
-            append(if (comment.isAscendedSummit == true) "&#9745;" else " &#10060;")
-            append(
-                if (comment.myIntDateOfAscend != null) "[${
-                    convertLongToDateString(
-                        comment.myIntDateOfAscend!!
-                    )
-                }]" else "[ --- ]"
-            )
+            append(if (comment.isAscendedType > 0) "&#9745;" else " &#10060;")
+            append(comment.myIntDateOfAscend ?: "[ --- ]")
             append(" ")
-            append("${comment.strMySummitComment}")
+            append("${comment.strMyComment}")
             if (comment != mySummits.last()) append("<br>")
         }
     }
@@ -136,9 +130,9 @@ fun isAscendedRoute(route: Comments.RouteWithMyComment): Boolean {
     return false
 }
 
-fun maxAscentRoute(routes: List<Comments.MyTTRouteANDWithPhotos>): Int {
+fun maxAscentRoute(comments: List<Comments.MyTTCommentANDWithPhotos>): Int {
     var maxAscent = 0 // set the value
-    routes.forEach { myRoute ->
+    comments.forEach { myRoute ->
         myRoute.myTTCommentAND.isAscendedType.let {
             if (it > maxAscent) maxAscent = it
         }

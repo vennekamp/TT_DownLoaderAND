@@ -5,7 +5,9 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -13,13 +15,13 @@ import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class MyTTSummitDAO_DataBaseTest {
+class MyTTCommentDAO_DataBaseTest4Summit {
 
     // see https://stackoverflow.com/a/44991770 - synchronize async queries
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var myTTSummitDAO: MyTTSummitDAO
+    private lateinit var myTTCommentDAO: MyTTCommentDAO
     private lateinit var db: TTDataBase
 
     @Before
@@ -37,7 +39,7 @@ class MyTTSummitDAO_DataBaseTest {
             .allowMainThreadQueries()
             .createFromAsset("TT_DownLoader_AND.sqlite")
             .build()
-        myTTSummitDAO = db.myTTSummitDAO
+        myTTCommentDAO = db.myTTCommentDAO
     }
 
     @After
@@ -49,30 +51,34 @@ class MyTTSummitDAO_DataBaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetMyComment() {
-        val my_TT_Summit_AND = MyTTSummitAND()
-        my_TT_Summit_AND.strMySummitComment = "TEST"
-        my_TT_Summit_AND.myIntDateOfAscend = Calendar.getInstance().timeInMillis
-        my_TT_Summit_AND.isAscendedSummit = true
-        my_TT_Summit_AND.myIntTTGipfelNr = -123
-        myTTSummitDAO.insert(my_TT_Summit_AND)
+        val myTTCommentAND = MyTTCommentAND(
+            myIntTTGipfelNr = -100
+        )
+        myTTCommentAND.strMyComment = "TEST"
+        myTTCommentAND.myCommentTimStamp = Calendar.getInstance().timeInMillis
+        myTTCommentAND.isAscendedType = 1
+        myTTCommentAND.Id = myTTCommentDAO.insert(myTTCommentAND)
+
+
+        val myComment = runBlocking {   myTTCommentDAO.getMyTTCommentANDByID(myTTCommentAND.Id).first()}
+        Assert.assertEquals("TEST", myComment.strMyComment)
+        myTTCommentDAO.deleteMyCommentById(myComment.Id)
+        Assert.assertNull("TEST", runBlocking {  myTTCommentDAO.getMyTTCommentANDByID(myTTCommentAND.Id).first()})
 
         repeat(15)
         {
-            val my_TT_Summit_AND = MyTTSummitAND()
-            my_TT_Summit_AND.strMySummitComment = createRandomString(100)
-            my_TT_Summit_AND.myIntDateOfAscend = Calendar.getInstance().timeInMillis
-            my_TT_Summit_AND.isAscendedSummit = true
-            my_TT_Summit_AND.myIntTTGipfelNr = it - 50
-            myTTSummitDAO.insert(my_TT_Summit_AND)
-        }
-        val myComment = myTTSummitDAO.get(-123)
-        Assert.assertEquals("TEST", myComment.value?.strMySummitComment)
-        myTTSummitDAO.deleteById(-123)
-        Assert.assertNull("TEST", myTTSummitDAO.get(-123))
-        repeat(15)
-        {
-            myTTSummitDAO.deleteById(it - 50)
-            Assert.assertNull("TEST", myTTSummitDAO.get(it - 50))
+            val myTTCommentAND_IN = MyTTCommentAND(
+                myIntTTGipfelNr = -99
+            )
+            myTTCommentAND_IN.strMyComment = createRandomString(100)
+            myTTCommentAND_IN.myCommentTimStamp = Calendar.getInstance().timeInMillis
+            myTTCommentAND_IN.isAscendedType = 0
+            myTTCommentAND_IN.Id = myTTCommentDAO.insert(myTTCommentAND_IN)
+
+            val myTTCommentAND_OUT = runBlocking {   myTTCommentDAO.getMyTTCommentANDByID(myTTCommentAND_IN.Id).first()}
+            myTTCommentDAO.deleteMyCommentById(myTTCommentAND_OUT.Id)
+            Assert.assertNull("TEST", runBlocking {   myTTCommentDAO.getMyTTCommentANDByID(myTTCommentAND_IN.Id).first()})
+
         }
     }
 }

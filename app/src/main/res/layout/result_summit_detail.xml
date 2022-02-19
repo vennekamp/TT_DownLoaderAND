@@ -108,7 +108,7 @@
                 android:text="@string/tableCol_RouteIsAscended"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/header_small"
-                app:isAscendedFormatted="@{listMySummit}"
+                app:isAscendedFormatted="@{listMyComment}"
                 android:clickable="false"
                 app:flow_verticalBias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,13 +120,13 @@
                 android:id="@+id/edt_my_summit_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
+                android:background="@drawable/edittext_background_summit"
                 android:configChanges="orientation|keyboardHidden"
                 android:gravity="top|start"
                 android:hint="@string/tableCol_MyComment"
                 android:focusable="false"
                 android:inputType="none"
-                app:myCommentStringFormatted="@{listMySummit}"
+                app:myCommentStringFormatted="@{listMyComment}"
                 android:importantForAutofill="no"
                 android:scrollbarStyle="outsideInset"
                 android:scrollbars="vertical"
@@ -333,8 +333,8 @@
         <import type="java.util.List" />
 
         <variable
-            name="listMySummit"
-            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND&gt;" />
+            name="listMyComment"
+            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND&gt;" />
 
         <variable
             name="summit"

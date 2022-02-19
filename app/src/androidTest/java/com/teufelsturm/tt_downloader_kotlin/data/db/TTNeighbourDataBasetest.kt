@@ -17,7 +17,7 @@ class TTNeighbourDataBasetest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var ttNeigbourSummitANDDAO: TTNeigbourSummitANDDAO
+    private lateinit var ttNeighbourSummitANDDAO: TTNeighbourSummitANDDAO
     private lateinit var db: TTDataBase
 
 
@@ -37,7 +37,7 @@ class TTNeighbourDataBasetest {
 //            .allowMainThreadQueries()
 //            .createFromAsset("TT_DownLoader_AND_Neighbour.sqlite")
 //            .build()
-        ttNeigbourSummitANDDAO = db.ttNeigbourSummitANDDAO
+        ttNeighbourSummitANDDAO = db.ttNeighbourSummitANDDAO
     }
 
     @After
@@ -50,35 +50,35 @@ class TTNeighbourDataBasetest {
     @Throws(Exception::class)
     fun getNext2AndPrev2TravSalePersNeighbours() {
         val neighbours1 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(1).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1).first().getIDs() }
         assertThat(neighbours1).isEqualTo(listOf(1121, 1122, 2, 3))
         val neighbours2 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(353).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(353).first().getIDs() }
         assertThat(neighbours2).isEqualTo(listOf(354, 1121, 1122, 1))
         val neighbours3 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(354).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(354).first().getIDs() }
         assertThat(neighbours3).isEqualTo(listOf(353, 1121, 1122, 1))
         val neighbours4 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(1121).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1121).first().getIDs() }
         assertThat(neighbours4).isEqualTo(listOf(353, 354, 1122, 1))
         val neighbours5 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(1093).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1093).first().getIDs() }
         assertThat(neighbours5).isEqualTo(listOf(1095, 1094, 1092, 1091))
         val neighbours6 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(1092).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1092).first().getIDs() }
         assertThat(neighbours6).isEqualTo(listOf(1095, 1094, 1091, 1093))
         val neighbours7 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(1091).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1091).first().getIDs() }
         assertThat(neighbours7).isEqualTo(listOf(1095, 1094, 1092, 1093))
         val neighbours8 =
-            runBlocking { ttNeigbourSummitANDDAO.getTSPSummits(1110).first().getIDs() }
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1110).first().getIDs() }
         assertThat(neighbours8).isEqualTo(listOf(887, 888, 812, 830))
 
         (1..1148).forEach {
             if (!listOf(1126).contains(it)) {
                 assertThat(runBlocking {
                     "TSP-results count for $it: ${
-                        ttNeigbourSummitANDDAO.getTSPSummits(
+                        ttNeighbourSummitANDDAO.getTSPSummits(
                             it
                         ).first().size
                     }"
@@ -104,10 +104,10 @@ class TTNeighbourDataBasetest {
         ttNeigbourSummitAND._idTimStamp = 12345L
         ttNeigbourSummitAND.intTTHauptGipfelNr = 1
         ttNeigbourSummitAND.intTTNachbarGipfelNr = 2
-        ttNeigbourSummitANDDAO.insert(ttNeigbourSummitAND)
-        val neighbour: TTNeigbourSummitAND = ttNeigbourSummitANDDAO.get(-123)
+        ttNeighbourSummitANDDAO.insert(ttNeigbourSummitAND)
+        val neighbour: TTNeigbourSummitAND = ttNeighbourSummitANDDAO.get(-123)
         Assert.assertEquals(12345L, neighbour._idTimStamp)
-        ttNeigbourSummitANDDAO.deleteByID(-123)
-        Assert.assertNull("TEST", ttNeigbourSummitANDDAO.get(-123))
+        ttNeighbourSummitANDDAO.deleteByID(-123)
+        Assert.assertNull("TEST", ttNeighbourSummitANDDAO.get(-123))
     }
 }

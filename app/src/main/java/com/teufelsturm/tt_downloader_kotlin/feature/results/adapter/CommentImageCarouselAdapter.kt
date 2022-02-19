@@ -10,13 +10,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import coil.load
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 
-const val TAG = "CommentImageCarouselAdp"
+private const val TAG = "CommentImageCarouselAdp"
 
 class CommentImageCarouselAdapter : Carousel.Adapter {
 
-    var data: MutableList<MyTT_RoutePhotos_AND> = mutableListOf()
+    var data: MutableList<MyTTCommentPhotosAND> = mutableListOf()
 
     override fun count(): Int {
         return data.size

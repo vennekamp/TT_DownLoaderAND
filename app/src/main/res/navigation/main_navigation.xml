@@ -196,7 +196,7 @@
             app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND" />
         <argument
             android:name="lstMyTT_RoutePhotos_AND"
-            app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND[]"  />
+            app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND[]"  />
         <argument
             android:name="MyRouteName"
             app:argType="string"

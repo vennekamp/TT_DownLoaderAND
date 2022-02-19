@@ -1,6 +1,6 @@
 package com.teufelsturm.tt_downloader_kotlin.data.order
 
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 
 /**
@@ -27,11 +27,11 @@ sealed class SortSummitWithMySummitCommentBy(var order: Order?) {
 }
 
 
-fun List<SummitWithMySummitComment>.sortRoutesBy(
+fun List<CommentsSummit.SummitWithMySummitComment>.sortRoutesBy(
     sortSummitWithMySummitCommentBy: SortSummitWithMySummitCommentBy? = SortSummitWithMySummitCommentBy.GipfelNr(
         Order.Ascending
     )
-): List<SummitWithMySummitComment> =
+): List<CommentsSummit.SummitWithMySummitComment> =
     when (sortSummitWithMySummitCommentBy?.order) {
         is Order.Descending -> {
             when (sortSummitWithMySummitCommentBy) {
@@ -58,15 +58,15 @@ fun List<SummitWithMySummitComment>.sortRoutesBy(
         }
     }
 
-private fun comparatorGipfelr(): Comparator<SummitWithMySummitComment> =
+private fun comparatorGipfelr(): Comparator<CommentsSummit.SummitWithMySummitComment> =
     compareBy(
         { it.ttSummitAND.strGebiet?.lowercase() },
         { it.ttSummitAND.intKleFuGipfelNr })
 
-private fun comperatorGradeByStrig(it: SummitWithMySummitComment) =
+private fun comperatorGradeByStrig(it: CommentsSummit.SummitWithMySummitComment) =
     RouteGrade.getRouteGradeByString(
         it.ttSummitAND.strLeichtesterWeg
     )?.ordinal ?: -1
 
 private fun comparatorGipfelNrDescending() =
-    compareByDescending<SummitWithMySummitComment> { it.ttSummitAND.strGebiet?.lowercase() }.thenByDescending { it.ttSummitAND.intKleFuGipfelNr }
+    compareByDescending<CommentsSummit.SummitWithMySummitComment> { it.ttSummitAND.strGebiet?.lowercase() }.thenByDescending { it.ttSummitAND.intKleFuGipfelNr }

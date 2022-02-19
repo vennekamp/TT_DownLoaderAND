@@ -13,7 +13,7 @@ import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsRoutesListBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTSummitClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.RoutesListResultViewModel
-import com.teufelsturm.tt_downloader_kotlin.results.RoutesListAdapter
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.RoutesListAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking

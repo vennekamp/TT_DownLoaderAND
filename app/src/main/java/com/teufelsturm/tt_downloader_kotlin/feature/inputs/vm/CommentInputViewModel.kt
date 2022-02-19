@@ -78,15 +78,15 @@ class CommentInputViewModel @Inject constructor(
     }
 
     fun getMyTTRouteANDId(): Long {
-        return ascentData.myTTRouteANDWithPhotos.myTTCommentAND.Id
+        return ascentData.myTTCommentANDWithPhotos.myTTCommentAND.Id
     }
 
-    fun setMyTTRouteANDWithPhotos(mMyTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos) {
+    fun setMyTTRouteANDWithPhotos(mMyTTCommentANDWithPhotos: Comments.MyTTCommentANDWithPhotos) {
 
-        ascentData.setMyTTRouteANDWithPhotos(mMyTTRouteANDWithPhotos)
+        ascentData.setMyTTRouteANDWithPhotos(mMyTTCommentANDWithPhotos)
         spinnerHowAscended.onItemSelected(
             null,
-            ascentData.myTTRouteANDWithPhotos.myTTCommentAND.isAscendedType
+            ascentData.myTTCommentANDWithPhotos.myTTCommentAND.isAscendedType
         )
 
     }

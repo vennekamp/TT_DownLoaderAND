@@ -58,21 +58,3 @@ data class TTSummitAND(
     var osm_display_name: String? = null
 ) : SummitInterface
 
-
-@Parcelize
-@Entity(tableName = "MyTT_SummitPhotos_AND")
-class MyTT_SummitPhotos_AND(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "_id")
-    var Id: Long = NO_ID,
-
-    @ColumnInfo(name = "commentID")
-    var commentID: Long = 0L,
-
-    @ColumnInfo(name = "uri")
-    var uri: String? = null,
-
-    @ColumnInfo(name = "caption")
-    var caption: String? = null
-) : Parcelable
-

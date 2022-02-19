@@ -63,5 +63,6 @@
     <string name="ok">Okay</string>
     <string name="no_image">Keine Bilder vorhanden</string>
     <string name="tabLayout_content_description">Gipfel oder Wege oder Kommentar suchen</string>
+    <string name="nur_meine_gipfel">Nur meine\nGipfel</string>
 
 </resources>

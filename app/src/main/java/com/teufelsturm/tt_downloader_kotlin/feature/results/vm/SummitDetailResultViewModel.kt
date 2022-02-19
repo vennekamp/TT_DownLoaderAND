@@ -18,7 +18,7 @@ class SummitDetailResultViewModel @Inject constructor(
     application: Application,
     private val ttSummitDAO: TTSummitDAO,
     private val ttRouteDAO: TTRouteDAO,
-    private val ttNeigbourSummitANDDAO: TTNeigbourSummitANDDAO
+    private val ttNeighbourSummitANDDAO: TTNeighbourSummitANDDAO
 ) :
     AndroidViewModel(application) {
 
@@ -31,9 +31,9 @@ class SummitDetailResultViewModel @Inject constructor(
     val mTTSummit: LiveData<TTSummitAND>
         get() = _mTTSummit
 
-    private val _mMYTTSummit: MutableLiveData<List<MyTTSummitAND>> = MutableLiveData()
-    val mMYTTSummit: LiveData<List<MyTTSummitAND>>
-        get() = _mMYTTSummit
+    private val _mMYTTComment: MutableLiveData<List<MyTTCommentAND>> = MutableLiveData()
+    val mMYTTComment: LiveData<List<MyTTCommentAND>>
+        get() = _mMYTTComment
 
     private val _ttRoutes: MutableLiveData<List<Comments.RouteWithMyComment>> = MutableLiveData()
     val ttRoutes: LiveData<List<Comments.RouteWithMyComment>>
@@ -57,17 +57,9 @@ class SummitDetailResultViewModel @Inject constructor(
         }
     }
 
-    private suspend fun queryMyTTSummitAsync(intTTGipfelNr: Int) {
-        // mMyTTSummit =
-        ttSummitDAO.getSummitWithMySummitComment(intTTGipfelNr).collect {
-            _mMYTTSummit.value = it.myTTSummitANDList
-            _queriesRunning.apply { value = value?.minus(1) }
-        }
-    }
-
     private suspend fun queryNeighboursAsync(intTTGipfelNr: Int) {
         // ttNeigbours =
-        ttNeigbourSummitANDDAO.getTSPSummits(intTTGipfelNr).collect {
+        ttNeighbourSummitANDDAO.getTSPSummits(intTTGipfelNr).collect {
             _ttNeigbours.value = it
             _queriesRunning.apply { value = value?.minus(1) }
         }

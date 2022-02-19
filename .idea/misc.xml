@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/drawable/edittext_background.xml" value="0.15885416666666666" />
+        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/drawable/edittext_background_route.xml" value="0.15885416666666666" />
+        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/drawable/hop_logo.xml" value="0.15885416666666666" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.22592592592592592" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.22592592592592592" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.22592592592592592" />
@@ -30,9 +33,9 @@
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/results_comments_list.xml" value="0.18697916666666667" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/results_routes_list.xml" value="0.18697916666666667" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/results_summits_list.xml" value="0.1" />
-        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/search__comments.xml" value="0.1921875" />
-        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/search__routes.xml" value="0.1921875" />
-        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/search__summits.xml" value="0.1765625" />
+        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/search__comments.xml" value="0.33" />
+        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/search__routes.xml" value="0.384375" />
+        <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/layout/search__summits.xml" value="0.33" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/menu/detail_result.xml" value="0.2375" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/menu/summit_detail_result.xml" value="0.2375" />
         <entry key="..\:/Programming/git/TT_DownLoaderAND/app/src/main/res/menu/zoom_image.xml" value="0.3415384615384615" />

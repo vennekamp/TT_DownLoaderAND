@@ -22,6 +22,8 @@ private const val ITEM_VIEW_TYPE_COMMENT = 0
 private const val ITEM_VIEW_TYPE_MY_COMMENT = 1
 private const val ITEM_VIEW_TYPE_ADD_COMMENT = 2
 
+private const val TAG = "RouteDetailAdapter"
+
 /**
  * Display the routes (aka 'Details') to a summit used for the recyclerview in
  * [com.teufelsturm.tt_downloader_kotlin.databinding.ResultRouteDetailBinding] fills [ListitemCommentBinding]
@@ -44,7 +46,7 @@ class RouteDetailAdapter :
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is Comments.TTCommentAND -> ITEM_VIEW_TYPE_COMMENT
-            is Comments.MyTTRouteANDWithPhotos -> ITEM_VIEW_TYPE_MY_COMMENT
+            is Comments.MyTTCommentANDWithPhotos -> ITEM_VIEW_TYPE_MY_COMMENT
             is Comments.AddComment -> ITEM_VIEW_TYPE_ADD_COMMENT
             is Comments.RouteWithMyComment -> throw IllegalArgumentException("getItem($position) for CommentsRoute.RouteWithMyRouteComment not supported.")
         }
@@ -66,7 +68,7 @@ class RouteDetailAdapter :
                 holder.bind(item)
             }
             is MyCommentsListAdapterViewHolder -> {
-                val item = getItem(position) as Comments.MyTTRouteANDWithPhotos
+                val item = getItem(position) as Comments.MyTTCommentANDWithPhotos
                 holder.bind(item, clickListenerRouteComments, clickListenerRouteCommentImage)
             }
             is MyCommentsAddViewHolder -> {
@@ -99,7 +101,7 @@ class MyCommentsListAdapterViewHolder private constructor(
 ) :
     RecyclerView.ViewHolder(itemBinding.root) {
     fun bind(
-        item: Comments.MyTTRouteANDWithPhotos,
+        item: Comments.MyTTCommentANDWithPhotos,
         clickListenerRouteComments: RouteCommentsClickListener?,
         clickListenerRouteCommentImage: CommentImageClickListener?
     ) {
@@ -108,7 +110,7 @@ class MyCommentsListAdapterViewHolder private constructor(
         itemBinding.clickListenerImage = clickListenerRouteCommentImage
         Log.e(TAG, "carousel.currentIndex: ${itemBinding.carousel.currentIndex}")
         val commentImageCarouselAdapter = CommentImageCarouselAdapter()
-        item.myTT_route_PhotosANDList.forEach {
+        item.myTT_comment_PhotosANDList.forEach {
             commentImageCarouselAdapter.data.add(it)
         }
         itemBinding.tv2.doAfterTextChanged {

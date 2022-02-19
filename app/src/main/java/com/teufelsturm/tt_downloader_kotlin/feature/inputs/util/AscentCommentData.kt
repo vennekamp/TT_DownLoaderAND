@@ -14,16 +14,16 @@ private const val TAG = "AscentData"
 
 class AscentCommentData : BaseObservable() {
 
-    lateinit var myTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos
+    lateinit var myTTCommentANDWithPhotos: Comments.MyTTCommentANDWithPhotos
         private set
 
-    fun setMyTTRouteANDWithPhotos (_myTTRouteANDWithPhotos: Comments.MyTTRouteANDWithPhotos) {
-            if (!this::myTTRouteANDWithPhotos.isInitialized || myTTRouteANDWithPhotos != _myTTRouteANDWithPhotos) {
-                myTTRouteANDWithPhotos = _myTTRouteANDWithPhotos
+    fun setMyTTRouteANDWithPhotos (_myTTCommentANDWithPhotos: Comments.MyTTCommentANDWithPhotos) {
+            if (!this::myTTCommentANDWithPhotos.isInitialized || myTTCommentANDWithPhotos != _myTTCommentANDWithPhotos) {
+                myTTCommentANDWithPhotos = _myTTCommentANDWithPhotos
             }
-        setAscentDate(myTTRouteANDWithPhotos.myTTCommentAND.myIntDateOfAscend)
-        setAscentPartner(myTTRouteANDWithPhotos.myTTCommentAND.myAscendedPartner)
-        setAscentComment(myTTRouteANDWithPhotos.myTTCommentAND.strMyComment)
+        setAscentDate(myTTCommentANDWithPhotos.myTTCommentAND.myIntDateOfAscend)
+        setAscentPartner(myTTCommentANDWithPhotos.myTTCommentAND.myAscendedPartner)
+        setAscentComment(myTTCommentANDWithPhotos.myTTCommentAND.strMyComment)
         }
 
 
@@ -46,7 +46,7 @@ class AscentCommentData : BaseObservable() {
             ascentDate = convertLongToDateString(_ascentDateInMillis)
         }
         Log.e(TAG, "ascent date is now: $ascentDate")
-        myTTRouteANDWithPhotos.myTTCommentAND.myIntDateOfAscend = ascentDate
+        myTTCommentANDWithPhotos.myTTCommentAND.myIntDateOfAscend = ascentDate
         notifyPropertyChanged(BR.ascentDate)
     }
 
@@ -70,7 +70,7 @@ class AscentCommentData : BaseObservable() {
                     convertLongToDateTimeString(it)
                 }
             }")
-        myTTRouteANDWithPhotos.myTTCommentAND.myIntDateOfAscend = _ascentDate
+        myTTCommentANDWithPhotos.myTTCommentAND.myIntDateOfAscend = _ascentDate
         notifyPropertyChanged(BR.ascentDate)
     }
 
@@ -83,7 +83,7 @@ class AscentCommentData : BaseObservable() {
         if (ascentPartner == _ascentPartner) return
         ascentPartner = _ascentPartner
         Log.e(TAG, "ascent partner is now: $ascentPartner")
-        myTTRouteANDWithPhotos.myTTCommentAND.myAscendedPartner = _ascentPartner
+        myTTCommentANDWithPhotos.myTTCommentAND.myAscendedPartner = _ascentPartner
         notifyPropertyChanged(BR.ascentPartner)
     }
 
@@ -96,7 +96,7 @@ class AscentCommentData : BaseObservable() {
         if (ascentComment == _ascentComment) return
         ascentComment = _ascentComment
         Log.e(TAG, "ascent comment is now: $ascentComment")
-        myTTRouteANDWithPhotos.myTTCommentAND.strMyComment = _ascentComment
+        myTTCommentANDWithPhotos.myTTCommentAND.strMyComment = _ascentComment
         notifyPropertyChanged(BR.ascentComment)
     }
 

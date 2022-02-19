@@ -120,7 +120,7 @@ interface TTRouteDAO {
 							AND a.intAnzahlDerKommentare >= :minNumberOfComments
 							AND COALESCE (a.sachsenSchwierigkeitsGrad, a.ohneUnterstuetzungSchwierigkeitsGrad, a.rotPunktSchwierigkeitsGrad, a.intSprungSchwierigkeitsGrad) BETWEEN :intMinSchwierigkeit AND :intMaxSchwierigkeit
 							AND a.intTTGipfelNr IN (SELECT c.intTTGipfelNr
-						                                 FROM   TT_Summit_AND c
+						                                 FROM TT_Summit_AND c
                                                     WHERE  c.strGebiet = (CASE WHEN LENGTH (:area) THEN (:area) ELSE (c.strGebiet) END))
                             AND a.wegName like :partialRouteName"""
     )

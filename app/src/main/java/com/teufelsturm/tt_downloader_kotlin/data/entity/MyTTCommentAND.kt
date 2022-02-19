@@ -17,8 +17,8 @@ class MyTTCommentAND(
     var myCommentTimStamp: Long = System.currentTimeMillis(),
 
     // summit SHOULD also be entered for summit-comment and route-comment
-    @ColumnInfo(name = "intTTGipfelNr")
-    val intTTGipfelNr: Int,
+    @ColumnInfo(name = "myIntTTGipfelNr")
+    val myIntTTGipfelNr: Int,
 
     // route SHOULD also be for summit-comment 'null' and for route-comment the route number
     @ColumnInfo(name = "myIntTTWegNr")
@@ -38,8 +38,8 @@ class MyTTCommentAND(
 ): Parcelable
 
 @Parcelize
-@Entity(tableName = "MyTT_RoutePhotos_AND")
-class MyTT_RoutePhotos_AND(
+@Entity(tableName = "MyTT_CommentPhotos_AND")
+class MyTTCommentPhotosAND(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     var Id: Long = NO_ID,

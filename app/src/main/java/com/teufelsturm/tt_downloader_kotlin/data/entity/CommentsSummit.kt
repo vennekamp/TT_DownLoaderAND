@@ -43,29 +43,23 @@ sealed class CommentsSummit {
         )
     }
 
-    data class MyTTRouteWithRouteWithSummit(
-        // MyTTSummitAND --> Super
-        @Embedded val myTTSummitAND: MyTTSummitAND,
-        // route
-        val WegName: String?,
-        val strSchwierigkeitsGrad: String?,
-        val blnAusrufeZeichen: Boolean?,
-        var intSterne: Int?,
-        // summit
-        val intTTGipfelNr: Int?,
-        val strName: String?,
-        val intKleFuGipfelNr: Int?,
-        val strGebiet: String?
+    data class SummitWithMySummitComment(
+        @Embedded val ttSummitAND: TTSummitAND,
+        @Relation(
+            parentColumn = "intTTGipfelNr",
+            entityColumn = "myIntTTGipfelNr"
+        )
+        val myTTSummitANDList: List<MyTTCommentAND>
     )
 
-    data class MyTTSummitANDWithPhotos(
-        @Embedded val myTTSummitAND: MyTTSummitAND,
+    data class SummitWithMySummitCommentAndPhotos(
+        @Embedded val ttSummitAND: TTSummitAND,
         @Relation(
-            parentColumn = "_id",
-            entityColumn = "commentID"
+            parentColumn = "intTTGipfelNr",
+            entityColumn = "myIntTTGipfelNr"
         )
-        val myTT_Summit_PhotosANDList: MutableList<MyTT_SummitPhotos_AND> = mutableListOf()
-    ) : CommentsSummit()
+        val myTTSummitANDList: List<Comments.MyTTCommentANDWithPhotos>
+    )
 
     object AddComment : CommentsSummit()
 }

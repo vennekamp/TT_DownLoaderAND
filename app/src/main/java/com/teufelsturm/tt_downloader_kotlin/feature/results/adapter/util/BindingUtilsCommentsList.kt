@@ -93,12 +93,12 @@ fun TextView.tvRouteNameInCommentFormatted(ttRouteAND: TTRouteAND?) {
 }
 
 @BindingAdapter("myIntDateOfMyAscendRouteFormatted")
-fun TextView.myIntDateOfMyAscendRouteFormatted(item: Comments.MyTTRouteANDWithPhotos?) {
+fun TextView.myIntDateOfMyAscendRouteFormatted(item: Comments.MyTTCommentANDWithPhotos?) {
     text = item?.myTTCommentAND?.myIntDateOfAscend ?: ""
 }
 
 @BindingAdapter("tvDateAndTypeOfAscend")
-fun TextView.tvDateAndTypeOfAscend(item: Comments.MyTTRouteANDWithPhotos?) {
+fun TextView.tvDateAndTypeOfAscend(item: Comments.MyTTCommentANDWithPhotos?) {
     val spSB = SpannableStringBuilder()
     spSB.apply {
         item?.myTTCommentAND?.isAscendedType?.let { type ->
@@ -121,6 +121,6 @@ fun TextView.getTextFromReferencedTextView(anotherTextView: TextView) {
 }
 
 @BindingAdapter("tvMyAscendedPartner")
-fun TextView.tvMyAscendedPartner(item: Comments.MyTTRouteANDWithPhotos?) {
+fun TextView.tvMyAscendedPartner(item: Comments.MyTTCommentANDWithPhotos?) {
     "Partner: ${item?.myTTCommentAND?.myAscendedPartner}".also { text = it }
 }

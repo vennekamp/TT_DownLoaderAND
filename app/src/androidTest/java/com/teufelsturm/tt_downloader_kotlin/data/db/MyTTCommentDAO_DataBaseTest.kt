@@ -5,8 +5,9 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
+import com.google.common.truth.Truth
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTT_RoutePhotos_AND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentType
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateTimeString
 import kotlinx.coroutines.flow.first
@@ -54,45 +55,60 @@ class MyTTCommentDAO_DataBaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetMyComment() {
-        val myTTRouteAND = MyTTCommentAND(intTTGipfelNr = 100, myIntTTWegNr = 100)
-        myTTRouteAND.strMyComment = "TEST"
-        myTTRouteAND.myIntDateOfAscend =  convertLongToDateTimeString(  Calendar.getInstance().timeInMillis - 100_000)
-        myTTRouteAND.myCommentTimStamp = Calendar.getInstance().timeInMillis
-        myTTRouteAND.isAscendedType = RouteAscentType.GETEILTEFUEHRUNG.ordinal() ?: 0
-        myTTRouteAND.myAscendedPartner = "HORST"
-        myTTRouteAND.myIntTTWegNr = -123
-        runBlocking { myTTCommentDAO.insert(myTTRouteAND) }
+        val myTTRouteAND1 = MyTTCommentAND(myIntTTGipfelNr = 100, myIntTTWegNr = 100)
+        myTTRouteAND1.strMyComment = "TEST"
+        myTTRouteAND1.myIntDateOfAscend =
+            convertLongToDateTimeString(Calendar.getInstance().timeInMillis - 100_000)
+        myTTRouteAND1.myCommentTimStamp = Calendar.getInstance().timeInMillis
+        myTTRouteAND1.isAscendedType = RouteAscentType.GETEILTEFUEHRUNG.ordinal() ?: 0
+        myTTRouteAND1.myAscendedPartner = "HORST"
+        myTTRouteAND1.myIntTTWegNr = -123
+        myTTRouteAND1.Id = runBlocking { myTTCommentDAO.insert(myTTRouteAND1) }
+
+        val myTTRouteAND2 =
+            runBlocking { myTTCommentDAO.getMyTTCommentANDByID(myTTRouteAND1.Id).first() }
+        Truth.assertThat(myTTRouteAND1.Id).isEqualTo(myTTRouteAND2.Id)
+        Truth.assertThat(myTTRouteAND1.strMyComment).isEqualTo(myTTRouteAND2.strMyComment)
+        Truth.assertThat(myTTRouteAND1.myIntDateOfAscend).isEqualTo(myTTRouteAND2.myIntDateOfAscend)
+        Truth.assertThat(myTTRouteAND1.myCommentTimStamp).isEqualTo(myTTRouteAND2.myCommentTimStamp)
+        Truth.assertThat(myTTRouteAND1.isAscendedType).isEqualTo(myTTRouteAND2.isAscendedType)
+        Truth.assertThat(myTTRouteAND1.myAscendedPartner).isEqualTo(myTTRouteAND2.myAscendedPartner)
+        Truth.assertThat(myTTRouteAND1.myIntTTWegNr).isEqualTo(myTTRouteAND2.myIntTTWegNr)
+        Truth.assertThat(myTTRouteAND1.myIntTTGipfelNr).isEqualTo(myTTRouteAND2.myIntTTGipfelNr)
+        myTTCommentDAO.deleteMyCommentById(myTTRouteAND2.Id)
 
         repeat(15)
         {
-            val myTTRouteAND1 = MyTTCommentAND(intTTGipfelNr = 100, myIntTTWegNr = 100)
-            myTTRouteAND1.strMyComment = createRandomString(100)
-            myTTRouteAND1.myIntDateOfAscend = convertLongToDateTimeString( Calendar.getInstance().timeInMillis - 100_000)
-            myTTRouteAND1.myCommentTimStamp = Calendar.getInstance().timeInMillis
-            myTTRouteAND1.isAscendedType = RouteAscentType.GETEILTEFUEHRUNG.ordinal() ?: 0
-            myTTRouteAND1.myAscendedPartner = createRandomString(10)
-            myTTRouteAND1.myIntTTWegNr = it - 50
-            runBlocking { myTTCommentDAO.insert(myTTRouteAND1) }
+            val myTTRouteANDIN = MyTTCommentAND(myIntTTGipfelNr = 100, myIntTTWegNr = 100)
+            myTTRouteANDIN.strMyComment = createRandomString(100)
+            myTTRouteANDIN.myIntDateOfAscend =
+                convertLongToDateTimeString(Calendar.getInstance().timeInMillis - 100_000)
+            myTTRouteANDIN.myCommentTimStamp = Calendar.getInstance().timeInMillis
+            myTTRouteANDIN.isAscendedType = RouteAscentType.GETEILTEFUEHRUNG.ordinal() ?: 0
+            myTTRouteANDIN.myAscendedPartner = createRandomString(10)
+            myTTRouteANDIN.myIntTTWegNr = it - 50
+            myTTRouteANDIN.Id = runBlocking { myTTCommentDAO.insert(myTTRouteANDIN) }
+
+
+            myTTCommentDAO.deleteMyCommentById(myTTRouteANDIN.Id)
+            Assert.assertNull(
+                "TEST",
+                runBlocking { myTTCommentDAO.getMyTTCommentANDByID(myTTRouteANDIN.Id ).first() })
         }
 
-        val myComment = runBlocking { myTTCommentDAO.getMyTTRouteAND(-123).first() }
+        val myComment = runBlocking { myTTCommentDAO.getMyCommentANDByRoute(-123).first() }[0]
         Assert.assertEquals("TEST", myComment.strMyComment)
-        runBlocking { myTTCommentDAO.deleteMyCommentById(-123) }
-        Assert.assertNull("TEST", runBlocking { myTTCommentDAO.getMyTTRouteAND(-123).first() })
+        runBlocking { myTTCommentDAO.deleteMyCommentById(myComment.Id) }
+        Assert.assertNull(
+            "TEST",
+            runBlocking { myTTCommentDAO.getMyTTCommentANDByID(-123).first() })
 
-        repeat(15)
-        {
-            runBlocking {
-                myTTCommentDAO.deleteMyCommentById((it - 50).toLong())
-                Assert.assertNull("TEST", runBlocking { myTTCommentDAO.getMyTTRouteAND(it - 50).first() })
-            }
-        }
     }
 
     @Test
     @Throws(Exception::class)
     fun insertAndGetMyTT_RoutePhotos_AND() {
-        val myTT_RoutePhotos_AND = MyTT_RoutePhotos_AND()
+        val myTT_RoutePhotos_AND = MyTTCommentPhotosAND()
         myTT_RoutePhotos_AND.Id = -123L
         myTT_RoutePhotos_AND.commentID = -1023L
         myTT_RoutePhotos_AND.uri = "somewhere"
@@ -107,20 +123,20 @@ class MyTTCommentDAO_DataBaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun CheckIfAnyEntriesMyTTRouteANDWithPhotosExist(){
+    fun CheckIfAnyEntriesMyTTRouteANDWithPhotosExist() {
         val entries = runBlocking { myTTCommentDAO.getAllCommentWithPhoto().first() }
         Assert.assertNotNull(entries)
-        Assert.assertEquals(4, entries.count())
+        Assert.assertEquals(69, entries.count())
     }
 
 
     @Test
     @Throws(Exception::class)
-    fun CheckIfAnyEntriesMyTTRouteANDWithPhotosByRouteIDExist(){
-        val entries = runBlocking { myTTCommentDAO.getCommentWithPhoto(6287).first() }
+    fun CheckIfAnyEntriesMyTTRouteANDWithPhotosByRouteIDExist() {
+        val entries = runBlocking { myTTCommentDAO.getCommentWithPhotoByRoute(6287).first() }
         Assert.assertNotNull(entries)
         Assert.assertEquals(2, entries.count())
-        val entry1 = entries[0].myTT_route_PhotosANDList
+        val entry1 = entries[0].myTT_comment_PhotosANDList
         Assert.assertEquals(1, entry1.count())
     }
 }

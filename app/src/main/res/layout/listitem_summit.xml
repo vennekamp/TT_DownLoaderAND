@@ -203,7 +203,7 @@
 
         <variable
             name="listMySummit"
-            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND&gt;" />
+            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND&gt;" />
 
         <variable
             name="clickListener"

@@ -9,7 +9,6 @@ import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGr
 @Entity(tableName = "TT_Route_AND")
 data class TTRouteAND(
 
-
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     var id: Long = NO_ID,

@@ -2,8 +2,8 @@ package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteWithMyCommentWithSummit
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
 
 sealed class DiffCallBacks {
 
@@ -24,17 +24,17 @@ sealed class DiffCallBacks {
         }
     }
 
-    class TTSummitANDDiffCallback : DiffUtil.ItemCallback<SummitWithMySummitComment>() {
+    class TTSummitANDDiffCallback : DiffUtil.ItemCallback<CommentsSummit.SummitWithMySummitComment>() {
         override fun areItemsTheSame(
-            oldItem: SummitWithMySummitComment,
-            newItem: SummitWithMySummitComment
+            oldItem: CommentsSummit.SummitWithMySummitComment,
+            newItem: CommentsSummit.SummitWithMySummitComment
         ): Boolean {
             return oldItem.ttSummitAND.intTTGipfelNr == newItem.ttSummitAND.intTTGipfelNr
         }
 
         override fun areContentsTheSame(
-            oldItem: SummitWithMySummitComment,
-            newItem: SummitWithMySummitComment
+            oldItem: CommentsSummit.SummitWithMySummitComment,
+            newItem: CommentsSummit.SummitWithMySummitComment
         ): Boolean {
             return oldItem == newItem
         }

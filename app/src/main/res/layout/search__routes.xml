@@ -21,29 +21,41 @@
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:scrollbars="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/editTextSuchtextWege"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilTextSuchtextWege"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
-                android:textSize="22sp"
-                android:hint="@string/strSearchSummit"
-                android:inputType="text"
-                android:onTextChanged="@{viewModel4RouteSearch.searchTextVM::onTextChanged}"
-                android:selectAllOnFocus="false"
-                android:text="@{viewModel4RouteSearch.searchTextVM.searchText}"
-                android:completionThreshold="3"
-                app:adapter="@{viewModel4RouteSearch.routeAdapter}"
+                android:background="@color/PaleGreen"
+                android:inputType="textNoSuggestions|textCapSentences|textAutoComplete|textVisiblePassword"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSearchTextRoutes" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewSearchTextRoutes">
 
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/editTextSuchtextWege"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/PaleGreen"
+                    android:completionThreshold="2"
+                    android:hint="@string/strSearchRoute"
+                    android:inputType="textNoSuggestions|textCapSentences|textAutoComplete|textVisiblePassword"
+                    android:minHeight="48dp"
+                    android:onTextChanged="@{viewModel4RouteSearch.searchTextVM::onTextChanged}"
+                    android:selectAllOnFocus="false"
+                    android:text="@{viewModel4RouteSearch.searchTextVM.searchText}"
+                    android:textSize="22sp"
+                    app:adapter="@{viewModel4RouteSearch.routeAdapter}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spinnerAreaRoute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
+                android:background="@drawable/edittext_background_route"
                 android:entries="@{viewModel4RouteSearch.spinnerAreaRoute.entries}"
                 android:minWidth="@android:dimen/app_icon_size"
                 android:minHeight="@dimen/lv_header"
@@ -72,15 +84,15 @@
                 android:text="@string/lblGebiet"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/Black"
-                app:layout_constraintStart_toStartOf="@+id/editTextSuchtextWege"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSuchtextWege" />
+                app:layout_constraintStart_toStartOf="@+id/tilTextSuchtextWege"
+                app:layout_constraintTop_toBottomOf="@+id/tilTextSuchtextWege" />
 
 
             <TextView
                 android:id="@+id/cb_mine_only"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_background"
+                android:background="@drawable/edittext_background_route"
                 android:gravity="end"
                 android:minHeight="@dimen/lv_header"
                 android:onClick="@{() -> viewModel4RouteSearch.onClickJustMySummit()}"
@@ -91,7 +103,7 @@
                 android:textColor="@color/Black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/spinnerAreaRoute"
-                app:layout_constraintEnd_toEndOf="@+id/editTextSuchtextWege" />
+                app:layout_constraintEnd_toEndOf="@+id/tilTextSuchtextWege" />
 
             <CheckBox
                 android:layout_width="wrap_content"

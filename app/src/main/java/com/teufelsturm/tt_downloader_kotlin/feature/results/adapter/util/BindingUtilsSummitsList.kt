@@ -7,15 +7,13 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTSummitAND
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitBaseDataInterface
-import com.teufelsturm.tt_downloader_kotlin.data.entity.SummitWithMySummitComment
-import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
+import com.teufelsturm.tt_downloader_kotlin.data.entity.*
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertDateTimeStringToLong
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateString
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.formatSummitComments
 
 @BindingAdapter("summitTextFormatted")
-fun TextView.summitTextFormatted(item: SummitWithMySummitComment?) {
+fun TextView.summitTextFormatted(item: CommentsSummit.SummitWithMySummitComment?) {
     text = item?.let { item.ttSummitAND.strName }
     // context.getString(R.string.summit_number, item.ttSummitAND.strName,item.ttSummitAND.intKleFuGipfelNr)
 }
@@ -30,16 +28,16 @@ fun TextView.summitTextFormatted(item: TTSummitAND?) {
 }
 
 @BindingAdapter("myCommentStringFormatted")
-fun EditText.myCommentStringFormatted(mySummits: List<MyTTSummitAND>?) {
+fun EditText.myCommentStringFormatted(mySummits: List<MyTTCommentAND>?) {
     text = mySummits?.let { formatSummitComments(it) as Editable }
 }
 
 @BindingAdapter("isAscendedFormatted")
-fun CheckBox.isAscendedFormatted(listMySummitComment: List<MyTTSummitAND>?) {
+fun CheckBox.isAscendedFormatted(listMySummitComment: List<MyTTCommentAND>?) {
     var mIsChecked = false // set the value
     listMySummitComment?.let { list ->
         list.forEach {
-            if (mIsChecked || (it.isAscendedSummit != null && it.isAscendedSummit!!)) {
+            if (mIsChecked || it.isAscendedType > 0) {
                 mIsChecked = true
                 return@let
             }
@@ -89,15 +87,18 @@ fun TextView.easiestRouteGradeTextFormatted(item: TTSummitAND) {
 
 
 @BindingAdapter("ascensionDateFormatted")
-fun TextView.ascensionDateFormatted(items: List<MyTTSummitAND>) {
+fun TextView.ascensionDateFormatted(items: List<MyTTCommentAND>) {
     var myDate: Long? = null
     items.let { list ->
         list.forEach {
-            it.myIntDateOfAscend?.let { itDate ->
-                myDate = if (myDate == null) {
-                    itDate
-                } else {
-                    (myDate!!).coerceAtMost(itDate)
+            it.myIntDateOfAscend?.let { strDate ->
+                val iDate = convertDateTimeStringToLong(strDate)
+                iDate?.let {
+                    myDate = if (myDate == null) {
+                        iDate
+                    } else {
+                        myDate!!.coerceAtMost(iDate)
+                    }
                 }
             }
         }
@@ -106,11 +107,11 @@ fun TextView.ascensionDateFormatted(items: List<MyTTSummitAND>) {
 }
 
 @BindingAdapter("myCommentTextFormatted")
-fun TextView.myCommentTextFormatted(mySummits: List<MyTTSummitAND>) {
+fun TextView.myCommentTextFormatted(mySummits: List<MyTTCommentAND>) {
     text = formatSummitComments(mySummits)
 }
 
 @BindingAdapter("android:visibility")
-fun View.setVisibility(items: List<MyTTSummitAND>) {
+fun View.setVisibility(items: List<MyTTCommentAND>) {
     visibility = if (items.isEmpty()) View.GONE else View.VISIBLE
 }

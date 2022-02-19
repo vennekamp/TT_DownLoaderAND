@@ -88,7 +88,7 @@ class RouteDetailResultFragment : Fragment() {
                 it?.let { routeDetailAdapter.submitList(it.sortCommentsBy(viewModelOrder.sortCommentsBy.value)) }
         })
 
-        viewModel.mMyTTRouteANDWithPhotos.observe(viewLifecycleOwner, {
+        viewModel.mMyTTCommentANDWithPhotos.observe(viewLifecycleOwner, {
             if (viewModel.showMyComments.value == true)
                 it?.let {
                     routeDetailAdapter.submitList(it)
@@ -111,7 +111,7 @@ class RouteDetailResultFragment : Fragment() {
                 val action =
                     RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToCommentInputFragment(
                         mRoute.myTTCommentAND,
-                        mRoute.myTT_route_PhotosANDList.toTypedArray(),
+                        mRoute.myTT_comment_PhotosANDList.toTypedArray(),
                         viewModel.mTTRouteAND.value?.ttRouteAND?.let {
                             resources.getString(
                                 R.string.formatted_route_summit_name,
@@ -237,7 +237,7 @@ class RouteDetailResultFragment : Fragment() {
                     .setInterpolator(DecelerateInterpolator()).duration = 250
                 if (viewModel.showMyComments.value == true) {
 
-                    viewModel.mMyTTRouteANDWithPhotos.value?.let { comments ->
+                    viewModel.mMyTTCommentANDWithPhotos.value?.let { comments ->
                         val commmentsPlusAdd = mutableListOf<Comments>()
                         commmentsPlusAdd.addAll(comments)
                         commmentsPlusAdd.add(Comments.AddComment)
