@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -77,7 +78,8 @@ class RouteDetailResultViewModel @Inject constructor(
     val navigateToCommentInputFragment: LiveData<Comments.MyTTCommentANDWithPhotos?>
         get() = _navigateToCommentInputFragment
 
-    private val _navigateToImageFragment: MutableLiveData<View?> =    // IMAGE (TAG1 = commentID, TAG2 = photoID)
+    private val _navigateToImageFragment: MutableLiveData<View?> =
+        // IMAGE (TAG1 = commentID, TAG2 = photoID)
         MutableLiveData()
     val navigateToImageFragment: LiveData<View?>    // IMAGE (TAG1 = commentID, TAG2 = photoID)
         get() = _navigateToImageFragment
@@ -157,7 +159,8 @@ class RouteDetailResultViewModel @Inject constructor(
                 Comments.MyTTCommentANDWithPhotos(
                     MyTTCommentAND(
                         myIntTTGipfelNr = mTTSummitAND.value!!.intTTGipfelNr,
-                        myIntTTWegNr = mTTRouteAND.value!!.ttRouteAND.intTTWegNr)
+                        myIntTTWegNr = mTTRouteAND.value!!.ttRouteAND.intTTWegNr
+                    )
                 )
             is Comments.MyTTCommentANDWithPhotos -> _navigateToCommentInputFragment.value =
                 comments
@@ -172,6 +175,11 @@ class RouteDetailResultViewModel @Inject constructor(
     }
 
     fun onClickImage(view: View) {
+        val commentID = view.getTag(R.id.TAG_COMMENT_ID) as Long
+        val photoID = view.getTag(R.id.TAG_PHOTO_ID) as Long
+        val mTriple = Triple(view, commentID, photoID)
+        Log.e(TAG, "View view.getTag(R.id.TAG_COMMENT_ID) = ${view.getTag(R.id.TAG_COMMENT_ID)} ==? ${mTriple.second}")
+        Log.e(TAG, "View view.getTag(R.id.TAG_PHOTO_ID = ${view.getTag(R.id.TAG_PHOTO_ID)} ==? ${mTriple.third}")
         _navigateToImageFragment.value = view
     }
 

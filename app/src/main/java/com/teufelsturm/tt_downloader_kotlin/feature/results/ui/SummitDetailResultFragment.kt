@@ -20,11 +20,14 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.teufelsturm.tt_downloader_kotlin.R
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.databinding.ResultSummitDetailBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitDetailAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.toHTMLSpan
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitDetailResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToRoute
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
@@ -105,16 +108,33 @@ class SummitDetailResultFragment : Fragment() {
 
         viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
             if (view == null) return@observe
-            if (view.getTag(R.id.imageView2 * 256) == null) return@observe
+            if (view.getTag(R.id.TAG_COMMENT_ID) == null
+                || view.getTag(R.id.TAG_PHOTO_ID) == null
+            ) return@observe
+
+            ViewCompat.setTransitionName(view, "small_image")
+            val commentID = view.getTag(R.id.TAG_COMMENT_ID) as Long
+            val photoID = view.getTag(R.id.TAG_PHOTO_ID) as Long
+
+            val mComment =
+                viewModel.mMyTTCommentANDWithPhotos.value.find { comment ->
+                    comment is Comments.RouteWithMyTTCommentANDWithPhotos &&
+                            commentID.equals(comment.myTTCommentAND.myTTCommentAND.Id)
+                } as? Comments.RouteWithMyTTCommentANDWithPhotos
+
+            val mPhoto = mComment?.myTTCommentAND?.myTT_comment_PhotosANDList?.find { photo ->
+                photoID.equals(photo.Id)
+            }
             ViewCompat.setTransitionName(view, "small_image")
             val extras = FragmentNavigatorExtras(view to "image_big")
 
             val action =
                 SummitDetailResultFragmentDirections.actionSummitDetailResultFragmentToZoomImageView(
-                    view.getTag(R.id.imageView2 * 256) as String,
-                    "getDescription()" // TODO implement "getDescription()"
+                    mPhoto?.uri ?: "",
+                    getDescription(mComment, mPhoto)
                 )
             findNavController().navigate(action, extras)
+
             viewModel.doneNavigationToCommentImageFragment()
         })
 
@@ -174,6 +194,40 @@ class SummitDetailResultFragment : Fragment() {
             viewModel.onChangeSortOrder(it)
         })
         return binding.root
+    }
+
+    private fun getDescription(
+        mComment: Comments.RouteWithMyTTCommentANDWithPhotos?,
+        mPhoto: MyTTCommentPhotosAND?
+    ): String {
+        val description = StringBuilder(mPhoto?.caption ?: " - ")
+        description.append("\r\n")
+        description.append(
+            "${
+                requireContext().getString(
+                    R.string.formatted_summit_number,
+                    viewModel.mTTSummit.value?.strName,
+                    viewModel.mTTSummit.value?.intTTGipfelNr?.toString()
+                )
+            }\r\n"
+        )
+        mComment?.ttRouteAND?.let {
+            if (it.blnAusrufeZeichen == true) {
+                "&#10071; ".toHTMLSpan()
+            }
+            description.append((it.WegName ?: "").toHTMLSpan())
+            it.intSterne?.let { sterne ->
+                description.append(" ")
+                repeat(sterne) { description.append("*") }
+            }
+        }
+        description.append("\r\n")
+        description.append("Mit: ")
+        description.append(mComment?.myTTCommentAND?.myTTCommentAND?.myAscendedPartner ?: " -- ")
+        description.append("\r\n")
+        description.append(mComment?.myTTCommentAND?.myTTCommentAND?.strMyComment ?: "")
+        description.append("\r\n")
+        return description.toString()
     }
 
     override fun onResume() {
@@ -238,7 +292,11 @@ class SummitDetailResultFragment : Fragment() {
                         .translationY(height.toFloat() * coorTO)
                         .alpha(alphTo)
                         .withEndAction {//in case hiding the recyclerview hide it at the end.
-                            runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(it) }
+                            runBlocking {
+                                viewModel.viewModelRouteOrderWidget.setVisibility(
+                                    it
+                                )
+                            }
                         }
                         .start()
                 }

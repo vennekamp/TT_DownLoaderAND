@@ -126,28 +126,28 @@ class RouteDetailResultFragment : Fragment() {
         })
 
         viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
-            view?.let {
-                ViewCompat.setTransitionName(it, "small_image")
-                val extras = FragmentNavigatorExtras(it to "image_big")
-                val commentID = it.getTag(R.id.TAG_COMMENT_ID * 256) as? Int
-                val photoID = it.getTag(R.id.TAG_PHOTO_ID) as? Int
-
-                val mComment =
-                    viewModel.mMyTTCommentANDWithPhotos.value?.find { myTTCommentANDWithPhotos ->
-                        commentID?.equals(myTTCommentANDWithPhotos.myTTCommentAND.Id) ?: false
-                    }
-                val mPhoto = mComment?.myTT_comment_PhotosANDList?.find { myTTCommentPhotosAND ->
-                    photoID?.equals(myTTCommentPhotosAND.Id) ?: false
+            if (view == null) return@observe
+            if (view.getTag(R.id.TAG_COMMENT_ID) == null
+                || view.getTag(R.id.TAG_PHOTO_ID) == null
+            ) return@observe
+            ViewCompat.setTransitionName(view, "small_image")
+            val extras = FragmentNavigatorExtras(view to "image_big")
+            val commentID = view.getTag(R.id.TAG_COMMENT_ID) as Long
+            val photoID = view.getTag(R.id.TAG_PHOTO_ID) as Long
+            val mComment =
+                viewModel.mMyTTCommentANDWithPhotos.value?.find { myTTCommentANDWithPhotos ->
+                    commentID.equals(myTTCommentANDWithPhotos.myTTCommentAND.Id)
                 }
-                val action =
-                    RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToZoomImageView(
-                        mPhoto?.uri ?: "",
-                        getDescription(mComment, mPhoto)
-
-                    )
-                findNavController().navigate(action, extras)
-                viewModel.doneNavigationToCommentImageFragment()
+            val mPhoto = mComment?.myTT_comment_PhotosANDList?.find { myTTCommentPhotosAND ->
+                photoID.equals(myTTCommentPhotosAND.Id)
             }
+            val action =
+                RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToZoomImageView(
+                    mPhoto?.uri ?: "",
+                    getDescription(mComment, mPhoto)
+                )
+            findNavController().navigate(action, extras)
+            viewModel.doneNavigationToCommentImageFragment()
         })
         return binding.root
     }
@@ -177,6 +177,11 @@ class RouteDetailResultFragment : Fragment() {
                 repeat(sterne) { description.append("*") }
             }
         }
+        description.append("\r\n")
+        description.append("Mit: ")
+        description.append(mComment?.myTTCommentAND?.myAscendedPartner ?: " -- ")
+        description.append("\r\n")
+        description.append(mComment?.myTTCommentAND?.strMyComment ?: "")
         description.append("\r\n")
         return description.toString()
     }

@@ -34,8 +34,10 @@ class CommentImageCarouselAdapter : Carousel.Adapter {
                     when (childView) {
                         is ImageView -> {
                             childView.setTag(R.id.TAG_COMMENT_ID, data[index].commentID)
+                            Log.e(TAG,"childView.setTag(R.id.TAG_COMMENT_ID, ${data[index].commentID}")
                             childView.setTag(R.id.TAG_PHOTO_ID, data[index].Id
                             )
+                            Log.e(TAG,"childView.setTag(R.id.TAG_PHOTO_ID, ${data[index].Id}")
                             childView.load(Uri.parse(data[index].uri)) {
                                 Log.v(
                                     TAG,
