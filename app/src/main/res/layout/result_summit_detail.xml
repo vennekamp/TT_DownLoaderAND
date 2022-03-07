@@ -29,27 +29,10 @@
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
                 app:summit4NeighbourTextFormatted="@{summit}"
-                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(0)}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.size() > 0 ? viewModel4SummitResult.ttNeigbours.get(0) : null}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(0)}"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Falkenstein WächterNadel Lange" />
-
-            <Button
-                android:id="@+id/btn_neighbour_summit2"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/NoGap"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:textAllCaps="false"
-                app:summit4NeighbourTextFormatted="@{summit}"
-                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(2)}"
-                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(2)}"
-                app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit1"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Furz" />
-
 
             <Button
                 android:id="@+id/btn_neighbour_summit3"
@@ -61,10 +44,28 @@
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
                 app:summit4NeighbourTextFormatted="@{summit}"
-                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(1)}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.size() > 1 ? viewModel4SummitResult.ttNeigbours.get(1) : null}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(1)}"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="kurz" />
+
+            <Button
+                android:id="@+id/btn_neighbour_summit2"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/NoGap"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:textAllCaps="false"
+                app:summit4NeighbourTextFormatted="@{summit}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.size() > 2 ? viewModel4SummitResult.ttNeigbours.get(2) : null}"
+                android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(2)}"
+                app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit1"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Furz" />
+
+
             <Button
                 android:id="@+id/btn_neighbour_summit4"
                 style="?android:attr/buttonStyleSmall"
@@ -75,29 +76,32 @@
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:textAllCaps="false"
                 app:summit4NeighbourTextFormatted="@{summit}"
-                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.get(3)}"
+                app:neighbour4NeighbourTextFormatted="@{viewModel4SummitResult.ttNeigbours.size() > 3 ? viewModel4SummitResult.ttNeigbours.get(3) : null}"
                 android:onClick="@{(Int) -> viewModel4SummitResult.onClickNeighbour(3)}"
                 app:layout_constraintBaseline_toBaselineOf="@id/btn_neighbour_summit3"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="lang lang lang lang lang lang lang lang lang" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonSummitAscendDay_inComment"
+                android:id="@+id/btn_show_my_summit_comments"
                 style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:enabled="true"
+                android:gravity="center"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                app:icon="@drawable/ic_baseline_read_more_24"
+                android:onClick="@{() -> viewModel4SummitResult.onClickShowMyComments()}"
+                app:icon="@drawable/ic_read_more_anim_in2"
                 app:iconPadding="0dp"
                 app:iconSize="24dp"
-                android:gravity="center"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded"
-                app:layout_constraintStart_toEndOf="@+id/cb_summit_ascended"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/flow_neighbours_row2"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/cb_summit_ascended"
+                app:layout_constraintTop_toBottomOf="@+id/flow_neighbours_row2"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
 
             <CheckBox
                 android:id="@+id/cb_summit_ascended"
@@ -112,9 +116,9 @@
                 android:clickable="false"
                 app:flow_verticalBias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSummitAscendDay_inComment"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonSummitAscendDay_inComment"
-                app:layout_constraintTop_toTopOf="@+id/buttonSummitAscendDay_inComment" />
+                app:layout_constraintEnd_toStartOf="@+id/btn_show_my_summit_comments"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_show_my_summit_comments"
+                app:layout_constraintTop_toTopOf="@+id/btn_show_my_summit_comments" />
 
             <EditText
                 android:id="@+id/edt_my_summit_comment"
@@ -133,7 +137,7 @@
                 android:selectAllOnFocus="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonSummitAscendDay_inComment" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_show_my_summit_comments" />
 
             <TextView
                 android:id="@+id/tv_summit_name"
@@ -151,6 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
+                android:contentDescription="@string/my_comment"
                 android:onClick="@{(view) -> viewModel4SummitResult.onSummitGeoClick()}"
                 android:src="@drawable/ic_baseline_location_on_24"
                 app:tint="@color/design_default_color_primary"
@@ -227,7 +232,7 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel4SummitResult.queriesRunning == 0 ? View.GONE : View.VISIBLE}"
+                android:visibility="@{viewModel4SummitResult.queriesRunning > 0 ? View.VISIBLE : View.GONE}"
                 android:paddingTop="50dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -334,7 +339,7 @@
 
         <variable
             name="listMyComment"
-            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND&gt;" />
+            type="List&lt;com.teufelsturm.tt_downloader_kotlin.data.entity.Comments.MyTTCommentANDWithPhotos&gt;" />
 
         <variable
             name="summit"

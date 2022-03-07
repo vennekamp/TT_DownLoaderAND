@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "Summit_TSP_Order")
+@Entity(tableName = "Summit_TravSalePers_Order")
 class SummitTravSalePersOrder {
     //      RecNo	FieldName	            SQLType
     //      1	    _id	                    INTEGER

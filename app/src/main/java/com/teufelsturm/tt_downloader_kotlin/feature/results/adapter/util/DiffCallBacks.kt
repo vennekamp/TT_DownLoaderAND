@@ -56,4 +56,38 @@ sealed class DiffCallBacks {
             return oldItem == newItem
         }
     }
+
+
+    class TTCommentANDDiffCallback : DiffUtil.ItemCallback<Comments>() {
+        override fun areItemsTheSame(
+            oldItem: Comments,
+            newItem: Comments
+        ): Boolean {
+            return false // oldItem._id == newItem._id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: Comments,
+            newItem: Comments
+        ): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    class RouteWithMyTTCommentANDWithPhotosDiffCallback : DiffUtil.ItemCallback<Comments.RouteWithMyTTCommentANDWithPhotos>() {
+        override fun areItemsTheSame(
+            oldItem: Comments.RouteWithMyTTCommentANDWithPhotos,
+            newItem: Comments.RouteWithMyTTCommentANDWithPhotos
+        ): Boolean {
+            return false // oldItem._id == newItem._id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: Comments.RouteWithMyTTCommentANDWithPhotos,
+            newItem: Comments.RouteWithMyTTCommentANDWithPhotos
+        ): Boolean {
+            return oldItem == newItem
+        }
+    }
+
 }

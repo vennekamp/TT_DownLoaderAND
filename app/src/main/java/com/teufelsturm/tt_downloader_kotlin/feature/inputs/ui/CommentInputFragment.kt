@@ -103,7 +103,7 @@ class CommentInputFragment : Fragment() {
                 it.setHomeAsUpIndicator(
                     android.R.drawable.ic_delete
                 )
-                it.title = args.myRouteName
+                it.title = args.myRouteOrSummitName
             }
         }
         binding.carouselView.pageCount =

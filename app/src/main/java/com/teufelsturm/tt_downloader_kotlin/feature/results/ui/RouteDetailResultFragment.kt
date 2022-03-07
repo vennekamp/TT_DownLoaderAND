@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
+import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.OrderCommentsDialogFragment
 import com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.ViewModel4CommentOrder
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsBy
@@ -28,7 +29,6 @@ import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCo
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.toHTMLSpan
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.RouteDetailResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.StringBuilder
 
 private const val TAG = "RouteDetailResultFrag"
 
@@ -82,7 +82,6 @@ class RouteDetailResultFragment : Fragment() {
             }
         )
 
-
         viewModel.mTTRouteComments.observe(viewLifecycleOwner, {
             if (viewModel.showMyComments.value != true)
                 it?.let { routeDetailAdapter.submitList(it.sortCommentsBy(viewModelOrder.sortCommentsBy.value)) }
@@ -126,27 +125,40 @@ class RouteDetailResultFragment : Fragment() {
             }
         })
 
-
-
         viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
-            if (view == null) return@observe
-            ViewCompat.setTransitionName(view, "small_image")
-            val extras = FragmentNavigatorExtras(view to "image_big")
+            view?.let {
+                ViewCompat.setTransitionName(it, "small_image")
+                val extras = FragmentNavigatorExtras(it to "image_big")
+                val commentID = it.getTag(R.id.TAG_COMMENT_ID * 256) as? Int
+                val photoID = it.getTag(R.id.TAG_PHOTO_ID) as? Int
 
-            val action =
-                RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToZoomImageView(
-                    view.getTag(R.id.imageView2 * 256) as String,
-                    getDescription()
+                val mComment =
+                    viewModel.mMyTTCommentANDWithPhotos.value?.find { myTTCommentANDWithPhotos ->
+                        commentID?.equals(myTTCommentANDWithPhotos.myTTCommentAND.Id) ?: false
+                    }
+                val mPhoto = mComment?.myTT_comment_PhotosANDList?.find { myTTCommentPhotosAND ->
+                    photoID?.equals(myTTCommentPhotosAND.Id) ?: false
+                }
+                val action =
+                    RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToZoomImageView(
+                        mPhoto?.uri ?: "",
+                        getDescription(mComment, mPhoto)
+
                     )
-
-            findNavController().navigate(action, extras)
-            viewModel.doneNavigationToCommentImageFragment()
+                findNavController().navigate(action, extras)
+                viewModel.doneNavigationToCommentImageFragment()
+            }
         })
         return binding.root
     }
 
-    private fun getDescription() : String {
-        val describtion = StringBuilder(
+    private fun getDescription(
+        mComment: Comments.MyTTCommentANDWithPhotos?,
+        mPhoto: MyTTCommentPhotosAND?
+    ): String {
+        val description = StringBuilder(mPhoto?.caption ?: " - ")
+        description.append("\r\n")
+        description.append(
             "${
                 requireContext().getString(
                     R.string.formatted_summit_number,
@@ -159,13 +171,14 @@ class RouteDetailResultFragment : Fragment() {
             if (it.blnAusrufeZeichen == true) {
                 "&#10071; ".toHTMLSpan()
             }
-            describtion.append((it.WegName ?: "").toHTMLSpan())
+            description.append((it.WegName ?: "").toHTMLSpan())
             it.intSterne?.let { sterne ->
-                describtion.append(" ")
-                repeat(sterne) { describtion.append("*") }
+                description.append(" ")
+                repeat(sterne) { description.append("*") }
             }
         }
-        return describtion.toString()
+        description.append("\r\n")
+        return description.toString()
     }
 
     override fun onResume() {
@@ -178,7 +191,7 @@ class RouteDetailResultFragment : Fragment() {
             val translationYTo =
                 if (it == true) -binding.editTextMyRouteCommentRoute.height.toFloat() else 0f
 
-            binding.btnShowMyComments.icon =
+            binding.btnShowMyRouteComments.icon =
                 AnimatedVectorDrawableCompat.create(binding.root.context, drawableID)
             binding.editTextMyRouteCommentRoute.pivotY = 0f
             binding.listCommentFound.pivotY = 1f
@@ -204,8 +217,8 @@ class RouteDetailResultFragment : Fragment() {
                 }
                 .start()
 
-            if (binding.btnShowMyComments.icon is AnimatedVectorDrawableCompat) {
-                (binding.btnShowMyComments.icon as AnimatedVectorDrawableCompat).start()
+            if (binding.btnShowMyRouteComments.icon is AnimatedVectorDrawableCompat) {
+                (binding.btnShowMyRouteComments.icon as AnimatedVectorDrawableCompat).start()
             }
         })
         super.onResume()
@@ -215,13 +228,12 @@ class RouteDetailResultFragment : Fragment() {
         viewModel.showMyComments.value?.let {
             val drawableID =
                 if (it) R.drawable.ic_read_more_anim_in2 else R.drawable.ic_read_more_anim_out2
-            binding.btnShowMyComments.icon =
+            binding.btnShowMyRouteComments.icon =
                 AnimatedVectorDrawableCompat.create(binding.root.context, drawableID)
             binding.editTextMyRouteCommentRoute.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun animateRecyclerView() {
         binding.listCommentFound.animate()
             .alpha(0.2f)
@@ -240,17 +252,19 @@ class RouteDetailResultFragment : Fragment() {
                     viewModel.mMyTTCommentANDWithPhotos.value?.let { comments ->
                         val commmentsPlusAdd = mutableListOf<Comments>()
                         commmentsPlusAdd.addAll(comments)
+                        // add the 'plus'-Add-Comment item.
                         commmentsPlusAdd.add(Comments.AddComment)
                         routeDetailAdapter.submitList(commmentsPlusAdd)
                     }
                 } else {
                     routeDetailAdapter.submitList(viewModel.mTTRouteComments.value)
                 }
-                routeDetailAdapter.notifyDataSetChanged()
+                // routeDetailAdapter.notifyDataSetChanged()
             }
             .start()
     }
 
+    // region Menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.route_detail_result, menu)
     }
@@ -277,4 +291,5 @@ class RouteDetailResultFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+    // endregion
 }

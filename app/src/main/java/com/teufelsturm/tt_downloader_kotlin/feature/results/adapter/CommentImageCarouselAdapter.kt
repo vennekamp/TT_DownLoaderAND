@@ -33,7 +33,9 @@ class CommentImageCarouselAdapter : Carousel.Adapter {
                     Log.v(TAG, " children --> type ${childView.let { it::class.simpleName }}")
                     when (childView) {
                         is ImageView -> {
-                            childView.setTag(R.id.imageView2 *256, data[index].uri)
+                            childView.setTag(R.id.TAG_COMMENT_ID, data[index].commentID)
+                            childView.setTag(R.id.TAG_PHOTO_ID, data[index].Id
+                            )
                             childView.load(Uri.parse(data[index].uri)) {
                                 Log.v(
                                     TAG,

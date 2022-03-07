@@ -11,6 +11,7 @@ import com.teufelsturm.tt_downloader_kotlin.data.entity.*
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertDateTimeStringToLong
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateString
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.formatSummitComments
+import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.formatSummitFromMyCommentComments
 
 @BindingAdapter("summitTextFormatted")
 fun TextView.summitTextFormatted(item: CommentsSummit.SummitWithMySummitComment?) {
@@ -28,16 +29,30 @@ fun TextView.summitTextFormatted(item: TTSummitAND?) {
 }
 
 @BindingAdapter("myCommentStringFormatted")
-fun EditText.myCommentStringFormatted(mySummits: List<MyTTCommentAND>?) {
+fun EditText.myCommentStringFormatted(mySummits: List<Comments.MyTTCommentANDWithPhotos>?) {
     text = mySummits?.let { formatSummitComments(it) as Editable }
 }
 
 @BindingAdapter("isAscendedFormatted")
-fun CheckBox.isAscendedFormatted(listMySummitComment: List<MyTTCommentAND>?) {
+fun CheckBox.isAscendedFormatted(listMySummitComment: List<Comments.MyTTCommentANDWithPhotos>?) {
     var mIsChecked = false // set the value
     listMySummitComment?.let { list ->
         list.forEach {
-            if (mIsChecked || it.isAscendedType > 0) {
+            if (mIsChecked || it.myTTCommentAND.isAscendedType > 0) {
+                mIsChecked = true
+                return@let
+            }
+        }
+    }
+    this.isChecked = mIsChecked
+}
+
+@BindingAdapter("isAscendedFromMyCommentFormatted")
+fun CheckBox.isAscendedFromMyCommentFormatted(listMySummitComment: List<MyTTCommentAND>?) {
+    var mIsChecked = false // set the value
+    listMySummitComment?.let { list ->
+        list.forEach {
+            if (mIsChecked || it.isAscendedType > 0) { // TODO: auf den richtigen Wert ändern (mindestens VoG...?)
                 mIsChecked = true
                 return@let
             }
@@ -108,7 +123,7 @@ fun TextView.ascensionDateFormatted(items: List<MyTTCommentAND>) {
 
 @BindingAdapter("myCommentTextFormatted")
 fun TextView.myCommentTextFormatted(mySummits: List<MyTTCommentAND>) {
-    text = formatSummitComments(mySummits)
+    text = formatSummitFromMyCommentComments(mySummits)
 }
 
 @BindingAdapter("android:visibility")

@@ -1,0 +1,4 @@
+<resources>
+    <item type="id" name="TAG_COMMENT_ID"/>
+    <item type="id" name="TAG_PHOTO_ID"/>
+</resources>

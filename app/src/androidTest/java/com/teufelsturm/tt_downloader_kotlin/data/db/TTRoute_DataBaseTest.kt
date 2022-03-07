@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
+import com.google.common.truth.Truth
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteWithMyCommentWithSummit
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
@@ -164,4 +165,5 @@ class TTRoute_DataBaseTest {
         )
         Assert.assertEquals(2, data1?.get(0)?.myTTCommentANDList?.size)
     }
+
 }

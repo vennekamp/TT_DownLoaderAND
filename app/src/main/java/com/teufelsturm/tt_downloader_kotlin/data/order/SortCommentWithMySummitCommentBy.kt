@@ -1,6 +1,7 @@
 package com.teufelsturm.tt_downloader_kotlin.data.order
 
 import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentInterface
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 
 /**
@@ -49,7 +50,7 @@ fun <E: CommentInterface> List<E>.sortCommentsBy(
         }
     }
 
-fun <E: CommentsSummit.CommentsWithRouteWithSummit> List<E>.sortCommentsWithRouteSummitBy(
+fun <E: Comments.CommentsWithRouteWithSummit> List<E>.sortCommentsWithRouteSummitBy(
     sortCommentBy: SortCommentsWithRouteWithSummitBy? = SortCommentsWithRouteWithSummitBy.GipfelName(
         Order.Ascending
     )
@@ -72,7 +73,7 @@ fun <E: CommentsSummit.CommentsWithRouteWithSummit> List<E>.sortCommentsWithRout
         }
 
 private fun comparatorGipfelName() =
-    compareBy<CommentsSummit.CommentsWithRouteWithSummit> { it.strName?.lowercase() }.thenBy { it.WegName }
+    compareBy<Comments.CommentsWithRouteWithSummit> { it.strName?.lowercase() }.thenBy { it.WegName }
 
 private fun comparatorGipfelNameDescending() =
-    compareByDescending<CommentsSummit.CommentsWithRouteWithSummit> { it.strName?.lowercase() }.thenByDescending { it.WegName }
+    compareByDescending<Comments.CommentsWithRouteWithSummit> { it.strName?.lowercase() }.thenByDescending { it.WegName }

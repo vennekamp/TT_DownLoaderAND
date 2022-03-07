@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/PaleBlue"
+            android:background="@{ttroute == null ? @color/PaleYellow: @color/PaleBlue}"
             android:layout_margin="5dp">
 
             <TextView
@@ -28,7 +28,8 @@
                 android:layout_marginBottom="16dp"
                 android:textAllCaps="true"
                 android:padding="8dp"
-                app:tvMyAscendedPartner="@{myRouteWithPhotos}"
+                app:tvRouteNameInCommentFormatted="@{ttroute}"
+                android:visibility="@{ttroute == null ? View.GONE: View.VISIBLE}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{() -> clickListenerComment.onClick(myRouteWithPhotos)}"
+                    android:onClick="@{() -> clickListenerComment.onClick(myCommentWithPhotos)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.95"
@@ -253,7 +254,7 @@
                 style="@style/tv_item_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tvDateAndTypeOfAscend="@{myRouteWithPhotos}"
+                app:tvDateAndTypeOfAscend="@{myCommentWithPhotos.myTTCommentAND}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_image_caption"
@@ -264,7 +265,7 @@
                 style="@style/tv_item_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tvMyAscendedPartner="@{myRouteWithPhotos}"
+                app:tvMyAscendedPartner="@{myCommentWithPhotos.myTTCommentAND}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_date_of_ascend"
@@ -275,7 +276,7 @@
                 style="@style/tv_item_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@{myRouteWithPhotos.myTTCommentAND.strMyComment}"
+                android:text="@{myCommentWithPhotos.myTTCommentAND.strMyComment}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_ascended_partner"
@@ -286,9 +287,13 @@
     </androidx.cardview.widget.CardView>
 
     <data>
-
+        <import type="java.util.List"/>
+        <import type="android.view.View"/>
         <variable
-            name="myRouteWithPhotos"
+            name="ttroute"
+            type="com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND" />
+        <variable
+            name="myCommentWithPhotos"
             type="com.teufelsturm.tt_downloader_kotlin.data.entity.Comments.MyTTCommentANDWithPhotos" />
         <variable
             name="clickListenerImage"

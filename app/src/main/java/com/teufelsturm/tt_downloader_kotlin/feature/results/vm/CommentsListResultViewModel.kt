@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTCommentDAO
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWithSummitBy
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsWithRouteSummitBy
@@ -27,9 +28,9 @@ class CommentsListResultViewModel @Inject constructor(
 
     val viewModelCommentOrderWidget = ViewModelCommentOrderWidget()
 
-    private var _ttCommentANDList: MutableLiveData<List<CommentsSummit.CommentsWithRouteWithSummit>> =
+    private var _ttCommentANDList: MutableLiveData<List<Comments.CommentsWithRouteWithSummit>> =
         MutableLiveData()
-    val ttCommentANDList: LiveData<List<CommentsSummit.CommentsWithRouteWithSummit>>
+    val ttCommentANDList: LiveData<List<Comments.CommentsWithRouteWithSummit>>
         get() = _ttCommentANDList
     private val _queryRunning: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val queryRunning: LiveData<Boolean>

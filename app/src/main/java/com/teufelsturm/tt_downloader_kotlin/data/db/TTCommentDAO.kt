@@ -59,7 +59,7 @@ interface TTCommentDAO {
         area: String,
         intMinSchwierigkeit: Int,
         intMaxSchwierigkeit: Int
-    ): Flow<List<CommentsSummit.CommentsWithRouteWithSummit>>
+    ): Flow<List<Comments.CommentsWithRouteWithSummit>>
 
     @Query(
         """SELECT 

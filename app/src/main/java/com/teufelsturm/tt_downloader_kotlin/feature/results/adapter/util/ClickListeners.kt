@@ -36,8 +36,8 @@ class TTRouteClickListener(val clickListener: (routeNumber: Int, summitNumber: I
  *  for [ResultsRoutesListBinding], [ListitemCommentBinding]
  * - contains [RouteWithMyRouteComment] and [TTSummitAND] in XML File
  */
-class TTCommentClickListener(val clickListener: (CommentsSummit.CommentsWithRouteWithSummit) -> Unit) {
-    fun onClick(ttCommentAND: CommentsSummit.CommentsWithRouteWithSummit) =
+class TTCommentClickListener(val clickListener: (Comments.CommentsWithRouteWithSummit) -> Unit) {
+    fun onClick(ttCommentAND: Comments.CommentsWithRouteWithSummit) =
         clickListener(ttCommentAND)
 }
 

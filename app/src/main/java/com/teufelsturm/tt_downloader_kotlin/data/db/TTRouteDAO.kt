@@ -111,7 +111,6 @@ interface TTRouteDAO {
     @Query("SELECT * FROM TT_Route_AND WHERE intTTGipfelNr = :intTTGipfelNr")
     fun getRouteListWithMyCommentWithSummit(intTTGipfelNr: Int): LiveData<List<RouteWithMyCommentWithSummit>>
 
-
     @Transaction
     @Query(
         """SELECT COUNT(DISTINCT(a._id))

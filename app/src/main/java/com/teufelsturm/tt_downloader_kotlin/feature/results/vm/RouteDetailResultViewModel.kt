@@ -53,9 +53,6 @@ class RouteDetailResultViewModel @Inject constructor(
     val queriesRunning: LiveData<Int>
         get() = _queriesRunning
 
-//    // Creating adapter for spinner
-//    val spinnerHowAscended = ViewModelSpinnerSpannable(adapter)
-
     private val _mTTRouteComments: MutableLiveData<List<Comments.TTCommentAND>> =
         MutableLiveData<List<Comments.TTCommentAND>>()
     val mTTRouteComments: LiveData<List<Comments.TTCommentAND>>
@@ -80,9 +77,9 @@ class RouteDetailResultViewModel @Inject constructor(
     val navigateToCommentInputFragment: LiveData<Comments.MyTTCommentANDWithPhotos?>
         get() = _navigateToCommentInputFragment
 
-    private val _navigateToImageFragment: MutableLiveData<View?> =
+    private val _navigateToImageFragment: MutableLiveData<View?> =    // IMAGE (TAG1 = commentID, TAG2 = photoID)
         MutableLiveData()
-    val navigateToImageFragment: LiveData<View?>
+    val navigateToImageFragment: LiveData<View?>    // IMAGE (TAG1 = commentID, TAG2 = photoID)
         get() = _navigateToImageFragment
 
     fun queryData(intTTWegNr: Int, intTTGipfelNr: Int) {
@@ -166,6 +163,7 @@ class RouteDetailResultViewModel @Inject constructor(
                 comments
             is Comments.RouteWithMyComment -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${comments.javaClass}")
             is Comments.TTCommentAND -> throw IllegalArgumentException("onClickComment(routeComments: RouteComments) -> ${comments.javaClass}")
+            is Comments.RouteWithMyTTCommentANDWithPhotos -> throw IllegalArgumentException("Parameter 'Comments.RouteWithMyTTCommentANDWithPhotos' not expected!")
         }
     }
 

@@ -104,6 +104,12 @@
         <argument
             android:name="argNavigatingToSummit"
             app:argType="com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit" />
+        <action
+            android:id="@+id/action_summit_DetailResultFragment_to_commentInputFragment"
+            app:destination="@id/commentInputFragment" />
+        <action
+            android:id="@+id/action_summit_DetailResultFragment_to_zoomImageView"
+            app:destination="@id/zoomImageView" />
     </fragment>
     <fragment
         android:id="@+id/routeDetailResultFragment"
@@ -198,7 +204,7 @@
             android:name="lstMyTT_RoutePhotos_AND"
             app:argType="com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND[]"  />
         <argument
-            android:name="MyRouteName"
+            android:name="MyRouteOrSummitName"
             app:argType="string"
             app:nullable="true" />
         <action

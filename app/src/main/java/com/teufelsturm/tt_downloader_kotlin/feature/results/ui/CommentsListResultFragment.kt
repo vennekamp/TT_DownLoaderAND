@@ -12,6 +12,7 @@ import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.teufelsturm.tt_downloader_kotlin.R
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsWithRouteSummitBy
 import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsCommentsListBinding
@@ -66,10 +67,10 @@ class CommentsListResultFragment @Inject constructor() : Fragment() {
         binding.listCommentsFound.adapter = commentsListdapter
 
         commentsListdapter.setOnClickListener(
-            onClickListenerRoute = TTCommentClickListener { comment: CommentsSummit.CommentsWithRouteWithSummit ->
+            onClickListenerRoute = TTCommentClickListener { comment: Comments.CommentsWithRouteWithSummit ->
                 this.viewModel.onClickItem(comment.intTTWegNr, comment.intTTGipfelNr!!)
             },
-            onClickListenerSummit = TTCommentClickListener { comment: CommentsSummit.CommentsWithRouteWithSummit ->
+            onClickListenerSummit = TTCommentClickListener { comment: Comments.CommentsWithRouteWithSummit ->
                 this.viewModel.onClickItem(null, comment.intTTGipfelNr!!)
             },
         )

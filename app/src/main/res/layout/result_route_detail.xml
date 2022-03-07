@@ -12,25 +12,25 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_show_my_comments"
+                android:id="@+id/btn_show_my_route_comments"
                 style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:enabled="true"
+                android:gravity="center"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                app:icon="@drawable/ic_read_more_anim_in2"
-                android:enabled="true"
                 android:onClick="@{() -> viewModel4RouteResultInSummit.onClickShowMyComments()}"
+                app:icon="@drawable/ic_read_more_anim_in2"
                 app:iconPadding="0dp"
                 app:iconSize="24dp"
-                android:gravity="center"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/til_route_ascent_type"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tableCol_summit_name_in_comment" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_tableCol_summit_name_in_comment"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Rounded" />
 
             <TextView
                 android:id="@+id/editTextMyRouteComment_route"
@@ -46,7 +46,7 @@
                 android:ellipsize="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_show_my_comments" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_show_my_route_comments" />
 
             <TextView
                 android:id="@+id/tv_tableCol_summit_name_in_comment"
@@ -84,10 +84,10 @@
                 android:singleLine="true"
                 android:textAlignment="viewStart"
                 android:gravity="start"
-                app:layout_constraintBottom_toBottomOf="@+id/btn_show_my_comments"
-                app:layout_constraintEnd_toStartOf="@+id/btn_show_my_comments"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_show_my_route_comments"
+                app:layout_constraintEnd_toStartOf="@+id/btn_show_my_route_comments"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/btn_show_my_comments"
+                app:layout_constraintTop_toTopOf="@+id/btn_show_my_route_comments"
                 tools:drawableStart="@drawable/ic_ruheschlinge"
                 tools:text="  RS: mit Ruheschlinge"  />
 

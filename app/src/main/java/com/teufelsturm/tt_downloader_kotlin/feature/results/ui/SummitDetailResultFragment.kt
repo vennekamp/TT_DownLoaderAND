@@ -5,21 +5,32 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.databinding.ResultSummitDetailBinding
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitDetailAdapter
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitDetailResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToRoute
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
-import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 private const val TAG = "SummitDetailResultFrag"
@@ -27,7 +38,8 @@ private const val TAG = "SummitDetailResultFrag"
 @AndroidEntryPoint
 class SummitDetailResultFragment : Fragment() {
 
-    var detailAdapter: SummitDetailAdapter = SummitDetailAdapter()
+    var summitDetailAdapter: SummitDetailAdapter = SummitDetailAdapter()
+    // var summitCommentDetailAdapter: SummitCommentDetailAdapter = SummitCommentDetailAdapter()
 
     private lateinit var binding: ResultSummitDetailBinding
 
@@ -59,14 +71,61 @@ class SummitDetailResultFragment : Fragment() {
         // to all the data in the ViewModel
         binding.viewModel4SummitResult = viewModel
 
-        binding.listRouteFound.adapter = detailAdapter
-        detailAdapter.setOnClickListener(TTRouteClickListener { routeId, _ ->
+        binding.listRouteFound.adapter = summitDetailAdapter
+        summitDetailAdapter.setOnClickListener(TTRouteClickListener { routeId, _ ->
             // Toast.makeText(context, "Route-ID: $routeId", Toast.LENGTH_LONG).show()
             this.viewModel.onClickRoute(routeId)
+        },
+            RouteCommentsClickListener { RouteComments ->
+                this.viewModel.onClickComment(RouteComments)
+            },
+            CommentImageClickListener { image ->
+                this.viewModel.onClickImage(image)
+            }
+        )
+
+        viewModel.navigateToCommentInputFragment.observe(viewLifecycleOwner, { myComment ->
+            myComment?.let { mRoute ->
+                Toast.makeText(
+                    requireContext(),
+                    "Clicked existing comment or 'Add Comment'.... ${mRoute.myTTCommentAND.strMyComment} ",
+                    Toast.LENGTH_SHORT
+                ).show()
+                val action =
+                    SummitDetailResultFragmentDirections.actionSummitDetailResultFragmentToCommentInputFragment(
+                        mRoute.myTTCommentAND,
+                        mRoute.myTT_comment_PhotosANDList.toTypedArray(),
+                        viewModel.mTTSummit.value?.strName
+                            ?: resources.getString(R.string.my_comment)
+                    )
+                findNavController().navigate(action)
+                viewModel.doneNavigationToCommentInputFragment()
+            }
         })
-        viewModel.ttRoutes.observe(viewLifecycleOwner, {
-            detailAdapter.submitList(it)
+
+        viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
+            if (view == null) return@observe
+            if (view.getTag(R.id.imageView2 * 256) == null) return@observe
+            ViewCompat.setTransitionName(view, "small_image")
+            val extras = FragmentNavigatorExtras(view to "image_big")
+
+            val action =
+                SummitDetailResultFragmentDirections.actionSummitDetailResultFragmentToZoomImageView(
+                    view.getTag(R.id.imageView2 * 256) as String,
+                    "getDescription()" // TODO implement "getDescription()"
+                )
+            findNavController().navigate(action, extras)
+            viewModel.doneNavigationToCommentImageFragment()
         })
+
+        lifecycleScope.launch {
+            viewModel.ttRoutes.collect {
+                if (viewModel.showMyComments.value != true)
+                    it.let {
+                        summitDetailAdapter.submitList(it)
+                    }
+            }
+        }
 
         // Add an Observer on the state variable for Navigating when and item is clicked.
         viewModel.navigateToRouteDetail.observe(viewLifecycleOwner, { intTTRouteNr ->
@@ -103,13 +162,9 @@ class SummitDetailResultFragment : Fragment() {
                 viewModel.doneNavigatingSummit()
             }
         })
-        viewModel.mTTSummit.observe(viewLifecycleOwner, Observer {
+        viewModel.mTTSummit.observe(viewLifecycleOwner, {
             binding.summit = it
         })
-        viewModel.mMYTTComment.observe(viewLifecycleOwner, {
-            binding.listMyComment = it
-        })
-
         // this Fragment has a ActionBar Options Menu
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.title = "Gipfel"
@@ -117,15 +172,50 @@ class SummitDetailResultFragment : Fragment() {
 
         viewModel.viewModelRouteOrderWidget.sortRoutesBy.observe(viewLifecycleOwner, {
             viewModel.onChangeSortOrder(it)
-            detailAdapter.notifyDataSetChanged()
         })
-
         return binding.root
     }
 
     override fun onResume() {
-        super.onResume()
-        // at 'onResume' the view is created, how can it be forced to be measured?
+        restoreAnimatedState()
+        viewModel.showMyComments.observe(viewLifecycleOwner, {
+            if (it == null) return@observe
+            val drawableID =
+                if (it != true) R.drawable.ic_read_more_anim_in2 else R.drawable.ic_read_more_anim_out2
+            val scaleYTo = if (it != true) 0f else 1f
+            val translationYTo =
+                if (it != true) -binding.edtMySummitComment.height.toFloat() else 0f
+
+            binding.btnShowMySummitComments.icon =
+                AnimatedVectorDrawableCompat.create(binding.root.context, drawableID)
+            binding.edtMySummitComment.pivotY = 0f
+            binding.listRouteFound.pivotY = 1f
+            binding.listRouteFound.pivotX = binding.listRouteFound.measuredWidth.toFloat()
+            animateRecyclerView()
+            binding.edtMySummitComment.animate()
+                .scaleY(scaleYTo)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .setDuration(500L)
+                .start()
+            binding.listRouteFound.animate()
+                .translationY(translationYTo)
+                .setDuration(500L)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .withStartAction {
+                    binding.edtMySummitComment.visibility = View.VISIBLE
+                }
+                .withEndAction {
+                    if (scaleYTo == 0f) {
+                        binding.edtMySummitComment.visibility = View.GONE
+                        binding.listRouteFound.translationY = 0f
+                    }
+                }
+                .start()
+
+            if (binding.btnShowMySummitComments.icon is AnimatedVectorDrawableCompat) {
+                (binding.btnShowMySummitComments.icon as AnimatedVectorDrawableCompat).start()
+            }
+        })
         viewModel.viewModelRouteOrderWidget.futureVisibility.observe(viewLifecycleOwner,
             {
                 if (it == View.INVISIBLE) return@observe
@@ -153,8 +243,51 @@ class SummitDetailResultFragment : Fragment() {
                         .start()
                 }
             })
+        super.onResume()
     }
 
+    private fun restoreAnimatedState() {
+        viewModel.showMyComments.value?.let {
+            val drawableID =
+                if (it) R.drawable.ic_read_more_anim_in2 else R.drawable.ic_read_more_anim_out2
+            binding.btnShowMySummitComments.icon =
+                AnimatedVectorDrawableCompat.create(binding.root.context, drawableID)
+            binding.edtMySummitComment.visibility = if (it) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun animateRecyclerView() {
+        binding.listRouteFound.animate()
+            .alpha(0.2f)
+            .scaleX(0.2f)
+            .scaleY(0.2f)
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(250L)
+            .withEndAction {
+                binding.listRouteFound.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setInterpolator(DecelerateInterpolator()).duration = 250
+                if (viewModel.showMyComments.value != false) {
+                    Log.e(
+                        TAG,
+                        "binding.listRouteFound.swapAdapter(summitCommentDetailAdapter - ROUTES"
+                    )
+                    summitDetailAdapter.submitList(viewModel.ttRoutes.value)
+                } else {
+                    Log.e(
+                        TAG,
+                        "binding.listRouteFound.swapAdapter(summitCommentDetailAdapter - COMMENTS"
+                    )
+
+                    lifecycleScope.launch { summitDetailAdapter.submitList(viewModel.mMyTTCommentANDWithPhotos.first()) }
+                }
+            }
+            .start()
+    }
+
+    // region Menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.summit_detail_result, menu)
     }
@@ -179,4 +312,5 @@ class SummitDetailResultFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+    // endregion
 }

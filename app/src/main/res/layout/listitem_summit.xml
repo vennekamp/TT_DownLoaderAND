@@ -18,7 +18,7 @@
             android:id="@+id/cb_is_ascended"
             style="@style/my_check_box_style"
             android:clickable="false"
-            app:isAscendedFormatted="@{listMySummit}"
+            app:isAscendedFromMyCommentFormatted="@{listMySummit}"
             android:text="@string/tableCol_IsAscended"
             app:buttonTint="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"

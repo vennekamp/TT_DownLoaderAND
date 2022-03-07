@@ -1,22 +1,13 @@
 package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter
 
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import androidx.core.view.updateLayoutParams
-import androidx.core.widget.doAfterTextChanged
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
-import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemCommentBinding
-import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemMyCommentAddBinding
-import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemMyCommentBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.DiffCallBacks
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener
-import java.lang.IllegalArgumentException
+import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.ViewHolders
 
 private const val ITEM_VIEW_TYPE_COMMENT = 0
 private const val ITEM_VIEW_TYPE_MY_COMMENT = 1
@@ -30,7 +21,7 @@ private const val TAG = "RouteDetailAdapter"
  */
 class RouteDetailAdapter :
     ListAdapter<Comments,
-            RecyclerView.ViewHolder>(TTCommentANDDiffCallback()) {
+            RecyclerView.ViewHolder>(DiffCallBacks.TTCommentANDDiffCallback()) {
 
     private var clickListenerRouteComments: RouteCommentsClickListener? = null
     private var clickListenerRouteCommentImage: CommentImageClickListener? = null
@@ -49,143 +40,36 @@ class RouteDetailAdapter :
             is Comments.MyTTCommentANDWithPhotos -> ITEM_VIEW_TYPE_MY_COMMENT
             is Comments.AddComment -> ITEM_VIEW_TYPE_ADD_COMMENT
             is Comments.RouteWithMyComment -> throw IllegalArgumentException("getItem($position) for CommentsRoute.RouteWithMyRouteComment not supported.")
+            is Comments.RouteWithMyTTCommentANDWithPhotos -> throw IllegalArgumentException("getItem($position) for CommentsRoute.RouteWithMyTTCommentANDWithPhotos not supported.")
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ITEM_VIEW_TYPE_COMMENT -> RouteDetailAdapterViewHolder.from(parent)
-            ITEM_VIEW_TYPE_MY_COMMENT -> MyCommentsListAdapterViewHolder.from(parent)
-            ITEM_VIEW_TYPE_ADD_COMMENT -> MyCommentsAddViewHolder.from(parent)
+            ITEM_VIEW_TYPE_COMMENT -> ViewHolders.RouteDetailAdapterViewHolder.from(parent)
+            ITEM_VIEW_TYPE_MY_COMMENT -> ViewHolders.MyCommentsListAdapterViewHolder.from(parent)
+            ITEM_VIEW_TYPE_ADD_COMMENT -> ViewHolders.MyCommentsAddViewHolder.from(parent)
             else -> throw ClassCastException("Unknown viewType ${viewType}")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is RouteDetailAdapterViewHolder -> {
+            is ViewHolders.RouteDetailAdapterViewHolder -> {
                 val item = getItem(position) as Comments.TTCommentAND
                 holder.bind(item)
             }
-            is MyCommentsListAdapterViewHolder -> {
+            is ViewHolders.MyCommentsListAdapterViewHolder -> {
                 val item = getItem(position) as Comments.MyTTCommentANDWithPhotos
                 holder.bind(item, clickListenerRouteComments, clickListenerRouteCommentImage)
             }
-            is MyCommentsAddViewHolder -> {
+            is ViewHolders.MyCommentsAddViewHolder -> {
                 val item = getItem(position) as Comments.AddComment
                 holder.bind(item, clickListenerRouteComments)
             }
         }
     }
 
-    class RouteDetailAdapterViewHolder private constructor(private val mainBinding: ListitemCommentBinding) :
-        RecyclerView.ViewHolder(mainBinding.root) {
-        fun bind(item: Comments.TTCommentAND) {
-            mainBinding.comment = CommentsSummit.CommentsWithRouteWithSummit(item)
-            mainBinding.executePendingBindings()
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): RouteDetailAdapterViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding =
-                    ListitemCommentBinding.inflate(layoutInflater, parent, false)
-                return RouteDetailAdapterViewHolder(binding)
-            }
-        }
-    }
 }
 
-class MyCommentsListAdapterViewHolder private constructor(
-    private val itemBinding: ListitemMyCommentBinding
-) :
-    RecyclerView.ViewHolder(itemBinding.root) {
-    fun bind(
-        item: Comments.MyTTCommentANDWithPhotos,
-        clickListenerRouteComments: RouteCommentsClickListener?,
-        clickListenerRouteCommentImage: CommentImageClickListener?
-    ) {
-        itemBinding.myRouteWithPhotos = item
-        itemBinding.clickListenerComment = clickListenerRouteComments
-        itemBinding.clickListenerImage = clickListenerRouteCommentImage
-        Log.e(TAG, "carousel.currentIndex: ${itemBinding.carousel.currentIndex}")
-        val commentImageCarouselAdapter = CommentImageCarouselAdapter()
-        item.myTT_comment_PhotosANDList.forEach {
-            commentImageCarouselAdapter.data.add(it)
-        }
-        itemBinding.tv2.doAfterTextChanged {
-            itemBinding.tilImageCaption.animation?.cancel()
-            itemBinding.tilImageCaption.animate()
-                .scaleY(0f)
-                .alpha(0f)
-                .setDuration(150L)
-                .setInterpolator(AccelerateDecelerateInterpolator())
-                .withEndAction {
-                    itemBinding.tilImageCaption.text = it
-                    itemBinding.tilImageCaption.animate()
-                        .scaleY(1f)
-                        .alpha(1f)
-                        .setDuration(150L).interpolator = AccelerateDecelerateInterpolator()
-                }
-                .start()
-        }
-        itemBinding.carousel.setAdapter(commentImageCarouselAdapter)
 
-        if (commentImageCarouselAdapter.count() == 0) {
-            val scale: Float = itemBinding.mlCommentPhotos.context.resources.displayMetrics.density
-            val pixels = (65.0 /*dps*/ * scale + 0.5f).toInt()
-            itemBinding.mlCommentPhotos.updateLayoutParams { height = pixels }
-        } else {
-            itemBinding.mlCommentPhotos.updateLayoutParams {
-                height = ViewGroup.LayoutParams.WRAP_CONTENT
-            }
-        }
-        itemBinding.executePendingBindings()
-    }
-
-    companion object {
-        fun from(parent: ViewGroup): MyCommentsListAdapterViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding =
-                ListitemMyCommentBinding.inflate(layoutInflater, parent, false)
-            return MyCommentsListAdapterViewHolder(binding)
-        }
-    }
-}
-
-class MyCommentsAddViewHolder private constructor(val binding: ListitemMyCommentAddBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun bind(
-        item:  Comments.AddComment,
-        clickListenerRouteComments: RouteCommentsClickListener?
-    ) {
-        binding.routeComments = item // as static RouteComments.AddComment
-        binding.clickListenerComment = clickListenerRouteComments
-        binding.executePendingBindings()
-    }
-
-    companion object {
-        fun from(parent: ViewGroup): MyCommentsAddViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding =
-                ListitemMyCommentAddBinding.inflate(layoutInflater, parent, false)
-            return MyCommentsAddViewHolder(binding)
-        }
-    }
-}
-
-class TTCommentANDDiffCallback : DiffUtil.ItemCallback<Comments>() {
-    override fun areItemsTheSame(
-        oldItem: Comments,
-        newItem: Comments
-    ): Boolean {
-        return false // oldItem._id == newItem._id
-    }
-
-    override fun areContentsTheSame(
-        oldItem: Comments,
-        newItem: Comments
-    ): Boolean {
-        return oldItem == newItem
-    }
-}

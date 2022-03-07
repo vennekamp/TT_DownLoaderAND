@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemCommentBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener
@@ -19,7 +20,7 @@ private const val ITEM_VIEW_TYPE_ADD_COMMENT = 3
  * [com.teufelsturm.tt_downloader_kotlin.databinding.ResultsCommentsListBinding] fills [ListitemCommentBinding]
  */
 class CommentsListdapter :
-    ListAdapter<CommentsSummit.CommentsWithRouteWithSummit, CommentsListdapter.ViewHolder>(
+    ListAdapter<Comments.CommentsWithRouteWithSummit, CommentsListdapter.ViewHolder>(
         CommentsWithRouteWithSummitDiffCallback()
     ) {
 
@@ -54,7 +55,7 @@ class CommentsListdapter :
     class ViewHolder private constructor(val binding: ListitemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            item: CommentsSummit.CommentsWithRouteWithSummit,
+            item: Comments.CommentsWithRouteWithSummit,
             onClickListenerRoute: TTCommentClickListener?,
             onClickListenerSummit: TTCommentClickListener?
         ) {
@@ -76,17 +77,17 @@ class CommentsListdapter :
 }
 
 class CommentsWithRouteWithSummitDiffCallback :
-    DiffUtil.ItemCallback<CommentsSummit.CommentsWithRouteWithSummit>() {
+    DiffUtil.ItemCallback<Comments.CommentsWithRouteWithSummit>() {
     override fun areItemsTheSame(
-        oldItem: CommentsSummit.CommentsWithRouteWithSummit,
-        newItem: CommentsSummit.CommentsWithRouteWithSummit
+        oldItem: Comments.CommentsWithRouteWithSummit,
+        newItem: Comments.CommentsWithRouteWithSummit
     ): Boolean {
         return oldItem._id == newItem._id
     }
 
     override fun areContentsTheSame(
-        oldItem: CommentsSummit.CommentsWithRouteWithSummit,
-        newItem: CommentsSummit.CommentsWithRouteWithSummit
+        oldItem: Comments.CommentsWithRouteWithSummit,
+        newItem: Comments.CommentsWithRouteWithSummit
     ): Boolean {
         return oldItem == newItem
     }

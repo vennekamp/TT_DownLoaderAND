@@ -48,10 +48,10 @@ interface TTNeighbourSummitANDDAO {
                         b.strName,
                         b.dblGPS_Latitude,
                         dblGPS_Longitude
-                    FROM Summit_TSP_Order a 
+                    FROM Summit_TravSalePers_Order a 
                         JOIN TT_Summit_AND b on a.intTTGipfelNr = b.intTTGipfelNr
-                    WHERE a._id BETWEEN (SELECT l._id + :from FROM Summit_TSP_Order l WHERE l.intTTGipfelNr = :intTTGipfelNr)
-                            AND  (SELECT u._id + :to FROM Summit_TSP_Order u WHERE u.intTTGipfelNr = :intTTGipfelNr)
+                    WHERE a._id BETWEEN (SELECT l._id + :from FROM Summit_TravSalePers_Order l WHERE l.intTTGipfelNr = :intTTGipfelNr)
+                            AND  (SELECT u._id + :to FROM Summit_TravSalePers_Order u WHERE u.intTTGipfelNr = :intTTGipfelNr)
                     AND a.intTTGipfelNr != :intTTGipfelNr ORDER BY a._id;"""
     )
     fun getNext2AndPrev2TravSalePersNeighbours(intTTGipfelNr: Int, from: Int, to: Int): Flow<List<TTNeigbourANDTTName>>

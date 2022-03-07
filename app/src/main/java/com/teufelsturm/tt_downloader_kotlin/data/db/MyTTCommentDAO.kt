@@ -46,18 +46,17 @@ interface MyTTCommentDAO {
     // endregion
 
     // region MyTTRouteANDWithPhotos
-
     @Query("SELECT * FROM MyTT_Comment_AND")
     fun getAllCommentWithPhoto(): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
     @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTWegNr = :myIntTTWegNr")
     fun getCommentWithPhotoByRoute(myIntTTWegNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
-    @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr AND myIntTTWegNr IS NULL")
+    @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr")
     fun getCommentWithPhotoBySummit(myIntTTGipfelNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
-    @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr AND myIntTTWegNr IS NULL")
-    fun getSummitCommentWithPhotoBySummit(myIntTTGipfelNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
+//    @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr AND myIntTTWegNr IS NULL")
+//    fun getSummitCommentWithPhotoBySummit(myIntTTGipfelNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
     @Query("SELECT DISTINCT(a.myAscendedPartner) FROM MyTT_Comment_AND a WHERE a.myAscendedPartner LIKE :partName ORDER BY LOWER(a.myAscendedPartner)")
     fun getDistinctPartner(partName: String): List<String>

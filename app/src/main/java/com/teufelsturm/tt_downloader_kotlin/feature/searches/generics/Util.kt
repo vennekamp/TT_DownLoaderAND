@@ -21,8 +21,9 @@ import java.util.*
  */
 @SuppressLint("SimpleDateFormat")
 fun convertLongToDateTimeString(systemTime: Long): String {
-    return SimpleDateFormat("E, d.MMM yyyy' - 'HH:mm", Locale.GERMANY)
-        .format(systemTime).toString()
+    // Create a DateFormatter object for displaying date in specified format.
+    val formatter = SimpleDateFormat("E, d.MMM yyyy' - 'HH:mm", Locale.GERMANY)
+    return formatter.format(systemTime).toString()
 }
 
 fun convertLongToDateString(systemTime: Long): String {
@@ -92,7 +93,21 @@ fun convertDateTimeStringToLong(_ascentDate: String?): Long? {
     return ascentDateObject?.time?.plus(mGMTOffset)
 }
 
-fun formatSummitComments(mySummits: List<MyTTCommentAND>): Spanned {
+fun formatSummitComments(mySummits: List<Comments.MyTTCommentANDWithPhotos>): Spanned {
+    val sb = StringBuilder()
+    sb.apply {
+        mySummits.forEach { comment ->
+            append(if (comment.myTTCommentAND.isAscendedType > 2) "&#9745;" else " &#10060;")
+            append(comment.myTTCommentAND.myIntDateOfAscend ?: "[ --- ]")
+            append(" ")
+            append("${comment.myTTCommentAND.strMyComment}")
+            if (comment != mySummits.last()) append("<br>")
+        }
+    }
+    return sb.toString().toHTMLSpan()
+}
+// MyTTCommentAND
+fun formatSummitFromMyCommentComments(mySummits: List<MyTTCommentAND>): Spanned {
     val sb = StringBuilder()
     sb.apply {
         mySummits.forEach { comment ->
@@ -105,7 +120,6 @@ fun formatSummitComments(mySummits: List<MyTTCommentAND>): Spanned {
     }
     return sb.toString().toHTMLSpan()
 }
-
 fun formatRouteComments(route: Comments.RouteWithMyComment): Spanned {
     val sb = StringBuilder()
     sb.apply {
@@ -121,8 +135,8 @@ fun formatRouteComments(route: Comments.RouteWithMyComment): Spanned {
 }
 
 fun isAscendedRoute(route: Comments.RouteWithMyComment): Boolean {
-    route.myTTCommentANDList.forEach { route ->
-        if ((route.isAscendedType.let { it > 2 } == true)) {
+    route.myTTCommentANDList.forEach { mRoute ->
+        if (mRoute.isAscendedType.let { it > 2 }) {
             Log.i("isAscendedFormatted", " ==> TRUE")
             return true
         }
