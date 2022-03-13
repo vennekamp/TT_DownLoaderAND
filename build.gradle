@@ -1,4 +1,6 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    debugVersionNameSuffix = '2.0'
+}// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
         google()
@@ -12,8 +14,8 @@ buildscript {
         coroutine_version = '1.6.0-native-mt'
         gradleVersion = '7.0.4'
         navigationVersion = '2.3.5'
-        room_version = '2.4.1'
-        hilt_version = '2.40.5'
+        room_version = '2.4.2'
+        hilt_version = '2.41'
         dataBindingCompilerVersion = gradleVersion // Always need to be the same.
     }
 
@@ -27,7 +29,7 @@ buildscript {
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
 
         // Adding the safe-args dependency to the project Gradle file
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1")
 
     }
 }

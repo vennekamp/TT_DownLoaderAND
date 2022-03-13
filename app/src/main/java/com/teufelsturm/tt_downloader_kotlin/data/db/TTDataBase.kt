@@ -11,9 +11,6 @@ const val NO_ID = 0L
 @Database(
     entities = [
         TTSummitAND::class,
-        // MyTTSummitAND::class,
-        // MyTT_SummitPhotos_AND::class,
-
         TTRouteAND::class,
         MyTTCommentAND::class,
         MyTTCommentPhotosAND::class,
@@ -21,7 +18,7 @@ const val NO_ID = 0L
         TTNeigbourSummitAND::class,
         SummitTravSalePersOrder::class,
         Comments.TTCommentAND::class
-    ], version = 2, exportSchema = false
+    ], version = 3, exportSchema = false
 )
 abstract class TTDataBase : RoomDatabase() {
 
@@ -46,7 +43,7 @@ abstract class TTDataBase : RoomDatabase() {
                         "TT_DownLoader.sqlite"
                     )
                         .allowMainThreadQueries()
-                        // .fallbackToDestructiveMigration()
+                        .fallbackToDestructiveMigration()
                         .createFromAsset("TT_DownLoader_AND.sqlite")
                         .build()
                     INSTANCE = instance
