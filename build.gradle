@@ -1,12 +1,12 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
     debugVersionNameSuffix = '2.0'
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+}
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
-
 
     ext {
         kotlin_version = '1.6.10'
@@ -30,7 +30,6 @@ buildscript {
 
         // Adding the safe-args dependency to the project Gradle file
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1")
-
     }
 }
 
