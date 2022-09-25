@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.google.common.truth.Truth
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -58,11 +57,15 @@ class TTSummitDataBaseTest {
             tt_Summit_AND.strName = "TEST"
             tt_Summit_AND.intTTGipfelNr = -123
             tt_Summit_DAO.insert(tt_Summit_AND)
+        }
+        runBlocking {
             val summit = tt_Summit_DAO.getSummit(-123).first()
             Assert.assertEquals("TEST", summit.strName)
-            tt_Summit_DAO.deleteByTTGipfelNr(-123)
-            Assert.assertNull("TEST", tt_Summit_DAO.getSummit(-123))
         }
+        runBlocking {
+            tt_Summit_DAO.deleteByTTGipfelNr(-123)
+        }
+        Assert.assertNull("TEST",runBlocking { tt_Summit_DAO.getSummit(-123).first() } )
     }
 
     @Test
@@ -76,12 +79,12 @@ class TTSummitDataBaseTest {
 
     @Test
     fun getAllSummits() {
-        val _tt_Summit_AND = runBlocking { tt_Summit_DAO.getAll() }
+        val _tt_Summit_AND = runBlocking { tt_Summit_DAO.getAll().first() }
 
-        val data = _tt_Summit_AND.getValueBlocking()
+        // val data = com.teufelsturm.tt_downloader_kotlin.data.db_neu.getValueBlocking()
 
-        Assert.assertNotNull("No List<TT_Summit_AND> object received.", data)
-        Assert.assertEquals(1149, data?.size)
+        Assert.assertNotNull("No List<TT_Summit_AND> object received.", _tt_Summit_AND)
+        Assert.assertEquals(1147, _tt_Summit_AND.size)
     }
 
     @Test
@@ -109,15 +112,13 @@ class TTSummitDataBaseTest {
     @Throws(Exception::class)
     fun getSummitWithMySummitCommentTest() {
         val summitWithMySummitComment =
-            runBlocking { tt_Summit_DAO.getSummitsListWithMySummitComment() }
+            runBlocking { tt_Summit_DAO.getSummitsListWithMySummitComment().first() }
 
-        val data = summitWithMySummitComment.getValueBlocking()
+        // val data = com.teufelsturm.tt_downloader_kotlin.data.db_neu.getValueBlocking()
 
-        Assert.assertNotNull("TEST", data)
-        Assert.assertEquals(1149, data?.size)
+        Assert.assertNotNull("TEST", summitWithMySummitComment)
+        Assert.assertEquals(1147, summitWithMySummitComment.size)
     }
-
-
 
     @Test
     @Throws(Exception::class)

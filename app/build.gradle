@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlin-kapt'
+apply plugin: "kotlin-kapt"
 apply plugin: 'dagger.hilt.android.plugin'
 // Adding the apply plugin statement for safeargs
 apply plugin: 'androidx.navigation.safeargs'

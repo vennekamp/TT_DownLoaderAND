@@ -7,9 +7,9 @@ import android.transition.TransitionInflater
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.davemorrissey.labs.subscaleview.ImageSource
-import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.databinding.ResultZoomImageBinding
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.ResultZoomImageBinding
 
 
 private const val TAG = "ZoomImageView"

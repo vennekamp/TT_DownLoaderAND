@@ -56,7 +56,7 @@ class MyTTCommentWriteReadTest {
             isAscendedType = 8
             myAscendedPartner = "Ein Partner"
             myIntDateOfAscend = "9.9.2021 14:35"
-            strMyComment = "Tolll war es!"
+            strMyComment = "Toll war es!"
         }
         myTTCommentAND.Id = myTTCommentDAO.insert(myTTCommentAND)
         assertThat(myTTCommentAND.Id).isGreaterThan(0)
@@ -65,7 +65,7 @@ class MyTTCommentWriteReadTest {
         assertThat(back1.isAscendedType).isEqualTo(8)
         assertThat(back1.myAscendedPartner).isEqualTo("Ein Partner")
         assertThat(back1.myIntDateOfAscend).isEqualTo("9.9.2021 14:35")
-        assertThat(back1.strMyComment).isEqualTo("Tolll war es!")
+        assertThat(back1.strMyComment).isEqualTo("Toll war es!")
 
         back1.strMyComment = "Doch nicht so schön...."
         runBlocking { myTTCommentDAO.update(back1) }

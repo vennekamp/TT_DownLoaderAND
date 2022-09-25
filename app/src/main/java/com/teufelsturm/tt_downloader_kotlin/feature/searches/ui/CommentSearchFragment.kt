@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.google.android.material.slider.LabelFormatter
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.app.MainActivity
-import com.teufelsturm.tt_downloader_kotlin.databinding.SearchCommentsBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventSearchCommentParameter
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.vm.CommentsSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.SearchCommentsBinding
 
 
 private const val TAG = "CommentSearchFragment"

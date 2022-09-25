@@ -6,8 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.teufelsturm.tt_downloader_kotlin.R
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
 
 
 @AndroidEntryPoint

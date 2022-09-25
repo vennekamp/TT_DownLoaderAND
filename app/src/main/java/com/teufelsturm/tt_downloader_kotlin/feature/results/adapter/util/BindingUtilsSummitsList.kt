@@ -6,12 +6,12 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.*
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertDateTimeStringToLong
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateString
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.formatSummitComments
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.formatSummitFromMyCommentComments
+import de.teufelsturm.tt_downloader_ktx.R
 
 @BindingAdapter("summitTextFormatted")
 fun TextView.summitTextFormatted(item: CommentsSummit.SummitWithMySummitComment?) {

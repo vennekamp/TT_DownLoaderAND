@@ -7,10 +7,10 @@ import android.view.Gravity
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.databinding.DialogDeleteOrEditBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.DialogDeleteOrEditBinding
 
 
 @AndroidEntryPoint

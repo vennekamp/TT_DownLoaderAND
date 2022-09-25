@@ -4,8 +4,8 @@ import android.net.Uri
 import android.util.Log
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import com.teufelsturm.tt_downloader_kotlin.BR
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
+import de.teufelsturm.tt_downloader_ktx.BR
 
 private const val TAG = "CustomCarouselViewModel"
 

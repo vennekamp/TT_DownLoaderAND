@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.navigation.fragment.findNavController
-import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsSummitsListBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.SummitClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitsListResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.ResultsSummitsListBinding
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -64,12 +64,12 @@ class SummitsListResultFragment @Inject constructor() : Fragment() {
             // Toast.makeText(context, "Summit ID: ${summitId}", Toast.LENGTH_LONG).show()
             this.viewModel.onClickSummit(summitId)
         })
-        viewModel.ttSummits.observe(viewLifecycleOwner, {
+        viewModel.ttSummits.observe(viewLifecycleOwner) {
             summitsListAdapter.submitList(it)
-        })
+        }
 
         // Add an Observer on the state variable for Navigating when and item is clicked.
-        viewModel.navigateToSummitDetail.observe(viewLifecycleOwner, { intTTGipfelNr ->
+        viewModel.navigateToSummitDetail.observe(viewLifecycleOwner) { intTTGipfelNr ->
             intTTGipfelNr?.let {
                 this.findNavController().navigate(
                     SummitsListResultFragmentDirections.actionSummitsResultFragmentToSummitResultFragment(
@@ -78,48 +78,48 @@ class SummitsListResultFragment @Inject constructor() : Fragment() {
                 )
                 viewModel.doneNavigating()
             }
-        })
-        viewModel.viewModelSummitOrderWidget.sortSummitBy.observe(viewLifecycleOwner, {
+        }
+        viewModel.viewModelSummitOrderWidget.sortSummitBy.observe(viewLifecycleOwner) {
             viewModel.onChangeSortOrder(it)
             summitsListAdapter.notifyDataSetChanged()
-        })
+        }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         // at 'onResume' the view is created, how can it be forced to be measured?
-        viewModel.viewModelSummitOrderWidget.futureVisibility.observe(viewLifecycleOwner,
-            {
-                if (it == View.INVISIBLE) return@observe
-                //toggle binding.gridLayout visibility with animation.
-                val menuRB = binding.radioButtonGrid
-                var coorTO = 0F
-                var alphTo = 1F
-                var dur = 250L
-                if (it != View.VISIBLE) {
-                    coorTO = -1F
-                    alphTo = 0F
-                    dur = 150L
+        viewModel.viewModelSummitOrderWidget.futureVisibility.observe(viewLifecycleOwner
+        ) {
+            if (it == View.INVISIBLE) return@observe
+            //toggle binding.gridLayout visibility with animation.
+            val menuRB = binding.radioButtonGrid
+            var coorTO = 0F
+            var alphTo = 1F
+            var dur = 250L
+            if (it != View.VISIBLE) {
+                coorTO = -1F
+                alphTo = 0F
+                dur = 150L
+            }
+            runBlocking { viewModel.viewModelSummitOrderWidget.setVisibility(View.VISIBLE) }
+            menuRB.animate()
+                .setDuration(dur)
+                .setInterpolator(FastOutLinearInInterpolator())
+                .translationX(menuRB.width.toFloat() * -coorTO)
+                .translationY(menuRB.height.toFloat() * coorTO)
+                .alpha(alphTo)
+                .withEndAction { //in case hiding the radiobutton grid hide it at the end.
+                    viewModel.viewModelSummitOrderWidget.setVisibility(it)
                 }
-                runBlocking { viewModel.viewModelSummitOrderWidget.setVisibility(View.VISIBLE) }
-                menuRB.animate()
-                    .setDuration(dur)
-                    .setInterpolator(FastOutLinearInInterpolator())
-                    .translationX(menuRB.width.toFloat() * -coorTO)
-                    .translationY(menuRB.height.toFloat() * coorTO)
-                    .alpha(alphTo)
-                    .withEndAction { //in case hiding the radiobutton grid hide it at the end.
-                        viewModel.viewModelSummitOrderWidget.setVisibility(it)
-                    }
-                    .start()
-                val marginTOP = binding.listSummitsFound.marginTop.toFloat()
-                binding.listSummitsFound.animate()
-                    .setDuration(dur)
-                    .translationY((menuRB.height.toFloat() - marginTOP) * (1 + coorTO))
-                    .setInterpolator(FastOutLinearInInterpolator())
-                    .start()
-            })
+                .start()
+            val marginTOP = binding.listSummitsFound.marginTop.toFloat()
+            binding.listSummitsFound.animate()
+                .setDuration(dur)
+                .translationY((menuRB.height.toFloat() - marginTOP) * (1 + coorTO))
+                .setInterpolator(FastOutLinearInInterpolator())
+                .start()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
-import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemCommentBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener
+import de.teufelsturm.tt_downloader_ktx.databinding.ListitemCommentBinding
 
 private const val ITEM_VIEW_TYPE_COMMENT = 0
 private const val ITEM_VIEW_TYPE_MY_COMMENT = 1

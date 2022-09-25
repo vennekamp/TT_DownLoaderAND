@@ -9,8 +9,8 @@ import androidx.constraintlayout.helper.widget.Carousel
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import coil.load
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
+import de.teufelsturm.tt_downloader_ktx.R
 
 private const val TAG = "CommentImageCarouselAdp"
 

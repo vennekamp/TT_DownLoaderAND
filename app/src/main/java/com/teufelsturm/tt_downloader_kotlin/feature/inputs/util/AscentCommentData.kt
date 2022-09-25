@@ -3,12 +3,12 @@ package com.teufelsturm.tt_downloader_kotlin.feature.inputs.util
 import android.util.Log
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import com.teufelsturm.tt_downloader_kotlin.BR
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.appendOrReplaceTime
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertDateTimeStringToLong
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateString
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.convertLongToDateTimeString
+import de.teufelsturm.tt_downloader_ktx.BR
 
 private const val TAG = "AscentData"
 

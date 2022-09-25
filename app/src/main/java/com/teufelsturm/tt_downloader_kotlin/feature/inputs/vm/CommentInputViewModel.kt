@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.NO_ID
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
@@ -20,6 +19,7 @@ import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAs
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.AutoCompleteAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.ViewModelSpinnerSpannable
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.teufelsturm.tt_downloader_ktx.R
 import javax.inject.Inject
 
 

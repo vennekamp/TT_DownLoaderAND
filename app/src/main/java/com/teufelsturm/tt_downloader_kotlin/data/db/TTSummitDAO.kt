@@ -40,7 +40,7 @@ interface TTSummitDAO {
     fun getSummitNameForAutoText(searchSummit: String, searchAreas: String = ""): List<String>
 
     @Query("SELECT * from TT_Summit_AND")
-    fun getAll(): LiveData<List<TTSummitAND>>
+    fun getAll(): Flow<List<TTSummitAND>>
 
     @Query("SELECT '' AS strGebiet UNION Select Distinct strGebiet from TT_Summit_AND ORDER BY strGebiet")
     fun getDistictAreaNames(): LiveData<List<String>>
@@ -99,7 +99,7 @@ interface TTSummitDAO {
 
     @Transaction
     @Query("SELECT * FROM TT_Summit_AND")
-    fun getSummitsListWithMySummitComment(): LiveData<List<CommentsSummit.SummitWithMySummitComment>>
+    fun getSummitsListWithMySummitComment(): Flow<List<CommentsSummit.SummitWithMySummitComment>>
 
     @Query(
         """SELECT a.* FROM TT_Summit_AND a

@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.google.common.truth.Truth
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteWithMyCommentWithSummit
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
@@ -82,19 +82,19 @@ class TTRoute_DataBaseTest {
     @Test
     @Throws(Exception::class)
     fun getAllRoute() {
-        val allTT_Route_AND: LiveData<List<TTRouteAND>> = runBlocking { tt_Route_DAO.getAll() }
-        val data = allTT_Route_AND.getValueBlocking()
-        Assert.assertNotNull("No List<TT_Route_AND> object received.", data)
-        Assert.assertEquals(12820, data?.size)
+        val allTT_Route_AND: List<TTRouteAND> = runBlocking { tt_Route_DAO.getAll().first() }
+        // val data = getValueBlocking()
+        Assert.assertNotNull("No List<TT_Route_AND> object received.", allTT_Route_AND)
+        Assert.assertEquals(12886, allTT_Route_AND.size)
     }
 
     @Test
     @Throws(Exception::class)
     fun getRouteNameForAutoText() {
         val allRouteNames: List<String> =
-            tt_Route_DAO.getRouteNameForAutoText("%bä%")
+            tt_Route_DAO.getRouteNameForAutoText("%bär%")
         Assert.assertNotNull("No List<TT_Summit_AND> object received.", allRouteNames)
-        Assert.assertEquals(20, allRouteNames.size)
+        Assert.assertEquals(29, allRouteNames.size)
         Assert.assertTrue(allRouteNames.contains("Bärensiegel"))
         Assert.assertTrue(allRouteNames.contains("Bärenhunger"))
     }
@@ -128,42 +128,49 @@ class TTRoute_DataBaseTest {
     @Test
     @Throws(Exception::class)
     fun getRouteWithMyCommentWithSummit() {
-        val ttRouteANDList1: LiveData<RouteWithMyCommentWithSummit> =
-            runBlocking { tt_Route_DAO.getRouteWithMyCommentWithSummit(6287) }
-        val data1 = ttRouteANDList1.getValueBlocking()
-        Assert.assertNotNull("No List<RouteWithMyCommentWithSummit> object received.", data1)
-        Assert.assertNotNull(
-            "No RouteWithMyCommentWithSummit.TTRouteAND object received.",
-            data1?.ttRouteAND
-        )
-        Assert.assertNotNull(
-            "No RouteWithMyCommentWithSummit.TTSummitAND object received.",
-            data1?.ttSummitAND
-        )
-        Assert.assertNotNull(
-            "No List<RouteWithMyCommentWithSummit> object received.",
-            data1?.myTTCommentANDList
-        )
-        Assert.assertEquals(2, data1?.myTTCommentANDList?.size)
+        val ttRouteANDList1: RouteWithMyCommentWithSummit? =
+            runBlocking { tt_Route_DAO.getRouteWithMyCommentWithSummit(6287).firstOrNull() }
+        // val data1 = com.teufelsturm.tt_downloader_kotlin.data.db.getValueBlocking()
+        if ( ttRouteANDList1 != null) {
+            Assert.assertNotNull(
+                "No RouteWithMyCommentWithSummit.TTRouteAND object received.",
+                ttRouteANDList1.ttRouteAND
+            )
+            Assert.assertNotNull(
+                "No RouteWithMyCommentWithSummit.TTSummitAND object received.",
+                ttRouteANDList1.ttSummitAND
+            )
+            Assert.assertNotNull(
+                "No List<RouteWithMyCommentWithSummit> object received.",
+                ttRouteANDList1.myTTCommentANDList
+            )
+            Assert.assertEquals(0, ttRouteANDList1.myTTCommentANDList.size)
+        }
     }
 
     @Test
     @Throws(Exception::class)
     fun getRouteWithMyCommentWithSummitByRoute() {
-        val ttRouteANDList1: LiveData<List<RouteWithMyCommentWithSummit>> =
-            runBlocking { tt_Route_DAO.getRouteListWithMyCommentWithSummit(4) }
-        val data1 = ttRouteANDList1.getValueBlocking()
-        Assert.assertNotNull("No List<RouteWithMyCommentWithSummit> object received.", data1)
-        Assert.assertNotNull(
-            "No RouteWithMyCommentWithSummit.TTRouteAND object received.", data1
-        )
+        val ttRouteANDList1: List<RouteWithMyCommentWithSummit>? =
+            runBlocking { tt_Route_DAO.getRouteListWithMyCommentWithSummit(4).firstOrNull() }
+        if (ttRouteANDList1 != null) {
+            // val data1 = com.teufelsturm.tt_downloader_kotlin.data.db_neu.getValueBlocking()
+            Assert.assertNotNull(
+                "No List<RouteWithMyCommentWithSummit> object received.",
+                ttRouteANDList1
+            )
+            Assert.assertNotNull(
+                "No RouteWithMyCommentWithSummit.TTRouteAND object received.",
+                ttRouteANDList1
+            )
 
-        Assert.assertEquals(6, data1?.size)
-        Assert.assertNotNull(
-            "No List<RouteWithMyCommentWithSummit> object received.",
-            data1?.get(0)?.myTTCommentANDList
-        )
-        Assert.assertEquals(2, data1?.get(0)?.myTTCommentANDList?.size)
+            Assert.assertEquals(6, ttRouteANDList1.size)
+            Assert.assertNotNull(
+                "No List<RouteWithMyCommentWithSummit> object received.",
+                ttRouteANDList1[0].myTTCommentANDList
+            )
+            Assert.assertEquals(0, ttRouteANDList1[0].myTTCommentANDList.size)
+        }
     }
 
 }

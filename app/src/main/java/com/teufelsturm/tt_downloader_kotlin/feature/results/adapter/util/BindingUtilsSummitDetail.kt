@@ -3,9 +3,9 @@ package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util
 import android.location.Location
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTNeigbourANDTTName
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTSummitAND
+import de.teufelsturm.tt_downloader_ktx.R
 import java.text.DecimalFormat
 
 @BindingAdapter(

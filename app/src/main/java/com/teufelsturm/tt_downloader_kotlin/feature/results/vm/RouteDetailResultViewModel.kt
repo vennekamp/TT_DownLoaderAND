@@ -5,12 +5,10 @@ import android.text.Spannable
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTRouteDAO
@@ -22,6 +20,7 @@ import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWith
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsBy
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.teufelsturm.tt_downloader_ktx.R
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

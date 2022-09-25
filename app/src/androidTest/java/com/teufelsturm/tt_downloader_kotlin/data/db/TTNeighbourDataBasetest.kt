@@ -50,11 +50,11 @@ class TTNeighbourDataBasetest {
     @Throws(Exception::class)
     fun getNext2AndPrev2TravSalePersNeighbours() {
         val neighbours1 =
-            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1).first().getIDs() }
-        assertThat(neighbours1).isEqualTo(listOf(1121, 1122, 2, 3))
-        val neighbours2 =
             runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(353).first().getIDs() }
-        assertThat(neighbours2).isEqualTo(listOf(354, 1121, 1122, 1))
+        assertThat(neighbours1).isEqualTo(listOf(354, 1121, 1122, 1))
+        val neighbours2 =
+            runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1).first().getIDs() }
+        assertThat(neighbours2).isEqualTo(listOf(1121, 1122, 2, 3))
         val neighbours3 =
             runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(354).first().getIDs() }
         assertThat(neighbours3).isEqualTo(listOf(353, 1121, 1122, 1))
@@ -72,10 +72,10 @@ class TTNeighbourDataBasetest {
         assertThat(neighbours7).isEqualTo(listOf(1095, 1094, 1092, 1093))
         val neighbours8 =
             runBlocking { ttNeighbourSummitANDDAO.getTSPSummits(1110).first().getIDs() }
-        assertThat(neighbours8).isEqualTo(listOf(887, 888, 812, 830))
+        assertThat(neighbours8).isEqualTo(listOf(887, 888, 812, 811))
 
         (1..1148).forEach {
-            if (!listOf(1126).contains(it)) {
+            if (!listOf(927,989,1008,1009,1010,1011,1024,1026,1065,1126).contains(it)) {
                 assertThat(runBlocking {
                     "TSP-results count for $it: ${
                         ttNeighbourSummitANDDAO.getTSPSummits(
@@ -88,12 +88,12 @@ class TTNeighbourDataBasetest {
     }
 
     private fun List<TTNeigbourANDTTName>.getIDs(): List<Int> {
-        return listOf(
-            this[0].intTTNachbarGipfelNr,
-            this[1].intTTNachbarGipfelNr,
-            this[2].intTTNachbarGipfelNr,
-            this[3].intTTNachbarGipfelNr
-        )
+        val rtnList = ArrayList<Int>()
+        for (item in this)
+        {
+            rtnList.add(item.intTTNachbarGipfelNr)
+        }
+        return rtnList
     }
 
     @Test

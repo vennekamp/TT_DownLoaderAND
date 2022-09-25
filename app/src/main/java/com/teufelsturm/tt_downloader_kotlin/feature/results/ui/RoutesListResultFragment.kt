@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.navigation.fragment.findNavController
-import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsRoutesListBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTSummitClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.RoutesListResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.RoutesListAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.ResultsRoutesListBinding
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -67,12 +67,12 @@ class RoutesListResultFragment @Inject constructor() : Fragment() {
             TTSummitClickListener { summitId ->
                 this.viewModel.onClickSummit(summitId)
             })
-        viewModel.ttRouteANDList.observe(viewLifecycleOwner, {
+        viewModel.ttRouteANDList.observe(viewLifecycleOwner) {
             routesListAdapter.submitList(it)
-        })
+        }
 
         // Add an Observer on the state variable for Navigating when and item is clicked.
-        viewModel.navigateToSummitDetail.observe(viewLifecycleOwner, { intTTGipfelNr ->
+        viewModel.navigateToSummitDetail.observe(viewLifecycleOwner) { intTTGipfelNr ->
             intTTGipfelNr?.let {
                 this.findNavController().navigate(
                     RoutesListResultFragmentDirections.actionRoutesListResultFragmentToSummitDetailResultFragment(
@@ -81,57 +81,57 @@ class RoutesListResultFragment @Inject constructor() : Fragment() {
                 )
                 viewModel.doneNavigatingToSumit()
             }
-        })
-        viewModel.navigateToRouteDetailEvent.observe(viewLifecycleOwner,
-            { _eventNavigatingToRoute ->
-                _eventNavigatingToRoute?.let {
-                    _eventNavigatingToRoute.intTTSummitNr.let {
-                        this.findNavController().navigate(
-                            RoutesListResultFragmentDirections.actionRoutesListResultFragmentToRouteDetailResultFragment(
-                                _eventNavigatingToRoute
-                            )
+        }
+        viewModel.navigateToRouteDetailEvent.observe(viewLifecycleOwner
+        ) { _eventNavigatingToRoute ->
+            _eventNavigatingToRoute?.let {
+                _eventNavigatingToRoute.intTTSummitNr.let {
+                    this.findNavController().navigate(
+                        RoutesListResultFragmentDirections.actionRoutesListResultFragmentToRouteDetailResultFragment(
+                            _eventNavigatingToRoute
                         )
-                        viewModel.doneNavigatingToRoute()
-                    }
+                    )
+                    viewModel.doneNavigatingToRoute()
                 }
-            })
+            }
+        }
 
-        viewModel.viewModelRouteOrderWidget.sortRoutesBy.observe(viewLifecycleOwner, {
+        viewModel.viewModelRouteOrderWidget.sortRoutesBy.observe(viewLifecycleOwner) {
             viewModel.onChangeSortOrder(it)
             routesListAdapter.notifyDataSetChanged()
-        })
+        }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         // at 'onResume' the view is created, how can it be forced to be measured?
-        viewModel.viewModelRouteOrderWidget.futureVisibility.observe(viewLifecycleOwner,
-            {
-                if (it == View.INVISIBLE) return@observe
-                //toggle binding.gridLayout visibility with animation.
-                with(binding.radioButtonGrid) {
-                    var coorTO = 0F
-                    var alphTo = 1F
-                    var dur = 300L
-                    if (it != View.VISIBLE) {
-                        coorTO = -1F
-                        alphTo = 0F
-                        dur = 100L
-                    }
-                    runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(View.VISIBLE) }
-                    animate()
-                        .setDuration(dur)
-                        .setInterpolator(FastOutLinearInInterpolator())
-                        .translationX(width.toFloat() * -coorTO)
-                        .translationY(height.toFloat() * coorTO)
-                        .alpha(alphTo)
-                        .withEndAction {//in case hiding the recyclerview hide it at the end.
-                            runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(it) }
-                        }
-                        .start()
+        viewModel.viewModelRouteOrderWidget.futureVisibility.observe(viewLifecycleOwner
+        ) {
+            if (it == View.INVISIBLE) return@observe
+            //toggle binding.gridLayout visibility with animation.
+            with(binding.radioButtonGrid) {
+                var coorTO = 0F
+                var alphTo = 1F
+                var dur = 300L
+                if (it != View.VISIBLE) {
+                    coorTO = -1F
+                    alphTo = 0F
+                    dur = 100L
                 }
-            })
+                runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(View.VISIBLE) }
+                animate()
+                    .setDuration(dur)
+                    .setInterpolator(FastOutLinearInInterpolator())
+                    .translationX(width.toFloat() * -coorTO)
+                    .translationY(height.toFloat() * coorTO)
+                    .alpha(alphTo)
+                    .withEndAction {//in case hiding the recyclerview hide it at the end.
+                        runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(it) }
+                    }
+                    .start()
+            }
+        }
     }
 
 

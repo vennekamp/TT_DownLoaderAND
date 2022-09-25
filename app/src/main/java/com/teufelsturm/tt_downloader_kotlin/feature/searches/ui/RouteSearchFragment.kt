@@ -10,13 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.app.MainActivity
-import com.teufelsturm.tt_downloader_kotlin.databinding.SearchRoutesBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventSearchRouteParameter
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.vm.RouteSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.SearchRoutesBinding
 
 
 private const val TAG = "RouteSearchFragment"
@@ -47,33 +47,32 @@ class RouteSearchFragment : Fragment() {
 
         //region OBSERVER
         viewModel.searchTextVM.searchText.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshRouteCount()
-                viewModel.refreshRangeSlider()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshRouteCount()
+            viewModel.refreshRangeSlider()
+        }
         viewModel.spinnerAreaRoute.selectedItem.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshRouteCount()
-                viewModel.refreshRangeSlider()
-            }
-        )
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshRouteCount()
+            viewModel.refreshRangeSlider()
+        }
         viewModel.rangeSliderMinMaxGradeInRouteSearch.values.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshRouteCount()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshRouteCount()
+        }
         viewModel.sliderNumberOfComments.value.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshRouteCount()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshRouteCount()
+        }
         viewModel.sliderMinOfMeanRating.value.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshRouteCount()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshRouteCount()
+        }
         //endregion
         binding.rangeSliderGradeLimits4RouteSearch.setLabelFormatter {
             viewModel.rangeSliderMinMaxGradeInRouteSearch.converter.invoke(it)
@@ -83,9 +82,9 @@ class RouteSearchFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         // Observer for the SEARCH event
-        viewModel.eventSearchRoute.observe(viewLifecycleOwner, { doSearch ->
+        viewModel.eventSearchRoute.observe(viewLifecycleOwner) { doSearch ->
             if (doSearch) onSearchRoute()
-        })
+        }
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -102,11 +101,10 @@ class RouteSearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.v(TAG, "In ViewPager2: onResume()")
-        viewModel.actionBarString.observe(viewLifecycleOwner,
-            {
-                (activity as MainActivity).supportActionBar!!.title = it
-            }
-        )
+        viewModel.actionBarString.observe(viewLifecycleOwner
+        ) {
+            (activity as MainActivity).supportActionBar!!.title = it
+        }
         (activity as MainActivity).supportActionBar!!.title = viewModel.actionBarString.value
     }
 
@@ -138,7 +136,7 @@ class RouteSearchFragment : Fragment() {
             viewModel.sliderNumberOfComments.value.value?.toInt() ?: 0
         val minOfMeanRating =
             viewModel.sliderMinOfMeanRating.value.value ?: 0f
-        val just_mine = viewModel.justMyRoute.get()
+        val justMine = viewModel.justMyRoute.get()
         val eventSearchRouteParameter = EventSearchRouteParameter(
             partialRouteName = partialRouteName,
             area = area,
@@ -146,7 +144,7 @@ class RouteSearchFragment : Fragment() {
             intMaxGrade = intMaxGrade,
             minNumberOfComments = minNumberOfComments,
             minOfMeanRating = minOfMeanRating,
-            just_mine
+            justMine
         )
         val action =
             TabOfSearchesFragmentDirections.actionMainSearchCollectionFragmentToRoutesListResultFragment(

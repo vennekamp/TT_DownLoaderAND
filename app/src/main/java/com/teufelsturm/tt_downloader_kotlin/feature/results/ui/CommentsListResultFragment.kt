@@ -11,17 +11,16 @@ import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsWithRouteSummitBy
-import com.teufelsturm.tt_downloader_kotlin.databinding.ResultsCommentsListBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.CommentsListdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTCommentClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.CommentsListResultViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToRoute
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.ResultsCommentsListBinding
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -78,15 +77,15 @@ class CommentsListResultFragment @Inject constructor() : Fragment() {
             // Retrieve the search arguments from the Bundle and initiate the query
             val args = CommentsListResultFragmentArgs.fromBundle(requireArguments())
             viewModel.queryRoutes(args)
-            viewModel.ttCommentANDList.observe(viewLifecycleOwner, {
+            viewModel.ttCommentANDList.observe(viewLifecycleOwner) {
                 it?.let {
                     commentsListdapter.submitList(it.sortCommentsWithRouteSummitBy(viewModel.viewModelCommentOrderWidget.sortCommentsBy.value))
                 }
-            })
+            }
         }
 
         // Add an Observer on the state variable for Navigating when and item is clicked.
-        viewModel.navigateToDetailEvent.observe(viewLifecycleOwner, {
+        viewModel.navigateToDetailEvent.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.intTTWegNr == null) {
                     this.findNavController().navigate(
@@ -105,50 +104,50 @@ class CommentsListResultFragment @Inject constructor() : Fragment() {
                 }
             }
             viewModel.doneNavigatingToDetail()
-        })
+        }
         viewModel.viewModelCommentOrderWidget.sortCommentsBy.observe(
-            viewLifecycleOwner,
-            { sortOrder ->
-                viewModel.onChangeSortOrder(sortOrder)
-                commentsListdapter.notifyDataSetChanged()
-            })
+            viewLifecycleOwner
+        ) { sortOrder ->
+            viewModel.onChangeSortOrder(sortOrder)
+            commentsListdapter.notifyDataSetChanged()
+        }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         // at 'onResume' the view is created, how can it be forced to be measured?
-        viewModel.viewModelCommentOrderWidget.futureVisibility.observe(viewLifecycleOwner,
-            {
-                if (it == View.INVISIBLE) return@observe
-                //toggle binding.gridLayout visibility with animation.
-                val menuRB = binding.radioButtonGrid
-                var coorTO = 0F
-                var alphTo = 1F
-                var dur = 250L
-                if (it != View.VISIBLE) {
-                    coorTO = -1F
-                    alphTo = 0F
-                    dur = 150L
+        viewModel.viewModelCommentOrderWidget.futureVisibility.observe(viewLifecycleOwner
+        ) {
+            if (it == View.INVISIBLE) return@observe
+            //toggle binding.gridLayout visibility with animation.
+            val menuRB = binding.radioButtonGrid
+            var coorTO = 0F
+            var alphTo = 1F
+            var dur = 250L
+            if (it != View.VISIBLE) {
+                coorTO = -1F
+                alphTo = 0F
+                dur = 150L
+            }
+            runBlocking { viewModel.viewModelCommentOrderWidget.setVisibility(View.VISIBLE) }
+            menuRB.animate()
+                .setDuration(dur)
+                .setInterpolator(FastOutLinearInInterpolator())
+                .translationX(menuRB.width.toFloat() * -coorTO)
+                .translationY(menuRB.height.toFloat() * coorTO)
+                .alpha(alphTo)
+                .withEndAction { //in case hiding the radiobutton grid hide it at the end.
+                    viewModel.viewModelCommentOrderWidget.setVisibility(it)
                 }
-                runBlocking { viewModel.viewModelCommentOrderWidget.setVisibility(View.VISIBLE) }
-                menuRB.animate()
-                    .setDuration(dur)
-                    .setInterpolator(FastOutLinearInInterpolator())
-                    .translationX(menuRB.width.toFloat() * -coorTO)
-                    .translationY(menuRB.height.toFloat() * coorTO)
-                    .alpha(alphTo)
-                    .withEndAction { //in case hiding the radiobutton grid hide it at the end.
-                        viewModel.viewModelCommentOrderWidget.setVisibility(it)
-                    }
-                    .start()
-                val marginTOP = binding.listCommentsFound.marginTop.toFloat()
-                binding.listCommentsFound.animate()
-                    .setDuration(dur)
-                    .translationY((menuRB.height.toFloat() - marginTOP) * (1 + coorTO))
-                    .setInterpolator(FastOutLinearInInterpolator())
-                    .start()
-            })
+                .start()
+            val marginTOP = binding.listCommentsFound.marginTop.toFloat()
+            binding.listCommentsFound.animate()
+                .setDuration(dur)
+                .translationY((menuRB.height.toFloat() - marginTOP) * (1 + coorTO))
+                .setInterpolator(FastOutLinearInInterpolator())
+                .start()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

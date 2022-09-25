@@ -4,19 +4,16 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ktx.BuildConfig
 import coil.load
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageClickListener
 import com.synnapps.carouselview.ImageListener
 import com.synnapps.carouselview.ViewListener
-import com.teufelsturm.tt_downloader_kotlin.BuildConfig
-import com.teufelsturm.tt_downloader_kotlin.R
-import com.teufelsturm.tt_downloader_kotlin.databinding.CustomCarouselBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CustomCarouselViewModel
-
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.CustomCarouselBinding
 
 private const val TAG = "CarouselViewAdapter"
 
@@ -27,8 +24,8 @@ class CarouselViewAdapter constructor(
     private lateinit var carouselView: CarouselView
 
     companion object {
-        const val ADD_IMAGE =
-            "android.resource:// ${BuildConfig.APPLICATION_ID} /drawable/add_image"
+        const val ADD_IMAGE: String =
+            "android.resource:// ${BuildConfig.LIBRARY_PACKAGE_NAME} /drawable/add_image"
     }
 
     fun deleteItem(selectedViewModel: CustomCarouselViewModel) {

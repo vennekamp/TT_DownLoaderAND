@@ -1,42 +1,137 @@
 {
   "project_info": {
-    "project_number": "458169370623",
-    "firebase_url": "https://tt-downloader3.firebaseio.com",
-    "project_id": "tt-downloader3",
-    "storage_bucket": "tt-downloader3.appspot.com"
+    "project_number": "546277725027",
+    "firebase_url": "https://steinfibelandandst.firebaseio.com",
+    "project_id": "steinfibelandandst",
+    "storage_bucket": "steinfibelandandst.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:458169370623:android:b10c6a64b5e82db4",
+        "mobilesdk_app_id": "1:546277725027:android:ff297063d30cb6b5",
         "android_client_info": {
-          "package_name": "com.teufelsturm.tt_downloader3"
+          "package_name": "de.steinfibel"
         }
       },
       "oauth_client": [
         {
-          "client_id": "458169370623-fnmp1d166qo49rg5h4fumasocc9kbl3q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.teufelsturm.tt_downloader3",
-            "certificate_hash": "cd922f8d8920881c8073d777d40a9304c3bd36ed"
-          }
-        },
-        {
-          "client_id": "458169370623-6j361q0tlr7mk01qehquuq4ti77u30h1.apps.googleusercontent.com",
+          "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB7pCJWxskIgEbk8o9HfmglDCZN5jFwOtE"
+          "current_key": "AIzaSyC96IgJ6pTKeD-3GJb0FsUyYpL4RzgrYkk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "458169370623-6j361q0tlr7mk01qehquuq4ti77u30h1.apps.googleusercontent.com",
+              "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546277725027:android:26ec4d54f21cd04a",
+        "android_client_info": {
+          "package_name": "de.steinfibel.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546277725027-75u836m4aol7d2i12n3didtuu7trisk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.steinfibel.free",
+            "certificate_hash": "008a0fb51d1ac56af72741bf2316ec4caa42ec1b"
+          }
+        },
+        {
+          "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC96IgJ6pTKeD-3GJb0FsUyYpL4RzgrYkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546277725027:android:6e5f7838d4fded65",
+        "android_client_info": {
+          "package_name": "de.steinfibel.pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546277725027-n018sagndo9o9pm7inkh79je4c0cdf7f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.steinfibel.pro",
+            "certificate_hash": "008a0fb51d1ac56af72741bf2316ec4caa42ec1b"
+          }
+        },
+        {
+          "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC96IgJ6pTKeD-3GJb0FsUyYpL4RzgrYkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546277725027:android:d810c63b6c31b9e97c7956",
+        "android_client_info": {
+          "package_name": "de.teufelsturm.tt_downloader_ktx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC96IgJ6pTKeD-3GJb0FsUyYpL4RzgrYkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546277725027-o9nnfhdqloh6qct8o521rjga1jdlkcsk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

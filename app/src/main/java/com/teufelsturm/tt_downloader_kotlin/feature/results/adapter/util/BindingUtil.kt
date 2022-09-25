@@ -10,8 +10,8 @@ import android.text.style.ImageSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
+import de.teufelsturm.tt_downloader_ktx.R
 
 fun String.toHTMLSpan(): Spanned {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

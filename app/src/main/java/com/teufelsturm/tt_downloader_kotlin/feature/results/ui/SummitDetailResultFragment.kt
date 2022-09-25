@@ -19,10 +19,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
-import com.teufelsturm.tt_downloader_kotlin.databinding.ResultSummitDetailBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.SummitDetailAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener
@@ -32,6 +30,8 @@ import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.SummitDetailResul
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToRoute
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventNavigatingToSummit
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.ResultSummitDetailBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -41,7 +41,7 @@ private const val TAG = "SummitDetailResultFrag"
 @AndroidEntryPoint
 class SummitDetailResultFragment : Fragment() {
 
-    var summitDetailAdapter: SummitDetailAdapter = SummitDetailAdapter()
+    private var summitDetailAdapter: SummitDetailAdapter = SummitDetailAdapter()
     // var summitCommentDetailAdapter: SummitCommentDetailAdapter = SummitCommentDetailAdapter()
 
     private lateinit var binding: ResultSummitDetailBinding
@@ -87,7 +87,7 @@ class SummitDetailResultFragment : Fragment() {
             }
         )
 
-        viewModel.navigateToCommentInputFragment.observe(viewLifecycleOwner, { myComment ->
+        viewModel.navigateToCommentInputFragment.observe(viewLifecycleOwner) { myComment ->
             myComment?.let { mRoute ->
                 Toast.makeText(
                     requireContext(),
@@ -104,9 +104,9 @@ class SummitDetailResultFragment : Fragment() {
                 findNavController().navigate(action)
                 viewModel.doneNavigationToCommentInputFragment()
             }
-        })
+        }
 
-        viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
+        viewModel.navigateToImageFragment.observe(viewLifecycleOwner) { view ->
             if (view == null) return@observe
             if (view.getTag(R.id.TAG_COMMENT_ID) == null
                 || view.getTag(R.id.TAG_PHOTO_ID) == null
@@ -119,11 +119,11 @@ class SummitDetailResultFragment : Fragment() {
             val mComment =
                 viewModel.mMyTTCommentANDWithPhotos.value.find { comment ->
                     comment is Comments.RouteWithMyTTCommentANDWithPhotos &&
-                            commentID.equals(comment.myTTCommentAND.myTTCommentAND.Id)
+                            commentID == comment.myTTCommentAND.myTTCommentAND.Id
                 } as? Comments.RouteWithMyTTCommentANDWithPhotos
 
             val mPhoto = mComment?.myTTCommentAND?.myTT_comment_PhotosANDList?.find { photo ->
-                photoID.equals(photo.Id)
+                photoID == photo.Id
             }
             ViewCompat.setTransitionName(view, "small_image")
             val extras = FragmentNavigatorExtras(view to "image_big")
@@ -136,7 +136,7 @@ class SummitDetailResultFragment : Fragment() {
             findNavController().navigate(action, extras)
 
             viewModel.doneNavigationToCommentImageFragment()
-        })
+        }
 
         lifecycleScope.launch {
             viewModel.ttRoutes.collect {
@@ -148,7 +148,7 @@ class SummitDetailResultFragment : Fragment() {
         }
 
         // Add an Observer on the state variable for Navigating when and item is clicked.
-        viewModel.navigateToRouteDetail.observe(viewLifecycleOwner, { intTTRouteNr ->
+        viewModel.navigateToRouteDetail.observe(viewLifecycleOwner) { intTTRouteNr ->
             intTTRouteNr?.let {
                 this.findNavController().navigate(
                     SummitDetailResultFragmentDirections.actionSummitResultFragmentToRouteDetailResultFragment(
@@ -161,8 +161,8 @@ class SummitDetailResultFragment : Fragment() {
                 )
                 viewModel.doneNavigatingRoute()
             }
-        })
-        viewModel.navigateToSummitGeo.observe(viewLifecycleOwner, { doNavigate ->
+        }
+        viewModel.navigateToSummitGeo.observe(viewLifecycleOwner) { doNavigate ->
             if (doNavigate != true) return@observe
             val gmmIntentUri = Uri.parse(
                 "geo:${viewModel.mTTSummit.value?.dblGPS_Latitude},${viewModel.mTTSummit.value?.dblGPS_Longitude}"
@@ -170,9 +170,9 @@ class SummitDetailResultFragment : Fragment() {
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             startActivity(mapIntent)
             viewModel.onSummitGeoClicked()
-        })
+        }
         // Add an Observer on the state variable for Navigating when and item is clicked.
-        viewModel.navigateToNextSummitDetail.observe(viewLifecycleOwner, { intTTGipfelNr ->
+        viewModel.navigateToNextSummitDetail.observe(viewLifecycleOwner) { intTTGipfelNr ->
             intTTGipfelNr?.let {
                 this.findNavController().navigate(
                     SummitDetailResultFragmentDirections.actionSummitResultFragmentSelf(
@@ -181,18 +181,18 @@ class SummitDetailResultFragment : Fragment() {
                 )
                 viewModel.doneNavigatingSummit()
             }
-        })
-        viewModel.mTTSummit.observe(viewLifecycleOwner, {
+        }
+        viewModel.mTTSummit.observe(viewLifecycleOwner) {
             binding.summit = it
-        })
+        }
         // this Fragment has a ActionBar Options Menu
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.title = "Gipfel"
 
 
-        viewModel.viewModelRouteOrderWidget.sortRoutesBy.observe(viewLifecycleOwner, {
+        viewModel.viewModelRouteOrderWidget.sortRoutesBy.observe(viewLifecycleOwner) {
             viewModel.onChangeSortOrder(it)
-        })
+        }
         return binding.root
     }
 
@@ -232,7 +232,7 @@ class SummitDetailResultFragment : Fragment() {
 
     override fun onResume() {
         restoreAnimatedState()
-        viewModel.showMyComments.observe(viewLifecycleOwner, {
+        viewModel.showMyComments.observe(viewLifecycleOwner) {
             if (it == null) return@observe
             val drawableID =
                 if (it != true) R.drawable.ic_read_more_anim_in2 else R.drawable.ic_read_more_anim_out2
@@ -269,38 +269,38 @@ class SummitDetailResultFragment : Fragment() {
             if (binding.btnShowMySummitComments.icon is AnimatedVectorDrawableCompat) {
                 (binding.btnShowMySummitComments.icon as AnimatedVectorDrawableCompat).start()
             }
-        })
-        viewModel.viewModelRouteOrderWidget.futureVisibility.observe(viewLifecycleOwner,
-            {
-                if (it == View.INVISIBLE) return@observe
-                //toggle binding.gridLayout visibility with animation.
-                with(binding.radioButtonGrid) {
-                    var coorTO = 0F
-                    var alphTo = 1F
-                    var dur = 300L
-                    if (it != View.VISIBLE) {
-                        coorTO = -1F
-                        alphTo = 0F
-                        dur = 100L
-                    }
-
-                    runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(View.VISIBLE) }
-                    animate()
-                        .setDuration(dur)
-                        .setInterpolator(FastOutLinearInInterpolator())
-                        .translationX(width.toFloat() * -coorTO)
-                        .translationY(height.toFloat() * coorTO)
-                        .alpha(alphTo)
-                        .withEndAction {//in case hiding the recyclerview hide it at the end.
-                            runBlocking {
-                                viewModel.viewModelRouteOrderWidget.setVisibility(
-                                    it
-                                )
-                            }
-                        }
-                        .start()
+        }
+        viewModel.viewModelRouteOrderWidget.futureVisibility.observe(viewLifecycleOwner
+        ) {
+            if (it == View.INVISIBLE) return@observe
+            //toggle binding.gridLayout visibility with animation.
+            with(binding.radioButtonGrid) {
+                var coorTO = 0F
+                var alphTo = 1F
+                var dur = 300L
+                if (it != View.VISIBLE) {
+                    coorTO = -1F
+                    alphTo = 0F
+                    dur = 100L
                 }
-            })
+
+                runBlocking { viewModel.viewModelRouteOrderWidget.setVisibility(View.VISIBLE) }
+                animate()
+                    .setDuration(dur)
+                    .setInterpolator(FastOutLinearInInterpolator())
+                    .translationX(width.toFloat() * -coorTO)
+                    .translationY(height.toFloat() * coorTO)
+                    .alpha(alphTo)
+                    .withEndAction {//in case hiding the recyclerview hide it at the end.
+                        runBlocking {
+                            viewModel.viewModelRouteOrderWidget.setVisibility(
+                                it
+                            )
+                        }
+                    }
+                    .start()
+            }
+        }
         super.onResume()
     }
 

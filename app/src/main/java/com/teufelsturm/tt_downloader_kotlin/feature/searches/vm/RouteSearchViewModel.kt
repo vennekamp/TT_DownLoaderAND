@@ -5,12 +5,12 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.*
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTRouteDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTSummitDAO
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.teufelsturm.tt_downloader_ktx.R
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

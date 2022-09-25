@@ -6,7 +6,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ImageSpan
 import androidx.core.content.res.ResourcesCompat
-import com.teufelsturm.tt_downloader_kotlin.R
+import de.teufelsturm.tt_downloader_ktx.R
 
 /**
  *

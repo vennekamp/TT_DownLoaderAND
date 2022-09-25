@@ -10,8 +10,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.TTRouteAND
-import com.teufelsturm.tt_downloader_kotlin.databinding.*
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.CommentImageCarouselAdapter
+import de.teufelsturm.tt_downloader_ktx.databinding.*
 
 private const val TAG = "ViewHolders"
 

@@ -16,19 +16,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.OrderCommentsDialogFragment
 import com.teufelsturm.tt_downloader_kotlin.data.order.dialogs.ViewModel4CommentOrder
 import com.teufelsturm.tt_downloader_kotlin.data.order.sortCommentsBy
-import com.teufelsturm.tt_downloader_kotlin.databinding.ResultRouteDetailBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.RouteDetailAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.CommentImageClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.toHTMLSpan
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.RouteDetailResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.ResultRouteDetailBinding
 
 private const val TAG = "RouteDetailResultFrag"
 
@@ -82,21 +82,21 @@ class RouteDetailResultFragment : Fragment() {
             }
         )
 
-        viewModel.mTTRouteComments.observe(viewLifecycleOwner, {
+        viewModel.mTTRouteComments.observe(viewLifecycleOwner) {
             if (viewModel.showMyComments.value != true)
                 it?.let { routeDetailAdapter.submitList(it.sortCommentsBy(viewModelOrder.sortCommentsBy.value)) }
-        })
+        }
 
-        viewModel.mMyTTCommentANDWithPhotos.observe(viewLifecycleOwner, {
+        viewModel.mMyTTCommentANDWithPhotos.observe(viewLifecycleOwner) {
             if (viewModel.showMyComments.value == true)
                 it?.let {
                     routeDetailAdapter.submitList(it)
                 }
-        })
+        }
 
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.title = "Weg"
-        viewModelOrder.sortCommentsBy.observe(viewLifecycleOwner, { sortOrder ->
+        viewModelOrder.sortCommentsBy.observe(viewLifecycleOwner) { sortOrder ->
             viewModel.onChangeSortOrder(sortOrder)
             routeDetailAdapter.notifyDataSetChanged()
             val sortCommentsDialog =
@@ -104,8 +104,8 @@ class RouteDetailResultFragment : Fragment() {
             sortCommentsDialog?.let { dialog ->
                 (dialog as DialogFragment).dismiss()
             }
-        })
-        viewModel.navigateToCommentInputFragment.observe(viewLifecycleOwner, { myComment ->
+        }
+        viewModel.navigateToCommentInputFragment.observe(viewLifecycleOwner) { myComment ->
             myComment?.let { mRoute ->
                 val action =
                     RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToCommentInputFragment(
@@ -123,9 +123,9 @@ class RouteDetailResultFragment : Fragment() {
                 findNavController().navigate(action)
                 viewModel.doneNavigationToCommentInputFragment()
             }
-        })
+        }
 
-        viewModel.navigateToImageFragment.observe(viewLifecycleOwner, { view ->
+        viewModel.navigateToImageFragment.observe(viewLifecycleOwner) { view ->
             if (view == null) return@observe
             if (view.getTag(R.id.TAG_COMMENT_ID) == null
                 || view.getTag(R.id.TAG_PHOTO_ID) == null
@@ -136,10 +136,10 @@ class RouteDetailResultFragment : Fragment() {
             val photoID = view.getTag(R.id.TAG_PHOTO_ID) as Long
             val mComment =
                 viewModel.mMyTTCommentANDWithPhotos.value?.find { myTTCommentANDWithPhotos ->
-                    commentID.equals(myTTCommentANDWithPhotos.myTTCommentAND.Id)
+                    commentID == myTTCommentANDWithPhotos.myTTCommentAND.Id
                 }
             val mPhoto = mComment?.myTT_comment_PhotosANDList?.find { myTTCommentPhotosAND ->
-                photoID.equals(myTTCommentPhotosAND.Id)
+                photoID == myTTCommentPhotosAND.Id
             }
             val action =
                 RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToZoomImageView(
@@ -148,7 +148,7 @@ class RouteDetailResultFragment : Fragment() {
                 )
             findNavController().navigate(action, extras)
             viewModel.doneNavigationToCommentImageFragment()
-        })
+        }
         return binding.root
     }
 
@@ -188,7 +188,7 @@ class RouteDetailResultFragment : Fragment() {
 
     override fun onResume() {
         restoreAnimatedState()
-        viewModel.showMyComments.observe(viewLifecycleOwner, {
+        viewModel.showMyComments.observe(viewLifecycleOwner) {
             if (it == null) return@observe
             val drawableID =
                 if (it == true) R.drawable.ic_read_more_anim_in2 else R.drawable.ic_read_more_anim_out2
@@ -225,7 +225,7 @@ class RouteDetailResultFragment : Fragment() {
             if (binding.btnShowMyRouteComments.icon is AnimatedVectorDrawableCompat) {
                 (binding.btnShowMyRouteComments.icon as AnimatedVectorDrawableCompat).start()
             }
-        })
+        }
         super.onResume()
     }
 

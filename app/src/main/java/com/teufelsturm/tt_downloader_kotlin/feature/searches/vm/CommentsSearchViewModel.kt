@@ -3,12 +3,12 @@ package com.teufelsturm.tt_downloader_kotlin.feature.searches.vm
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTSummitDAO
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.*
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteGrade
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.teufelsturm.tt_downloader_ktx.R
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

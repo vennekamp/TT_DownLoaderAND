@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teufelsturm.tt_downloader_kotlin.data.entity.CommentsSummit
-import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemSummitBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.DiffCallBacks
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.SummitClickListener
+import de.teufelsturm.tt_downloader_ktx.databinding.ListitemSummitBinding
 
 private const val TAG = "SummitsListAdapter"
 

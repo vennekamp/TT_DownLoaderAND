@@ -24,7 +24,7 @@ interface TTRouteDAO {
     fun getByRouteId(intTTWegNr: Int): Flow<TTRouteAND>
 
     @Query("SELECT * from TT_Route_AND")
-    fun getAll(): LiveData<List<TTRouteAND>>
+    fun getAll(): Flow<List<TTRouteAND>>
 
     @Query(
         """SELECT DISTINCT weg FROM 
@@ -105,11 +105,11 @@ interface TTRouteDAO {
 
     @Transaction
     @Query("SELECT * FROM TT_Route_AND WHERE intTTWegNr = :intTTWegNr")
-    fun getRouteWithMyCommentWithSummit(intTTWegNr: Int): LiveData<RouteWithMyCommentWithSummit>
+    fun getRouteWithMyCommentWithSummit(intTTWegNr: Int): Flow<RouteWithMyCommentWithSummit>
 
     @Transaction
     @Query("SELECT * FROM TT_Route_AND WHERE intTTGipfelNr = :intTTGipfelNr")
-    fun getRouteListWithMyCommentWithSummit(intTTGipfelNr: Int): LiveData<List<RouteWithMyCommentWithSummit>>
+    fun getRouteListWithMyCommentWithSummit(intTTGipfelNr: Int): Flow<List<RouteWithMyCommentWithSummit>>
 
     @Transaction
     @Query(

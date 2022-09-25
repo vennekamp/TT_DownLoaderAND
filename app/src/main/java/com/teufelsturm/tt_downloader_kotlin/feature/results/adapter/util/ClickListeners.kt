@@ -3,7 +3,6 @@ package com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util
 import android.view.View
 import com.teufelsturm.tt_downloader_kotlin.data.db.*
 import com.teufelsturm.tt_downloader_kotlin.data.entity.*
-import com.teufelsturm.tt_downloader_kotlin.databinding.*
 import com.teufelsturm.tt_downloader_kotlin.feature.results.ui.RoutesListResultFragment
 
 /**

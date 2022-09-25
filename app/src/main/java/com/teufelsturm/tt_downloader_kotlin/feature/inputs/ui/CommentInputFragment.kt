@@ -22,17 +22,17 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.app.MainActivity
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.databinding.InputMyCommentBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.FieldValidators
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CommentInputViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CustomCarouselViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.InputMyCommentBinding
 import java.io.File
 import java.util.*
 
@@ -135,7 +135,7 @@ class CommentInputFragment : Fragment() {
     }
 
     private fun createObservers() {
-        viewModelComment.showDateDialog.observe(viewLifecycleOwner, {
+        viewModelComment.showDateDialog.observe(viewLifecycleOwner) {
             if (it != true) return@observe
             val startDate = viewModelComment.ascentData.getAscentDateObject()
                 ?: MaterialDatePicker.todayInUtcMilliseconds()
@@ -149,8 +149,8 @@ class CommentInputFragment : Fragment() {
             }
             dialog.show(childFragmentManager, "myTimeDialog")
             viewModelComment.onShowDateDialogFinished()
-        })
-        viewModelComment.showTimeDialog.observe(viewLifecycleOwner, {
+        }
+        viewModelComment.showTimeDialog.observe(viewLifecycleOwner) {
             if (it != true) return@observe
             val cal = Calendar.getInstance()
             val dialog = MaterialTimePicker.Builder()
@@ -165,9 +165,9 @@ class CommentInputFragment : Fragment() {
             }
             dialog.show(childFragmentManager, "myTimeDialog")
             viewModelComment.onShowTimeWidgetFinished()
-        })
+        }
 
-        viewModelComment.deleteComment.observe(viewLifecycleOwner, {
+        viewModelComment.deleteComment.observe(viewLifecycleOwner) {
             if (it != true) return@observe
             viewModelComment.ascentData.setAscentDate(null)
             viewModelComment.ascentData.setAscentPartner(null)
@@ -185,7 +185,7 @@ class CommentInputFragment : Fragment() {
             )
             binding.carouselView.pageCount = 1
             viewModelComment.onDeletedComment()
-        })
+        }
 
         binding.edtDateOfAscend.addTextChangedListener(
             TextFieldValidation(
@@ -193,7 +193,7 @@ class CommentInputFragment : Fragment() {
             )
         )
 
-        viewModelCarousel.carouselImagesChange.observe(viewLifecycleOwner, {
+        viewModelCarousel.carouselImagesChange.observe(viewLifecycleOwner) {
             if (it) {
                 binding.carouselView.pageCount =
                     binding.carouselView.pageCount // reset the carouselView
@@ -201,32 +201,30 @@ class CommentInputFragment : Fragment() {
                 binding.carouselView.setCurrentItem(currentItem, true)
                 viewModelCarousel.onCarouselImagesChanged()
             }
-        })
+        }
 
-        viewModelComment.spinnerHowAscended.selected.observe(viewLifecycleOwner, {
+        viewModelComment.spinnerHowAscended.selected.observe(viewLifecycleOwner) {
             binding.spinnerRouteAsscendedEditTextStub.requestFocus()
             viewModelComment.ascentData.myTTCommentANDWithPhotos.myTTCommentAND.isAscendedType = it
-        })
+        }
 
-        viewModelCarousel.carouselImageDelete.observe(viewLifecycleOwner, { deleteItem ->
+        viewModelCarousel.carouselImageDelete.observe(viewLifecycleOwner) { deleteItem ->
             deleteItem?.let {
                 carouselViewAdapter.deleteItem(it)
                 dialogDeleteOrOpen?.dismiss()
             }
             viewModelCarousel.onItemDeleted()
-        })
+        }
 
-        viewModelCarousel.carouselImageShow.observe(viewLifecycleOwner, { carouselViewModel ->
-
+        viewModelCarousel.carouselImageShow.observe(viewLifecycleOwner) { carouselViewModel ->
             carouselViewModel?.getImage()?.let { uri ->
                 openImage(uri)
-
                 viewModelCarousel.onItemShown()
             }
-        })
+        }
 
 
-        viewModelCarousel.imagedClicked.observe(viewLifecycleOwner, { nullOrUri ->
+        viewModelCarousel.imagedClicked.observe(viewLifecycleOwner) { nullOrUri ->
             nullOrUri?.let { uri ->
                 if (uri.toString() == CarouselViewAdapter.ADD_IMAGE) {
                     Toast.makeText(
@@ -244,7 +242,7 @@ class CommentInputFragment : Fragment() {
                 }
                 viewModelCarousel.onImageClickHandled()
             }
-        })
+        }
     }
 
     private fun openImage(uri: Uri) {

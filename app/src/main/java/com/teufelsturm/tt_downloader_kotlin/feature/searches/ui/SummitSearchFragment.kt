@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.teufelsturm.tt_downloader_kotlin.R
 import com.teufelsturm.tt_downloader_kotlin.app.MainActivity
-import com.teufelsturm.tt_downloader_kotlin.databinding.SearchSummitsBinding
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.EventSearchSummitParameter
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.vm.SummitSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import de.teufelsturm.tt_downloader_ktx.R
+import de.teufelsturm.tt_downloader_ktx.databinding.SearchSummitsBinding
 
 private const val TAG = "SearchSummitFragment"
 
@@ -50,29 +50,28 @@ class SummitSearchFragment : Fragment() {
         binding.viewModel4SummitSearch = viewModel
         //region OBSERVER
         viewModel.spinnerAreaSummit.selectedItem.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshSummitCount()
-                viewModel.refreshRangeSlider()
-            }
-        )
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshSummitCount()
+            viewModel.refreshRangeSlider()
+        }
         viewModel.rangeSliderAnzahlDerWege.values.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshSummitCount()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshSummitCount()
+        }
 
         viewModel.rangeSliderAnzahlDerSternchenWege.values.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshSummitCount()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshSummitCount()
+        }
         viewModel.searchTextVM.searchText.observe(
-            viewLifecycleOwner,
-            {
-                viewModel.refreshSummitCount()
-                viewModel.refreshRangeSlider()
-            })
+            viewLifecycleOwner
+        ) {
+            viewModel.refreshSummitCount()
+            viewModel.refreshRangeSlider()
+        }
         // Observer for the SEARCH event
         viewModel.eventSearchSummit.observe(viewLifecycleOwner, Observer<Boolean> { doSearch ->
             if (doSearch) onSearchSummit()
@@ -85,11 +84,10 @@ class SummitSearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.v(TAG, "In ViewPager2: onResume()")
-        viewModel.actionBarString.observe(viewLifecycleOwner,
-            {
-                (activity as MainActivity).supportActionBar!!.title = it
-            }
-        )
+        viewModel.actionBarString.observe(viewLifecycleOwner
+        ) {
+            (activity as MainActivity).supportActionBar!!.title = it
+        }
         (activity as MainActivity).supportActionBar!!.title = viewModel.actionBarString.value
     }
 

@@ -9,8 +9,8 @@ import android.util.Log
 import androidx.core.text.toSpannable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import com.teufelsturm.tt_downloader_kotlin.BR
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CustomCarouselViewModel
+import de.teufelsturm.tt_downloader_ktx.BR
 
 private const val TAG = "CarouselAdapterData"
 

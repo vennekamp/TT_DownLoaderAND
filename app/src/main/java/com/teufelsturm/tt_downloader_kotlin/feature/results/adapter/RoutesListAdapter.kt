@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.databinding.ListitemRouteBinding
 import com.teufelsturm.tt_downloader_kotlin.data.entity.RouteWithMyCommentWithSummit
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.DiffCallBacks
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTRouteClickListener
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.TTSummitClickListener
+import de.teufelsturm.tt_downloader_ktx.databinding.ListitemRouteBinding
 
 private const val TAG = "RoutesListAdapter"
 
