@@ -1,6 +1,7 @@
 package com.teufelsturm.tt_downloader_kotlin.feature.searches.vm
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.databinding.ObservableBoolean
@@ -8,6 +9,7 @@ import androidx.lifecycle.*
 import com.teufelsturm.tt_downloader_kotlin.data.db.TTSummitDAO
 import com.teufelsturm.tt_downloader_kotlin.feature.searches.generics.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.teufelsturm.tt_downloader_ktx.BuildConfig
 import de.teufelsturm.tt_downloader_ktx.R
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -29,6 +31,8 @@ class SummitSearchViewModel @Inject constructor(
         justMySummit.set(!justMySummit.get())
         refreshSummitCount()
     }
+
+    val versionName : String = application.getString(R.string.app_name) + " Vers. 0." + "%03d".format(BuildConfig.VERSION_CODE)
 
     val spinnerAreaSummit = ViewModelSpinner(
         ttSummitDAO.getDistictAreaNames()
