@@ -27,38 +27,39 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/PaleYellow"
                 android:inputType="textNoSuggestions|textCapSentences|textAutoComplete|textVisiblePassword"
                 app:endIconMode="clear_text"
+                android:background="@color/PaleYellow"
+                android:hint="@string/strSearchSummit"
+                android:textColorHint="@color/Grey"
+                app:endIconTint="@color/Grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textViewSuchTextGipfel"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSuchTextGipfel">
+                app:layout_constraintTop_toBottomOf="@+id/textViewSuchTextGipfel" >
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/editTextSuchtextGipfel"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/PaleYellow"
-                    android:textColor="@color/Black"
-                    android:completionThreshold="2"
-                    android:hint="@string/strSearchSummit"
                     android:inputType="textNoSuggestions|textCapSentences|textAutoComplete|textVisiblePassword"
                     android:minHeight="48dp"
                     android:onTextChanged="@{viewModel4SummitSearch.searchTextVM::onTextChanged}"
-                    android:selectAllOnFocus="false"
+                    android:textColor="@color/Black"
                     android:text="@{viewModel4SummitSearch.searchTextVM.searchText}"
                     android:textSize="22sp"
                     app:adapter="@{viewModel4SummitSearch.summitAdapter}" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <!-- https://stackoverflow.com/questions/67722161/change-text-color-of-spinner -->
             <Spinner
                 android:id="@+id/spinnerAreaSummit"
+                android:theme="@style/Theme.TT_DownLoaderAND_Kotlin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/edittext_background_summit"
                 android:text="@color/Black"
+                android:textColor="@color/Black"
                 android:entries="@{viewModel4SummitSearch.spinnerAreaSummit.entries}"
                 android:minWidth="@android:dimen/app_icon_size"
                 android:minHeight="@dimen/lv_header"
@@ -177,10 +178,11 @@
                 android:layout_marginTop="20sp"
                 android:text="@{viewModel4SummitSearch.versionName}"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-
                 android:textColor="@color/Black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rangeSliderAnzahlDerSternchenWege" />
+                app:layout_constraintTop_toBottomOf="@+id/rangeSliderAnzahlDerSternchenWege"
+                tools:text="Version 0.xyz"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

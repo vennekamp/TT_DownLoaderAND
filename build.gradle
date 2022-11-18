@@ -29,7 +29,7 @@ buildscript {
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hilt_version")
 
         // Adding the safe-args dependency to the project Gradle file
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.2")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
     }
 }
 
