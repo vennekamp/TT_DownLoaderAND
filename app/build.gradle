@@ -7,11 +7,13 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs'
 
 android {
-    compileSdkVersion 33
+    buildToolsVersion = '30.0.3'
+
     defaultConfig {
-        applicationId "de.teufelsturm.tt_downloader_ktx"
         minSdkVersion 21
+        compileSdkVersion = 33
         targetSdkVersion 33
+        applicationId "de.teufelsturm.tt_downloader_ktx"
         versionCode 6
         versionName "0." + defaultConfig.versionCode.intdiv(10) + "." + defaultConfig.versionCode % 10
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -39,7 +41,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildToolsVersion '30.0.3'
 }
 
 // Allow references to generated code

@@ -140,6 +140,7 @@ interface TTSummitDAO {
                     AND a.strGebiet = (CASE WHEN length(:searchAreas) THEN (:searchAreas) ELSE (a.strGebiet) END)
                     AND a.strName LIKE :searchText;"""
     )
+    @Transaction
     fun loadConstrainedSummitsAndMyComments(
         minAnzahlWege: Int,
         maxAnzahlWege: Int,
@@ -172,6 +173,7 @@ interface TTSummitDAO {
                     AND a.intTTGipfelNr = b.myIntTTGipfelNr
                     AND a.strName LIKE :searchText;"""
     )
+    @Transaction
     fun loadConstrainedSummitsAndMyCommentsJustMine(
         minAnzahlWege: Int,
         maxAnzahlWege: Int,

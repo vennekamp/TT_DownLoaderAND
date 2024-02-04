@@ -46,12 +46,17 @@ interface MyTTCommentDAO {
     // endregion
 
     // region MyTTRouteANDWithPhotos
+    @Transaction
     @Query("SELECT * FROM MyTT_Comment_AND")
     fun getAllCommentWithPhoto(): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
+
+    @Transaction
     @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTWegNr = :myIntTTWegNr")
     fun getCommentWithPhotoByRoute(myIntTTWegNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
+
+    @Transaction
     @Query("SELECT * FROM MyTT_Comment_AND WHERE myIntTTGipfelNr = :myIntTTGipfelNr")
     fun getCommentWithPhotoBySummit(myIntTTGipfelNr: Int): Flow<List<Comments.MyTTCommentANDWithPhotos>>
 
