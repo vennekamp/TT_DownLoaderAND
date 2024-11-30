@@ -25,9 +25,9 @@ import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import com.teufelsturm.tt_downloader_kotlin.app.MainActivity
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
+// import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.FieldValidators
-import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel
+// import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CommentInputViewModel
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CustomCarouselViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,12 +43,12 @@ class CommentInputFragment : Fragment() {
 
     private lateinit var binding: InputMyCommentBinding
 
-    private lateinit var carouselViewAdapter: CarouselViewAdapter
+//      private lateinit var carouselViewAdapter: CarouselViewAdapter
 
-    private var dialogDeleteOrOpen: DialogDeleteOrOpen? = null
+//    private var dialogDeleteOrOpen: DialogDeleteOrOpen? = null
 
     private val viewModelComment by viewModels<CommentInputViewModel>()
-    private val viewModelCarousel by viewModels<CarouselViewAdapterViewModel>()
+    // private val viewModelCarousel by viewModels<CarouselViewAdapterViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +56,12 @@ class CommentInputFragment : Fragment() {
         // This callback will only be called when MyFragment is at least Started.
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
-            viewModelComment.saveModifiedComment(
-                viewModelComment.ascentData.myTTCommentANDWithPhotos.myTTCommentAND,
-                viewModelCarousel.carouselAdapterData.getCarouselItemViewModels(),
-                viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
-
-            )
+//            viewModelComment.saveModifiedComment(
+//                viewModelComment.ascentData.myTTCommentANDWithPhotos.myTTCommentAND,
+//                viewModelCarousel.carouselAdapterData.getCarouselItemViewModels(),
+//                viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
+//
+//            )
             this.remove()
             requireActivity().supportFragmentManager.popBackStack()
         }
@@ -82,57 +82,57 @@ class CommentInputFragment : Fragment() {
         )
 
         binding.viewModel4CommentInut = viewModelComment
-        binding.viewModel4Carousel = viewModelCarousel
-        carouselViewAdapter =
-            CarouselViewAdapter(
-                requireContext(),
-                viewModelCarousel
-            ).bind(binding.carouselView)
+//        binding.viewModel4Carousel = viewModelCarousel
+//        carouselViewAdapter =
+//            CarouselViewAdapter(
+//                requireContext(),
+//                viewModelCarousel
+//            ).bind(binding.carouselView)
 
         val toolBar = (requireActivity() as MainActivity).supportActionBar
         arguments?.let { itBundle ->
-            val args = CommentInputFragmentArgs.fromBundle(itBundle)
-            val commentData = Comments.MyTTCommentANDWithPhotos(
-                args.mMyTTCommentAnd,
-                args.lstMyTTRoutePhotosAND.toMutableList()
-            )
-            viewModelComment.setMyTTRouteANDWithPhotos(commentData)
-            viewModelCarousel.setMyTTRouteANDWithPhotos(commentData)
+//            val args = CommentInputFragmentArgs.fromBundle(itBundle)
+//            val commentData = Comments.MyTTCommentANDWithPhotos(
+//                args.mMyTTCommentAnd,
+//                args.lstMyTTRoutePhotosAND.toMutableList()
+//            )
+//            viewModelComment.setMyTTRouteANDWithPhotos(commentData)
+//            viewModelCarousel.setMyTTRouteANDWithPhotos(commentData)
 
             toolBar?.let {
                 it.setHomeAsUpIndicator(
                     android.R.drawable.ic_delete
                 )
-                it.title = args.myRouteOrSummitName
+//                it.title = args.myRouteOrSummitName
             }
         }
-        binding.carouselView.pageCount =
-            viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().size
-
-        addCarouselPageListener()
-        setHasOptionsMenu(true)
+//        binding.carouselView.pageCount =
+//            viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().size
+//
+//        addCarouselPageListener()
+//        setHasOptionsMenu(true)
         createObservers()
         return binding.root
     }
 
-    private fun addCarouselPageListener() {
-        binding.carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                viewModelCarousel.carouselAdapterData.onCarouselPageSelected(position)
-            }
-
-            override fun onPageSelected(position: Int) {
-                // Check if this is the page you want.
-            }
-        })
-    }
+//    private fun addCarouselPageListener() {
+//        binding.carouselView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//            override fun onPageScrollStateChanged(state: Int) {
+//            }
+//
+//            override fun onPageScrolled(
+//                position: Int,
+//                positionOffset: Float,
+//                positionOffsetPixels: Int
+//            ) {
+//                viewModelCarousel.carouselAdapterData.onCarouselPageSelected(position)
+//            }
+//
+//            override fun onPageSelected(position: Int) {
+//                // Check if this is the page you want.
+//            }
+//        })
+//    }
 
     private fun createObservers() {
         viewModelComment.showDateDialog.observe(viewLifecycleOwner) {
@@ -176,14 +176,14 @@ class CommentInputFragment : Fragment() {
                 binding.spinnerRouteAsscendedInCommentRoute.setSelection(0)
             }
 
-            viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels.addAll(
-                viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().filter {
-                    it.getImage().toString() != CarouselViewAdapter.ADD_IMAGE
-                })
-            viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().removeAll(
-                viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
-            )
-            binding.carouselView.pageCount = 1
+//            viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels.addAll(
+//            viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().filter {
+//                    it.getImage().toString() != CarouselViewAdapter.ADD_IMAGE
+//                })
+//            viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().removeAll(
+//                viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
+//            )
+//            binding.carouselView.pageCount = 1
             viewModelComment.onDeletedComment()
         }
 
@@ -193,56 +193,56 @@ class CommentInputFragment : Fragment() {
             )
         )
 
-        viewModelCarousel.carouselImagesChange.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.carouselView.pageCount =
-                    binding.carouselView.pageCount // reset the carouselView
-                val currentItem = viewModelCarousel.carouselAdapterData.getPosition()
-                binding.carouselView.setCurrentItem(currentItem, true)
-                viewModelCarousel.onCarouselImagesChanged()
-            }
-        }
+//        viewModelCarousel.carouselImagesChange.observe(viewLifecycleOwner) {
+//            if (it) {
+//                binding.carouselView.pageCount =
+//                    binding.carouselView.pageCount // reset the carouselView
+//                val currentItem = viewModelCarousel.carouselAdapterData.getPosition()
+//                binding.carouselView.setCurrentItem(currentItem, true)
+//                viewModelCarousel.onCarouselImagesChanged()
+//            }
+//        }
 
         viewModelComment.spinnerHowAscended.selected.observe(viewLifecycleOwner) {
             binding.spinnerRouteAsscendedEditTextStub.requestFocus()
             viewModelComment.ascentData.myTTCommentANDWithPhotos.myTTCommentAND.isAscendedType = it
         }
 
-        viewModelCarousel.carouselImageDelete.observe(viewLifecycleOwner) { deleteItem ->
-            deleteItem?.let {
-                carouselViewAdapter.deleteItem(it)
-                dialogDeleteOrOpen?.dismiss()
-            }
-            viewModelCarousel.onItemDeleted()
-        }
+//        viewModelCarousel.carouselImageDelete.observe(viewLifecycleOwner) { deleteItem ->
+//            deleteItem?.let {
+//                //carouselViewAdapter.deleteItem(it)
+//                dialogDeleteOrOpen?.dismiss()
+//            }
+//            viewModelCarousel.onItemDeleted()
+//        }
+//
+//        viewModelCarousel.carouselImageShow.observe(viewLifecycleOwner) { carouselViewModel ->
+//            carouselViewModel?.getImage()?.let { uri ->
+//                openImage(uri)
+//                viewModelCarousel.onItemShown()
+//            }
+//        }
 
-        viewModelCarousel.carouselImageShow.observe(viewLifecycleOwner) { carouselViewModel ->
-            carouselViewModel?.getImage()?.let { uri ->
-                openImage(uri)
-                viewModelCarousel.onItemShown()
-            }
-        }
 
-
-        viewModelCarousel.imagedClicked.observe(viewLifecycleOwner) { nullOrUri ->
-            nullOrUri?.let { uri ->
-                if (uri.toString() == CarouselViewAdapter.ADD_IMAGE) {
-                    Toast.makeText(
-                        context,
-                        "Bilder auswählen...",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    filesChooserContract.launch(arrayOf("image/*"))
-                } else {
-                    dialogDeleteOrOpen = DialogDeleteOrOpen(viewModelCarousel)
-                    dialogDeleteOrOpen?.show(
-                        requireActivity().supportFragmentManager,
-                        "dialog_delete_or_open"
-                    )
-                }
-                viewModelCarousel.onImageClickHandled()
-            }
-        }
+//        viewModelCarousel.imagedClicked.observe(viewLifecycleOwner) { nullOrUri ->
+//            nullOrUri?.let { uri ->
+//                if (uri.toString() == CarouselViewAdapter.ADD_IMAGE) {
+//                    Toast.makeText(
+//                        context,
+//                        "Bilder auswählen...",
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                    filesChooserContract.launch(arrayOf("image/*"))
+//                } else {
+//                    dialogDeleteOrOpen = DialogDeleteOrOpen(viewModelCarousel)
+//                    dialogDeleteOrOpen?.show(
+//                        requireActivity().supportFragmentManager,
+//                        "dialog_delete_or_open"
+//                    )
+//                }
+//                viewModelCarousel.onImageClickHandled()
+//            }
+//        }
     }
 
     private fun openImage(uri: Uri) {
@@ -266,16 +266,16 @@ class CommentInputFragment : Fragment() {
                     uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
                 )
-                viewModelCarousel.carouselAdapterData.addCustomCarouselViewModel(
-                    CustomCarouselViewModel(
-                        MyTTCommentPhotosAND(
-                            0L, viewModelComment.getMyTTRouteANDId(),
-                            uri.toString(),
-                            requireContext().getFileName(uri)
-                        )
-                    ), true
-                )
-                binding.carouselView.pageCount++
+//                viewModelCarousel.carouselAdapterData.addCustomCarouselViewModel(
+//                    CustomCarouselViewModel(
+//                        MyTTCommentPhotosAND(
+//                            0L, viewModelComment.getMyTTRouteANDId(),
+//                            uri.toString(),
+//                            requireContext().getFileName(uri)
+//                        )
+//                    ), true
+//                )
+//                binding.carouselView.pageCount++
             }
         }
 
@@ -297,32 +297,33 @@ class CommentInputFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.comment_input_menu -> {
-                viewModelComment.saveModifiedComment(
-                    viewModelComment.ascentData.myTTCommentANDWithPhotos.myTTCommentAND,
-                    viewModelCarousel.carouselAdapterData.getCarouselItemViewModels(),
-                    viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
-                )
-                requireActivity().supportFragmentManager.popBackStack()
-                true
-            }
-            R.id.comment_edit_image -> {
-                val pos = viewModelCarousel.carouselAdapterData.getPosition()
-                if (pos != -1) {
-                    viewModelCarousel.onImageClick(pos)
-                } else {
-                    val msg = "clicked image not found!! "
-                    Log.e(TAG, msg)
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    val fallbackPos =
-                        viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().size - 1
-                    viewModelCarousel.onImageClick(fallbackPos)
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        return super.onOptionsItemSelected(item)
+//        return when (item.itemId) {
+//            R.id.comment_input_menu -> {
+////                viewModelComment.saveModifiedComment(
+////                    viewModelComment.ascentData.myTTCommentANDWithPhotos.myTTCommentAND,
+////                    viewModelCarousel.carouselAdapterData.getCarouselItemViewModels(),
+////                    viewModelCarousel.carouselAdapterData.deletedCarouselItemViewModels
+////                )
+//                requireActivity().supportFragmentManager.popBackStack()
+//                true
+//            }
+//            R.id.comment_edit_image -> {
+//                val pos = viewModelCarousel.carouselAdapterData.getPosition()
+//                if (pos != -1) {
+//                    viewModelCarousel.onImageClick(pos)
+//                } else {
+//                    val msg = "clicked image not found!! "
+//                    Log.e(TAG, msg)
+//                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+//                    val fallbackPos =
+//                        viewModelCarousel.carouselAdapterData.getCarouselItemViewModels().size - 1
+//                    viewModelCarousel.onImageClick(fallbackPos)
+//                }
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
     }
 
 

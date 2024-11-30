@@ -26,7 +26,18 @@
                 app:layout_constraintRight_toRightOf="@+id/carouselView"
                 android:src="@drawable/ic_baseline_delete_24" />
 
-            <com.synnapps.carouselview.CarouselView
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/carouselView"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    app:strokeColor="#FF777777"
+    app:strokeWidth="1dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@+id/til_image_caption"
+    />
+            <!-- com.synnapps.carouselview.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -43,7 +54,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/til_image_caption"
-                />
+                / -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_image_caption"
@@ -58,11 +69,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_image_caption"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="@{viewModel4Carousel.carouselAdapterData.canEdit}"
-                android:focusableInTouchMode="@{viewModel4Carousel.carouselAdapterData.canEdit}"
-                android:cursorVisible="@{viewModel4Carousel.carouselAdapterData.canEdit}"
-                android:text="@={viewModel4Carousel.carouselAdapterData.imageCaptionVM.imageCaption}" />
+                android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,10 +207,10 @@
             name="viewModel4CommentInut"
             type="com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CommentInputViewModel" />
 
-        <variable
+       <!-- <variable
             name="viewModel4Carousel"
             type="com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CarouselViewAdapterViewModel" />
-
+-->
         <variable
             name="clickListenerComment"
             type="com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteCommentsClickListener" />

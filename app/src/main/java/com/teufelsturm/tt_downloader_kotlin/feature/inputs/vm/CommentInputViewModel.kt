@@ -12,7 +12,7 @@ import com.teufelsturm.tt_downloader_kotlin.data.db.MyTTCommentDAO
 import com.teufelsturm.tt_downloader_kotlin.data.db.NO_ID
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.Comments
-import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
+// import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.util.AscentCommentData
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentType
 import com.teufelsturm.tt_downloader_kotlin.feature.results.adapter.util.RouteAscentTypeOnItemSelected
@@ -155,29 +155,29 @@ class CommentInputViewModel @Inject constructor(
         rowIDRoute: Long,
         myTTCommentAND: MyTTCommentAND
     ) {
-        if (it.getMyTT_RoutePhotos_AND().uri != CarouselViewAdapter.ADD_IMAGE) {
-            val commentPhoto = it.getMyTT_RoutePhotos_AND()
-            commentPhoto.commentID = rowIDRoute
-
-            val rowIDComment: Long = if (commentPhoto.Id == NO_ID) {
-                Log.e(
-                    TAG,
-                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} insert"
-                )
-                myTTCommentDAO.insert(commentPhoto)
-            } else {
-                Log.e(
-                    TAG,
-                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} update"
-                )
-                myTTCommentDAO.update(commentPhoto)
-                commentPhoto.Id
-            }
-            Log.e(
-                TAG,
-                "saveModifiedComment(...commentPhoto for ${commentPhoto.caption} in row -> $rowIDComment"
-            )
-        }
+//        if (it.getMyTT_RoutePhotos_AND().uri != CarouselViewAdapter.ADD_IMAGE) {
+//            val commentPhoto = it.getMyTT_RoutePhotos_AND()
+//            commentPhoto.commentID = rowIDRoute
+//
+//            val rowIDComment: Long = if (commentPhoto.Id == NO_ID) {
+//                Log.e(
+//                    TAG,
+//                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} insert"
+//                )
+//                myTTCommentDAO.insert(commentPhoto)
+//            } else {
+//                Log.e(
+//                    TAG,
+//                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} update"
+//                )
+//                myTTCommentDAO.update(commentPhoto)
+//                commentPhoto.Id
+//            }
+//            Log.e(
+//                TAG,
+//                "saveModifiedComment(...commentPhoto for ${commentPhoto.caption} in row -> $rowIDComment"
+//            )
+//        }
     }
 
     private fun saveMyRoute(myTTCommentAND: MyTTCommentAND) =

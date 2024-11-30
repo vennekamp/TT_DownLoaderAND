@@ -5,7 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentAND
 import com.teufelsturm.tt_downloader_kotlin.data.entity.MyTTCommentPhotosAND
-import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
+// import com.teufelsturm.tt_downloader_kotlin.feature.inputs.adapter.CarouselViewAdapter
 import com.teufelsturm.tt_downloader_kotlin.feature.inputs.vm.CustomCarouselViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -95,7 +95,7 @@ class MyTTCommentWriteReadTest {
                 "content://com.android.externalstorage.documents/document/primary%3ADCIM%2F100ANDRO%2FDSC_0005.JPG"
         }
         val myTT_RoutePhotos_AND1 =
-            MyTTCommentPhotosAND(0, 0, CarouselViewAdapter.ADD_IMAGE, "Bild hinzufügen...")
+            MyTTCommentPhotosAND(0, 0, "CarouselViewAdapter.ADD_IMAGE", "Bild hinzufügen...")
 
         val customCarouselViewModel0 = CustomCarouselViewModel(myTT_RoutePhotos_AND0)
         val customCarouselViewModel1 = CustomCarouselViewModel(myTT_RoutePhotos_AND1)
@@ -120,7 +120,7 @@ class MyTTCommentWriteReadTest {
                 myTTCommentAND.Id
             }
         carouselItemViewModels.forEach {
-            if (it.getMyTT_RoutePhotos_AND().uri != CarouselViewAdapter.ADD_IMAGE) {
+            if (it.getMyTT_RoutePhotos_AND().uri != "CarouselViewAdapter.ADD_IMAGE") {
                 val commentPhoto = it.getMyTT_RoutePhotos_AND()
                 commentPhoto.commentID = rowID
                 if (commentPhoto.Id == NO_ID) {
