@@ -90,13 +90,15 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     /// ADDITIONAL / EXTERNAL LIBRARIES
-    // Image Carousel
-    implementation 'com.synnapps:carouselview:0.1.5'
+    // Image Carousel:  https://mvnrepository.com/artifact/com.synnapps/carouselview
+    implementation("com.synnapps:carouselview:0.1.4")
+
     // Image Loader from external source
     implementation("io.coil-kt:coil:1.4.0")
     // TouchImageView
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0'
-
+//    // https://github.com/thiago-you/carouselview
+//    implementation 'com.github.thiago-you:carouselview:1.0.0'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'

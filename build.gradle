@@ -5,6 +5,7 @@ ext {
 buildscript {
     repositories {
         google()
+        maven { url "https://mvnrepository.com/artifact/com.synnapps/carouselview/"}
         mavenCentral()
     }
 
