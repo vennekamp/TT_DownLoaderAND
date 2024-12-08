@@ -26,6 +26,7 @@ interface TTNeighbourSummitANDDAO {
     @Query("DELETE FROM TT_NeigbourSummit_AND WHERE _id = :id")
     fun deleteByID(id: Int)
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @RewriteQueriesToDropUnusedColumns
     @Query(
         """SELECT a.*, b.strName,

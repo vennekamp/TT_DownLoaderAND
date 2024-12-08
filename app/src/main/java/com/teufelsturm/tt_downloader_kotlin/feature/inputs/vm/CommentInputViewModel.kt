@@ -160,10 +160,10 @@ class CommentInputViewModel @Inject constructor(
 //            commentPhoto.commentID = rowIDRoute
 //
 //            val rowIDComment: Long = if (commentPhoto.Id == NO_ID) {
-//                Log.e(
-//                    TAG,
-//                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} insert"
-//                )
+                Log.e(
+                    TAG,
+                    "saveModifiedComment(...commentPhoto for ${myTTCommentAND.myIntTTWegNr} insert"
+                )
 //                myTTCommentDAO.insert(commentPhoto)
 //            } else {
 //                Log.e(

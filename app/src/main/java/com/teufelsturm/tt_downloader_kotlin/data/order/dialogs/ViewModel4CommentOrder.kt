@@ -3,8 +3,8 @@ package com.teufelsturm.tt_downloader_kotlin.data.order.dialogs
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.teufelsturm.tt_downloader_kotlin.data.order.Order
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortCommentsWithRouteWithSummitBy
 import com.teufelsturm.tt_downloader_kotlin.feature.results.vm.generics.ViewModelRadioButtonCwRwS
@@ -26,8 +26,11 @@ class ViewModel4CommentOrder: ViewModel() {
         _futureVisibility.value = View.GONE
     }
 
-    var order: LiveData<Order> =
-        Transformations.map(sortOrder) { convertBooleanToOrder(it) }
+    var order: LiveData<Order> = sortOrder.map { it: Boolean -> convertBooleanToOrder(it)}
+
+
+        // Transformations.map(sortOrder) { convertBooleanToOrder(it) }
+
     private val _futureVisibility = MutableLiveData<Int>(View.INVISIBLE)
     val futureVisibility: LiveData<Int>
         get() = _futureVisibility

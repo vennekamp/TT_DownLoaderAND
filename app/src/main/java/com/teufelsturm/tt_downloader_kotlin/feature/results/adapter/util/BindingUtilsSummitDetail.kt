@@ -9,7 +9,7 @@ import de.teufelsturm.tt_downloader_ktx.R
 import java.text.DecimalFormat
 
 @BindingAdapter(
-    value = ["bind:summit4NeighbourTextFormatted", "bind:neighbour4NeighbourTextFormatted"],
+    value = ["summit4NeighbourTextFormatted", "neighbour4NeighbourTextFormatted"],
     requireAll = true
 )
 fun TextView.neighbourTextFormatted(

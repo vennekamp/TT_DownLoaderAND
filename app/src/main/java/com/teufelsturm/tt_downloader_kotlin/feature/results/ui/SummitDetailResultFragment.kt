@@ -359,7 +359,7 @@ class SummitDetailResultFragment : Fragment() {
             R.id.summit_detail_menu_search -> {
                 findNavController().navigate(
                     SummitDetailResultFragmentDirections.actionSummitDetailResultFragmentToMainSearchCollectionFragment(
-                        0
+                        /* 0 */
                     )
                 )
                 true

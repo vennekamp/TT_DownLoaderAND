@@ -32,7 +32,8 @@
             app:popExitAnim="@anim/to_right" />
         <argument
             android:name="startTab"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" /> <!-- Default value is optional -->
     </fragment>
 
     <fragment

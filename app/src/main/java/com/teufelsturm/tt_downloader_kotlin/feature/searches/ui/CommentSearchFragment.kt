@@ -94,7 +94,7 @@ class CommentSearchFragment : Fragment() {
         Log.v(TAG,"In ViewPager2: onResume()")
         viewModel.actionBarString.observe(viewLifecycleOwner,
             {
-                (activity as MainActivity).supportActionBar!!.title = it
+                (activity as MainActivity).supportActionBar!!.title = "it_FIXME_FIXME_FIXME"
             }
         )
         (activity as MainActivity).supportActionBar!!.title = viewModel.actionBarString.value

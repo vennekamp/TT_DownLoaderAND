@@ -149,7 +149,7 @@ class RoutesListResultFragment @Inject constructor() : Fragment() {
             R.id.summits_menu_search -> {
                 findNavController().navigate(
                     RoutesListResultFragmentDirections.actionRoutesListResultFragmentToMainSearchCollectionFragment(
-                        1
+                        /* 1 */
                     )
                 )
                 true

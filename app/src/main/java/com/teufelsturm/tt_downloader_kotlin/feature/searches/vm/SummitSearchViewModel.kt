@@ -75,7 +75,7 @@ class SummitSearchViewModel @Inject constructor(
 
     val summitCount = MutableLiveData<Int>()
 
-    val actionBarString = Transformations.map(summitCount) { summitCount ->
+    val actionBarString = summitCount.map { summitCount ->
         formatItemCount4Button(
             summitCount,
             application.resources.getString(R.string.strSearchSummit)

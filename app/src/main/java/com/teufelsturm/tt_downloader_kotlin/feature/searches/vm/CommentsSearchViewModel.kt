@@ -28,7 +28,7 @@ class CommentsSearchViewModel @Inject constructor(
     val searchTextVM = ViewModelEditText("", viewModelScope)
     val commentCount = MutableLiveData<Int?>(null)
 
-    val actionBarString = Transformations.map(commentCount) { routeCount ->
+    val actionBarString = commentCount.map { routeCount ->
         formatItemCount4Button(
             routeCount,
             application.applicationContext.resources.getString(R.string.strSearchComment)

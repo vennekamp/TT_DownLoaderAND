@@ -163,9 +163,7 @@ class CommentsListResultFragment @Inject constructor() : Fragment() {
             }
             R.id.summits_menu_search -> {
                 findNavController().navigate(
-                    CommentsListResultFragmentDirections.actionCommentsListResultFragmentToMainSearchCollectionFragment(
-                        2
-                    )
+                    CommentsListResultFragmentDirections.actionCommentsListResultFragmentToMainSearchCollectionFragment()
                 )
                 true
             }

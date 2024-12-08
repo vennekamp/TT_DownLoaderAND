@@ -83,7 +83,7 @@ class RouteSearchViewModel @Inject constructor(
 
     val routeCount = MutableLiveData<Int>()
 
-    val actionBarString = Transformations.map(routeCount) { routeCount ->
+    val actionBarString = routeCount.map { routeCount ->
         formatItemCount4Button(
             routeCount,
             application.applicationContext.resources.getString(R.string.strSearchRoute)

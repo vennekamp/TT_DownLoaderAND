@@ -70,10 +70,11 @@ class TabOfSearchesFragment : Fragment() {
         })
 
         // this Fragment has a ActionBar Options Menu
-        setHasOptionsMenu(true)
+        this.setHasOptionsMenu(true)
         return binding.root
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.searches, menu)
     }

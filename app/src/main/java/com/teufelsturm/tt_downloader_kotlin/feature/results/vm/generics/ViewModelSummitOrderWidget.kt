@@ -4,8 +4,8 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.teufelsturm.tt_downloader_kotlin.data.order.Order
 import com.teufelsturm.tt_downloader_kotlin.data.order.SortSummitWithMySummitCommentBy
 import de.teufelsturm.tt_downloader_ktx.R
@@ -31,8 +31,7 @@ class ViewModelSummitOrderWidget : ViewModel() {
         _futureVisibility.value = View.GONE
     }
 
-    var order: LiveData<Order> =
-        Transformations.map(sortOrder) { convertBooleanToOrder(it) }
+    var order: LiveData<Order> = sortOrder.map { it: Boolean -> convertBooleanToOrder(it) }
     private val _futureVisibility = MutableLiveData<Int>(View.INVISIBLE)
     val futureVisibility: LiveData<Int>
         get() = _futureVisibility

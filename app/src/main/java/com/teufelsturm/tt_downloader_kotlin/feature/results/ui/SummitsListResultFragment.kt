@@ -122,10 +122,12 @@ class SummitsListResultFragment @Inject constructor() : Fragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_result, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         return when (id) {
@@ -136,7 +138,7 @@ class SummitsListResultFragment @Inject constructor() : Fragment() {
             R.id.summits_menu_search -> {
                 findNavController().navigate(
                     SummitsListResultFragmentDirections.actionSummitsResultFragmentToMainSearchCollectionFragment(
-                        0
+                        /* 0 */
                     )
                 )
                 true

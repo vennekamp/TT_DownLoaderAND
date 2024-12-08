@@ -274,6 +274,7 @@ class RouteDetailResultFragment : Fragment() {
         inflater.inflate(R.menu.route_detail_result, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.route_detail_menu_sort -> {
@@ -284,7 +285,7 @@ class RouteDetailResultFragment : Fragment() {
             R.id.route_detail_menu_search -> {
                 findNavController().navigate(
                     RouteDetailResultFragmentDirections.actionRouteDetailResultFragmentToMainSearchCollectionFragment(
-                        1
+                        /*1*/
                     )
                 )
                 true

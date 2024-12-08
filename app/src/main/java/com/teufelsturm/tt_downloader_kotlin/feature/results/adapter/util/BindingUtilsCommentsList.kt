@@ -114,12 +114,12 @@ fun TextView.tvDateAndTypeOfAscend(item: MyTTCommentAND?) {
     }
     text = spSB
 }
-
+/*
 @BindingAdapter("app:referencedTextView")
 fun TextView.getTextFromReferencedTextView(anotherTextView: TextView) {
     text = anotherTextView.text
 }
-
+*/
 
 @BindingAdapter("tvMyAscendedPartner")
 fun TextView.tvMyAscendedPartner(item: MyTTCommentAND?) {
