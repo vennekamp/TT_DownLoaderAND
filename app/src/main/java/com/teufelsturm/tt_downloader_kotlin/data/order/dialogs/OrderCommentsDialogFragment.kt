@@ -16,6 +16,7 @@ import de.teufelsturm.tt_downloader_ktx.databinding.DialogCommentOrderBinding
 class OrderCommentsDialogFragment(val viewModel: ViewModel4CommentOrder) : DialogFragment() {
 
     private lateinit var binding: DialogCommentOrderBinding
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialog?.window?.attributes?.windowAnimations = R.style.MyDialogAnimation

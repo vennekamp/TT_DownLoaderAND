@@ -50,7 +50,7 @@ sealed class Comments {
     // Comments.MyTTCommentANDWithPhotos
     data class RouteWithMyTTCommentANDWithPhotos(
         var ttRouteAND: TTRouteAND?,
-        val myTTCommentAND: Comments.MyTTCommentANDWithPhotos
+        val myTTCommentAND: MyTTCommentANDWithPhotos
     ) : Comments()
 
     data class RouteWithMyComment(

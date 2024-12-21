@@ -7,7 +7,86 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TTRouteDAO {
-
+/*
+    +----------------------------------+
+    |          <<interface>>           |
+    |           TTRouteDAO             |
+    +----------------------------------+
+    | + insert(summit: TTRouteAND)     |
+    | + update(summit: TTRouteAND)     |
+    | + deleteByTTWegNr(intTTWegNr: Int)|
+    | + getBySummit(intTTGipfelNr: Int):|
+    |      LiveData<List<TTRouteAND>>  |
+    | + getByRouteId(intTTWegNr: Int):  |
+    |      Flow<TTRouteAND>            |
+    | + getAll(): Flow<List<TTRouteAND>>|
+    | + getRouteNameForAutoText(searchSummit: |
+    |      String, searchAreas: String): List<String> |
+    | + getMaxAnzahlDerKommentare(      |
+    |      partialRouteName: String,    |
+    |      area: String, intMinSchwierigkeit: Int, |
+    |      intMaxSchwierigkeit: Int,    |
+    |      minOfMeanRating: Float): Int?|
+    | + getMaxMeanRating(               |
+    |      partialRouteName: String,    |
+    |      area: String,                |
+    |      intMinSchwierigkeit: Int,    |
+    |      intMaxSchwierigkeit: Int,    |
+    |      minNumberOfComments: Int):   |
+    |      Float?                      |
+    | + getConstrainedMinMaxGrade(      |
+    |      partialRouteName: String,    |
+    |      area: String,                |
+    |      minNumberOfComments: Int,    |
+    |      minOfMeanRating: Float):     |
+    |      suspend GradeMinMax         |
+    | + getRouteWithMySummitComment():  |
+    |      LiveData<List<Comments.RouteWithMyComment>> |
+    | + getRouteWithMySummitCommentByRoute( |
+    |      intTTWegNr: Int): Flow<Comments.RouteWithMyComment> |
+    | + getRouteWithMySummitCommentBySummit(|
+    |      intTTGipfelNr: Int):         |
+    |      Flow<List<Comments.RouteWithMyComment>> |
+    | + getRouteWithMyCommentWithSummit(|
+    |      intTTWegNr: Int):            |
+    |      Flow<RouteWithMyCommentWithSummit> |
+    | + getRouteListWithMyCommentWithSummit(|
+    |      intTTGipfelNr: Int):         |
+    |      Flow<List<RouteWithMyCommentWithSummit>> |
+    | + getConstrainedCount(            |
+    |      partialRouteName: String,    |
+    |      area: String,                |
+    |      intMinSchwierigkeit: Int,    |
+    |      intMaxSchwierigkeit: Int,    |
+    |      minNumberOfComments: Int,    |
+    |      minOfMeanRating: Float):     |
+    |      suspend Int                 |
+    | + getConstrainedJustMineCount(    |
+    |      partialRouteName: String,    |
+    |      area: String,                |
+    |      intMinSchwierigkeit: Int,    |
+    |      intMaxSchwierigkeit: Int,    |
+    |      minNumberOfComments: Int,    |
+    |      minOfMeanRating: Float):     |
+    |      suspend Int                 |
+    | + loadRouteListWithMyCommentWithSummitConstrained(|
+    |      partialRouteName: String,    |
+    |      area: String,                |
+    |      intMinSchwierigkeit: Int,    |
+    |      intMaxSchwierigkeit: Int,    |
+    |      minNumberOfComments: Int,    |
+    |      minOfMeanRating: Float):     |
+    |      Flow<List<RouteWithMyCommentWithSummit>> |
+    | + loadRouteListWithMyCommentWithSummitConstrainedJustMine(|
+    |      partialRouteName: String,    |
+    |      area: String,                |
+    |      intMinSchwierigkeit: Int,    |
+    |      intMaxSchwierigkeit: Int,    |
+    |      minNumberOfComments: Int,    |
+    |      minOfMeanRating: Float):     |
+    |      Flow<List<RouteWithMyCommentWithSummit>> |
+    +----------------------------------+
+*/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(summit: TTRouteAND)
 
@@ -170,8 +249,14 @@ interface TTRouteDAO {
                     a.rotPunktSchwierigkeitsGrad, 
                     a.intSprungSchwierigkeitsGrad, 
                     a.intAnzahlDerKommentare, 
-                    a.fltMittlereWegBewertung
-                    FROM   TT_Route_AND a
+                    a.fltMittlereWegBewertung,
+                    (a.fltBayesianAverageWegBewertung - MIN) / (MAX - MIN) * 5.0 AS fltBayesianAverageWegBewertung
+                    FROM   TT_Route_AND a ,(                   
+SELECT 
+       MIN(a.fltBayesianAverageWegBewertung) AS MIN,
+       MAX(a.fltBayesianAverageWegBewertung) AS MAX
+FROM   TT_Route_AND a
+)
                     WHERE  a.fltMittlereWegBewertung >= :minOfMeanRating
 							AND a.intAnzahlDerKommentare >= :minNumberOfComments
 							AND COALESCE (a.sachsenSchwierigkeitsGrad, a.ohneUnterstuetzungSchwierigkeitsGrad, a.rotPunktSchwierigkeitsGrad, a.intSprungSchwierigkeitsGrad) BETWEEN :intMinSchwierigkeit AND :intMaxSchwierigkeit
@@ -206,8 +291,14 @@ interface TTRouteDAO {
                     a.rotPunktSchwierigkeitsGrad, 
                     a.intSprungSchwierigkeitsGrad, 
                     a.intAnzahlDerKommentare, 
-                    a.fltMittlereWegBewertung
-                    FROM   TT_Route_AND a
+                    a.fltMittlereWegBewertung,
+                    (a.fltBayesianAverageWegBewertung- MIN) /  (MAX - MIN ) * 5.0 AS fltBayesianAverageWegBewertung
+                    FROM   TT_Route_AND a ,(                   
+SELECT 
+       MIN(a.fltBayesianAverageWegBewertung) AS MIN,
+       MAX(a.fltBayesianAverageWegBewertung) AS MAX
+FROM   TT_Route_AND a
+)
                     WHERE  a.fltMittlereWegBewertung >= :minOfMeanRating
 							AND a.intAnzahlDerKommentare >= :minNumberOfComments
 							AND COALESCE (a.sachsenSchwierigkeitsGrad, a.ohneUnterstuetzungSchwierigkeitsGrad, a.rotPunktSchwierigkeitsGrad, a.intSprungSchwierigkeitsGrad) BETWEEN :intMinSchwierigkeit AND :intMaxSchwierigkeit

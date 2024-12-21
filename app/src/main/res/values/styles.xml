@@ -17,6 +17,12 @@
         <item name="colorControlActivated">@color/LightGreen</item>
     </style>
 
+    <style name="mNormalizedRatingBar" parent="@style/Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/abc_ratingbar_indicator_material</item>
+        <item name="android:indeterminateDrawable">@drawable/abc_ratingbar_indicator_material</item>
+        <item name="colorControlNormal">@color/PaleYellow</item>
+        <item name="colorControlActivated">@color/LightGreen</item>
+    </style>
 
     <style name="MyRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textSize">10sp</item>

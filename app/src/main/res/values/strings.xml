@@ -17,7 +17,7 @@
     <string name="tableCol_Area">Gebiet </string>
     <string name="strNeighbourSummit">Nachbargipfel </string>
     <string name="tableCol_RouteIsAscended">geklettert </string>
-    <string name="tableCol_MyComment">Eigener <br />Kommentar </string>
+    <string name="tableCol_MyComment">Eigener <br/>Kommentar: </string>
     <string name="tableColSummitNumberOfficial">Gipfelnummer (KleFü) </string>
     <string name="tableCol_NumberOfRoutes">Anzahl der Wege </string>
     <string name="tableCol_NumberOfStarredRoutes">Anzahl der *-Wege </string>
@@ -26,7 +26,7 @@
     <string name="arrow">Pfeil</string>
     <string name="tableCol_RouteName">Weg </string>
     <string name="tableCol_NumberOfComments">Kommentare</string>
-    <string name="tableCol_MeanRating">Mittlere Bewertung </string>
+    <string name="tableCol_MeanRating">Mittlere Bewertung: </string>
     <string name="tableCol_Grade">Schwierigkeit</string>
     <string name="sort">Sortieren</string>
     <string name="search">Suchen</string>
@@ -64,4 +64,6 @@
     <string name="no_image">Keine Bilder vorhanden</string>
     <string name="tabLayout_content_description">Gipfel oder Wege oder Kommentar suchen</string>
     <string name="nur_meine_gipfel">Nur meine\nGipfel</string>
+    <string name="normalized_rating">Bayessch gewichtete Wertung: </string>
+    <string name="groesse">Größe:</string>
 </resources>

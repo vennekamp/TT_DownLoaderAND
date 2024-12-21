@@ -51,12 +51,92 @@
 
 
         <TextView
+            android:id="@+id/main_anchor__tv_label_rated_size"
+            style="@style/tv_item_recyclerview"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:minWidth="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/groesse"
+            app:layout_constraintStart_toStartOf="@id/tv_summit_text"
+            app:layout_constraintEnd_toStartOf="@+id/rating_bar_rated_size"
+            app:layout_constraintTop_toBottomOf="@+id/tv_summit_text" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating_bar_rated_size"
+            style="@style/mRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/Blue"
+            android:minWidth="0dp"
+            android:numStars="5"
+            android:paddingTop="4dp"
+            android:stepSize="0.25"
+            app:layout_constraintTop_toTopOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintBottom_toBottomOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintEnd_toStartOf="@+id/view_rating_spacer"
+            app:layout_constraintVertical_bias="0.0"
+            tools:rating="1.23" />
+
+        <View
+            android:id="@+id/view_rating_spacer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/Blue"
+            android:minWidth="0dp"
+            app:layout_constraintTop_toTopOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintBottom_toBottomOf="@+id/main_anchor__tv_label_rated_size"
+
+            app:layout_constraintStart_toEndOf="@+id/rating_bar_rated_size"
+            app:layout_constraintEnd_toStartOf="@+id/tv_label_rated_bayes"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_label_rated_bayes"
+            style="@style/tv_item_recyclerview"
+            android:minWidth="0dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintBottom_toBottomOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintStart_toEndOf="@+id/view_rating_spacer"
+            app:layout_constraintEnd_toStartOf="@+id/rating_bar_bayes"
+            android:text="Lohnend: " />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating_bar_bayes"
+            style="@style/mRatingBar"
+            android:minWidth="0dp"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/Blue"
+            android:numStars="5"
+            android:paddingTop="4dp"
+            android:stepSize="0.25"
+            app:layout_constraintTop_toTopOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintBottom_toBottomOf="@+id/main_anchor__tv_label_rated_size"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_rated_bayes"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            tools:rating="1.23" />
+
+        <TextView
             android:id="@+id/tv_area_label"
             style="@style/tv_item_recyclerview"
             android:text="@string/tableCol_Area"
             app:layout_constraintEnd_toEndOf="@+id/main_anchor__tv_summit_number_label"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_summit_text" />
+            app:layout_constraintTop_toBottomOf="@+id/main_anchor__tv_label_rated_size" />
 
         <TextView
             android:id="@+id/tv_area_text"
@@ -64,7 +144,7 @@
             app:areaTextFormatted="@{summit}"
             app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
             app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_summit_number_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_summit_text"
+            app:layout_constraintTop_toBottomOf="@+id/main_anchor__tv_label_rated_size"
             tools:text="#33" />
 
         <TextView

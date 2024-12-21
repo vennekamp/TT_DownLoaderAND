@@ -46,8 +46,8 @@ fun TextView.commentCountTextFormatted(item: Comments.RouteWithMyComment) {
     text = item.ttRouteAND.intAnzahlDerKommentare.toString()
 }
 
-@BindingAdapter("meanGradeTextFormatted")
-fun TextView.meanGradeTextFormatted(item: Comments.RouteWithMyComment) {
+@BindingAdapter("meanRatingTextFormatted")
+fun TextView.meanRatingTextFormatted(item: Comments.RouteWithMyComment) {
     val df = DecimalFormat("#.##")
     text = df.format(item.ttRouteAND.fltMittlereWegBewertung)
 }
@@ -57,6 +57,15 @@ fun RatingBar.fltRatingFormattedFormatted(item: Comments.RouteWithMyComment) {
     rating = item.ttRouteAND.fltMittlereWegBewertung ?: 0f
 }
 
+@BindingAdapter("fltNormalizedRatingFormattedFormatted")
+fun RatingBar.fltNormalizedRatingFormattedFormatted(item: Comments.RouteWithMyComment) {
+    rating = item.ttRouteAND.fltBayesianAverageWegBewertung ?: 0f
+}
+@BindingAdapter("meanNormalizedRatingTextFormatted")
+fun TextView.meanNormalizedRatingTextFormatted(item: Comments.RouteWithMyComment) {
+    val df = DecimalFormat("#.##")
+    text = df.format(item.ttRouteAND.fltBayesianAverageWegBewertung ?: 0f)
+}
 
 @BindingAdapter("isAscendedRouteFormatted")
 fun CheckBox.isAscendedRouteFormatted(item: Comments.RouteWithMyComment) {

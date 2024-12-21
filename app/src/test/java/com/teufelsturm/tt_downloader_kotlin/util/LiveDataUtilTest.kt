@@ -6,6 +6,9 @@ package com.teufelsturm.tt_downloader_kotlin.util
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -16,6 +19,7 @@ import java.util.concurrent.TimeoutException
  * Use this extension from host-side (JVM) tests. It's recommended to use it alongside
  * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.
  */
+
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 fun <T> LiveData<T>.getOrAwaitValueTest(
     time: Long = 2,
@@ -25,7 +29,7 @@ fun <T> LiveData<T>.getOrAwaitValueTest(
     var data: T? = null
     val latch = CountDownLatch(1)
     val observer = object : Observer<T> {
-        override fun onChanged(o: T?) {
+        override fun onChanged(o: T) { // T is non-null
             data = o
             latch.countDown()
             this@getOrAwaitValueTest.removeObserver(this)

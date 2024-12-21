@@ -4,6 +4,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.teufelsturm.tt_downloader_kotlin.data.entity.*
@@ -18,6 +19,17 @@ fun TextView.summitTextFormatted(item: CommentsSummit.SummitWithMySummitComment?
     text = item?.let { item.ttSummitAND.strName }
     // context.getString(R.string.summit_number, item.ttSummitAND.strName,item.ttSummitAND.intKleFuGipfelNr)
 }
+
+@BindingAdapter("normalisierteWegBewertungSumme")
+fun RatingBar.normalisierteWegBewertungSumme(item: CommentsSummit.SummitWithMySummitComment?) {
+    rating = item?.ttSummitAND?.normalisierteWegBewertungSumme?: 0F
+}
+
+@BindingAdapter("normalisierteWegBewertung")
+fun RatingBar.normalisierteWegBewertung(item: CommentsSummit.SummitWithMySummitComment?) {
+    rating = item?.ttSummitAND?.normalisierteWegBewertung?: 0F
+}
+
 
 @BindingAdapter("summitTextFormatted")
 fun TextView.summitTextFormatted(item: TTSummitAND?) {
