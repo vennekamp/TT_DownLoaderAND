@@ -20,16 +20,6 @@ fun TextView.summitTextFormatted(item: CommentsSummit.SummitWithMySummitComment?
     // context.getString(R.string.summit_number, item.ttSummitAND.strName,item.ttSummitAND.intKleFuGipfelNr)
 }
 
-@BindingAdapter("normalisierteWegBewertungSumme")
-fun RatingBar.normalisierteWegBewertungSumme(item: CommentsSummit.SummitWithMySummitComment?) {
-    rating = item?.ttSummitAND?.normalisierteWegBewertungSumme?: 0F
-}
-
-@BindingAdapter("normalisierteWegBewertung")
-fun RatingBar.normalisierteWegBewertung(item: CommentsSummit.SummitWithMySummitComment?) {
-    rating = item?.ttSummitAND?.normalisierteWegBewertung?: 0F
-}
-
 
 @BindingAdapter("summitTextFormatted")
 fun TextView.summitTextFormatted(item: TTSummitAND?) {
@@ -86,6 +76,17 @@ fun TextView.summitExtendedTextFormatted(item: SummitBaseDataInterface?) {
     }
 }
 
+@BindingAdapter("normalisierteWegBewertungSumme")
+fun RatingBar.normalisierteWegBewertungSumme(item: TTSummitAND?) {
+    // use ln(ln(x+1) /ln(2) )/ln(2) to normalize the rating (compress large differences between values)
+    val mRating = Math.log((item?.normalisierteWegBewertungSumme?: 0.0).div(5.0) + 1.0).div(Math.log(2.0))
+    rating = Math.log(mRating + 1).div(Math.log(2.0)).toFloat().times(5.0f)
+}
+
+@BindingAdapter("normalisierteWegBewertung")
+fun RatingBar.normalisierteWegBewertung(item: TTSummitAND?) {
+    rating = item?.normalisierteWegBewertung?: 0.0F
+}
 
 @BindingAdapter("areaTextFormatted")
 fun TextView.areaTextFormatted(item: TTSummitAND) {

@@ -21,7 +21,7 @@ const val NO_ID = 0L
         SummitTravSalePersOrder::class, // Represents travel sales or order-related data (potentially used for tracking visits)
         Comments.TTCommentAND::class    // Represents a comment linked to a route, potentially from the TT community
     ],
-    version = 3,  // Version number for the database. It changes when the schema is updated.
+    version = 5,  // Version number for the database. It changes when the schema is updated.
     exportSchema = false // If true, Room will export the schema to a folder for documentation purposes.
 )
 abstract class TTDataBase : RoomDatabase() {

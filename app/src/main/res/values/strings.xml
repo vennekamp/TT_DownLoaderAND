@@ -64,6 +64,6 @@
     <string name="no_image">Keine Bilder vorhanden</string>
     <string name="tabLayout_content_description">Gipfel oder Wege oder Kommentar suchen</string>
     <string name="nur_meine_gipfel">Nur meine\nGipfel</string>
-    <string name="normalized_rating">Bayessch gewichtete Wertung: </string>
+    <string name="normalized_rating">Bayes Normal: </string>
     <string name="groesse">Größe:</string>
 </resources>

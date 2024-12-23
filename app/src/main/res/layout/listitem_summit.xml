@@ -81,6 +81,7 @@
             app:layout_constraintStart_toEndOf="@+id/main_anchor__tv_label_rated_size"
             app:layout_constraintEnd_toStartOf="@+id/view_rating_spacer"
             app:layout_constraintVertical_bias="0.0"
+            app:normalisierteWegBewertungSumme="@{summit}"
             tools:rating="1.23" />
 
         <View
@@ -128,6 +129,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/main_anchor__tv_label_rated_size"
             app:layout_constraintStart_toEndOf="@+id/tv_label_rated_bayes"
             app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
+            app:normalisierteWegBewertung="@{summit}"
             tools:rating="1.23" />
 
         <TextView

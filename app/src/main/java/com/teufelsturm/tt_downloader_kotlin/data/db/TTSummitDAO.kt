@@ -133,7 +133,9 @@ interface TTSummitDAO {
                       a.fltGPS_Altitude, 
                       a.osm_type, 
                       a.osm_ID, 
-                      a.osm_display_name
+                      a.osm_display_name,
+                      normalisierteWegBewertungSumme,
+                      normalisierteWegBewertung 
                     FROM TT_Summit_AND a
                 WHERE a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
                     AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege
@@ -165,7 +167,9 @@ interface TTSummitDAO {
                       a.fltGPS_Altitude, 
                       a.osm_type, 
                       a.osm_ID, 
-                      a.osm_display_name
+                      a.osm_display_name,
+                      normalisierteWegBewertungSumme,
+                      normalisierteWegBewertung
                     FROM TT_Summit_AND a, MyTT_Comment_AND b
                 WHERE a.intAnzahlWege BETWEEN :minAnzahlWege AND :maxAnzahlWege
                     AND a.intAnzahlSternchenWege BETWEEN :minAnzahlSternchenWege AND :maxAnzahlSternchenWege

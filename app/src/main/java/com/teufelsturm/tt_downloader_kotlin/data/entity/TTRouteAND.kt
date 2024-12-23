@@ -108,7 +108,7 @@ data class TTRouteAND(
     */
     @ColumnInfo(name = "fltBayesianAverageWegBewertung")
     var fltBayesianAverageWegBewertung: Float? = null,
-    @ColumnInfo(name = "normalisierteWegBewertung ")
+    @ColumnInfo(name = "normalisierteWegBewertung")
     var normalisierteWegBewertung : Float? = null
 )
 

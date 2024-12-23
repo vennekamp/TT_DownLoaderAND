@@ -97,9 +97,9 @@ data class TTSummitAND(
     var bayesian_summit_average: Float? = null,
 
 
-    // Average of Bayesian average ratings for all routes for the summit
+    // Sum of Bayesian average ratings for all routes for the summit
     @ColumnInfo(name = "normalisierteWegBewertungSumme")
-    var normalisierteWegBewertungSumme: Float? = null,
+    var normalisierteWegBewertungSumme: Double? = null,
     // Average of Bayesian average ratings for all routes for the summit
     @ColumnInfo(name = "normalisierteWegBewertung")
     var normalisierteWegBewertung: Float? = null
